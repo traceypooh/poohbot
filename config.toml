@@ -25,7 +25,7 @@ disableLanguages        = [""]
   highlightjsTheme      = "github"
   highlightjsLang       = ["html", "css", "js", "toml"]
   # Sets where "View More Posts" links to
-  viewMorePostsLink     = "/blog/"
+  viewMorePostsLink     = "/post/"
   # Activate Estimated Reading Times, which appear in the post headers
   readingTime           = true
   # Sets which Social Share links appear in posts.
@@ -223,7 +223,7 @@ disableLanguages        = [""]
     [[Languages.de.menu.main]]
       name              = "Blog"
       identifier        = "blog"
-      url               = "/blog/"
+      url               = "/post/"
       pre               = "<i class='far fa-newspaper'></i>"
       weight            = 3
 
@@ -265,7 +265,7 @@ disableLanguages        = [""]
     [[Languages.fr.menu.main]]
       name              = "Blog"
       identifier        = "blog"
-      url               = "/blog/"
+      url               = "/post/"
       pre               = "<i class='far fa-newspaper'></i>"
       weight            = 3
 
@@ -307,7 +307,7 @@ disableLanguages        = [""]
     [[Languages.pl.menu.main]]
       name              = "Blog"
       identifier        = "blog"
-      url               = "/blog/"
+      url               = "/post/"
       pre               = "<i class='far fa-newspaper'></i>"
       weight            = 3
 
@@ -349,7 +349,7 @@ disableLanguages        = [""]
     [[Languages.pt.menu.main]]
       name              = "Blog"
       identifier        = "blog"
-      url               = "/blog/"
+      url               = "/post/"
       pre               = "<i class='far fa-newspaper'></i>"
       weight            = 3
 
