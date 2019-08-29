@@ -1,4 +1,4 @@
-baseurl                 = "https://traceypooh.gitlab.io/"
+baseurl                 = "https://traceypooh.gitlab.io/poohbot/"
 DefaultContentLanguage  = "en"
 title                   = "Tracey Pooh"
 theme                   = "hugo-future-imperfect-slim"
