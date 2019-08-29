@@ -1,4 +1,4 @@
-baseurl                 = "https://example.com/"
+baseurl                 = "https://traceypooh.gitlab.io/poohbot/"
 DefaultContentLanguage  = "en"
 title                   = "Tracey Pooh"
 theme                   = "hugo-future-imperfect-slim"
@@ -127,7 +127,7 @@ disableLanguages        = [""]
   [[menu.main]]
     name              = "Blog"
     identifier        = "blog"
-    url               = "/blog/"
+    url               = "/post/"
     pre               = "<i class='far fa-newspaper'></i>"
     weight            = 3
 
@@ -144,6 +144,53 @@ disableLanguages        = [""]
     url               = "/contact/"
     pre               = "<i class='far fa-envelope'></i>"
     weight            = 6
+
+# Sets Social Media icons to appear and link to your account. Value should be your
+# username unless otherwise noted. These are the icons affected by socialAppearAtTop
+# and socialAppearAtBottom.
+[social]
+  twitter               = "tracey_pooh"
+  youtube               = "channel/UCBcfKCrYjtWcuTk5LLT-7xg"
+  linkedin              = "tracey-jaquith-929432"
+  pinterest             = "poohbot"
+  github                = "traceypooh"
+  gitlab                = "traceypooh"
+  codepen               = "traceypooh"
+  stackoverflow         = "11941875" # User Number
+  flickr                = "46222920@N05"
+  tumblr                = "traceypooh"
+
+# email                 = "example"
+# facebook              = "example"
+# slideshare            = ""
+# medium                = ""
+# instagram             = "example"
+# keybase               = "example"
+# mastodon              = "example.com/@example"
+
+# googleplus            = ""
+# reddit                = "example"
+# quora                 = ""
+# linkedin_company      = "examplebusiness"
+# foursquare            = ""
+# xing                  = ""
+# wordpress             = ""
+# bitbucket             = ""
+# jsfiddle              = ""
+# deviantart            = ""
+# behance               = ""
+# dribbble              = ""
+# vimeo                 = ""
+# whatsapp              = "" # WhatsApp Number
+# skype                 = ""
+# snapchat              = ""
+# telegram              = "example"
+# vine                  = ""
+# googlescholar         = ""
+# orcid                 = ""
+# researchgate          = "example"
+
+
 
 [Languages]
   # Each language has its own menu.
@@ -319,55 +366,3 @@ disableLanguages        = [""]
       url               = "/contact/"
       pre               = "<i class='far fa-envelope'></i>"
       weight            = 6
-
-# Sets Social Media icons to appear and link to your account. Value should be your
-# username unless otherwise noted. These are the icons affected by socialAppearAtTop
-# and socialAppearAtBottom.
-[social]
-  # Coding Communities
-  github                = "pacollins/hugo-future-imperfect-slim"
-  gitlab                = ""
-  stackoverflow         = "" # User Number
-  bitbucket             = ""
-  jsfiddle              = ""
-  codepen               = ""
-  # Visual Art Communities
-  deviantart            = ""
-  flickr                = "example"
-  behance               = ""
-  dribbble              = ""
-  # Publishing Communities
-  wordpress             = ""
-  medium                = ""
-  # Professional/Business Oriented Communities
-  linkedin              = "example"
-  linkedin_company      = "examplebusiness"
-  foursquare            = ""
-  xing                  = ""
-  slideshare            = ""
-  # Social Networks
-  facebook              = "example"
-  googleplus            = ""
-  reddit                = "example"
-  quora                 = ""
-  youtube               = ""
-  vimeo                 = ""
-  whatsapp              = "" # WhatsApp Number
-    # WeChat and QQ need testing.
-    wechat              = ""
-    qq                  = "" # User ID Number
-  instagram             = "example"
-  tumblr                = ""
-  twitter               = "example"
-  skype                 = ""
-  snapchat              = ""
-  pinterest             = "example"
-  telegram              = "example"
-  vine                  = ""
-  googlescholar         = ""
-  orcid                 = ""
-  researchgate          = "example"
-  keybase               = "example"
-  mastodon              = "example.com/@example"
-  # Email
-  email                 = "example"
