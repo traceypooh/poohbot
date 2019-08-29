@@ -1,0 +1,42 @@
+---
+title: ffmpeg building on mac intel/x386
+author: tracey pooh
+type: post
+date: 2009-04-02T05:13:36+00:00
+
+categories:
+  - video
+tags:
+  - ffmpeg
+  - video
+
+---
+ffmpeg v0.5 just came out. it&#8217;s the bomb. it&#8217;s got tons of fixes and massive amounts of new codecs that it can read. for example, it can now decode my professional filmmaker brother&#8217;s &#8220;DVC ProHD&#8221; highly proprietary (and massive bitrate!) format! it can also decode flac and 24-bit flac. (encoding flac is disappointing though).
+
+at any rate! macports is a great way to get it installed on your mac.
+  
+the current way of setting up macports and then doing
+     
+sudo port install ffmpeg
+  
+works fine on my PPC at work (oddly &#8212; pretty old computer now) but not my Air (intel x386)
+
+So I set out to find the fixes needed to make it work. Here they are:
+
+step 1: install macports &#8212; see http://www.macports.org/install.php
+
+sudo port install x264 +noasm # for i386 (not needed for PPC)
+  
+sudo port fetch ffmpeg
+  
+sudo port checksum ffmpeg
+  
+sudo port extract ffmpeg
+  
+sudo port patch ffmpeg
+  
+remove &#8220;&#8211;enable-shared&#8221; from /opt/local/var/macports/sources/rsync.macports.org/release/ports/multimedia/ffmpeg/Portfile
+  
+sudo port install ffmpeg
+
+**[May update]** I think the packages are improving so some of the above steps may not be necessary, depending on your Mac model, xcode version, and such. So I&#8217;d suggest just trying &#8220;sudo port install ffmpeg&#8221; first to see if it works and try some tweaks above if that doesn&#8217;t work

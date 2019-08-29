@@ -1,0 +1,410 @@
+/*
+  This css file is for individual users to restyle items for their personal site,
+  or for the implementation of features specifically for their site. Anything that
+  is an official part of the theme (ex. Pull Requests) should be included in main.css
+  and follow the formatting and style given.
+*/
+
+
+/******************************************************************************
+ * overrides to WP theme
+ ******************************************************************************/
+
+#content a:link    { color: #428bca; }
+#content a:visited { color:rgb(99,209,255); } /*1.5 * each component of #428bca AKA rgb(66,139,202)*/
+
+
+.imbox2 { border-color:black; }
+
+code { background-color:#222; }
+
+footer[id=colophon] { display:none !important; }
+
+/******************************************************************************
+ * overrides to WP theme
+ ******************************************************************************/
+
+
+
+
+
+
+
+
+div.asciiover pre {
+  background-color:black;
+  position:relative;
+  top:-80px;
+  font-size:10px !important;
+  line-height:12px !important;
+}
+
+
+
+div.lastmod {
+  float:right;
+  padding-right:50px;
+  margin-right:-40px;
+  text-align:right;
+  clear:both;
+}
+
+div.lastmod h3 {
+  clear:both;
+  font-size:80%;
+}
+
+
+.topinblock {
+  vertical-align:top;
+  display:inline-block;
+  *display:inline; /*for IEv8, at least*/
+}
+
+.midinblock {
+  vertical-align:middle;
+  display:inline-block;
+  *display:inline; /*for IEv8, at least*/
+}
+
+.rounded15 {
+  -moz-border-radius:15px;
+  -webkit-border-radius:15px;
+  -khtml-border-radius:15px;
+  border-radius:15px;
+}
+
+.rounded5 {
+  -moz-border-radius:5px;
+  -webkit-border-radius:5px;
+  -khtml-border-radius:5px;
+  border-radius:5px;
+}
+
+
+
+/* use with div elements when want to have 2 columns in my page */
+.col2 { width:375px; float:left; }
+
+/* like col2, but narrower and more padding */
+.col2p {
+  width:240px;
+  float:left;
+  padding-left:1%;
+  padding-right:1%;
+  padding-top:8px;
+  padding-bottom:8px;
+}
+
+
+
+/* use with div elements when want to have 4 columns in my page */
+.col4 { width:25%; float:left; }
+
+/* like col4, but extra 8px padding (1% of 800==8px)*/
+.col4p{ width:22.5%; float:left; padding-left:1%; padding-right:1%; padding-top:8px; padding-bottom:8px; }
+
+
+
+/* use with div elements when want to have 4 columns in my page */
+.col4left {
+  position:relative;
+  float:left;
+  width:250px;
+  height:200px;
+  font-size:9pt;
+}
+
+/* like col4left, but extra 8px padding */
+.col4rite {
+  float:left;
+  width:125px;
+  font-size:9pt;
+  padding: 40px 8px 8px 8px;
+}
+
+
+.colctr, .colctrThird {
+  float:left;
+  font-size:9pt;
+  text-align:center;
+}
+.colctrThird {  /* just like colctr but 1/3 width */
+  width:250px;
+}
+
+
+
+
+div.quote { float:left; width:245px; padding:10px; }
+div.quote dd { margin-left:40px; } /*xxx WP CSS is braindead!! */
+div.quote dl { margin-bottom:30px; }
+
+div.quote dt,  #randquote dt,  dl dt q,  h3.widget-title a.rsswidget
+{
+  color:white !important;  /*xxx WP CSS is braindead!! */
+}
+
+/* nicer/briefer DNow! RSS left-column widget */
+#rss-2 ul li {
+  display:block;
+  height:40px;
+  overflow:hidden;
+}
+
+
+#randquote {
+  float:right;
+  width:400px;
+  margin-right:10%;
+  text-align:center;
+  font-size:80%;
+  font-style:italic;
+}
+#randquote a {
+  color:gray !important;
+  text-decoration: none !important;
+}
+
+
+
+
+div.protest div.txt,
+div.protest div.pic
+{
+  display:inline-block;
+  *display:inline; /*for IEv8, at least*/
+  vertical-align:middle;
+}
+div.protest div.pic {
+  width:420px;
+  height:350px;
+}
+div.protest div.txt {
+  width:350px;
+}
+
+
+
+#dnow div {
+  border-bottom:1px dashed #FFF380;
+  font-style:italic;
+  font-size:9pt;
+  padding:10px 0px 10px 0px;
+}
+
+
+
+/******************** JPEGS STUFF ****************************/
+body.jpegs {
+  background: url('images/cloudtile.jpg') repeat;
+  color:yellow;
+}
+
+body.jpegs img {
+  border-width: 4px 0px 4px 0px;
+  border-color: yellow;
+  border-style: solid;
+  height:150px;
+  margin: 0px 0px 50px 0px;
+  padding: 0px;
+}
+body.jpegs img.left {
+  border-left-width:4px;
+}
+body.jpegs img.rite {
+  border-right-width:4px;
+}
+
+body.jpegs div.row {
+  clear:left;
+}
+
+/* JS flips this on */
+body.clouds {
+  text-align:center;
+}
+/******************** JPEGS STUFF ****************************/
+
+
+
+/******************** HOVER ****************************/
+/* this is the SWEET stuff! */
+.showOnHover { text-decoration: none; display:none; }
+.hoverShower { text-decoration: none; }
+a.hoverShower:hover .showOnHover {
+  text-decoration: none !important;
+  display:inline;
+  z-index:100;
+  position:absolute;
+}
+
+
+/********* Visibility inverted (for tours.php)********/
+
+.showOnHover2
+  { display:inline; z-index:100; position:absolute; }
+.hoverShower2:hover .showOnHover2
+{ display:none; }
+
+
+.tourbox, .tourOverlay {  background-color:#333; } /*xxx*/
+
+.tourbox {
+  margin:20px;
+  padding:5px;
+  margin-right:10px;
+  position:relative;
+}
+
+.tourOverlay {
+  width:300px;
+  margin-bottom:10px;
+  font-style: italic;
+  font-size: 12pt;
+  padding-top:5px;
+  color:white;
+  text-align:left;
+  filter:alpha(opacity=70);-moz-opacity:.70;opacity:.70;
+}
+
+
+/******************** HOVER ****************************/
+
+
+
+
+
+/******************** PHOTO ALBUMS STUFF ****************************/
+div.allalbums { max-width:400px; } /* going for 2 columns (on non-iphone) */
+div.allalbums .asummary { max-width:133px; text-align:right; }
+
+#pdescription {
+  white-space:pre-wrap;
+  margin-top:10px;
+  margin-left:20px;
+  font-family: cursive;
+  font-size: 125%;
+  line-height:1.2;
+}
+
+#content span.pnav {
+  font-size:8pt;
+  white-space:nowrap;
+  padding-left:30px;
+}
+
+
+
+.pixcell.topinblock {
+  margin-left:10px;
+  min-height:300px;
+}
+
+
+/******************** PHOTO ALBUMS STUFF ****************************/
+
+
+
+/******************** PICTURES -- NICE CORNERS ****************************/
+/* defaults for showing picture */
+
+
+.pixOverlay {
+  margin-left:10px;
+  margin-top:10px;
+  text-align:left;
+  font-size:9pt;
+  font-style: italic;
+  text-decoration: none !important;
+  padding:5px;
+  background-color:black;
+  color:white;
+  filter:alpha(opacity=50);-moz-opacity:.50;opacity:.50;
+  line-height:1.0;
+}
+
+
+.imbox { float:left; }
+.pixcell .imbox { float:none; }
+.pixcell p {
+  line-height:1.0;
+  margin-bottom:0; /*theme overrides*/
+  position: relative;
+  text-align: right;
+}
+
+
+
+/* for safari: */
+.imbox a:link,
+.imbox a:visited,
+.imbox a:active,
+.imbox a:hover {
+  text-decoration: none !important;
+  color:white !important;
+}
+
+
+
+
+.imbox {
+  /* container */
+  position:relative;
+  margin:7px;
+  /*not obvious fix for issue when imbox is inside div text-align:center on FF*/
+  text-align:left;
+}
+.imbox1 {
+  /* bottom layer (image) in container */
+  position:absolute;
+  border-width:0px;
+}
+.imbox2 {
+  /* top    layer (border) in container */
+  position:absolute;
+  top:-7px;
+  left:-7px;
+  border-width:7px;
+  border-style: solid;
+  -moz-border-radius:20px;
+  -webkit-border-radius:20px;
+  -khtml-border-radius:20px;
+  border-radius:20px;
+}
+
+/******************** PICTURES -- NICE CORNERS ****************************/
+
+
+
+
+
+/*****************  star wars... nothing but... STAR WARS  ***********/
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Sans Regular'), local('DroidSans-Regular'), url(/droid-sans.ttf) format('truetype');
+}
+.starwords {
+  position: relative;
+  margin:0; border:0; padding:0;
+  width: 100%;
+  height: 500px;
+  /* background-color: #111; */
+}
+.starwords a.tag {
+  font-family: 'Droid Sans';
+  position: absolute;
+  text-decoration: none !important;
+  display: block;
+  border: 0 !important;
+  line-height: 1.0;
+}
+.starwords a.c0 {color: #000}
+.starwords a.c1 {color: #333}
+.starwords a.c2 {color: #555}
+.starwords a.c3 {color: #777}
+.starwords a.c4 {color: #999}
+.starwords a.tag:hover {color: #a50096 !important}
+/*****************  star wars... nothing but... STAR WARS  ***********/

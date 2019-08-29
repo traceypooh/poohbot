@@ -1,0 +1,65 @@
+---
+title: natively compiling ffmpeg, x264, mplayer on mac (with builtin x264 and webm encoding)
+author: tracey pooh
+type: post
+date: 2011-05-28T22:41:51+00:00
+
+categories:
+  - video
+tags:
+  - coding
+  - ffmpeg
+  - video
+
+---
+i&#8217;m very pleased that after years of hacks here and there, all three heads of the current codebases pretty well build natively on mac (snow leopard) for
+
+  * x264
+  * ffmpeg
+  * mplayer
+
+here, i&#8217;m making sure that i compile in static version of libvpx (Webm) and libx264 (h.264) video packages so that the ffmpeg can easily make hiqh quality h.246 and webm transcoded videos.
+
+<https://archive.org/~tracey/downloads/macff.sh>
+
+&nbsp;
+
+So we can make nice (2 pass video) ~768 kb/sec 640&#215;480 derivatives like so (alter &#8220;-r &#8221; as appropriate):
+
+`# make WebM<br />
+ffmpeg -deinterlace -y -i 'camels.avi' -vcodec webm -fpre libvpx-360p.ffpreset  -vf scale=640:480  -r 20  -threads 2  -map_meta_data -1:0  -pass 1 -an           tmp.webm<br />
+` 
+
+`ffmpeg -deinterlace -y -i 'camels.avi' -vcodec webm -fpre libvpx-360p.ffpreset  -vf scale=640:480  -r 20  -threads 2  -map_meta_data -1:0  -pass 2  -acodec libvorbis -ab 128k -ac 2 -ar 44100 tmp.webm<br />
+` 
+
+`mv tmp.webm 'camels.webm'`
+
+ ``
+
+&nbsp;
+
+`# make h.264`
+
+`ffmpeg -deinterlace -y -i 'camels.avi' -vcodec libx264 -fpre libx264-IA.ffpreset  -vf scale=640:480  -r 20  -threads 2  -map_meta_data -1:0  -pass 1 -an           tmp.mp4`
+
+`<br />
+ffmpeg -deinterlace -y -i 'camels.avi' -vcodec libx264 -fpre libx264-IA.ffpreset  -vf scale=640:480  -r 20  -threads 2  -map_meta_data -1:0  -pass 2  -acodec aac -strict experimental -ab 128k -ac 2 -ar 44100 tmp.mp4<br />
+` 
+
+`qt-faststart tmp.mp4 'camels.mp4'<br />
+` 
+
+our preset files:
+  
+<https://archive.org/~tracey/downloads/libvpx-360p.ffpreset>
+  
+<https://archive.org/~tracey/downloads/libx264-IA.ffpreset>
+
+Nice things about the h.264 derivative:
+
+  * plays on all iphones and ipads
+  * browser video tag and/or flash plugin compatible
+  * starts immediately, seeks immediately even before entire video is downloaded
+
+hope this may be useful!

@@ -1,0 +1,68 @@
+---
+title: 'convert yuvj420p to yuv420p (chrome playable!) mp4 video (eg: canon/nikon video)'
+author: tracey pooh
+type: post
+date: 2012-06-17T20:57:56+00:00
+
+categories:
+  - video
+tags:
+  - camera video
+  - colorspaces
+  - ffmpeg
+  - geek
+  - video
+  - yuvj420p
+
+---
+hooray!
+
+found a nice (video lossless, best i can tell) way to convert the video from cameras like my Canon ELPH SD1400,
+  
+which is \*already\* h.264 video + PCM mono audio
+
+to a new mp4 container with aac audio. that part&#8217;s easy/cake w/ ffmpeg &#8212; but the trick to get the h.264
+  
+video part to play in chrome browser and/or with a flash plugin is to get the flagged &#8220;yuvj420p&#8221; colorspace pixels
+  
+to be considered &#8220;yuv420p&#8221;. it seems like the former is >= 8 bits-per-pixel and has a range wider than the 256 values;
+  
+while the later is 8 bit per pixel. ( brief [info/notes/background][1] )
+
+at any rate, finally found this nice post:
+
+<https://blendervse.wordpress.com/2012/04/02/waiving-the-fullrange-flag/>
+
+which refers to this modified MP4Box/gpac tree, to switch the &#8220;fullrange&#8221; color-related flag off:
+  
+<https://github.com/golgol7777/gpac>
+
+and then, voila! i have a nice little script where i can convert my canon ELPH videos to a html5 video tag and flash plugin compatible mp4:
+
+`<br />
+#!/bin/bash -ex                                                                                                                                                                                       </p>
+<p> IN=${1:?"Usage: [input video] [output video]"};<br />
+OUT=${2:?"Usage: [input video] [output video]"};</p>
+<p># make a hacked version of "mp4box" that can toggle a colorspace-related flag in our video!<br />
+if [ ! -e $HOME/scripts/mp4box ]; then<br />
+    (git clone https://github.com/golgol7777/gpac.git  &&  cd gpac)  ||  \<br />
+    ( cd gpac  &&  git reset --hard  &&   git clean -f  &&  git pull  &&  git status );</p>
+<p>    ./configure --enable-pic --static-mp4box --enable-static-bin<br />
+    make -j4;</p>
+<p>    # bonus points: make a *static* binary so if we change linux/OS versions, dont hafta worry!<br />
+    cd applications/mp4box;<br />
+    gcc  -o  $HOME/scripts/mp4box   -static   main.o filedump.o fileimport.o live.o -L../../bin/gcc -lgpac_static -lm -lpthread -ldl -lz<br />
+fi</p>
+<p># demux<br />
+ffmpeg -y -i "$IN" -an -vcodec copy  video.mp4;<br />
+ffmpeg -y -i "$IN" -vn -acodec copy  audio.wav;</p>
+<p># convert yuvj420p to yuv420p the cheater way (for chrome and flash plugin playback!)<br />
+rm -fv tmp.mp4;<br />
+$HOME/scripts/mp4box  -add video.mp4#:fullrange=off tmp.mp4</p>
+<p># convert wav audio to aac<br />
+ffmpeg -y -i tmp.mp4 -i audio.wav -acodec libfaac -ac 1 -ab 256k  -vcodec copy  t2.mp4;<br />
+qt-faststart t2.mp4 "$OUT";<br />
+rm -fv video.mp4 audio.wav t2.mp4 tmp.mp4;<br />
+`
+
+ [1]: https://lists.libav.org/pipermail/libav-user/2010-August/005234.html

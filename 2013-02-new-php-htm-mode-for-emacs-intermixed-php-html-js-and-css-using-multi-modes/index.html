@@ -1,0 +1,32 @@
+---
+title: new “php-htm-mode” for emacs — intermixed PHP, HTML, JS, and CSS using multi-modes
+author: tracey pooh
+type: post
+date: 2013-02-28T06:21:12+00:00
+
+categories:
+  - linux
+  - macosx
+  - technical
+tags:
+  - coding
+  - emacs
+  - geek
+  - linux
+  - lisp
+  - mac
+  - php
+  - php-htm-mode
+
+---
+I finally formalized, cleaned up, and packaged up my current emacs editing setup for files with intermixed PHP, HTML, JS/javascript, and CSS code all in the same file.  It uses an existing but rarely used technique called &#8220;multi-mode&#8221; and sets &#8220;trigger points&#8221; for switching the &#8220;major mode&#8221; of the buffer as your cursor moves through the code.
+
+A nice thing about this approach is that you can always glance down anytime you are editing to see which mode you are in (or the emacs lisp code \*thinks\* you are in).  You can also fork/edit the single &#8220;.el&#8221; lisp file to add/update the triggers for various modes.
+
+[https://github.com/traceypooh/php-htm-mode][1]
+
+Screenshot:<figure style="width: 325px" class="wp-caption alignnone">
+
+[<img title="screenshot of php-htm-mode" alt="screenshot of php-htm-mode" src="https://raw.github.com/traceypooh/php-htm-mode/master/php.png" width="325" height="1047" />][1]<figcaption class="wp-caption-text">screenshot of php-htm-mode</figcaption></figure>
+
+ [1]: https://github.com/traceypooh/php-htm-mode "php-htm-mode"

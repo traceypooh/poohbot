@@ -1,0 +1,62 @@
+---
+title: Sony P-Series running 10.10 Meerkat Ubuntu
+author: tracey pooh
+type: post
+date: 2010-10-24T10:04:05+00:00
+
+categories:
+  - linux
+  - video
+tags:
+  - coding
+  - linux
+  - video
+
+---
+Sony P-Series
+  
+(specifically: win7 era P788K, 8&#8243; 1600&#215;768 display, 2B RAM, GMA 500 graphics, 64GB SSD)
+
+I got this supercute [mini-laptop][1] last year
+
+I had been using Ubuntu linux Lucid (10.4) and just upped to Meerkat (10.10). (Both were Netbook Edition).
+  
+I&#8217;d never gotten video acceleration to work before and was stuck w/ ~1-5 fps video most of the time.
+
+Doing the widely suggested:
+
+`sudo add-apt-repository ppa:gma500/ppa && sudo add-apt-repository ppa:gma500/fix && sudo apt-get update && sudo apt-get install poulsbo-driver-2d poulsbo-driver-3d poulsbo-config<br />
+` 
+
+bricked my vaio 8-( well, i mean, it gave me root login w/o X/windows ability but&#8230; 8-p)
+  
+but 2-3 apt-get remove, reinstalls, hunting google later, found the apparent saviour (I did 1000mb from 2000mb recommended [here][2]):
+
+`sudo nano /etc/default/grub<br />
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash mem=1000mb acpi_osi=Linux"<br />
+sudo update-grub`
+
+booted clean! \*immediately\* got ability to use proprietary vaio accessory to output VGA to external monitor (a first!) and brightness up/down hotkeys working. (brightness to work even at all!)
+  
+but best of all, video and appearance \*and everything\* (moving windows, starting applications) was \*so much faster\* visually!
+
+`cmd-line video playback with:<br />
+sudo apt-get remove mplayer<br />
+sudo apt-get install gnome-mplayer gecko-mediaplayer`
+
+so this is \*all\* i have done, aside from starting w/ vanilla install (with just a few changes to help w/ SSD instead of HD) of lucid upgraded to meerkat.
+  
+(personally, i&#8217;m still working on getting suspend/resume to work (seems to work but the display doesn&#8217;t come back on &#8212; been like this the whole time) and to get hibernate to work &#8212; prolly will go with some kinda memory stick to dump to)
+
+UPDATE!
+
+suspend/resume working now with change to suggested &#8220;gma500 fix&#8221;
+
+`sudo add-apt-repository ppa:gma500/ppa && sudo add-apt-repository ppa:gma500/fix && sudo apt-get update && sudo apt-get install poulsbo-driver-2d poulsbo-driver-3d poulsbo-config`
+
+I think this additional suggestion may have fixed sleep/resume (but it&#8217;s possible it was just the gma500/fix related packages in live above:
+
+sudo mv /usr/lib/pm-utils/sleep.d/99video /usr/lib/pm-utils/99video
+
+ [1]: http://www.sonystyle.com/webapp/wcs/stores/servlet/ProductDisplay?storeId=10151&catalogId=10551&langId=-1&productId=8198552921666067697
+ [2]: http://www.webupd8.org/2010/05/fix-intel-gma500-poulsbo-graphics-in.html
