@@ -1,4 +1,4 @@
-baseurl                 = "https://traceypooh.gitlab.io/poohbot/"
+baseurl                 = "https://traceypooh.gitlab.io/"
 DefaultContentLanguage  = "en"
 title                   = "Tracey Pooh"
 theme                   = "hugo-future-imperfect-slim"
@@ -13,7 +13,7 @@ disableLanguages        = [""]
   post = "/:year/:month/:title/"
 
 [params]
-  mainSections = ["blog", "post"]
+  mainSections = ["post"]
   # Loads CSS and JavaScript files. The variable is an array so that you can load
   # multiple/additional files if necessary. The standard theme files can be loaded
   # by adding the value, "default". Default includes the add-on.css and and-on.js.
