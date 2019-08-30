@@ -1,4 +1,5 @@
 baseurl                 = "https://traceypooh.gitlab.io/poohbot/"
+relativeurls            = true
 DefaultContentLanguage  = "en"
 title                   = "Tracey Pooh"
 theme                   = "hugo-future-imperfect-slim"

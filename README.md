@@ -22,3 +22,16 @@ export HUGO_BASEURL=https://traceypooh.gitlab.io; rm -rfv public/  &&  hugo  && 
   - `git submodule add https://github.com/pacollins/hugo-future-imperfect-slim`
   - or if cloned to another machine:
   - `git submodule update --init --recursive`
+
+
+## initial setup
+- https://gohugo.io/hosting-and-deployment/hosting-on-gitlab/
+- added Git LFS (esp. for imagery / big files and if i future resize/recrop, etc.)
+  - `git lfs track "*.jpg"`
+- had to sort out http://localhost:1313/post/
+- archive.org video/book embeds
+- https://gohugo.io/content-management/shortcodes/#youtube
+- unbug users!
+- `hugo` # build public
+- `hugo new post/my-first-post.md`
+
