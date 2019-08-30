@@ -2,6 +2,11 @@
 
 poohbot.com static site
 
+https://about.gitlab.com/2016/04/07/gitlab-pages-setup/
+
+```bash
+export HUGO_BASEURL=https://traceypooh.gitlab.io; rm -rfv public/  &&  hugo  &&  hugo serve
+```
 
 ## run and/or make `public/` subdir
 - `brew install hugo`
