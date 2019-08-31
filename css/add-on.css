@@ -411,26 +411,36 @@ div.allalbums .asummary { max-width:133px; text-align:right; }
 
 
 
+a.image.featured img {
+  object-fit: cover;
+  object-position: center;
+}
 /* hugo: imagery max we can show is 880px wide */
 /*       (at 2.35:1 (see below) btw, that's 375px height */
-.mini-post a.image.featured img {
+a.image.featured img {
+  min-width: 880px; /*xxx*/
+  max-height: 375px;
+}
+#site-sidebar a.image.featured img {
   /* hugo: on left side recent posts (etc.) give it a nice styley aspect ratio */
   /* 286px is width we get pegged to; so being... me.. let's make it (max) `2.35:1` cinematic ratio */
   /* do your maths peoples: 286 / 2.35 => 121.7 */
-  object-fit: cover;
-  object-position: center;
+  min-width: 286px;
   max-height: 122px;
-  /* box-shadow: 25px 25px 50px 0 red inset, -25px -25px 50px 0 red inset; */
+}
+body.single a.image.featured img {
+  min-width: initial;
+  max-height: initial;
 }
 
 /* https://codepen.io/burtclan/pen/mLqxC */
-.mini-post a.image.featured {
+a.image.featured {
   box-shadow: inset 0 0 10px 5px;
   position: relative;
   display: inline-block;
   color: #666;
 }
-.mini-post a.image.featured:after {
+a.image.featured:after {
   box-shadow: inset 0 0 10px 5px;
   content: "";
   position: absolute;
@@ -442,6 +452,6 @@ div.allalbums .asummary { max-width:133px; text-align:right; }
   height: 100%;
   border-collapse: separate;
 }
-.mini-post a.image.featured:hover {
+a.image.featured:hover {
   border-bottom-color: white; /*xxx*/
 }
