@@ -4,13 +4,23 @@ poohbot.com static site version
 
 
 ## todo
+```bash
+cd ~/poohbot/content/post
+gg -E ^geo
+gg featured-top
+gg lacer.php_.txt
+perl -i -pe "s/&#8217;/'/g" */*.md
+```
+
 - make videos take up full 854px wide (720x480 now)
-- http://localhost:1313/2013/10/wow-that-was-2011-3-wyden/
+
+- **imagery:**
 - http://localhost:1313/2017/09/responsive-masonic-tiles-using-css-grid-no-js-no-flexbox/
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
 - http://localhost:1313/2013/11/play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js/
 - http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
 - http://localhost:1313/2013/02/simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
+- http://localhost:1313/2012/06/convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/
 
 
 ## archive.org embeds
