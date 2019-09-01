@@ -1,17 +1,27 @@
 # poohbot
 
-poohbot.com static site
+poohbot.com static site version
 
-https://about.gitlab.com/2016/04/07/gitlab-pages-setup/
 
-```bash
-export HUGO_BASEURL=https://traceypooh.gitlab.io; rm -rfv public/  &&  hugo  &&  hugo serve
+## todo
+- make videos take up full 854px wide (720x480 now)
+- http://localhost:1313/2013/10/wow-that-was-2011-3-wyden/
+- http://localhost:1313/2017/09/responsive-masonic-tiles-using-css-grid-no-js-no-flexbox/
+- http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
+- http://localhost:1313/2013/11/play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js/
+- http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
+- http://localhost:1313/2013/02/simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
+
+
+## archive.org embeds
+```html
+<iframe src="https://archive.org/embed/ID" width="854" height="480" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
 ```
 
 ## run and/or make `public/` subdir
 - `brew install hugo`
 - ensures fresh - removes prior run
-- `rm -rfv public/  &&  hugo  &&  (sleep 5; open http://localhost:1313 ) &  &&  hugo serve`
+- [gogo](gogo)
   - `CTL-C` at any point..
 
 
@@ -26,6 +36,7 @@ export HUGO_BASEURL=https://traceypooh.gitlab.io; rm -rfv public/  &&  hugo  && 
 
 ## initial setup
 - https://gohugo.io/hosting-and-deployment/hosting-on-gitlab/
+- https://about.gitlab.com/2016/04/07/gitlab-pages-setup/
 - added Git LFS (esp. for imagery / big files and if i future resize/recrop, etc.)
   - `git lfs track "*.jpg"`
 - had to sort out http://localhost:1313/post/
