@@ -411,36 +411,24 @@ div.allalbums .asummary { max-width:133px; text-align:right; }
 
 
 
-a.image.featured img {
-  object-fit: cover;
-  object-position: center;
-}
-/* hugo: imagery max we can show is 880px wide */
-/*       (at 2.35:1 (see below) btw, that's 375px height */
-a.image.featured img {
-  min-width: 880px; /*xxx*/
-  max-height: 375px;
-}
-#site-sidebar a.image.featured img {
-  /* hugo: on left side recent posts (etc.) give it a nice styley aspect ratio */
-  /* 286px is width we get pegged to; so being... me.. let's make it (max) `2.35:1` cinematic ratio */
-  /* do your maths peoples: 286 / 2.35 => 121.7 */
-  min-width: 286px;
-  max-height: 122px;
-}
-body.single a.image.featured img {
-  min-width: initial;
-  max-height: initial;
-}
-
 /* https://codepen.io/burtclan/pen/mLqxC */
 a.image.featured {
   box-shadow: inset 0 0 10px 5px;
   position: relative;
-  display: inline-block;
   color: #666;
 }
+.mini-post a.image.featured {
+  /* these magic missing pieces poached from default theme's `.post` class rules */
+  border: 0;
+  display: block;
+}
+a.image.featured:before {
+  content: "";
+  display: block;
+  padding-bottom: calc(100% / 2.35); /* enforce a styley 2.35:1 cinematic aspect ratio */
+}
 a.image.featured:after {
+  /* gray blur on edges */
   box-shadow: inset 0 0 10px 5px;
   content: "";
   position: absolute;
@@ -452,6 +440,26 @@ a.image.featured:after {
   height: 100%;
   border-collapse: separate;
 }
-a.image.featured:hover {
-  border-bottom-color: white; /*xxx*/
+a.image.featured img {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+/* OK now when we're showing a full single post, let the image height be fully natural */
+/* ie: reverse our customizations above.  Also don't do the edge blurring. */
+.post.single a.image.featured {
+  box-shadow: none;
+  height: auto;
+}
+.post.single a.image.featured img {
+  position: relative;
+}
+.post.single a.image.featured:after, .post.single a.image.featured:before {
+  display: none;
 }

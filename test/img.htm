@@ -1,0 +1,29 @@
+<style>
+/* https://css-tricks.com/aspect-ratio-boxes/#article-header-id-7 */
+.featured {
+  position: relative;
+}
+.featured::before {
+  content: "";
+  display: block;
+  padding-bottom: calc(100% / 2.35);
+}
+.featured img {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+</style>
+
+<div class="featured">
+  <img src="https://images.pexels.com/photos/87651/earth-blue-planet-globe-planet-87651.jpeg"/>
+</div>
+
+<div class="featured">
+  <img src="https://archive.org/images/glogo.png"/>
+</div>
