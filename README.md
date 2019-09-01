@@ -15,6 +15,7 @@ perl -i -pe "s/&#8217;/'/g" */*.md
 
 - make videos take up full 854px wide (720x480 now)
 - link any <img> local tag in a post to fullsize nake img?
+- get WP comments (eg: pinky post..)
 
 - **imagery:**
 - http://localhost:1313/2017/09/responsive-masonic-tiles-using-css-grid-no-js-no-flexbox/
