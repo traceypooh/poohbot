@@ -10,6 +10,7 @@ gg -i poohbot.com
 gg -E ^geo
 gg featured-top
 gg lacer.php_.txt
+gg -F '\*'
 perl -i -pe "s/&#8217;/'/g" */*.md
 ```
 
@@ -18,6 +19,8 @@ perl -i -pe "s/&#8217;/'/g" */*.md
 - get WP comments (eg: pinky post..)
 
 - **imagery:**
+- http://localhost:1313/2008/04/bike-gears-jamming-a-triple-into-a-double/
+
 - http://localhost:1313/2017/09/responsive-masonic-tiles-using-css-grid-no-js-no-flexbox/
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
 - http://localhost:1313/2013/11/play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js/
@@ -28,7 +31,9 @@ perl -i -pe "s/&#8217;/'/g" */*.md
 - http://localhost:1313/2011/07/bloviate/
 - http://localhost:1313/2011/06/mole-rolls-to-freedom/
 - http://localhost:1313/2011/05/natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding/
-
+- http://localhost:1313/2010/06/updated-site/
+- http://localhost:1313/2009/09/ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
+- http://localhost:1313/2009/04/ffmpeg-building-on-mac-intel/x386/
 
 ## archive.org embeds
 ```html
