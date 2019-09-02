@@ -6,17 +6,15 @@ poohbot.com static site version
 ## todo
 ```bash
 cd ~/poohbot/content/post
-gg -i poohbot.com
-gg -E ^geo
-gg featured-top
-gg -F '\*'
+gg -i poohbot.com 2015
 perl -i -pe "s/&#8217;/'/g"   */*.md
 perl -i -pe 's/&#8220;/"/g'   */*.md
 perl -i -pe 's/&#8221;/"/g'   */*.md
 perl -i -pe 's/&#8230;/.../g' */*.md
 perl -i -pe 's/&#8212;/--/g'  */*.md
 
-
+perl -i -pe "s/\\\*/**/g"   */*.md
+gg -ho '&#8[0-9][0-9][0-9];'|sort|uniq -c
 ```
 
 - pick 2 random posts for left side
@@ -70,8 +68,8 @@ perl -i -pe 's/&#8212;/--/g'  */*.md
 - added Git LFS (esp. for imagery / big files and if i future resize/recrop, etc.)
   - `git lfs track "*.jpg"`
 - had to sort out http://localhost:1313/post/
-- archive.org video/book embeds
 - https://gohugo.io/content-management/shortcodes/#youtube
+- archive.org video/book embeds
 - unbug users!
 - `hugo` # build public
 - `hugo new post/my-first-post.md`
