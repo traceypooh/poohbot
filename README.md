@@ -14,9 +14,12 @@ gg -F '\*'
 perl -i -pe "s/&#8217;/'/g" */*.md
 ```
 
+- pick 2 random posts for left side
 - make videos take up full 854px wide (720x480 now)
 - link any <img> local tag in a post to fullsize nake img?
 - get WP comments (eg: pinky post..)
+- `embed: ` in .md auto does archive.org iframe..
+- builtin in images/carousel?
 
 - **imagery:**
 - http://localhost:1313/2008/04/bike-gears-jamming-a-triple-into-a-double/
