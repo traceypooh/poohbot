@@ -450,6 +450,12 @@ a.image.featured img {
   left: 0;
   height: 100%;
 }
+a.image.featured.featured-top img {
+  object-position: top;
+}
+a.image.featured.featured-bottom img {
+  object-position: bottom;
+}
 
 /* OK now when we're showing a full single post, let the image height be fully natural */
 /* ie: reverse our customizations above.  Also don't do the edge blurring. */
