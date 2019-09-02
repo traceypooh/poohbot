@@ -1,0 +1,22 @@
+#!/bin/bash
+
+VID=${1:?"Usage: interlacy <video file> <-ss> <-endpos>"}
+ SS=${2:?"Usage: interlacy <video file> <-ss> <-endpos>"}
+END=${3:?"Usage: interlacy <video file> <-ss> <-endpos>"}
+CROP="720x240";
+
+
+echo -n "Removed: ";
+rm -fv [01]/*pgmyuv  *pgmyuv  *-F[01].png | tr '\n' ' '; echo;
+
+for i in 0 1; do
+  mkdir -p $i;
+  mplayer -nosound -ss $SS -endpos $END $VID  -nosound  -vf field=$i  -vo pnm:pgmyuv;
+  mv *pgmyuv $i/;
+  for j in $i/*pgmyuv; do
+    convert -quality 100 -crop $CROP'+0+0!' $j $(basename $j)-F$i.png;
+  done;
+done;
+php -r '$pgm=glob("*-F[01].*"); foreach ($pgm as $i) { $scores=array(); foreach ($pgm as $j) { if ($i==$j) continue; $scores[$j]=strtok(trim(`compare -verbose $i $j -metric MAE $i $j null: 2>&1 |fgrep all|cut -f2 -d:`)," ");  }  asort($scores); list($best,$score)=each($scores); print_r($scores); echo "best $i $best ($score)\n"; }'|tee best; echo =========================================================================; grep best best;
+
+

@@ -9,9 +9,14 @@ cd ~/poohbot/content/post
 gg -i poohbot.com
 gg -E ^geo
 gg featured-top
-gg lacer.php_.txt
 gg -F '\*'
-perl -i -pe "s/&#8217;/'/g" */*.md
+perl -i -pe "s/&#8217;/'/g"   */*.md
+perl -i -pe 's/&#8220;/"/g'   */*.md
+perl -i -pe 's/&#8221;/"/g'   */*.md
+perl -i -pe 's/&#8230;/.../g' */*.md
+perl -i -pe 's/&#8212;/--/g'  */*.md
+
+
 ```
 
 - pick 2 random posts for left side

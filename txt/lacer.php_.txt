@@ -1,0 +1,301 @@
+<? 
+
+// NOTE: you can run this web page on the command-line in an alternate mode
+// to take a source video file and output some 1/2-height fields yourself!
+// Example::
+//     php ~/scripts/lacer.php good.mov  0.5  0.7
+
+define('IMAGES', (isset($_GET['alt']) || isset($_GET['deinterlaced']) ? 'rj/2323/*png' :'rj/*png'));
+define('CROP', "720x240");
+define('BFF', true); //DV is typically Bottom Field First.  Set to 0 if Top Field First
+
+
+// we are running from command line -- let's make some fields from your video!
+if (php_sapi_name()=='cli') exit(field_maker()); 
+
+
+// .. we are a web page ..
+?>
+<pre style="font-size:80%;font-style:italic;position:fixed;bottom:10px;right:10px;">
+Script last updated: 
+$Date: 2012-12-09 23:18:11 -0800 (Sun, 09 Dec 2012) $ 
+$Author: tracey $
+$Revision: 8958 $
+</pre>
+<style>
+body {
+  background-color:black;
+  color:yellow;
+  width:1000px;
+}
+a:link, a:visited, a:active {
+  color: #00AEF0 !important;
+  text-decoration:none;
+}
+a:hover {
+  text-decoration:underline;
+}
+
+.topinblock {
+  vertical-align:top;
+  display:inline-block;
+  *display:inline; /*for IEv8, at least*/
+  zoom:1; /*for IEv7*/
+}
+
+.ttl { 
+  position:absolute;
+  background-color:gray;
+  color:yellow;
+  font-weight:bold;
+  padding:3px;
+}
+
+#lacer {
+  position:relative;
+}
+
+#lacer img {
+  position:absolute; 
+}
+
+.note {
+  font-size:90%; 
+  color:#ddd;
+}
+</style>
+
+<h3>Deinterlacing 2:3:2:3 (2323) telecine video into fields for visual analysis (<a href="http://poohBot.com/2012/02/19/deinterlacing-2323-telecine-video-into-fields-for-visual-analysis/">post/info</a>) (<a href="http://poohBot.com">site</a>)</h3>
+<?
+
+$ims=glob(IMAGES);
+sort($ims);
+
+if ($_GET['deinterlaced'])
+{
+  // counting first field as 0, throw out fields 3 and 4.
+  // continue that pattern every 10 fields...
+  $tmp = count($ims);
+  for ($i=3; $i < $tmp; $i += 10)
+  {
+    unset($ims[$i+1]);
+    unset($ims[$i]);
+  }
+  $ims = array_values($ims);
+}
+
+
+if ($_GET['all'])
+{
+  foreach ($ims as $im)
+    echo "<div class=\"ttl ghost roundbox5\">$im</div><img src=\"$im\"><br/>";
+}
+
+
+
+$tmp = `env identify {$ims[0]} ||  /opt/local/bin/identify {$ims[0]}`;
+
+if (!preg_match('/ (\d+)x(\d+) /', $tmp, $mat))
+  die("cant id WxH");
+$W = $mat[1];
+$H = $mat[2];
+
+
+$shift = ($_GET['shift'] ? $_GET['shift'] : 0);
+$url = 
+  "lacer.php?".
+  ($_GET['alt'] ? 'alt=1&' : '').
+  ($_GET['deinterlaced'] ? 'deinterlaced=1&' : '');
+
+
+if ($_GET['pick']==1)
+{
+  ?>
+  <form>
+    <div class="topinblock">
+    Top field:<br/>
+    <select name="tN" size=50>
+    <?foreach ($ims as $i => $im):?>
+    <option value="<?=$i?>"><?=$im?></option>
+    <?endforeach?>
+    </select>
+    </div>
+    <div class="topinblock">
+    Bottom field:<br/>
+    <select name="bN" size=50>
+    <?foreach ($ims as $i => $im):?>
+    <option value="<?=$i?>"><?=$im?></option>
+    <?endforeach?>
+    </select>
+    </div>
+    <input type="submit"/>
+  </form>
+  <br/>
+    <a href="<?=$url?>all=1">show all fields</a>
+  <?
+  exit(0);
+}
+
+$tN = (isset($_GET['tN']) ? $_GET['tN'] : (BFF ? 1 : 0));
+$bN = (isset($_GET['bN']) ? $_GET['bN'] : (BFF ? 0 : 1));
+
+
+$t=$ims[$tN];
+$b=$ims[$bN];
+
+
+
+echo '<div id="lacer" style="width:'.$W.'px;height:'.(2*$H).'px;">';
+foreach (range(0,$H) as $y)
+{
+  // CSS MAGIC!
+  $line = "clip:rect(".$y."px {$W}px ".($y+1)."px 0px);";
+  echo "<img src=\"".(BFF?$b:$t)."\" style=\"top:".($y  )."px; $line;\">";
+  echo "<img src=\"".(BFF?$t:$b)."\" style=\"top:".($y+1)."px; $line; left:{$shift}px;\">";
+}
+echo '</div>';
+
+echo
+(BFF ?
+ "bot ==> $b<br/>top ==> $t<br/>".
+ "<div class=\"note\">(NOTE: showing bottom field first since DV source, so first line you see above is from a 'bottom field')</div><br/>" :
+ "top ==> $t<br/>bot ==> $b<br/>").
+" [ <a href=\"{$url}bN=".($bN+2)."&tN=".($tN+2)."\">NEXT PAIR</a>".
+" | <a href=\"{$url}bN=".($bN-2)."&tN=".($tN-2)."\">PREV PAIR</a>".
+" | <a href=\"{$url}bN={$tN}&tN={$bN}\">SWAP TOP/BOTTOM</a>".
+" | <a href=\"{$url}bN={$bN}&tN={$tN}&shift=".($shift-1)."$tobo\">SHIFT X LEFT 1</a>".
+" | <a href=\"{$url}bN={$bN}&tN={$tN}&shift=".($shift+1)."$tobo\">SHIFT X RIGHT 1</a>".
+" | <a href=\"lacer.php\">START OVER</a>".
+" | <a href=\"{$url}pick=1\">PICK TWO FIELDS</a>".
+" ]<br/>".
+
+($_GET['alt'] ?
+ " [ <a href=\"lacer.php\">original set</a>".
+ " | alternate 3:2 pulldown DV sample set".
+ " | <a href=\"lacer.php?deinterlaced=1\">alternate set - deinterlaced</a>".
+ " ] <br>" :
+ ($_GET['deinterlaced'] ?
+ " [ <a href=\"lacer.php\">original set</a>".
+ " | <a href=\"lacer.php?alt=1\">alternate 3:2 pulldown DV sample set</a>".
+ " | alternate set - deinterlaced".
+ " ] <br>" :
+ " [ original set".
+ " | <a href=\"lacer.php?alt=1\">alternate 3:2 pulldown DV sample set</a>".
+ " | <a href=\"lacer.php?deinterlaced=1\">alternate set - deinterlaced</a>".
+  " ] <br>"));
+
+?>
+<div class="note" style="padding:20px;">
+  <h3>Some notes about the DV video format (always interlaced!) with 3:2 pulldown:</h3>
+  <pre>
+  Most explanations that indicate how 2:3:2:3 frames are laid out are misleading or even wrong, especially for DV.
+  If you think of four progressive film frames as:
+     [A] [B] [C] [D]
+
+  what DV needs to do is "telecine" -- turn the 24P (from the camera sensor) into 60i to record to DV format.
+  So it needs to take those four full frames and make 10 half frames.
+  (Repeat that 6 times, and you have taken one second of 24 progressive (full frame) fps (frames per second)
+   and created one second of 60 half frame fields!)
+  If we split those frames into (starting at 0) even lines and odd lines (ie: fields), we get:
+    [A0 A1] [B0 B1] [C0 C1] [D0 D1]
+
+  Most explanations gloss over some explanation like: A0 A1 A1 B0 B1 C0 C1 C1 D0 D1
+  But this is not how the fields (1/2 frames) are laid out on tape!
+  It depends a bit on your camera (there area few ways to write them out), but for our
+  DV example above, they are written out like:
+    [A0 A1] [B0 A1] [C0 B1] [C0 C1] [D0 D1]
+
+  That strikes us both as *quite* weird and totally unexpected, right?
+  If you look a bit closer, it makes more sense -- the A1 field is repeated
+  in the same spot visually (the odd lines in 2 adjacent frames),
+  and so is the C0 field.  You can see this very clearly by stepping thru
+  the <a href="lacer.php?alt=1">sample set</a> and hitting NEXT PAIR four times.
+  You see as you step through them: 
+     [good pairing] [bad pairing] [bad] [good] [good]
+
+  You can see a pair of duped fields (1 and 3) easily by clicking <a href="lacer.php?alt=1&tN=1&bN=3">here</a>
+  and then trying the "SWAP TOP/BOTTOM" link.  Notice how nothing visually changes!
+
+  So the way one would "pullup" four progessive 24 fps frames from that DV encoding would be:
+  (if the A0 is the field=0; B0 is field=2; and so on...)
+      * throw out the 3rd (A1 dupe) and 4th (C0 dupe) fields
+      * basically re-merge the B0 and B1 fields back into a [B] frame
+      * merge the remaining pairs of fields into [A] [C] [D]
+  Click to step through the <a href="lacer.php?deinterlaced=1">deinterlaced solution</a> (then click "NEXT PAIR" until done)
+
+  Your "cadence" of "3 good, 2 bad" may start at a slightly different point that the DV sample above,
+  but the standard telecine pattern for DV will either be the same
+  (or can be an alternate repeatable pattern of 10 fields from 4 frames).
+
+  <hr/>
+
+  Best documentation I could find (from Cinema Tools) for 2:3:2:3 pulldown 
+  with an *alternate* way to explain the cadence:
+  <a href="http://documentation.apple.com/en/cinematools/usermanual/index.html#chapter=13%26section=3%26hash=apple_ref:doc:uid:CinemaTools-UserManual-90861P24-1009353"><img src="http://documentation.apple.com/en/cinematools/usermanual/Art/L00/L0027_32Pulldown.png"></a>
+  It's a bit confusing for DV, since:
+     * DV starts 2 fields in from this
+     * if you look carefully, it can make you think [C] is field swapped
+       (compared to [A] [B] and [D])
+  So I find my detected and explained cadence pattern above more apropos for DV!
+  But YMMV 8-)
+  </pre>
+</div>
+<?
+
+
+// running script from command line -- create the php fields from the cmd-line video
+function field_maker()
+{
+  //chdir(dirname(IMAGES)) or die("cannot chdir to ".dirname(IMAGES));
+  
+  if ($_SERVER['argc'] != 4)
+    die("Usage: interlacy <video file> <-ss> <-endpos>");
+  
+  $vid=$_SERVER['argv'][1];
+  $ss =$_SERVER['argv'][2];
+  $end=$_SERVER['argv'][3];
+
+  $ss = ($ss ? " -ss $ss " : "");
+
+  echo "Removing: ";
+  passthru("rm -fv [01]/*pgmyuv  *pgmyuv  *-F[01].png | tr '\n' ' '"); /**/
+  echo "\n\n";
+  
+  for ($i=0; $i<2; $i++)
+  {
+    // first, dump even fields as *-F0.png
+    // next,  dump odd  fields as *-F1.png
+    passthru("env mplayer -nosound $ss -endpos $end $vid  -nosound  -vf field=$i  -vo pnm:pgmyuv");
+
+    // convert the "pgmyuv" format into web viewable PNG format,
+    // cropping out the "uv" (chroma) bottom parts so we just
+    // see the Y (luminance) part
+    passthru("mkdir -p $i; mv *pgmyuv $i/");
+    foreach (glob("$i/*pgmyuv") as $fi)
+    {
+      $fi2 = basename($fi)."-F$i.png";
+      passthru("env convert -quality 100 -crop ".CROP."'+0+0!' $fi $fi2");
+    }
+  }
+
+  // you can comment out this next line to compare all possible fields to each other...  
+  return;
+   
+  $pngs = glob("*-F[01].png"); 
+  foreach ($pngs as $i) 
+  { 
+    $scores=array(); 
+    foreach ($pngs as $j) 
+    { 
+      if ($i==$j) continue; // don't compare same field with itself
+
+      // use ImageMagick utility to compare the two fields and output a score
+      // (the lower the score, the more similar the fields are)
+      $scores[$j]=strtok(trim(`env compare -verbose $i $j -metric MAE $i $j null: 2>&1 |fgrep all|cut -f2 -d:`)," ");
+    }
+    asort($scores); 
+    list($best,$score) = each($scores); 
+    print_r($scores); 
+    echo "best $i $best ($score)\n"; 
+  }
+}
