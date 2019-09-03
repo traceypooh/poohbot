@@ -8,11 +8,13 @@ date: 2010-06-04
 ## The Personal is Political
 
 <div id="js-quotes"></div>
+<noscript>Any app that can be written in JavaScript, will eventually be written in JavaScript.<br/>- Jeff Atwood<br/><b><i>enable thy javascript</i></b></noscript>
+
 
 <script src="https://archive.org/includes/jquery-1.10.2.min.js"></script>
 <script>
 $.getJSON('/js/quotes.js', (resp) => {
-  console.log(resp)
+  // console.log(resp)
   let htm = ''
   for (let longy = 0; longy < 2; longy++) {
     let i = -1
