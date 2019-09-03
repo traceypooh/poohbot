@@ -15,8 +15,11 @@ perl -i -pe 's/&#8212;/--/g'  */*.md
 
 perl -i -pe "s/\\\*/**/g"   */*.md
 gg -ho '&#8[0-9][0-9][0-9];'|sort|uniq -c
+
+fgrep '<?' ../*.md  */*.md
 ```
 
+- aliases /img => /images    (for prior site 404s...)
 - pick 2 random posts for left side
 - make videos take up full 854px wide (720x480 now)
 - link any <img> local tag in a post to fullsize nake img?
