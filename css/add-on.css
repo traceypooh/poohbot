@@ -137,10 +137,10 @@ div.lastmod h3 {
 
 
 div.quote { float:left; width:245px; padding:10px; }
-div.quote dd { margin-left:40px; } /*xxx WP CSS is braindead!! */
-div.quote dl { margin-bottom:30px; }
-
-div.quote dt,  #randquote dt,  dl dt q,  h3.widget-title a.rsswidget
+#js-quotes .quote dd {
+  color:#999;
+}
+#randquote dt,  h3.widget-title a.rsswidget
 {
   color:white !important;  /*xxx WP CSS is braindead!! */
 }
