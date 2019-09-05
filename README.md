@@ -3,6 +3,13 @@
 poohbot.com static site version
 
 ```bash
+
+F=poohbot-pictures; cd ~/poohbot/hugo-export; cat $F/index.md ~/Sites/$F.php |tee ../content/$F.md; rm -v $F/index.md ~/Sites/$F.php;  code ../content/$F.md
+
+cd ~/poohbot/hugo-export; lc */*
+
+
+
 egrep -v '^albums/(thumbs|images)/' BLUE |egrep -v '^wp\-'
 ```
 
