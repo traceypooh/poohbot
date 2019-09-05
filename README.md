@@ -2,6 +2,9 @@
 
 poohbot.com static site version
 
+```bash
+egrep -v '^albums/(thumbs|images)/' BLUE |egrep -v '^wp\-'
+```
 
 ## todo
 ```bash
@@ -15,6 +18,7 @@ perl -i -pe 's/&#8212;/--/g'  */*.md
 
 perl -i -pe "s/\\\*/**/g"   */*.md
 gg -ho '&#8[0-9][0-9][0-9];'|sort|uniq -c
+cd ~/poohbot/content  &&  gg wp-
 
 fgrep '<?' ../*.md  */*.md
 ```
@@ -30,7 +34,6 @@ fgrep '<?' ../*.md  */*.md
 - **imagery:**
 - http://localhost:1313/2008/04/bike-gears-jamming-a-triple-into-a-double/
 
-- http://localhost:1313/2017/09/responsive-masonic-tiles-using-css-grid-no-js-no-flexbox/
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
 - http://localhost:1313/2013/11/play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js/
 - http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
