@@ -1,0 +1,69 @@
+---
+author: tracey pooh
+type: page
+date: 2010-06-04
+
+---
+
+<? if ($_SERVER['QUERY_STRING']) return B::albumSingle() ?>
+
+
+<div class="col4left">
+  <div style="position:absolute; right:0px;">
+    <?B::randomPicture()?>
+  </div>
+</div>
+<div class="col4rite">
+      <nobr><h5><a href="#albums">Recent Albums</a></h5></nobr>
+      Most of the new pictures are here.
+</div>
+
+
+<div class="col4left">
+  <div style="position:absolute; right:0px;">
+    <?B::albumPicture("2004 biking/131-3159_IMG.JPG")?>
+  </div>
+</div>
+<div class="col4rite">
+  <nobr><b><a href="/photos/?biking">Road Biking Photo Album</a></b>.</nobr><br/>
+  We like to bike between 40 to 100 miles a week.
+</div>
+
+
+
+<br clear="left"/>
+
+
+
+
+<div class="col4left">
+  <div style="position:absolute; right:0px;">
+    <?B::albumPicture("europe/106-0607_IMG.JPG", null, "/europe")?>
+  </div>
+</div>
+<div class="col4rite">
+      <nobr><b><a href="/europe">Europe Photo Album</a></b>.</nobr><br/>
+      The "best of" from a summer month in 2002.<br/>
+      Paris, Roma, Barcelona, Nice, <nobr>San Sebastian</nobr>,
+      Firenza, Grasse, more!
+</div>
+
+
+<div class="col4left">
+  <div style="position:absolute; right:0px;">
+    <?B::picture(array('wd'=>"213", 'ht'=>"160", 'title'=>"Anti-war Protest!",
+                       'href'=>"/protest", 'src'=>"/images/protest/hunter.jpg"))?>
+  </div>
+</div>
+<div class="col4rite">
+      <b><nobr><a href="/protest">2003 ANTI-WAR March</a></nobr><br/>
+      Photo Album</b><br/>
+      with commentary<br/>
+      (and my first protest!)
+</div>
+
+
+
+<br clear="left"/>
+
+<?B::albumsOverview()?>

@@ -1,0 +1,8 @@
+
+# Mt Diablo Blvd  ==>  Bear Creek Rd.
+http://maps.google.com/maps?f=d&hl=en&saddr=Mt+Diablo+Blvd,+Lafayette,+CA+94549,+USA+&daddr=bear+creek+rd,+orinda,+ca&ll=37.901813,-122.177925&spn=0.119875,0.119476
+# Bear Creek Rd.  ==>  Glorietta
+http://maps.google.com/maps?f=d&hl=en&saddr=bear+creek+rd,+orinda,+ca&daddr=1+virginia+dr,+orinda,ca&ll=37.892196,-122.187366&spn=0.059945,0.059738
+
+# Glorietta  ==>  Mt Diablo Blvd
+http://maps.google.com/maps?f=d&hl=en&saddr=1+virginia+dr,+orinda,ca&daddr=mt+diablo+Blvd,+Lafayette,+CA+94549,+USA&ll=37.879393,-122.145653&spn=0.059956,0.059738

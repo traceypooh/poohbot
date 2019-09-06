@@ -1,0 +1,40 @@
+<style>
+body { background-color: #ffffdd; color:purple; font: 11pt Verdana, Arial, Helvetica; }
+</style>
+<script lang="javascript">
+function queryVal()
+{
+  var query = window.location.search.substring(1);
+  var parms = query.split('&');
+  for (var i=0; i<parms.length; i++)
+  {
+    var pos = parms[i].indexOf('=');
+    if (pos > 0)
+    {
+      var key = parms[i].substring(0,pos);
+      var val = parms[i].substring(pos+1);
+      // just return the 1st value
+      return val;
+    }
+  }
+}
+function kml()
+{
+  var t = document.getElementById("kml");
+  var loc = window.location.href.substring(1);
+  var splits = loc.split('/');
+  var splits = splits[splits.length-1];
+  var splits = splits.split('.');
+  var basenom = splits[0];
+  t.innerHTML = '<a style="font-weight:bold;" href="kml.php?file='+basenom+'.kml">Plot route on Google Earth</a><br/><a style="font-weight:bold;" href="'+basenom+'.jpg">Climbing profile</a>';
+}
+
+  
+</script>
+
+<body onload="kml()">
+<h3>Tracey and Hunter East Bay Roadbiking Info</h3>
+<a style="font-weight:bold;" href="../tours/">Return to east bay tours</a>
+<span style="padding-left:100px;"></span>
+<div id="kml"></div>
+<br/><hr/><br/>

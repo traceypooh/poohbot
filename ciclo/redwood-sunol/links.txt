@@ -1,0 +1,37 @@
+#<pre>
+
+# mt diablo blvd  ==>  st marys
+http://maps.google.com/maps?f=d&hl=en&saddr=mt+diablo+blvd,+lafayette,+ca&daddr=st+marys+road,+moraga,+ca
+
+# st marys  ==>  redwood golf course
+http://maps.google.com/maps?f=d&hl=en&saddr=st+marys+road,+moraga,+ca&daddr=17007+Redwood+Road,+Castro+Valley,+94546&ll=37.780213,-122.102909&spn=0.120073,0.141449
+
+# redwood golf course  ==>  sunol
+http://maps.google.com/maps?f=d&hl=en&saddr=17007+Redwood+Road,+Castro+Valley,+94546&daddr=e+castro+valley+blvd,+castro+valley,+ca&ll=37.698559,-122.038064&spn=0.030051,0.035362
+
+# sunol, castro valley  ==>  sunol, pleasanton
+http://maps.google.com/maps?f=d&hl=en&saddr=e+castro+valley+blvd,+castro+valley,+ca&daddr=Canyon+Creek+Cir,+Pleasanton,+CA+94588
+
+# sunol, pleasanton  ==>  san ramon
+http://maps.google.com/maps?f=d&hl=en&saddr=Canyon+Creek+Cir,+Pleasanton,+CA+94588&daddr=Pine+Valley+Pl,+San+Ramon,+CA+94583&ll=37.715739,-121.94438&spn=0.060089,0.070724
+
+# San Ramon northbound
+http://maps.google.com/maps?f=d&hl=en&saddr=Pine+Valley+Pl,+San+Ramon,+CA+94583&daddr=2799+Hooper+Dr,+San+Ramon,+CA+94583,+USA&ll=37.760673,-121.965666&spn=0.060052,0.070724
+
+# San Ramon  ==>  Alamo
+http://maps.google.com/maps?f=d&hl=en&saddr=2799+Hooper+Dr,+San+Ramon,+CA+94583,+USA&daddr=299+Wayne+Ave,+Alamo,+CA+94507,+USA+
+
+# Alamo  ==>  Hillgrade
+http://maps.google.com/maps?f=q&hl=en&q=299+Wayne+Ave,+Alamo,+CA+94507,+USA+to+1500+Hillgrade+Ave,+Alamo,+CA+94507,+USA+
+
+# Hillgrade buzzkill hill 
+http://maps.google.com/maps?f=d&hl=en&saddr=1500+Hillgrade+Ave,+Alamo,+CA+94507,+USA&daddr=487+crest+ave,+alamo,+ca
+
+# hillgrade ==>  olympic blvd
+http://maps.google.com/maps?f=d&hl=en&saddr=487+Crest+Ave,+Alamo,+CA+94507&daddr=Olympic+Blvd,+Lafayette,+CA+94549,+USA
+
+# olympic blvd ==> 3rd st, lafayette
+http://maps.google.com/maps?f=d&hl=en&saddr=Olympic+Blvd,+Lafayette,+CA+94549,+USA&daddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&ll=37.888504,-122.102051&spn=0.029974,0.035362
+
+# 3rd st  ==>  Mt. diablo blvd
+http://maps.google.com/maps?f=d&hl=en&saddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&daddr=mt+diablo+Blvd,+Lafayette,+CA+94549,+USA&ll=37.890265,-122.119753&spn=0.014987,0.017681

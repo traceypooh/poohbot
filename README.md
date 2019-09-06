@@ -31,6 +31,7 @@ fgrep '<?' ../*.md  */*.md
 - get WP comments (eg: pinky post..)
 - `embed: ` in .md auto does archive.org iframe..
 - builtin in images/carousel?
+- photos.md
 - work.md
 - `<script>`-- and CSP
 

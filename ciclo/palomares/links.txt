@@ -1,0 +1,30 @@
+# mt. diablo ==> 3rd st.
+http://maps.google.com/maps?f=d&hl=en&saddr=mt+diablo+Blvd,+Lafayette,+CA+94549,+USA&daddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&om=1
+
+# 3rd st ==> olympic blvd
+http://maps.google.com/maps?f=d&hl=en&saddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&daddr=Olympic+Blvd,+Lafayette,+CA+94549,+USA&om=1
+        
+http://maps.google.com/maps?q=from:+olympic+blvd,+94549+to:+hillgrade+ave,+94507&om=1
+
+
+http://maps.google.com/maps?f=q&hl=en&q=1500+Hillgrade+Ave,+Alamo,+CA+94507,+USA+to+299+Wayne+Ave,+Alamo,+CA+94507,+USA&om=1
+
+
+http://maps.google.com/maps?f=q&hl=en&q=299+Wayne+Ave,+Alamo,+CA+94507,+USA+to+2799+Hooper+Dr,+San+Ramon,+CA+94583,+USA&om=1
+
+http://maps.google.com/maps?f=q&hl=en&q=+2799+Hooper+Dr,+San+Ramon,+CA+94583,+USA+to+Pine+Valley+Pl,+San+Ramon,+CA+94583,+USA&om=1
+
+http://maps.google.com/maps?f=q&hl=en&q=Pine+Valley+Pl,+San+Ramon,+CA+94583,+USA+to+11998+Silvergate+Dr,+Dublin,+CA+94568,+USA&ie=UTF8&z=14&ll=37.723003,-121.94644&spn=0.0518,0.049095&om=1
+
+http://maps.google.com/maps?f=q&hl=en&q=11998+Silvergate+Dr,+Dublin,+CA+94568,+USA+to+2100+Foothill+Rd,+Pleasanton,+CA+94588,+USA&ie=UTF8&z=13&om=1
+
+http://maps.google.com/maps?f=q&hl=en&q=2100+Foothill+Rd,+Pleasanton,+CA+94588,+USA+to+1+carver+lane,+sunol,+ca&ie=UTF8&z=14&om=1
+
+http://maps.google.com/maps?f=q&hl=en&q=1+carver+lane,+sunol,+ca+to+palomares+road,+castro+valley,+ca&ie=UTF8&z=13&om=1
+
+http://maps.google.com/maps?f=q&hl=en&q=Palomares+Rd,+Castro+Valley,+CA+94552,+USA+to+Redwood+Rd,+Castro+Valley,+CA+94546,+USA&ie=UTF8&z=12&om=1
+
+http://maps.google.com/maps?f=d&hl=en&daddr=st+marys+road,+moraga,+ca&saddr=Redwood+Road,+Castro+Valley,+94546
+
+http://maps.google.com/maps?f=d&hl=en&daddr=mt+diablo+blvd,+lafayette,+ca&saddr=st+marys+road,+moraga,+ca
+

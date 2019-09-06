@@ -1,0 +1,29 @@
+# mt. diablo ==> 3rd st.
+http://maps.google.com/maps?f=d&hl=en&saddr=mt+diablo+Blvd,+Lafayette,+CA+94549,+USA&daddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&om=1
+
+# 3rd st ==> olympic blvd
+http://maps.google.com/maps?f=d&hl=en&saddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&daddr=Olympic+Blvd,+Lafayette,+CA+94549,+USA&om=1
+        
+http://maps.google.com/maps?q=from:+olympic+blvd,+94549+to:+hillgrade+ave,+94507&om=1
+        
+http://maps.google.com/maps?f=d&hl=en&saddr=1500+Hillgrade+Ave,+Alamo,+CA+94507&daddr=Stone+Valley+Rd+W,+Alamo,+CA+94507&om=1
+
+http://maps.google.com/maps?q=from%3A+Stone+Valley+Rd+W,+Alamo,+CA+94507+to%3A+101+Hope+Ln,+Danville,+CA+94526&f=d&hl=en
+
+http://maps.google.com/maps?f=d&hl=en&saddr=101+Hope+Ln,+Danville,+CA+94526&daddr=Mt+Diablo+Scenic+Blvd,+Danville,+CA+94506&om=1
+
+http://maps.google.com/maps?f=d&hl=en&saddr=Mt+Diablo+Scenic+Blvd,+Danville,+CA+94506&daddr=summit+road,+94506&om=1
+
+http://maps.google.com/maps?f=d&hl=en&sll=37.881662,-121.914768&sspn=0.014192,0.027874&saddr=Summit+Rd,+Danville,+CA+94506+%4037.863020,-121.932740&daddr=37.88173,-121.914682&om=1
+
+http://maps.google.com/maps?f=d&hl=en&saddr=37.88173,-121.914682&daddr=n+gate+road,+walnut+creek,+ca&ll=37.872076,-121.934209&spn=0.028389,0.041757&om=1
+
+http://maps.google.com/maps?f=d&hl=en&saddr=n+gate+road,+walnut+creek,+ca&daddr=ygnacio+valley+rd,+walnut+creek,+ca&om=1  
+  
+http://maps.google.com/maps?q=from%3A+ygnacio+valley+rd,+walnut+creek,+ca+to%3A+olympic+blvd,+94549
+
+# olympic blvd ==> 3rd st, lafayette
+http://maps.google.com/maps?f=d&hl=en&saddr=Olympic+Blvd,+Lafayette,+CA+94549,+USA&daddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&ll=37.888504,-122.102051&spn=0.029974,0.035362
+
+# 3rd st  ==>  Mt. diablo blvd
+http://maps.google.com/maps?f=d&hl=en&saddr=3440+Moraga+Blvd,+Lafayette,+CA+94549&daddr=mt+diablo+Blvd,+Lafayette,+CA+94549,+USA&ll=37.890265,-122.119753&spn=0.014987,0.017681

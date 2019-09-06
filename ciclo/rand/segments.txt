@@ -1,0 +1,146 @@
+#
+# put segments here via from then to on separate lines
+#
+bear creek rd and happy valley rd, orinda ca
+alhambra valley rd and bear creek rd, martinez, ca
+
+san pablo dam rd and wildcat canyon rd, orinda, ca
+bear creek rd and happy valley rd, orinda, ca
+
+franklin canyon rd, martinez, ca
+alhambra valley rd and reliez valley rd, martinez, ca
+
+palomares rd, castro valley, ca
+proctor rd and redwood rd, castro valley, ca
+
+st marys rd, moraga, ca
+canyon rd and pinehurst rd, canyon ca
+
+1833 drake dr, oakland, ca
+skyline blvd and snake rd, oakland, ca
+
+skyline blvd and snake rd, oakland, ca
+pinehurst rd and skyline blvd, oakland, ca
+
+pinehurst rd and skyline blvd, oakland, ca
+joaquin miller rd and skyline blvd, oakland, ca
+
+pinehurst rd and skyline blvd, oakland, ca
+canyon rd and pinehurst rd, canyon, ca
+
+joaquin miller rd and skyline blvd, oakland, ca
+redwood rd and skyline blvd, oakland, ca
+
+redwood rd and skyline blvd, oakland, ca
+pinehurst rd and redwood rd, castro valley, ca
+
+pinehurst rd and redwood rd, castro valley, ca
+proctor rd and redwood rd, castro valley, ca
+
+proctor rd and redwood rd, castro valley, ca
+castro valley blvd and redwood rd, castro valley, ca
+
+pinehurst rd and redwood rd, castro valley, ca
+canyon rd and pinehurst rd, canyon, ca
+
+canyon rd and pinehurst rd, canyon, ca
+pinehurst rd and skyline blvd, oakland, ca
+
+skyline blvd and snake rd, oakland, ca
+grizzly peak blvd and skyline blvd, oakland, ca
+
+grizzly peak blvd and skyline blvd, oakland, ca
+claremont ave and grizzly peak blvd, berkeley, ca
+
+claremont ave and grizzly peak blvd, berkeley, ca
+golf course dr and grizzly peak blvd, berkeley, ca
+
+golf course dr and grizzly peak blvd, berkeley, ca
+san pablo dam rd and wildcat canyon rd, orinda, ca
+
+san pablo dam rd and wildcat canyon rd, orinda, ca
+castro ranch rd and san pablo dam rd, el sobrante, ca
+
+castro ranch rd and san pablo dam rd, el sobrante, ca
+alhambra valley rd and castro ranch rd, martinez, ca
+
+alhambra valley rd and castro ranch rd, martinez, ca
+alhambra valley rd and bear creek rd, martinez, ca
+
+alhambra valley rd and bear creek rd, martinez, ca
+alhambra valley rd and reliez valley rd, martinez, ca
+
+canyon rd and pinehurst rd, canyon, ca
+glenside dr and st marys rd, lafayette, ca
+
+# fixxx oldstyle no intersection on TO (for oil,sugar,...)
+alhambra valley rd and castro ranch rd, martinez, ca
+alhambra valley rd, el sobrante, ca
+
+# fixxx oldstyle no intersection on TO (for 3bears...)
+san pablo dam rd and wildcat canyon rd, orinda, ca
+bear creek rd, orinda, ca
+
+# fixxx oldstyle no intersection on TO (for redwood-inspiration...)
+castro valley blvd and redwood rd, castro valley, ca
+e+castro+valley+blvd,+castro+valley,+ca
+
+# fixxx oldstyle no intersection on TO olympic blvd
+glenside dr and st marys rd, lafayette, ca
+olympic blvd, lafayette, ca
+
+# MORGAN TERRITORY, MIXED W/ AND W/O INTERSECTIONS!
+olympic blvd, lafayette, ca
+newell ave and olympic blvd, walnut creek, ca
+
+newell ave and olympic blvd, walnut creek, ca
+newell ave and s broadway, walnut creek, ca
+
+newell ave and s broadway, walnut creek, ca
+ygnacio valley rd, walnut creek, ca
+
+ygnacio valley rd, walnut creek, ca
+alberta way and ygnacio valley rd, clayton, ca
+
+alberta way and ygnacio valley rd, clayton, ca
+pine hollow rd, clayton, ca
+
+pine hollow rd, clayton, ca
+mitchell canyon rd and pine hollow rd, clayton, ca
+
+mitchell canyon rd and pine hollow rd, clayton, ca
+main st, clayton, ca
+
+main st, clayton, ca
+marsh creek rd and morgan territory rd, clayton, ca
+
+marsh creek rd and morgan territory rd, clayton, ca
+meadow view ln and morgan territory rd, clayton, ca
+
+meadow view ln and morgan territory rd, clayton, ca
+7000 morgan territory rd, 94517
+
+7000 Morgan Territory Rd, 94517
+37.831819,-121.804368
+
+37.831819,-121.804368
+37.795017,-121.780829
+
+37.795017,-121.780829
+manning rd and morgan territory rd, livermore, ca
+
+manning rd and morgan territory rd, livermore, ca
+sycamore valley rd w, danville, ca
+
+sycamore valley rd w, danville, ca
+danville blvd, danville, ca
+
+danville blvd, danville, ca
+stone valley rd w, alamo, ca
+
+# connects back to redwood-sunol return to bickerstaff
+stone valley rd w, alamo, ca
+1500 hillgrade ave, alamo, ca
+
+##############################################################################
+#### need this last line here
