@@ -15,17 +15,12 @@ egrep -v '^albums/(thumbs|images)/' BLUE |egrep -v '^wp\-'
 
 ## todo
 ```bash
-cd ~/poohbot/content/post
-gg -i poohbot.com 2015
-perl -i -pe "s/&#8217;/'/g"   */*.md
-perl -i -pe 's/&#8220;/"/g'   */*.md
-perl -i -pe 's/&#8221;/"/g'   */*.md
-perl -i -pe 's/&#8230;/.../g' */*.md
-perl -i -pe 's/&#8212;/--/g'  */*.md
+cd ~/poohbot/content/
+gg -i poohbot.com
 
 perl -i -pe "s/\\\*/**/g"   */*.md
-gg -ho '&#8[0-9][0-9][0-9];'|sort|uniq -c
-cd ~/poohbot/content  &&  gg wp-
+gg  '&#8[0-9][0-9][0-9]'
+gg wp-
 
 fgrep '<?' ../*.md  */*.md
 ```

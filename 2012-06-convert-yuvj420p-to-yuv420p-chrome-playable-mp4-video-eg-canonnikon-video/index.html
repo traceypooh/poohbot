@@ -18,11 +18,11 @@ found a nice (video lossless, best i can tell) way to convert the video from cam
 
 which is **already** h.264 video + PCM mono audio
 
-to a new mp4 container with aac audio. that part&#8217;s easy/cake w/ ffmpeg &#8212; but the trick to get the h.264
+to a new mp4 container with aac audio. that part's easy/cake w/ ffmpeg -- but the trick to get the h.264
 
-video part to play in chrome browser and/or with a flash plugin is to get the flagged &#8220;yuvj420p&#8221; colorspace pixels
+video part to play in chrome browser and/or with a flash plugin is to get the flagged "yuvj420p" colorspace pixels
 
-to be considered &#8220;yuv420p&#8221;. it seems like the former is >= 8 bits-per-pixel and has a range wider than the 256 values;
+to be considered "yuv420p". it seems like the former is >= 8 bits-per-pixel and has a range wider than the 256 values;
 
 while the later is 8 bit per pixel. ( brief [info/notes/background](https://lists.libav.org/pipermail/libav-user/2010-August/005234.html) )
 
@@ -30,7 +30,7 @@ at any rate, finally found this nice post:
 
 <https://blendervse.wordpress.com/2012/04/02/waiving-the-fullrange-flag/>
 
-which refers to this modified MP4Box/gpac tree, to switch the &#8220;fullrange&#8221; color-related flag off:
+which refers to this modified MP4Box/gpac tree, to switch the "fullrange" color-related flag off:
 
 <https://github.com/golgol7777/gpac>
 
