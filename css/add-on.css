@@ -248,24 +248,32 @@ a.hoverShower:hover .showOnHover {
 { display:none; }
 
 
-.tourbox, .tourOverlay {  background-color:#333; } /*xxx*/
-
-.tourbox {
-  margin:20px;
-  padding:5px;
-  margin-right:10px;
-  position:relative;
+.tourbox, .tourOverlay {
+  background-color:#333;
 }
-
+.tourbox {
+  padding: 5px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+.tourbox img {
+  border: 0;
+  width: 100%;
+}
 .tourOverlay {
-  width:300px;
-  margin-bottom:10px;
+  width: 100%;
   font-style: italic;
-  font-size: 12pt;
-  padding-top:5px;
+  padding: 10px 20px;
   color:white;
-  text-align:left;
-  filter:alpha(opacity=70);-moz-opacity:.70;opacity:.70;
+  opacity: .70;
+}
+.tourOverlay hr {
+  margin: 5px 0;
+}
+.tourOverlay h5 {
+  margin: 5px 0;
+  color:white;
 }
 
 
