@@ -23,14 +23,14 @@ It's a much cleaner/clearer process, namely:
   * I opted to **ditch ffpreset files in favor of command-line argument** 100% equivalents. It seems a bit easier for someone reading the task log of their item, trying to see what we did.
   * I **no longer need qt-faststart** step and dropped it. I use the cmd-line modern ffmpeg `-movflags faststart`
 
-Entire processing is now done 100% with ffmpeg, in the standard &#8220;2-pass&#8221; mode
+Entire processing is now done 100% with ffmpeg, in the standard "2-pass" mode
 
 As before, this output .mp4:
 
   * **plays in** modern html5 video tag compatible **browsers**
   * **plays in flash** plugin within browsers
   * works on all **iOS devices**
-  * makes sure the &#8220;moov atom&#8221; is at the front of the file, so browsers can **playback before downloading** the entire file, etc.
+  * makes sure the "moov atom" is at the front of the file, so browsers can **playback before downloading** the entire file, etc.
 
 
 Here is an example (you would tailor especially the `scale=640:480` depending on source aspect ratio and desired output size; change or drop altogether the `-r 20` option (the source was 20 fps, so we make the dest 20 fps); tailor the bitrate args to taste):
