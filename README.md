@@ -29,7 +29,6 @@ cd ~/poohbot/content  &&  gg wp-
 
 fgrep '<?' ../*.md  */*.md
 ```
-
 - aliases /img => /images    (for prior site 404s...)
 - pick 2 random posts for left side
 - make videos take up full 854px wide (720x480 now)
@@ -37,6 +36,8 @@ fgrep '<?' ../*.md  */*.md
 - get WP comments (eg: pinky post..)
 - `embed: ` in .md auto does archive.org iframe..
 - builtin in images/carousel?
+- work.md
+- `<script>`-- and CSP
 
 - **imagery:**
 - http://localhost:1313/2008/04/bike-gears-jamming-a-triple-into-a-double/
