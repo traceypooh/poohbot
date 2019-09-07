@@ -77,13 +77,13 @@ window.MJ = {
   },
 
 
-  test_img:function(){
-    MJ.fi = MJ.load_url('/img/traceymonet.jpg');
+  test_img:function(img) {
+    MJ.fi = MJ.load_url(img)
 
     // now encode the safely transported byte stream into base64
-    jQuery('#map').html('<img src="data:image;base64,' + encodeStream64(MJ.fi) + '"/>');
-    delete MJ.fi;
-    MJ.fi = false;
+    jQuery('#map').html('<img src="data:image;base64,' + encodeStream64(MJ.fi) + '"/>')
+    delete MJ.fi
+    MJ.fi = false
   },
 
 

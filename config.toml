@@ -1,5 +1,4 @@
 baseurl                 = "https://traceypooh.gitlab.io/poohbot/"
-staticDir               = "poohbot/static"
 
 DefaultContentLanguage  = "en"
 title                   = "Tracey Pooh"
