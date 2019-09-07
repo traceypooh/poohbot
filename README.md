@@ -2,6 +2,22 @@
 
 poohbot.com static site version
 
+layouts/shortcodes/fancybox.html
+
+```go
+
+{{% fancybox path="/post/2019/img" file="k8.png" caption="golly" gallery="the-met" %}}
+
+{{%/* fig class="full"
+    src="http://farm5.staticflickr.com/4136/4829260124_57712e570a_o_d.jpg"
+    title="One of my favorite touristy-type photos. I secretly waited for the
+    good light while we were having fun and took this. Only regret: a stupid
+    pole in the top-left corner of the frame I had to clumsily get rid of at
+    post-processing."
+    link="http://www.flickr.com/photos/alexnormand/4829260124/in/
+            set-72157624547713078/" */%}}
+```
+
 ```bash
 
 F=poohbot-pictures; cd ~/poohbot/hugo-export; cat $F/index.md ~/Sites/$F.php |tee ../content/$F.md; rm -v $F/index.md ~/Sites/$F.php;  code ../content/$F.md
@@ -17,6 +33,7 @@ egrep -v '^albums/(thumbs|images)/' BLUE |egrep -v '^wp\-'
 ```bash
 cd ~/poohbot/content/
 gg -i poohbot.com
+gg featured-click
 
 perl -i -pe "s/\\\*/**/g"   */*.md
 gg  '&#8[0-9][0-9][0-9]'
@@ -25,9 +42,11 @@ gg wp-
 fgrep '<?' ../*.md  */*.md
 ```
 - aliases /img => /images    (for prior site 404s...)
+- aliases every prior post url to current (when differ)
+- crawl new site and fix all 404s
 - pick 2 random posts for left side
 - make videos take up full 854px wide (720x480 now)
-- link any <img> local tag in a post to fullsize nake img?
+- link any <img> local tag in a post to fullsize naked img?
 - get WP comments (eg: pinky post..)
 - `embed: ` in .md auto does archive.org iframe..
 - builtin in images/carousel?
@@ -36,8 +55,6 @@ fgrep '<?' ../*.md  */*.md
 - `<script>`-- and CSP
 
 - **imagery:**
-- http://localhost:1313/2008/04/bike-gears-jamming-a-triple-into-a-double/
-
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
 - http://localhost:1313/2013/11/play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js/
 - http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
