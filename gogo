@@ -5,7 +5,6 @@ cd $mydir
 
 export HUGO_BASEURL=https://traceypooh.gitlab.io
 export HUGO_PAGINATE=25
-export HUGO_STATICDIR=static
 
 rm -rfv public
 hugo
