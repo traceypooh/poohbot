@@ -6,6 +6,8 @@ date: 2013-11-15
 categories:
   - coding
   - video
+aliases:
+  - /mj/
 tags:
   - coding
   - geek
@@ -69,7 +71,6 @@ tags:
 <script>
   $.get('/js/motion-jpeg.js', (js) => {
     const htm = $('#bodydiv').html()
-    console.log(js)
     $('#src').text(`${htm}<script>${js}</` + `script>`)
   })
 </script>
