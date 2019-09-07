@@ -18,13 +18,14 @@ layouts/shortcodes/fancybox.html
             set-72157624547713078/" */%}}
 ```
 
+unifiy to `/js/jquery.js`
+
+
 ```bash
 
 F=poohbot-pictures; cd ~/poohbot/hugo-export; cat $F/index.md ~/Sites/$F.php |tee ../content/$F.md; rm -v $F/index.md ~/Sites/$F.php;  code ../content/$F.md
 
 cd ~/poohbot/hugo-export; lc */*
-
-
 
 egrep -v '^albums/(thumbs|images)/' BLUE |egrep -v '^wp\-'
 ```
@@ -62,7 +63,6 @@ fgrep '<?' ../*.md  */*.md
 - http://localhost:1313/2012/06/convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/
 - http://localhost:1313/2012/01/natively-compiling-ffmpeg-mplayer-mencoder-on-macos-lion-with-x264/
 - http://localhost:1313/2011/07/bloviate/
-- http://localhost:1313/2011/06/mole-rolls-to-freedom/
 - http://localhost:1313/2011/05/natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding/
 - http://localhost:1313/2010/06/updated-site/
 - http://localhost:1313/2009/09/ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
