@@ -2,8 +2,8 @@
 
 poohbot.com static site version
 
-layouts/shortcodes/fancybox.html
-
+## could use
+- layouts/shortcodes/fancybox.html
 ```go
 
 {{% fancybox path="/post/2019/img" file="k8.png" caption="golly" gallery="the-met" %}}
@@ -18,8 +18,10 @@ layouts/shortcodes/fancybox.html
             set-72157624547713078/" */%}}
 ```
 
-unifiy to `/js/jquery.js`
+## todo
 
+`static/js/` location _still_ broken in production :(
+unifiy to `/js/jquery.js`
 
 ```bash
 
@@ -30,7 +32,6 @@ cd ~/poohbot/hugo-export; lc */*
 egrep -v '^albums/(thumbs|images)/' BLUE |egrep -v '^wp\-'
 ```
 
-## todo
 ```bash
 cd ~/poohbot/content/
 gg -i poohbot.com

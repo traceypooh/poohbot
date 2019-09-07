@@ -54,7 +54,9 @@ tags:
     Huh?
     <i>
       <p>
-        This extracts the JPEG frames, likely without the huffman compression tables (though chrome dont care 8-), found within the .avi bytestream, and then base64 encodes them so they can be easily inserted into a dynamic &lt;img&gt; tag.
+        This extracts the JPEG frames, _found within an `.avi` file bytestream_, likely without the huffman compression tables (though chrome dont care 8-).
+        Then it base64 encodes each frame, inserting each frame into a dynamic &lt;img&gt; tag to "play the .avi file".
+        <img src="/img/emote_happy_dance_infinite.gif"/>
       </p>
       <p>
         Add in a short display timeout and keep overlaying images, and you have your "video", using &lt;img&gt; tags, like a flip book.<br/>
