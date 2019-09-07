@@ -2,8 +2,7 @@
 title: play motion-JPEG video using javascript (in browser, no plugins, minimal JS)
 author: tracey pooh
 type: post
-date: 2013-11-15T03:29:55+00:00
-
+date: 2013-11-15
 categories:
   - coding
   - video
@@ -13,5 +12,64 @@ tags:
   - javascript
   - motion-JPEG
   - video
-
 ---
+# Motion JPEG test
+
+<style>
+#map {
+  position: relative;
+  height: 480px;
+  width: 100%;
+  font-weight: bold;
+}
+#map img {
+  position: absolute;
+  border: 5px solid #333;
+}
+#bodydiv textarea {
+  height: 2000px;
+}
+</style>
+
+<div id="bodydiv">
+  <input type="button" value="test image"      onclick="MJ.test_img();"/>
+  <input type="button" value="motion jpeg avi (short, 3.5MB)"
+    onclick="MJ.mjpeg(-1, 'https://archive.org/download/stairs/stairs.avi',20); delete MJ.fi; MJ.fi=0;"
+  />
+  <input type="button" value="motion jpeg avi (34 seconds, 55MB)"
+    onclick="MJ.mjpeg(-1, '/mj/test.avi'  ,30); delete MJ.fi; MJ.fi=0;"
+  />
+
+  <div id="map">
+    click a button above to begin!
+  </div>
+  <div style="margin:auto;text-align:left;">
+    Huh?
+    <i>
+      <p>
+        This extracts the JPEG frames, likely without the huffman compression tables (though chrome dont care 8-), found within the .avi bytestream, and then base64 encodes them so they can be easily inserted into a dynamic &lt;img&gt; tag.
+      </p>
+      <p>
+        Add in a short display timeout and keep overlaying images, and you have your "video", using &lt;img&gt; tags, like a flip book.<br/>
+      </p>
+    </i>
+    <h5 >WORKS: [ chrome: yes ][ firefox: was yes but now not 8-( ][ safari/iOS: no ][ IE: i bet not ]</h5>
+    <p>
+      <hr/>
+      <small>Originally created 2006 by Tracey Jaquith.  minor updates to jQuery and simplifying 2013</small>
+    </p>
+  </div>
+
+  <h4>Source (or "View Source"):</h4>
+  <textarea id="src" rows="30" cols="100"></textarea>
+</div>
+
+<script src="/js/jquery.js"></script>
+<script src="/js/motion-jpeg.js"></script>
+<script>
+  $.get('/js/motion-jpeg.js', (js) => {
+    const htm = $('#bodydiv').html()
+    console.log(js)
+    $('#src').text(`${htm}<script>${js}</` + `script>`)
+  })
+</script>
