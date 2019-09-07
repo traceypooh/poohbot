@@ -1,0 +1,53 @@
+# ( echo '<style>td.r {text-align:right;} td {padding:0 7 0 7;}</style><table style="border-collapse:collapse;" border=1>' &&  cat ride.txt | perl -ne 'next if m=^#=; chop; if (m=<tr>=) { print; next; } m=^(\S+)\s+(\S+)\s+([^\t]+)(.*)$= || die "bad line: $_"; print "<tr><td class=\"r\">$1</td><td>$2</td><td>$3</td><td>$4</td></tr>\n";' && echo "</table>" ) >| mt-diablo-halfway.htm
+<tr><th colspan=4><b>Mt. Diablo Halfway</b></th></tr>
+<tr><th>Mile</th><th>Turn</th><th>Route/Street</th><th>Notes</th></tr>
+0 R BART entrance	cross bridge to west lot, take right exit out
+0 R Camino Pablo
+0 L Brookwood Rd		Goes around Orinda theatre
+0 L Moraga Way
+1 R Bryant Way	Right exit of traffic circle
+2 R Davis Rd				bike path starts at corner of Bates Blvd.
+2 L bike path
+3 L St. Stephens Dr	goes over freeway Route 24
+3 R El Nido Ranch Rd	Stop at steep short downhill.  goes under freeway Route 24.  
+4 L Mt. Diablo Blvd
+7 R Pleasant Hill Rd
+8 L Olympic Blvd
+9 R Tice Valley Blvd	2 short uphills
+10 R Crest Ave
+11 L Hillgrade Ave	(Crest becomes Hillgrade)
+11 R Danville Blvd
+15 R Railroad Ave	forking right at intersection with Hartz Ave (after some schools on the right)
+15 X <b>STOP AT CAFE FRANCAISE</b>	(righthand small mall with a Subway)
+15 L Railroad Ave (from Cafe Francaise)
+15 R W Linda Mesa Ave
+15 R Hartz Ave
+15 L Diablo Rd
+17 R Veer right to continue on Diablo Rd.
+19 L Mt. Diablo Scenic Blvd	this left is at stop sign.  Enter park.  Rough road next mile
+20 S continue on South Gate Blvd			enter park gate, start long climb
+22 S pay gate (free for bikes)			water fountain.  Cooler shade section starts
+25 X North Gate Blvd	<b>REST STOP</b>  Top of climb!  Ranger Station has bathrooms and fountain in back.  May climb to summit for additional 9 miles roundtrip
+32 S North Gate Blvd	exit park
+33 R Oak Grove Rd
+33 S Go straight/right fork through traffic circle
+33 R bike path very soon after traffic circle				go slow as entrance is narrow and easy to bike past
+-	S	-		path goes by golf course.  Up short hill to VERY narrow dark tunnel under Ygnacio Blvd.  Remove dark glasses!
+35 L Contra Costa Canal Trail				this Left is after short steep downhill
+37 R street crossing with mall on right			regrouping/break - starbucks, jamba juice, safeway (restrooms)
+-	S			return to Contra Costa Canal Trail			head in same (west) direction as before
+39 L Iron Horse Trail				Contra Costa Canal Trail ends at Iron Horse T-junction
+40 L left fork to "bridge" over Ygnacio Blvd	(still on Iron Horse Trail)
+41 R Newell Ave			by Whole Foods  -- end of bike trails
+42 L Olympic Blvd
+43 R Pleasant Hill Rd				(from here, reverse of earlier today)
+44 L Mt. Diablo Blvd
+47 R El Nido Ranch Rd / Pine Rd			goes under freeway Route 24.  short steep (final remaining!) hill here
+48 L St. Stephens Dr	goes over freeway Route 24
+48 R bike path				**immediately** after crossing freeway and passing onramp - VERY easy to miss narrow path entrance
+49 R Davis Rd				bike path ends here
+49 L unmarked road - this is a left after stop sign
+50 L Moraga Way			This is a left exit around traffic circle
+50 R Brookwood Rd		This is after Orinda theatre
+50 R Camino Pablo
+50 R BART entrance			<b>FINISH</b>

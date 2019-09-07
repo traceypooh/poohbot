@@ -1,0 +1,1 @@
+mkdir -p ~/www/alc/russ;  cd ~/www/alc/russ;  wgeto 'http://www.google.com/maps?f=d&source=s_d&saddr=37.25442,+-107.07842&daddr=37.67263,+-106.61877&geocode=FRR1OAId7Bye-Q%3BFbbWPgIdbiCl-Q&hl=en&mra=ls&sll=37.255196,-107.07996&sspn=0.010384,0.017831&num=10&ie=UTF8&ll=37.50101,-107.094727&spn=0.662409,1.141205&z=10&dirflg=d' >| kml.kml;  router.php;

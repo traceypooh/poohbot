@@ -1,0 +1,136 @@
+#top_banner {
+	padding-left: 1.5em;
+}
+
+#sub_toc {
+	font-size : 0.9em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	padding-left: 1.5em;
+/*	padding: 0.5em 0em 0.5em 0.5em;*/
+}
+
+#sub_toc h3 {
+	display: inline;
+}
+
+.homepage_blank {
+	background : White;
+    margin-right: 0.5em;
+ }   
+
+.homepage_blank h2 {
+/*	display: inline;
+*/	line-height:normal;
+	margin-top: 0;
+}
+
+.homepage_basic {
+	border: 2px solid #5A9ACE;
+	background : White;
+    padding: 0.5em;
+	margin: 0.5em;
+	margin-left: 0em;
+ }   
+
+.homepage_basic h2 {
+	display: inline;
+}
+
+.homepage_messages {
+	border: 2px solid #5A9ACE;
+    font-size: 1em; 
+	background-color : #C6DBEF;
+	color : #000000;
+	vertical-align : top;
+    padding: 0.5em;
+	margin: 0.5em;
+	margin-left: 0em;
+}
+
+.homepage_messages h2 {
+	display: inline;
+	color: black;
+}
+
+.homepage_messages h3 {
+	display: inline;
+	color: black;
+	line-height:normal;
+}
+
+.homepage_photo {
+	border: 2px solid #5A9ACE;
+	background : #C6DBEF;
+    font-size: 1em;
+	vertical-align : top;
+    padding: 0.5em;
+	margin: 0.5em;
+}
+
+.homepage_photo h2 {
+	display: inline;
+}
+
+.homepage_fundraising {
+	border: solid #5A9ACE 2px;
+    font-size: 1em; 
+	background : #FFCDAE;
+	text-align: center;
+	vertical-align : top;
+    padding: 0.5em;
+	margin: 0.5em;
+	margin-top: 1em;
+}
+
+.homepage_fundraising h2 {
+	display: inline;
+}
+
+.homepage_team_roster {
+	border: solid #5A9ACE 2px;
+    font-size: 1em; 
+	background : #FFCDAE;
+	text-align: left;
+	vertical-align : top;
+    padding: 0.5em;
+	margin: 0.5em;
+	margin-top: 0.5em;
+	margin-bottom: 1em;
+}
+
+.homepage_team_roster h2 {
+	display: inline;
+}
+
+.homepage_team_roster ul {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+
+.homepage_team_roster li {
+	padding: 0;
+	margin: 0;
+}
+
+#button a,#button a:visited {
+	background-color: #5F9BCF;
+	width: 75%;
+	border-top: 3px solid #C6DBEF;
+	border-right: 3px solid navy;
+	border-bottom: 3px solid navy;
+	border-left: 3px solid #C6DBEF; 
+	font-size: 1.3em;
+	font-weight: bold;
+	display: block;
+	padding: 3px 0.2em;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+}
+#button a:hover { 
+	border-top: 3px solid white;
+	border-left: 3px solid white; 
+	background-color: #C6DBEF;
+	color: black;
+}

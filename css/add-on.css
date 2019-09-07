@@ -477,3 +477,12 @@ a.image.featured.featured-bottom img {
 .post.single a.image.featured:after, .post.single a.image.featured:before {
   display: none;
 }
+
+
+
+.ride-date {
+  font-family: monospace;
+  font-size: 125%;
+  font-weight: bold;
+  white-space: pre;
+}
