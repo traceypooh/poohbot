@@ -49,6 +49,7 @@ fgrep '<?' ../*.md  */*.md
 - link any <img> local tag in a post to fullsize naked img?
 - get WP comments (eg: pinky post..)
 - `embed: ` in .md auto does archive.org iframe..
+- about.md
 - europe.md
 - photos.md
 - work.md
