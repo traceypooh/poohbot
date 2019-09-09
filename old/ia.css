@@ -1,0 +1,74 @@
+
+/*copied verbatim into <style>element at bottom of description field of my IA collection*/
+
+
+.white1 { color: #fdf6e3;}
+
+#iafoot, #iafootdiv { display:none; }
+
+#nunuh1 { background-color:black; }
+
+body { background-color: #151515; }
+
+td#navbg { background-image:none; background-color:black; }
+
+body.Audio .level2Header, body.Movies .level2Header, body.Unity .level2Header {
+  background-color: #333;
+}
+
+.level3Header {
+  background-color: #888;
+}
+
+
+div.box {
+  color:#fdf6e3 !important;
+  background-color:black;
+  border-radius:0px;
+  border:0px;
+}
+div.box h1 {
+  background-color:black !important;
+  color:#fdf6e3;
+  font-size:175%;
+  border-radius:0px;
+  border:0px;
+  border-bottom:2px solid #333;
+}
+div.breadcrumbs {
+  color:#fdf6e3;
+}
+div.breadcrumbs a:link, div.breadcrumbs a:visited, div.breadcrumbs a:active, div.breadcrumbs a:hover, 
+div.box a:link, div.box a:visited, div.box a:active, div.box a:hover {
+  color:lightblue;
+  text-decoration: none;
+}
+
+
+
+/*hide "about" and any "admins" left column box*/
+#col1 div.box { display:none; }
+#col1  #spotlight        { display:block; }
+#col1  #picks            { display:block; }
+#col1  #contributors     { display:block; }
+
+
+
+
+div.box#downloads  ol li, 
+div.box#downloads7 ol li {
+  list-style-image: url('http://poohBot.com/images/star.png');
+}
+div.box#downloads  h1,
+div.box#downloads7 h1 {
+  font-size:125%;
+}
+
+/* cuteness with the reviews box */
+div.box#reviews             b   { display: none;}
+div.box#reviews             img { position: relative; top: -15px; }
+div.box#reviews             a   { position: relative; left: 80px; }
+
+div.box#reviews br {display:none; }
+div.box#reviews a {display:block; }
+div.box#reviews h1 a {display:inline; left:0px; }
