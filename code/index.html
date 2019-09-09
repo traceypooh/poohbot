@@ -6,28 +6,14 @@ date: 2010-06-04
 ---
 <!-- ****************** CSS HOVERING SOURCE ****************** -->
 <style>
-/*
-   NOTE: you'll wanna put this entire "style" tag in your "head" tag of your
-   document.
-
-   Magic needed for MSIE v5-v6 that attaches javascript "onmouseover"
-   elements to elements that have :hover
-   (since MSIE ignores CSS :hover for all but "a" hyperlink tags)
-   (Firefox and other browsers compliant to CSS2 don't need/use this).
-
-   See here and many thanks to: http://www.xs4all.nl/~peterned/csshover.html.
-
-   CSS2 rec 1998: http://www.w3.org/TR/REC-CSS2/cover.html.
-*/
-body
-  { behavior:url("csshover.htc"); }
-
-/* this is the SWEET stuff! */
-.showOnHover
-  { display:none; }
-span.hoverShower:hover .showOnHover
-  { display:inline; z-index:100; position:absolute; }
-
+.showOnHover {
+  display:none;
+}
+span.hoverShower:hover .showOnHover {
+  display:inline;
+  z-index:100;
+  position:absolute;
+}
 </style>
 <!-- ****************** CSS HOVERING SOURCE ****************** -->
 
