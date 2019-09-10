@@ -1,0 +1,309 @@
+{
+  "short": [
+    {
+      "q": "The greatest enemy of knowledge is not ignorance, it is the illusion of knowledge",
+      "a": "Stephen Hawking"
+    },
+    {
+      "q": "A major purpose of the Constitution is to protect minorities from majorities",
+      "a": "Elizabeth Gill, lawyer with the American Civil Liberties Union, about CA Prop 8 passage"
+    },
+    {
+      "q": "The wise man is always similar to himself",
+      "a": "Sextus"
+    },
+    {
+      "q": "If you want to go quickly, go alone.<br/>If you want to go far, go together.",
+      "a": "Mahatma Mohandas K. Gandhi"
+    },
+    {
+      "q": "America is addicted to wars of distraction.",
+      "a": "Barbara Ehrenreich"
+    },
+    {
+      "q": "All wars are civil wars, because all men are brothers.",
+      "a": "Francois de Salignac de la Mothe Fenelon"
+    },
+    {
+      "q": "Bell's Theorem - When a body is immersed in water, the telephone rings.",
+      "a": "Murphy's Law"
+    },
+    {
+      "q": "I've often said, the only thing standing between me and greatness is me.",
+      "a": "Woody Allen"
+    },
+    {
+      "q": "When will our conscience grow so tender that we will act to prevent human misery rather than avenge it?",
+      "a": "Eleanor Roosevelt"
+    },
+    {
+      "q": "The whole problem with the world is that fools and fanatics are always so certain of themselves, and wiser people so full of doubts.",
+      "a": "Bertrand Russell"
+    },
+    {
+      "q": "The reward for conformity was that everyone liked you except yourself.",
+      "a": "Rita Mae Brown"
+    },
+    {
+      "q": "A ship in harbor is safe - but that is not what ships are for.",
+      "a": "John A. Shedd"
+    },
+    {
+      "q": "The best work is done with the heart breaking, or overflowing.",
+      "a": "Mignon McLaughlin"
+    },
+    {
+      "q": "As every psychologist knows, nothing is more revealing of any individual than elaborate explanations.",
+      "a": "Jacques Lusseyran"
+    },
+    {
+      "q": "Holding onto anger is like eating rat poison and expecting the rat to die",
+      "a": "unknown"
+    },
+    {
+      "q": "You may be disappointed if you fail, but you are doomed if you don't try.",
+      "a": "Beverly Sills"
+    },
+    {
+      "q": "Thinking is probably the hardest work there is, which is probably the reason why so few engage in it.",
+      "a": "Henry Ford"
+    },
+    {
+      "q": "A serious (wo)man ought not to waste time stating a majority opinion",
+      "a": "Mathematician G. H. Hardy"
+    },
+    {
+      "q": "Good people are always so sure they're right.",
+      "a": "Barbara Graham's last words.  Executed June 3, 1955 at San Quentin"
+    },
+    {
+      "q": "An eye for an eye will make the whole world blind.",
+      "a": "Mahatma Mohandas K. Gandhi"
+    },
+    {
+      "q": "When someone says 'in theory', what they are really saying is, 'not really'.",
+      "a": "anonymous [cannot recall]"
+    },
+    {
+      "q": "Identity always emerges in interaction",
+      "a": "Susan Stryker, 'Wired' May 1996"
+    },
+    {
+      "q": "You are who you pretend to be.",
+      "a": "Oscar Wilde"
+    },
+    {
+      "q": "Become what you are",
+      "a": "Juliana Hatfield 3"
+    },
+    {
+      "q": "Democracy won't survive if citizens turn into lemmings.",
+      "a": "Bill Moyers"
+    },
+    {
+      "q": "It takes nerve to walk down the street when you fall between the cracks.",
+      "a": "Nan Goldin [one of my favorite photographers]"
+    },
+    {
+      "q": "No one can make you feel inferior without your consent.",
+      "a": "Eleanor Roosevelt"
+    },
+    {
+      "q": "I love the confidence that makeup gives me.",
+      "a": "Tyra Banks"
+    },
+    {
+      "q": "Is there life before death?",
+      "a": "Anarchist quote"
+    },
+    {
+      "q": "The only good is knowledge and the only evil ignorance",
+      "a": "unattributed, Chinese fortune cookie"
+    },
+    {
+      "q": "For evil to succeed, all it needs is for good [wo]men to do nothing.",
+      "a": "Martin Luther King, Jr."
+    },
+    {
+      "q": "You can't escape who you are.",
+      "a": "Douglass Rushkoff"
+    },
+    {
+      "q": "Always stick around for one more drink.  That's when things happen.  That's when you find out everything you want to know.",
+      "a": "John Berendt",
+      "anchor": "'Midnight in the Garden of Good and Evil'",
+      "href": "http://www.amazon.com/exec/obidos/ASIN/0679751521"
+    },
+    {
+      "q": "The way to come to tolerate and then enjoy being involved in the world is by being in the world.",
+      "a": "Elaine Aron",
+      "anchor": "'The Highly Sensitive Person'",
+      "href": "http://www.amazon.com/exec/obidos/ISBN=0553062182"
+    },
+    {
+      "q": "If you don't change your beliefs, your life will be like this forever.  Is this good news?",
+      "a": "Robert Anthony"
+    },
+    {
+      "q": "You see things; and you say, 'Why?' But I dream things that never were; and I say, 'Why not?'",
+      "a": "George Bernard Shaw"
+    },
+    {
+      "q": "If everything is under control, you are going too slow.",
+      "a": "Mario Andretti"
+    },
+    {
+      "q": "In Silicon Valley, a land where thick glasses are sexy and functional autism rules at social gatherings...",
+      "a": "Annalee Newitz"
+    },
+    {
+      "q": "Revolution is not showing life to people, but making them live.",
+      "a": "Guy Debord"
+    },
+    {
+      "q": "If liberty means anything at all, it means the right to tell people what they do not want to hear.",
+      "a": "George Orwell"
+    },
+    {
+      "q": "If we let people see that kind of thing, there would never again be any war.",
+      "a": "Petagon official on why the US military censored graphic footage from the Gulf War"
+    },
+    {
+      "q": "After two years in Washington, I often long for the realism and sincerity of Hollywood",
+      "a": "Fred Thompson"
+    },
+    {
+      "q": "You must do the thing you think you cannot do",
+      "a": "Eleanor Roosevelt"
+    }
+  ],
+  "long": [
+    {
+      "q": "Of course there is nothing the matter with the stars<br> It is my emptiness among them<br> While they drift farther away in the invisible morning",
+      "a": "W. S. MERWIN, In the Winter of My Thirty-Eighth Year"
+    },
+    {
+      "q": "What focus means is saying no to something that with every bone in your body think is a phenomenal idea, and you wake up thinking about it, but you end up saying no to it because you're focusing on something else",
+      "a": "Jony Ive, on the thing he learned most from Steve Jobs"
+    },
+    {
+      "q": "When I despair, I remember that all throughout history, the way of truth and love has always won.  There have been murderers and tyrants, and for a time they can seem invincible.  But in the end they always fall.  Think of it, always.",
+      "a": "Mahatma Mohandas Gandhi"
+    },
+    {
+      "q": "The first thing you need to know about Goldman Sachs is that it's everywhere. The world's most powerful investment bank is a great vampire squid wrapped around the face of humanity, relentlessly jamming its blood funnel into anything that smells like money",
+      "a": "Matt Taibbi",
+      "href": "http://www.rollingstone.com/politics/news/the-great-american-bubble-machine-20100405"
+    },
+    {
+      "q": "Do you want me to tell you something really subversive?  Love is everything it's cracked up to be.  That's why people are so cynical about it ... It really is worth fighting for, being brave for, risking everything for.  And the trouble is, if you don't risk anything, you risk even more.",
+      "a": "Erica Jong"
+    },
+    {
+      "q": "(Comparing 1929 and 2008 crashes) Now we are learning, painfully, for a 2nd time, a lesson that we should have never learned twice, that markets don't regulate themselves.  Markets left to their own devices create: grotesque inequality, ruin the environment, and ruin the economy.",
+      "a": "Economics Journalist Robert Kuttner",
+      "anchor": "from Democracy Now!",
+      "href": "http://www.democracynow.org/2008/1/23/recession"
+    },
+    {
+      "q": "What does it matter to the dead, the orphans, and the homeless whether the mad destruction is wrought under the name of totalitarianism or the holy name of liberty or democracy?",
+      "a": "Mahatma Mohandas Gandhi"
+    },
+    {
+      "q": "Nonviolence means avoiding not only external physical violence but also internal violence of spirit.  You not only refuse to shoot a man, but you refuse to hate him.",
+      "a": "Martin Luther King Jr."
+    },
+    {
+      "q": "No man consciously chooses evil because it is evil; he only mistakes it for the happiness that he seeks.",
+      "a": "Mary Wollstonecraft Shelley"
+    },
+    {
+      "q": "Kevin Danaher of Global Exchange told an audience in Seattle during the WTO meetings that if they were confused about their priorities, ask a nine-year-old whether corporations should maximize profits or save the environment; increase CEO stock options or stop child starvation.",
+      "a": "Paul Hawken, Founder Smith & Hawken"
+    },
+    {
+      "q": "Corporations were created to enable the exploitation of the New World by profit-seeking commercial entities who needed to limit their liability in order to protect their families.  Bear in mind that the American colonies rose up not against the tyranny of a crazed King George, but against the rule of his chartered corporations.",
+      "a": "Paul Hawken, Founder Smith & Hawken"
+    },
+    {
+      "q": "What was any art but a mold in which to imprison for a moment the shining elusive element which is life itself -- life hurrying past us and running away, too strong to stop, too sweet to lose.",
+      "a": "Willa Cather"
+    },
+    {
+      "q": "<u>Dowling's Law of Photograpy</u> -<br/>One missed photographic opportunity creates a desire to purchase two additional pieces of equipment.",
+      "a": "Murphy's Law"
+    },
+    {
+      "q": "When in doubt, make a fool of yourself.  There is a microscopically thin line between being brilliantly creative and acting like the most gigantic idiot on earth.  So what the hell, leap.",
+      "a": "Cynthia Heimel"
+    },
+    {
+      "q": "I shouldn't make blanket generalizations, but I will. I can appreciate a nicely formed bod as much as anyone. But men, until about the age of 29, lack conversation.",
+      "a": "Kathleen Turner, 47, on her lack of interest in men under 30, in the Boston Globe"
+    },
+    {
+      "q": "It's not right that a small group of white men should have all the money and power.  It <i>is</i> right to have public libraries and public schools and public transportation and public parks and Social Security.  Those are worthwhile services, and the current administration wants to do away with all of them.  It wants to privatize all public services, which eliminates any sense of community, of shared effort.  In their eyes, there's me, and there's you.  But there is never <i>us</i>",
+      "a": "David Budbill"
+    },
+    {
+      "q": "Fascism is a political movement that exalts nation -- and often race -- over the rights of the individual and does so in an autocratic and dictatorial way.  Fascism also has to have an enemy to hate.  For the Nazis it was the Jews, the Gypsies, the queers.  With an enemy to hate, the government then has an excuse to limit individual freedom in order to \"protect\" the people from the enemy -- or the \"evildoers\", as George W. Bush calls them.",
+      "a": "David Budbill"
+    },
+    {
+      "q": "It does take courage ... to engage the world politically -- especially from a position of reason and compassion rather than self-righteousness and anger",
+      "a": "Marsha Carmichael"
+    },
+    {
+      "q": "The feminist movement is not about equal rights for women.  Instead it encourages women to leave their husbands, kill their children, practice witchcraft, destroy capitalism and become lesbians.",
+      "a": "Pat Roberson"
+    },
+    {
+      "q": "fanaticism ... enables people like Jerry Falwell to preach hate against those who do not think, live, or love in the exact same way he does.",
+      "a": "Lorri L. Jean, National Gay and Lesbian Task Force Executive Director (regarding Falwells blaming gays for attack on US in NYC and DC)"
+    },
+    {
+      "q": "When I write a political column for the Chicago Sun-Times, when liberals disagree with me, they send in long, logical e-mails explaining all my errors. I hardly ever get well-reasoned articles from the right. People just tell me to shut up.",
+      "a": "Roger Ebert"
+    },
+    {
+      "q": "How much we enjoy what we have is more important than how much we have.  Life is full of people who have more than they know what to do with, but cannot be content. It is the capacity to enjoy life that brings contentment.",
+      "a": "anonymous"
+    },
+    {
+      "q": "There's more queers in the Castro than there are bishops in the Vatican. Of course, there are more queers in the Vatican than there are bishops in the Castro",
+      "a": "Mark David, Comedian, 'Faggot with a Gun' Venue"
+    },
+    {
+      "q": "To those of us that experienced it, no explanation is necessary.. To those of us that didn't, none is possible...",
+      "a": "a bastardization of a Ram Dass quote [taken from a message regarding the experience that Burning Man evokes]"
+    },
+    {
+      "q": "To know that one does not write for the other, to know that these things I am going to write will never cause me to be loved by the one I love (the other), to know that writing compensates for nothing, sublimates nothing, that it is precisely <i>there where you are not</i><br/> - this is the beginning of writing.",
+      "a": "Roland Barthes, 'A Lover's Discourse' [From friend Kolin Ohi's signature]"
+    },
+    {
+      "q": "... capitalism promotes economic inequality and the individual fight for survival.  Its motto is 'Take care of number one.  You're competing with everyone else for scarce resources, and if you turn your back, they'll screw you, so you'd better screw them first.'",
+      "a": "Robert McChesney",
+      "anchor": "'Free Press For Sale'",
+      "href": "http://www.derrickjensen.org/mcches.html"
+    },
+    {
+      "q": "ACCESS:<br/>  It leads straight into the backrooms of Washington.  Access is what buyers of political favors profess to be purchasing from the sellers, as in 'Our contribution to the senator merely reflects our desire to have access to the legislative process.'  Buying access is distinguished from bribery chiefly by the fact that the latter has been officially declared illegal, while the former is still at large.",
+      "a": "Jim Hightower",
+      "anchor": "'Beezlebub's Buzzwords'",
+      "href": "http://www.thenation.com/doc.mhtml%3Fi=20000207%26s=hightower"
+    },
+    {
+      "q": "Your passion is your source of power.  To lead a really full life, you need to follow where it leads ... in defiance of all things conventional, perhaps.  ... You should never bow down to anything but those you love and respect.  Ever.  For anything.",
+      "a": "Doug Peacock"
+    },
+    {
+      "q": "There is always something to do. There are hungry people to feed, naked people to clothe, sick people to comfort and make well. And while I don't expect you to save the world, I do think it's not asking too much to love those with whom you sleep, share the happiness of those whom you call friend, engage those among you who are visionary and remove from your life those who offer you depression, despair and disrespect.",
+      "a": "Nikki Giovanni"
+    },
+    {
+      "q": "There are <u>three fundamental rules</u> that all wisdom traditions say will help us accomplish our task, if we follow them.  The first is to <u>be cautious about materialism</u>: Don't want too much.  Live Modestly.  The second is to <u>dedicate yourself to something you believe in</u>, something you think is beautiful and important.  The third is to commit yourself to <u>a personal spiritual practice</u> that you can follow every day, even if just for a few minutes.  Devote some part of your day to sitting in silence and saying 'Here I am.  Guide me.'  The point is that if we search outside ourselves for the meaning of life, we'll probably never find it.  But if we center ourselves and look for meaning <i>in</i> life, we'll find that it's waiting for us right here in the present moment.",
+      "a": "Bo Lozoff"
+    }
+  ]
+}
