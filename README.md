@@ -23,27 +23,28 @@ poohbot.com static site version
 `static/js/` location _still_ broken in production :(
 unifiy to `/js/jquery.js`
 
-```bash
-egrep -v '^albums/(thumbs|images)/' BLUE |egrep -v '^wp\-'
-```
 
 ```bash
 cd ~/poohbot
 gg -i poohbot.com
 gg featured-click
 gg Ride.index
+fgrep '<?' $(finddot md)
+gg wp-
 
 cd ~/poohbot/content/
 perl -i -pe "s/\\\*/**/g"   */*.md
 gg  '&#8[0-9][0-9][0-9]'
-gg wp-
 gg https://poohbot.com/alc/morgan-territory/kml.kml
 
-fgrep '<?' ../*.md  */*.md
 ```
+
+- crawl poohBot.com
+  - compare with crawl of hugo
+    - ensure on poohBot.com / not hugo explainable or alias..
+- crawl new site and fix all 404s
 - aliases /img => /images    (for prior site 404s...)
 - aliases every prior post url to current (when differ)
-- crawl new site and fix all 404s
 - pick 2 random posts for left side
 - make videos take up full 854px wide (720x480 now)
 - link any <img> local tag in a post to fullsize naked img?
@@ -54,17 +55,15 @@ fgrep '<?' ../*.md  */*.md
 - photos.md
 - work.md
 - `<script>`-- and CSP
+  - gg '<script>'|chopper 2000|fgrep '<script>'
 
 - **imagery:**
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
-- http://localhost:1313/2013/11/play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js/
 - http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
 - http://localhost:1313/2013/02/simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
 - http://localhost:1313/2012/06/convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/
 - http://localhost:1313/2012/01/natively-compiling-ffmpeg-mplayer-mencoder-on-macos-lion-with-x264/
-- http://localhost:1313/2011/07/bloviate/
 - http://localhost:1313/2011/05/natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding/
-- http://localhost:1313/2010/06/updated-site/
 - http://localhost:1313/2009/09/ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
 - http://localhost:1313/2009/04/ffmpeg-building-on-mac-intel/x386/
 

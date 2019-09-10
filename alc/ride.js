@@ -1,10 +1,11 @@
 // 2009/2019 Tracey Jaquith  GPL/opensource/free to re/use...
 
-const log = (typeof console === 'undefined'
+if (typeof log === 'undefined') {
+  log = (typeof console === 'undefined'
     ? () => {}
     : console.log.bind(console)
-)
-
+  )
+}
 
 class Ride {
   constructor() {
