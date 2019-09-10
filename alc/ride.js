@@ -158,14 +158,14 @@ table    { width:100%; border-collapse:collapse; border:1px solid black; } \n\
     const legendY = 500
     const LINEWIDTH = 3
 
+    const data = JSON.parse(document.getElementsByTagName('elevation')[0].dataset.data)
+    log(data)
+
     if (location.pathname.match(/three-bears/))
       MAXY = 4000
 
-    if (data.maxY > MAXY) {
-      var str = 'your max of '+data.maxY+' is way over canned max Y feet of: '+MAXY
-      MAXY = 1000*Math.floor(data.maxY / 1000) + 1000
-      alert(str + '.  Bumping maxY to ' + MAXY)
-    }
+    if (data.maxY > MAXY)
+      MAXY = data.maxY + 200
 
     // pixel size of rendered graph
     let WIDE = 800
@@ -209,19 +209,18 @@ table    { width:100%; border-collapse:collapse; border:1px solid black; } \n\
 
 
     // compute approx #feet climbed
-    var prevAvgy = 100000;
-    this.feetClimbed = 0.0;
-    for (var i=SAMPLE_CLIMBED; data.points[i]; i+=SAMPLE_CLIMBED)
-    {
+    var prevAvgy = 100000
+    this.feetClimbed = 0.0
+    for (var i=SAMPLE_CLIMBED; data.points[i]; i+=SAMPLE_CLIMBED) {
       var avgy=0.0;
       for (var j=0; j<SAMPLE_CLIMBED; j++)
-        avgy += data.points[i-j][1];
-      avgy /= SAMPLE_CLIMBED;
+        avgy += data.points[i-j][1]
+      avgy /= SAMPLE_CLIMBED
       if (avgy > prevAvgy)
-        this.feetClimbed += avgy - prevAvgy;
-      prevAvgy = avgy;
+        this.feetClimbed += avgy - prevAvgy
+      prevAvgy = avgy
     }
-    log(this.feetClimbed);
+    log(this.feetClimbed)
 
 
     // actually -- instead of picking every X points, we average all heights
@@ -260,7 +259,7 @@ table    { width:100%; border-collapse:collapse; border:1px solid black; } \n\
     str += '<tr><td colspan=\"3\">'+
       '<div style="font-size:90%; padding-top:10px; float:right;">Approximate #feet climbed: '+
       Math.round(this.feetClimbed)+'</div>'+
-      '<center><'+legbot+'>Approximate distance:<br/>'+data.maxX.toFixed(1)+' miles</'+
+      '<center><'+legbot+'>Approximate distance:<br/>'+parseInt(data.maxX, 10).toFixed(1)+' miles</'+
       legbot+'></center></td></tr>';
     str +=
       '</table>';

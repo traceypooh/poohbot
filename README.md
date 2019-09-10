@@ -53,7 +53,8 @@ fgrep '<?' ../*.md  */*.md
 - europe.md
 - photos.md
 - work.md
-- `<script>`-- and CSP
+- gg '<script' |chopper |fgrep -v 'src='
+- `<style>` and CSP ..
 
 - **imagery:**
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
