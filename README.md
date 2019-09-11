@@ -28,7 +28,6 @@ unifiy to `/js/jquery.js`
 cd ~/poohbot
 gg -i poohbot.com
 gg featured-click
-gg Ride.index
 fgrep '<?' $(finddot md)
 gg wp-
 
@@ -60,7 +59,7 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - gg onclick; line; gg onmouseover; line; gg onhover; gg onmouseout
 - `<style>`
 
-- **imagery:**
+### neees imagery
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
 - http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
 - http://localhost:1313/2013/02/simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/

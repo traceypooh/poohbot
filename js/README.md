@@ -1,7 +1,8 @@
 
 ## highlightjs gotten here
-- https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/default.min.css
-- https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js
+- https://highlightjs.org/download/
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/default.min.css
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js
 - has these default 25 langs:
   - apache
   - bash
