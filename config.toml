@@ -25,7 +25,7 @@ disableLanguages        = [""]
   # Sets options for highlight.js
   highlightjs           = true
   highlightjsTheme      = "github"
-  highlightjsLang       = ["html", "css", "js", "toml"]
+  highlightjsLang       = []
   # Sets where "View More Posts" links to
   viewMorePostsLink     = "/post/"
   # Activate Estimated Reading Times, which appear in the post headers
