@@ -54,7 +54,8 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - europe.md
 - photos.md
 - work.md
-- gg '<script' |chopper |fgrep -v 'src='
+- gg '<script' |chopper 2000|fgrep -v 'src='
+- gg '<script>'|chopper 2000|grep '<script>'
 - `<style>` and CSP ..
 
 - **imagery:**
