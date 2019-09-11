@@ -108,18 +108,18 @@ ${this.custom}
 
 
   route() {
-    var bodyobj = document.getElementsByTagName("body")[0];
+    const bodyobj = document.getElementsByTagName("body")[0]
+    const data = JSON.parse(document.getElementsByTagName('route')[0].dataset.data)
 
-    var o = document.createElement('div');
-    var tmp='', n=0;
-    for (var i=0, ldr; ldr=this.leaders[i]; i++)
-    {
-      tmp += '<tr><td colspan=3>Ride Leader: &nbsp;&nbsp;&nbsp;&nbsp; '+ldr+'</td></tr>';
-      n++;
+    var o = document.createElement('div')
+    var tmp='', n=0
+    for (var i=0, ldr; ldr=this.leaders[i]; i++) {
+      tmp += '<tr><td colspan=3>Ride Leader: &nbsp;&nbsp;&nbsp;&nbsp; '+ldr+'</td></tr>'
+      n++
     }
 
-    var terrain =  (location.pathname.match(/three-bears-and-mt-diablo/) ?
-                    '4 - steep hills, long climbs' : this.terrain);
+    const terrain =  (location.pathname.match(/three-bears-and-mt-diablo/) ?
+                      '4 - steep hills, long climbs' : this.terrain);
 
     var str = '\n\
 <table style="font-weight:bold;">\n \
