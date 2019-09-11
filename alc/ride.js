@@ -57,7 +57,7 @@ class Ride {
                       '4 - steep hills, long climbs' : this.terrain)
 
     $('#indy').html(`
-<center><h1>${data.title ? data.title : ''}</h1></center>
+<center><h1>${data.title ? data.title : ($indy.data('title') ? $indy.data('title') : '')}</h1></center>
 <ul>
   <li>
     <strong>Location:</strong>
@@ -124,7 +124,7 @@ ${this.custom}
     var str = '\n\
 <table style="font-weight:bold;">\n \
 <tr><td rowspan='+(n+2)+
-  ' style="width:120px; text-align:right;"><img style="width:100px" src="../ALCtraining.png"/></td><td colspan=3><div style="background-color:white; z-index:100; float:right;"><a href="index.htm">overview</a></div><h2>'+this.series+': "'+
+  ' style="width:120px; text-align:right;"><img style="width:100px" src="../ALCtraining.png"/></td><td colspan=3><div style="background-color:white; z-index:100; float:right;"><a href="index.html">overview</a></div><h2>'+this.series+': "'+
   data.title+'"</h2></td></tr>\n \
 <tr><td>Category: '+this.category+'</td><td>Terrain: '+
     terrain+'</td><td>Mileage: '+
@@ -176,7 +176,7 @@ table    { width:100%; border-collapse:collapse; border:1px solid black; } \n\
     var legrite = '24'//pt font
     var larger = ''
     let sty = 'margin:50px;'
-    var start = '<div style="margin-right:50px; background-color:white; z-index:100; padding:5 20 5 20; border:1px solid gray; float:right;"><a href="index.htm">overview</a></div>'
+    var start = '<div style="margin-right:50px; background-color:white; z-index:100; padding:5 20 5 20; border:1px solid gray; float:right;"><a href="index.html">overview</a></div>'
     if (this.arg('half')) {
       WIDE /= 2
       TALL /= 2
