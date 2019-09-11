@@ -2,7 +2,7 @@
 
 poohbot.com static site version
 
-## could use
+## Could Use
 - layouts/shortcodes/fancybox.html
 ```go
 
@@ -18,8 +18,7 @@ poohbot.com static site version
             set-72157624547713078/" */%}}
 ```
 
-## todo
-
+## To Do
 `static/js/` location _still_ broken in production :(
 unifiy to `/js/jquery.js`
 
@@ -54,13 +53,18 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - europe.md
 - photos.md
 - work.md
+- unbug users!
 
-### CSP:
+### map route fails
+- http://localhost:1313/morgan-territory/
+- http://localhost:1313/three-bears-and-mt-diablo/
+
+### CSP
 - gg -E '<script( lang="javascript")*>'|chopper 2000|grep '<script'
 - gg onclick; line; gg onmouseover; line; gg onhover; gg onmouseout
 - `<style>`
 
-- **imagery:**
+### Imagery++
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
 - http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
 - http://localhost:1313/2013/02/simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
@@ -74,6 +78,7 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 ```html
 <iframe src="https://archive.org/embed/ID" width="854" height="480" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen></iframe>
 ```
+
 
 ## run and/or make `public/` subdir
 - `brew install hugo`
@@ -99,7 +104,5 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - had to sort out http://localhost:1313/post/
 - https://gohugo.io/content-management/shortcodes/#youtube
 - archive.org video/book embeds
-- unbug users!
 - `hugo` # build public
 - `hugo new post/my-first-post.md`
-
