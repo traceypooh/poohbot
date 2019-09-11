@@ -54,8 +54,11 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - europe.md
 - photos.md
 - work.md
+
+### CSP:
 - gg -E '<script( lang="javascript")*>'|chopper 2000|grep '<script'
-- `<style>` and CSP ..
+- gg onclick; line; gg onmouseover; line; gg onhover; gg onmouseout
+- `<style>`
 
 - **imagery:**
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/

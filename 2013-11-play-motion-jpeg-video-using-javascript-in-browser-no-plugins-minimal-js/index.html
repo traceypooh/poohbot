@@ -86,9 +86,4 @@ tags:
 
 <script src="/js/jquery.js"></script>
 <script src="/js/motion-jpeg.js"></script>
-<script>
-  $.get('/js/motion-jpeg.js', (js) => {
-    const htm = $('#bodydiv').html()
-    $('#src').text(`${htm}<script>${js}</` + `script>`)
-  })
-</script>
+<script src="/js/motion-jpeg-source.js"></script>
