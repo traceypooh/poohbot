@@ -3,7 +3,8 @@
 poohbot.com static site version
 
 ## To Do - criticals
-- get WP comments (eg: pinky post..)
+- **local pagination of tags/cats broken!**
+- **get WP comments (eg: pinky post..)**
 - about.md
 - europe.md
 - photos.md
@@ -15,8 +16,8 @@ perl -i -pe "s/\\\*/**/g"   content/*/*.md
 ```
 - `static/js/` location _still_ broken in production :(
 - aliases /img => /images    (for prior site 404s...)
-- aliases every prior post url to current (when differ)
-- crawl poohBot.com
+- **aliases** every prior post url to current (when differ)
+- **crawl poohBot.com**
   - compare with crawl of hugo
     - ensure on poohBot.com / not hugo explainable or alias..
 - crawl new site and fix all 404s
