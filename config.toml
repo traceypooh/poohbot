@@ -100,8 +100,8 @@ disableLanguages        = [""]
     enabled             = true
     api                 = ""  # without trailing slash, defaults to "staticman3.herokuapp.com"
     gitProvider         = "gitlab"  # either "github" or "gitlab"
-    username            = "@staticmanlab"
-    repo                = ""
+    username            = "traceypooh"
+    repo                = "poohbot"
     branch              = "master"
 
     [params.staticman.recaptcha]
