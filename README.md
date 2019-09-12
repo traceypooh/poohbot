@@ -20,8 +20,6 @@ poohbot.com static site version
 
 ## To Do
 `static/js/` location _still_ broken in production :(
-unifiy to `/js/jquery.js`
-
 
 ```bash
 cd ~/poohbot
@@ -32,7 +30,6 @@ gg wp-
 
 cd ~/poohbot/content/
 perl -i -pe "s/\\\*/**/g"   */*.md
-gg  '&#8[0-9][0-9][0-9]'
 gg https://poohbot.com/alc/morgan-territory/kml.kml
 
 ```
