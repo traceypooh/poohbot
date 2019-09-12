@@ -56,9 +56,10 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - http://localhost:1313/three-bears-and-mt-diablo/
 
 ### CSP
-- gg -E '<script( lang="javascript")*>'|chopper 2000|grep '<script'
-- gg onclick; line; gg onmouseover; line; gg onhover; gg onmouseout
-- `<style>`
+- gg -i onclick
+- gg -i '<script>' |chopper
+- gg '<style[^U]' |chopper |fgrep '<style'
+- gg 'style='
 
 ### Imagery++
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/

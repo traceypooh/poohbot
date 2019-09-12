@@ -1,8 +1,6 @@
-
 ( function ($) { //wacky wrapper to allow us to use jQuery as $ w/o collision...
 
-IAV =
-{
+IAV = {
   // ----------------  STUFF FOR THE "FILMSTRIP" PART  --------------
   // maps IDENTIFIER to thumbnail #/seconds (we'll left 0-pad to the 6 digits...)
   MAP:{
@@ -107,14 +105,6 @@ IAV =
   ios:(navigator.userAgent.indexOf('iPhone')>0  ||
        navigator.userAgent.indexOf('iPad')>0  ||
        navigator.userAgent.indexOf('iPod')>0),
-
-
-  // for lapses.md
-  playimg:function(img)
-  {
-    var ag = document.getElementById("agif");
-    ag.src = '/img/'+img;
-  },
 
 
   playClips:function()
@@ -357,7 +347,7 @@ IAV =
       var thumb = '000000' + thumbn;
       thumb = thumb.substr(thumb.length-6, 6);
 
-      var onclik = (this.usingplayer ? 'onclick="return IAV.playmp4('+playern+',\''+id+'\')"' :
+      var onclik = (this.usingplayer ? 'onclick="return IAV.playmp4('+playern+',\''+id+'\')"' : // xxx CSP onmouse.. 2 lines below..
                     'href="https://archive.org/details/'+id+'"');
 
       str += '<a '+ onclik + '><img title="'+title+'" alt="'+title+'" id="'+id+'" onmouseover="IAV.imtoggle(\''+id+'\')" onmouseout="IAV.imtoggle(\''+id+'\')" class="cell'+this.HALF+'" src="https://archive.org/serve/'+id+'/'+id+'.thumbs/'+id+'_'+thumb+'.jpg"/></a>';
@@ -377,24 +367,50 @@ IAV =
   },
 
 
-  setup:function()
-  {
+  setup_lapses:function() {
+    const e = document.getElementById('agif-wrap')
+    e.style.float = 'right'
+    e.style.margin = '10px 0 12px 30px'
+    e.style.color = 'blue'
+    e.style.textAlign = 'right'
+
+    let gif = document.getElementById('agif')
+    gif.style.border = '5px solid black'
+
+    for (link of e.getElementsByTagName('a')) {
+      link.style.display = 'block'
+      const img = link.getAttribute('href')
+      link.addEventListener('mouseover', function() {
+        IAV.log(img)
+        gif.src = '/img/' + img
+        IAV.log(gif.src)
+      })
+      link.addEventListener('click', function(evt) {
+        evt.preventDefault()
+        evt.stopPropagation()
+      })
+    }
+  },
+
+
+  setup:function() {
     this.videourl  = location.href.match(/\/video(\.php|\/)*$/);
     this.lapsesurl = location.href.match(/\/lapses(\.php|\/)*$/);
     this.usingplayer = (this.lapsesurl || this.videourl);
 
-    if (!this.lapsesurl)    this.LAPSES=[]; // no filtering needed!
+    if (this.lapsesurl)
+      this.setup_lapses()
+    else
+      this.LAPSES = [] // no filtering needed!
 
 
 
-    if (this.usingplayer)
-    {
+    if (this.usingplayer) {
       // insert:
       //    <div id="filmstrip"></div>
       //    <br clear="left">
       var content = document.getElementById("content");
-      if (!content)
-      {
+      if (!content) {
         var obj = document.getElementById("wptouch-search");
         if (!obj)
           return false;
@@ -413,8 +429,7 @@ IAV =
       post.appendChild(obj);
     }
 
-    if (location.href.match(/filmstrip/))
-    {
+    if (location.href.match(/filmstrip/)) {
       var bodyobj = document.getElementsByTagName("body")[0];
       if (!bodyobj)
         return false;
@@ -436,8 +451,7 @@ IAV =
     if (!this.filmstrip)
       return false;
 
-    if (this.usingplayer)
-    {
+    if (this.usingplayer) {
       // allow for 4 vids per line!
       this.css("div#content { padding-right:10px !important; }");//xxx
       this.HALF = '';
@@ -520,27 +534,22 @@ IAV =
 }\n\
     ");
 
-    this.filmstripSetup();
-    return false;
+    this.filmstripSetup()
+    return false
   },
 
 
-  imtoggle:function(id)
-  {
-    var e=document.getElementById(id);
-    if (e)
-    {
-      if (e.src.match(/.jpg$/))
-      {
-        e.jpg = e.src;
-        e.src = 'https://archive.org/serve/'+id+'/'+id+'.gif';
-      }
-      else
-      {
-        e.src = e.jpg;
+  imtoggle:function(id) {
+    const e = document.getElementById(id)
+    if (e) {
+      if (e.src.match(/.jpg$/)) {
+        e.jpg = e.src
+        e.src = 'https://archive.org/serve/'+id+'/'+id+'.gif'
+      } else {
+        e.src = e.jpg
       }
     }
-    return false;
+    return false
   },
 
 
