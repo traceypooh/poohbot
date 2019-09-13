@@ -19,12 +19,18 @@ perl -i -pe "s/\\\*/**/g"   content/*/*.md
 - aliases /img => /images    (for prior site 404s...)
 - **aliases** every prior post url to current (when differ)
 - **crawl poohBot.com**
+```bash
+# get log of all pages/assets findable, as well as 404s
+wget --domains poohbot.com --recursive --page-requisites --spider --no-directories --no-verbose https://poohbot.com 2>&1 |tee poohbot.com
+```
   - compare with crawl of hugo
     - ensure on poohBot.com / not hugo explainable or alias..
 - crawl new site and fix all 404s
 
 ## To Do - nice to have
 ```
+gg lacer.php
+gg kml.php
 gg wp-
 gg featured-click
 ```
