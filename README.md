@@ -1,3 +1,7 @@
+
+https://yasoob.me/posts/running_staticman_on_static_hugo_blog_with_nested_comments/
+---
+
 # poohbot
 
 poohbot.com static site version
@@ -9,6 +13,7 @@ poohbot.com static site version
 
 `egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
 
+  - wgeto -q 'https://poohbot.com/wp-json/wp/v2/comments?per_page=100' |jq .
 - about.md
 - europe.md
 - photos.md
