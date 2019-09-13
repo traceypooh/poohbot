@@ -6,6 +6,9 @@ poohbot.com static site version
 - **local pagination of tags/cats broken!**
 - **import WP comments (eg: pinky post..)**
   - grep -r File.UniqueID .
+
+`egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
+
 - about.md
 - europe.md
 - photos.md
