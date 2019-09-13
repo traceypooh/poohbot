@@ -26,6 +26,8 @@ wget --domains poohbot.com --recursive --page-requisites --spider --no-directori
   - compare with crawl of hugo
     - ensure on poohBot.com / not hugo explainable or alias..
 - crawl new site and fix all 404s
+- /category/ => /categories/ alias
+- /tag/      => /tags        alias
 
 ## To Do - nice to have
 ```
