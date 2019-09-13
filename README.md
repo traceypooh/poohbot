@@ -4,7 +4,8 @@ poohbot.com static site version
 
 ## To Do - criticals
 - **local pagination of tags/cats broken!**
-- **get WP comments (eg: pinky post..)**
+- **import WP comments (eg: pinky post..)**
+  - grep -r File.UniqueID .
 - about.md
 - europe.md
 - photos.md
