@@ -10,11 +10,12 @@ poohbot.com static site version
 `egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
 
 ### production .json and .js locations:
+- `static/js/` location _still_ broken in production :(
 - /quotes
 - /tours
 - /video
 - /lapses
-
+- /mj  (404 js and 'view source' section)
 
 - about.md
 - europe.md
@@ -23,9 +24,7 @@ poohbot.com static site version
 ```bash
 gg -i poohbot.com
 fgrep '<?' $(finddot md)
-perl -i -pe "s/\\\*/**/g"   content/*/*.md
 ```
-- `static/js/` location _still_ broken in production :(
 - aliases /img => /images    (for prior site 404s...)
 - **aliases** every prior post url to current (when differ)
 - **crawl poohBot.com**
