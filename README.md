@@ -4,8 +4,17 @@ poohbot.com static site version
 
 ## To Do - criticals
 - **local pagination of tags/cats broken!**
+- top nav
+- side nav
 
 `egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
+
+### production .json and .js locations:
+- /quotes
+- /tours
+- /video
+- /lapses
+
 
 - about.md
 - europe.md
@@ -128,5 +137,5 @@ wget -qO- 'https://poohbot.com/wp-json/wp/v2/comments?per_page=100' |jq .
 
 cd ~/poohbot; ./comments2json; line; files data/comments|lc; line; grep -h author_url *.json|sort|uniq -c|sort -n; line; grep -rh '"website": ' data/comments/|sort|uniq -c|sort -n; line; files data/comments/|lc
 
-echo -n post/2019/techo-tuesday-make-a-free-website-static-site-generators-and-hugo.md |md5
+echo -n post/2019/09-techo-tuesday-make-a-free-website-static-site-generators-and-hugo.md |md5
 ```
