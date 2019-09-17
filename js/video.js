@@ -1,5 +1,10 @@
 ( function ($) { //wacky wrapper to allow us to use jQuery as $ w/o collision...
 
+const log = (typeof console === 'undefined'
+  ? () => {}
+  : console.log.bind(console)
+)
+
 IAV = {
   // ----------------  STUFF FOR THE "FILMSTRIP" PART  --------------
   // maps IDENTIFIER to thumbnail #/seconds (we'll left 0-pad to the 6 digits...)
@@ -136,7 +141,7 @@ IAV = {
   load:function(idx)
   {
     var id=this.IDS[idx];
-    this.log(id,' is loading');
+    log(id,' is loading');
     this.nloading++;
     var v=document.createElement('video');
     v.autoload = true;
@@ -160,7 +165,7 @@ IAV = {
   canplay:function(idx)
   {
     var id=this.IDS[idx];
-    this.log(id, ' can start playback');
+    log(id, ' can start playback');
     if (!this.playing  &&  this.playnext == idx)
     {
       this.playing = true;
@@ -170,7 +175,7 @@ IAV = {
       this.v[idx].style.position = 'relative';
 
       this.v[idx].play();
-      this.log(id, ' is playing');
+      log(id, ' is playing');
     }
     else
     {
@@ -186,7 +191,7 @@ IAV = {
   loaded:function(idx)
   {
     var id=this.IDS[idx];
-    this.log(id,' has been 100% downloaded');
+    log(id,' has been 100% downloaded');
     this.nloading--;
 
     if (this.nloading < 2  &&  idx+2 < this.IDS.length)
@@ -196,7 +201,7 @@ IAV = {
   ended:function(idx)
   {
     var id=this.IDS[idx];
-    this.log(id,' has finished playback');
+    log(id,' has finished playback');
     this.v[idx].width = 10;
     this.v[idx].height = 10;
     this.v[idx].style.position = 'absolute';
@@ -208,106 +213,104 @@ IAV = {
 
 
 
-  // (for video.php and lapses.php only)
-  playmp4:function(playern, identifier)
-  {
-    var playlist=false;
+  // for video.md and lapses.md only
+  playmp4:function(evt) {
+    const identifier = (evt ? evt.dataset.id : '')
+    let playlist = false
 
-    if (!identifier)
-    {
+    if (!evt) {
       // means play all videos
 
-      if (!this.playallSetup)
-      {
-        this.playallSetup=true;
-        $.getScript('https://archive.org/jw/jwplayer.js', function(){
-          IAV.log('play all setup');
-          IAV.playmp4(0);
-        });
-        return false;
+      if (!this.playallSetup) {
+        this.playallSetup = true
+        $.getScript('https://archive.org/jw/jwplayer.js', function() {
+          IAV.log('play all setup')
+          IAV.playmp4(0)
+        })
+        return false
       }
 
 
-      playlist = [];
-      for (identifier in this.MAP)
-      {
-        if (this.omitClip(identifier))
-          continue;
+      playlist = []
+      for (let id in this.MAP) {
+        if (this.omitClip(id))
+          continue
 
-        playlist.push({'title':this.MAP[identifier][1],
-                       'file':'https://archive.org/download/'+identifier+'/format=h.264&x=ignore.mp4'});
+        playlist.push({
+          'title': this.MAP[id][1],
+          'file': 'https://archive.org/download/'+id+'/format=h.264&x=ignore.mp4'
+        })
       }
 
-      this.log(playlist);
+      log(playlist)
     }
 
 
-    // normally we want the player identified by our param.
-    // however, for the last row, we use the player in the row above
-    if (!($('#player'+playern).length))
-      playern -= 1;
+    // now figure out where we should place the player:
+    //   _after_ the last cell in the row w/ the clicked cell
+    //   _before_ the first cell in the row w/ the clicked cell (when last row clicked)
+    const firstY = $('.strip:first').offset().top
+    const lastY = $('.strip:last').offset().top
+    const clickedY = (evt ? $(evt.parentNode).offset().top : firstY)
+    log({ identifier, firstY, clickedY, lastY })
+    const $after = (clickedY === lastY
+      // if clicked on last row, find last element in prior row
+      ? $('.strip').filter((idx, e) => $(e).offset().top < clickedY).last()
+      // else find last element in clicked row
+      : $('.strip').filter((idx, e) => $(e).offset().top === clickedY).last()
+    )
 
 
+    // first clear and hide any already visible/playing player
+    $('body').append($('<div id="player1" style="display:none"></div>'))
 
-    if (playern != this.priorPlayern)
-    {
-      // first clear and hide all players
-      $('div.playa').hide('slow');
-      $('div.playa').html(' ');
-    }
-
-
-    if (playlist)
-    {
-      $('#player'+playern).html('<div id="mwplayer" width="800" height="480"> </div>');
-    }
-    else
-    {
-      $('#player'+playern).html('<iframe src="https://archive.org/details/'+identifier+'?embed=1'+(IAV.ios?'':'&autoplay=1')+'" width="800" height="480" frameborder="0"></iframe>');
-    }
-
-    if (playern != this.priorPlayern)
-      $('#player'+playern).show('slow');
+    $('#player1').hide('slow', () => {
+      $('#player1').remove()
+      $('<div id="player1" style="display:none"></div>').insertAfter($after)
 
 
-    if (playlist)
-    {
-      var cfg = {
-        'http.startparam': 'start',
-        autoplay: (IAV.ios ? false : true),
-        playlist: playlist,
-        provider: 'http',
-        width: 800,
-        height: 480
+      if (playlist) {
+        $('#player1').html('<div id="mwplayer" width="800" height="480"> </div>')
+      } else {
+        $('#player1').html('<iframe src="https://archive.org/details/'+identifier+'?embed=1'+(IAV.ios?'':'&autoplay=1')+'" width="100%" style="min-width:320px" height="480" frameborder="0"></iframe>')
       }
-      jwplayer('mwplayer').setup(cfg);
-    }
+
+      $('#player1').show('slow')
 
 
-    this.priorPlayern = playern;
+      if (playlist) {
+        jwplayer('mwplayer').setup({
+          'http.startparam': 'start',
+          autoplay: (IAV.ios ? false : true),
+          playlist: playlist,
+          provider: 'http',
+          width: 800,
+          height: 480
+        })
+      }
+    })
 
     return false;
   },
 
-  omitClip:function(identifier)
-  {
+  omitClip:function(identifier) {
     if (!this.LAPSES.length)
-      return false;
+      return false
 
-    // means we are on page "lapses.php" and need to omit non time lapses
-    for (var i=0,id; id=this.LAPSES[i] ; i++)
-      if (id==identifier) return false; // not a timelapse video, omit
-    return true;
+    // means we are on page "lapses.md" and need to omit non time lapses
+    for (let i = 0, id; id = this.LAPSES[i]; i++) {
+      if (id === identifier) return false // not a timelapse video, omit
+    }
+    return true
   },
 
-  filmstripSetup:function()
-  {
-    var str = '';
+  filmstripSetup:function() {
+    let str = ''
     if (this.usingplayer)
       str += '\n\
 \n\
 <div style="margin-top:-10px;  float:right;">\n\
-  <a onclick="return IAV.playmp4(0)">Play all</a>\n\
+  <a onclick="return IAV.playmp4()">Play all</a>\n\
 </div>\n\
 ';
 
@@ -322,32 +325,24 @@ IAV = {
 <div>\n\
 \n\
     ';
-    var n=0;
-    var playern=0;
+    let n = 0
 
-    for (id in this.MAP)
-    {
+    for (id in this.MAP) {
       if (this.omitClip(id))
-        continue;
+        continue
 
-      var thumbn = this.MAP[id][0];
-      var title  = this.MAP[id][1];
-      var playerstr = '';
-      if (this.usingplayer  &&  (n>0  &&  n % 4==0))
-      {
-        playerstr = '<center><div class="playa" id="player'+playern+'"> </div></center>';
-        playern++;
-      }
+      const thumbn = this.MAP[id][0]
+      const title  = this.MAP[id][1]
 
       if (!this.HALF  ||  (n % 2 == 0))
-        str += '</div>'+playerstr+'<div class="topinblock strip'+this.HALF+'">';
+        str += '</div><div class="topinblock strip'+this.HALF+'">';
       str += '<div title="click for more info" alt="click for more info" onclick="location.href=\'https://archive.org/details/'+id+'\'" class="rounded15 placard placard2'+this.HALF+((this.HALF && n % 2)?'b':'')+'">'+id+'</div>';
 
       // left 0-pad to 6 digits as needed
-      var thumb = '000000' + thumbn;
-      thumb = thumb.substr(thumb.length-6, 6);
+      let thumb = '000000' + thumbn
+      thumb = thumb.substr(thumb.length-6, 6)
 
-      var onclik = (this.usingplayer ? 'onclick="return IAV.playmp4('+playern+',\''+id+'\')"' : // xxx CSP onmouse.. 2 lines below..
+      const onclik = (this.usingplayer ? 'data-id="'+id+'" onclick="return IAV.playmp4(this)"' : // xxx CSP onmouse.. 2 lines below..
                     'href="https://archive.org/details/'+id+'"');
 
       str += '<a '+ onclik + '><img title="'+title+'" alt="'+title+'" id="'+id+'" onmouseover="IAV.imtoggle(\''+id+'\')" onmouseout="IAV.imtoggle(\''+id+'\')" class="cell'+this.HALF+'" src="https://archive.org/serve/'+id+'/'+id+'.thumbs/'+id+'_'+thumb+'.jpg"/></a>';
@@ -363,7 +358,7 @@ IAV = {
     if (obj) obj.innerHTML = n;
 
     this.filmstrip.innerHTML += str;
-    this.log(this.filmstrip);
+    log(this.filmstrip);
   },
 
 
@@ -394,9 +389,9 @@ IAV = {
 
 
   setup:function() {
-    this.videourl  = location.href.match(/\/video(\.php|\/)*$/);
-    this.lapsesurl = location.href.match(/\/lapses(\.php|\/)*$/);
-    this.usingplayer = (this.lapsesurl || this.videourl);
+    this.videourl  = location.href.match(/\/video\/*$/)
+    this.lapsesurl = location.href.match(/\/lapses\/*$/)
+    this.usingplayer = (this.lapsesurl || this.videourl)
 
     if (this.lapsesurl)
       this.setup_lapses()
@@ -455,9 +450,7 @@ IAV = {
       // allow for 4 vids per line!
       this.css("div#content { padding-right:10px !important; }");//xxx
       this.HALF = '';
-    }
-    else
-    {
+    } else {
       // archive.org
       $('#picks').insertAfter('#spotlight');
     }
@@ -553,29 +546,22 @@ IAV = {
   },
 
 
-  css:function(str)
-  {
-    var headobj = document.getElementsByTagName("head")[0];
+  css:function(str) {
+    var headobj = document.getElementsByTagName("head")[0]
     if (!headobj)
-      return;
+      return
 
-    var obj = document.createElement('style');
-    obj.setAttribute('type', 'text/css');
+    const obj = document.createElement('style')
+    obj.setAttribute('type', 'text/css')
     if (obj.styleSheet)
-      obj.styleSheet.cssText = str; //MSIE
+      obj.styleSheet.cssText = str //MSIE
     else
-      obj.appendChild(document.createTextNode(str)); // other browsers
+      obj.appendChild(document.createTextNode(str)) // other browsers
 
-    headobj.appendChild(obj);
-  },
-
-  log:function()
-  {
-    if (typeof(console)!='undefined'  &&  typeof(console.log)!='undefined')
-      console.log(arguments);
+    headobj.appendChild(obj)
   }
-};
-}) ( jQuery );//wacky wrapper to allow us to use jQuery as $ w/o collision...
+}
+}) ( jQuery )//wacky wrapper to allow us to use jQuery as $ w/o collision...
 
 
-IAV.setup();
+IAV.setup()

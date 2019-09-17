@@ -10,11 +10,6 @@ poohbot.com static site version
 `egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
 
 ### production .json and .js locations:
-- `static/js/` location _still_ broken in production :(
-- /quotes
-- /tours
-- /video
-- /lapses
 - /mj  (404 js and 'view source' section)
 
 - about.md
@@ -39,6 +34,7 @@ wget --domains poohbot.com --recursive --page-requisites --spider --no-directori
 - /tag/      => /tags        alias
 
 ## To Do - nice to have
+- `static/js/` location (re: production and post-DNS cutover)
 ```
 gg lacer.php
 gg kml.php
@@ -46,6 +42,8 @@ gg wp-
 gg featured-click
 ```
 - unbug users!
+- /video/ and /lapses/ - switch to CSS grid for centering filmstrip
+- /video/ and /lapses/ - 'Play all'
 - pick 2 random posts for left side
 - make videos take up full 854px wide (720x480 now)
 - link any <img> local tag in a post to fullsize naked img?
