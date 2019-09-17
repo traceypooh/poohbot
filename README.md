@@ -4,12 +4,9 @@ poohbot.com static site version
 
 ## To Do - criticals
 - **local pagination of tags/cats broken!**
-- **import WP comments (eg: pinky post..)**
-  - grep -r File.UniqueID .
 
 `egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
 
-  - wgeto -q 'https://poohbot.com/wp-json/wp/v2/comments?per_page=100' |jq .
 - about.md
 - europe.md
 - photos.md
@@ -127,27 +124,9 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 https://yasoob.me/posts/running_staticman_on_static_hugo_blog_with_nested_comments/
 
 ```bash
-./node_modules/.bin/wp2sm poohbotpictures.WordPress.2019-09-13-posts.xml talk
-
-
-grep xxx comments2json
-
+wget -qO- 'https://poohbot.com/wp-json/wp/v2/comments?per_page=100' |jq .
 
 cd ~/poohbot; ./comments2json; line; files data/comments|lc; line; grep -h author_url *.json|sort|uniq -c|sort -n; line; grep -rh '"website": ' data/comments/|sort|uniq -c|sort -n; line; files data/comments/|lc
 
 echo -n post/2019/techo-tuesday-make-a-free-website-static-site-generators-and-hugo.md |md5
-```
-
-```json
-{
- "_id": "wp1",
-  "replyThread": "",
-  "replyID": "",
-  "replyName": "",
-  "name": "da pooh",
-  "website": "poohbot.com",
-  "email": "4ab10d3b4fca4d61625b7ccf312470c4",
-  "date": "2019-09-12T09:10:25.987Z",
-  "body": "wow, i really wish i was someone like tracey.  so funny and smert."
-}
 ```
