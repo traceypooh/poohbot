@@ -1,6 +1,12 @@
+
+content/contact/_index.md
+---
 # poohbot
 
 poohbot.com static site version
+
+## helpful related links
+- https://fontawesome.com/v4.7.0/icons/
 
 ## To Do - criticals
 - **local pagination of tags/cats broken!**

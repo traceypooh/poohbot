@@ -486,3 +486,27 @@ a.image.featured.featured-bottom img {
   font-weight: bold;
   white-space: pre;
 }
+
+
+
+/* DARK MODE! */
+@media (prefers-color-scheme: dark) {
+  body,
+  #site-header,
+  #site-header .flyout-menu,
+  #site-nav-menu,
+  article.mini-post header,
+  body #content ul li:first-child,
+  .button {
+    color: #ddd;
+    background-color: #111;
+  }
+  article.post,
+  article.mini-post {
+    color: #ddd;
+    background-color: #222;
+  }
+  h1, h2, h3, h4, h5, h6, .pagination a {
+    color: #ddd;
+  }
+}
