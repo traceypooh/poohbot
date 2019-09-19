@@ -224,7 +224,7 @@ IAV = {
       if (!this.playallSetup) {
         this.playallSetup = true
         $.getScript('https://archive.org/jw/jwplayer.js', function() {
-          IAV.log('play all setup')
+          log('play all setup')
           IAV.playmp4(0)
         })
         return false
@@ -376,9 +376,9 @@ IAV = {
       link.style.display = 'block'
       const img = link.getAttribute('href')
       link.addEventListener('mouseover', function() {
-        IAV.log(img)
+        log(img)
         gif.src = '/img/' + img
-        IAV.log(gif.src)
+        log(gif.src)
       })
       link.addEventListener('click', function(evt) {
         evt.preventDefault()
