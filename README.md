@@ -1,6 +1,4 @@
 
-content/contact/_index.md
----
 # poohbot
 
 poohbot.com static site version
@@ -9,18 +7,14 @@ poohbot.com static site version
 - https://fontawesome.com/v4.7.0/icons/
 
 ## To Do - criticals
-- **local pagination of tags/cats broken!**
 - top nav
+gg albums/images
+gg albums/thumbs
 
 `egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
 
-### production .json and .js locations:
-- /mj  (404 js and 'view source' section)
-
-- about.md
-- europe.md
 - photos.md
-- work.md
+- europe.md
 ```bash
 gg -i poohbot.com
 ```
@@ -37,7 +31,9 @@ wget --domains poohbot.com --recursive --page-requisites --spider --no-directori
 - /category/ => /categories/ alias
 - /tag/      => /tags        alias
 
+
 ## To Do - nice to have
+content/contact/_index.md
 fgrep '<?' $(finddot md)
 - `static/js/` location (re: production and post-DNS cutover)
 ```

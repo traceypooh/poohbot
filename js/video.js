@@ -455,7 +455,7 @@ IAV = {
       $('#picks').insertAfter('#spotlight');
     }
 
-    var imgPre = (location.hostname.match("archive.org") ? "/serve/poohBot/" : "//poohBot.com/images/");
+    const imgPre = (location.hostname.match('archive.org') ? '/serve/poohBot/' : '/img/');
 
     this.css("\n\
 .topinblock {\n\
