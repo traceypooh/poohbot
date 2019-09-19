@@ -24,6 +24,10 @@ gg -i poohbot.com
 ```bash
 # get log of all pages/assets findable, as well as 404s
 wget --domains poohbot.com --recursive --page-requisites --spider --no-directories --no-verbose https://poohbot.com 2>&1 |tee poohbot.com
+
+
+wget --domains poohbot.com --page-requisites --no-verbose http://poohbot.com/
+
 ```
   - compare with crawl of hugo
     - ensure on poohBot.com / not hugo explainable or alias..
