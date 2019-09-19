@@ -11,8 +11,6 @@ poohbot.com static site version
 gg albums/images
 gg albums/thumbs
 
-`egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
-
 - photos.md
 - europe.md
 ```bash
@@ -25,8 +23,12 @@ gg -i poohbot.com
 # get log of all pages/assets findable, as well as 404s
 wget --domains poohbot.com --recursive --page-requisites --spider --no-directories --no-verbose https://poohbot.com 2>&1 |tee poohbot.com
 
+#
+egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u -o chex
 
-wget --domains poohbot.com --page-requisites --no-verbose http://poohbot.com/
+# now check urls from WP (and their includes) and ensure they're on GL now..
+( for i in $(cat ~/poohbot/tmp/chex); do line; echo $i; wget --domains poohbot.com --page-requisites --no-verbose http:$i; done ) 2>&1 |tee frog
+
 
 ```
   - compare with crawl of hugo
