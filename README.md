@@ -11,7 +11,6 @@ poohbot.com static site version
 ## To Do - criticals
 - **local pagination of tags/cats broken!**
 - top nav
-- side nav
 
 `egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
 
@@ -24,7 +23,6 @@ poohbot.com static site version
 - work.md
 ```bash
 gg -i poohbot.com
-fgrep '<?' $(finddot md)
 ```
 - aliases /img => /images    (for prior site 404s...)
 - **aliases** every prior post url to current (when differ)
@@ -40,6 +38,7 @@ wget --domains poohbot.com --recursive --page-requisites --spider --no-directori
 - /tag/      => /tags        alias
 
 ## To Do - nice to have
+fgrep '<?' $(finddot md)
 - `static/js/` location (re: production and post-DNS cutover)
 ```
 gg lacer.php

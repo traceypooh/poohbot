@@ -1,4 +1,4 @@
-baseurl                 = "https://traceypooh.gitlab.io/poohbot/"
+baseurl                 = "https://poohbot.com/"
 # this promising extra option breaks deployed site:
 # relativeurls            = true
 DefaultContentLanguage  = "en"
