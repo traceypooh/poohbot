@@ -22,8 +22,6 @@ gg -i poohbot.com
   2 https://poohbot.com/albums/images/2005_06_12%20morgan%20territory/IMG_1717.JPG
   4 https://poohbot.com/albums/images/2007_10_14%20key%20west/keyWest_0136_tj.jpg
   1 https://poohbot.com/albums/thumbs/2008_05_04%20Jonathan%20Pon%20Ride/jonpon_0157_hb.jpg
-  1 https://poohbot.com/ciclo/'+basenom+'.jpg
-  1 https://poohbot.com/ciclo/kml.php?file='+basenom+'.kml
 228 https://poohbot.com/css/images/cloudtile.jpg
   1 https://poohbot.com/img/cloudtile.jpg
   1 https://poohbot.com/img/europe.jpg
