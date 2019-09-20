@@ -11,8 +11,10 @@ poohbot.com static site version
 gg albums/images
 gg albums/thumbs
 
-- photos.md
+`egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
+
 - europe.md
+- photos.md
 ```bash
 gg -i poohbot.com
 ```
