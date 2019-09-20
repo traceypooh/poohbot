@@ -22,6 +22,7 @@ gg -i poohbot.com
   2 https://poohbot.com/albums/images/2005_06_12%20morgan%20territory/IMG_1717.JPG
   4 https://poohbot.com/albums/images/2007_10_14%20key%20west/keyWest_0136_tj.jpg
   1 https://poohbot.com/albums/thumbs/2008_05_04%20Jonathan%20Pon%20Ride/jonpon_0157_hb.jpg
+
 228 https://poohbot.com/css/images/cloudtile.jpg
   1 https://poohbot.com/img/cloudtile.jpg
   1 https://poohbot.com/img/europe.jpg
@@ -46,9 +47,11 @@ gg -i poohbot.com
 
 
 ## To Do - nice to have
-- /img       => /images      alias
-- /category/ => /categories/ alias
-- /tag/      => /tags        alias
+### aliases
+- /img           => /images
+- /albums/thumbs => /albums/images
+- /category/     => /categories/
+- /tag/          => /tags
 - content/contact/_index.md
 fgrep '<?' $(finddot md)
 - `static/js/` location (re: production and post-DNS cutover)
