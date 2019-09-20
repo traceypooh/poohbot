@@ -13,12 +13,7 @@
 #content a:link    { color: #428bca; }
 #content a:visited { color:rgb(99,209,255); } /*1.5 * each component of #428bca AKA rgb(66,139,202)*/
 
-
 .imbox2 { border-color:black; }
-
-/* code { background-color:#222; } xxx */
-
-footer[id=colophon] { display:none !important; }
 
 /******************************************************************************
  * overrides to WP theme
@@ -41,28 +36,8 @@ div.asciiover pre {
 
 
 
-div.lastmod {
-  float:right;
-  padding-right:50px;
-  margin-right:-40px;
-  text-align:right;
-  clear:both;
-}
-
-div.lastmod h3 {
-  clear:both;
-  font-size:80%;
-}
-
-
 .topinblock {
   vertical-align:top;
-  display:inline-block;
-  *display:inline; /*for IEv8, at least*/
-}
-
-.midinblock {
-  vertical-align:middle;
   display:inline-block;
   *display:inline; /*for IEv8, at least*/
 }
