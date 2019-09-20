@@ -6,50 +6,65 @@ poohbot.com static site version
 ## helpful related links
 - https://fontawesome.com/v4.7.0/icons/
 
+
 ## To Do - criticals
 - top nav
 gg albums/images
 gg albums/thumbs
-
-`egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u`
-
+gg -i poohbot.com
 - europe.md
 - photos.md
-```bash
-gg -i poohbot.com
-```
-- aliases /img => /images    (for prior site 404s...)
-- **aliases** every prior post url to current (when differ)
-- **crawl poohBot.com**
-```bash
-# get log of all pages/assets findable, as well as 404s
-wget --domains poohbot.com --recursive --page-requisites --spider --no-directories --no-verbose https://poohbot.com 2>&1 |tee poohbot.com
+  - /albums/images
+  - /albums/thumbs
+- crawl GL site and fix all 404s
 
-#
-egrep -io '//poohbot.com[^ :]+' poohbot.com|fgrep -v poohbot.com/wp-|egrep -v '/feed/$'|sort -u -o chex
+## 404s
+  2 https://poohbot.com/albums/images/2005_06_12%20morgan%20territory/IMG_1717.JPG
+  4 https://poohbot.com/albums/images/2007_10_14%20key%20west/keyWest_0136_tj.jpg
+  1 https://poohbot.com/albums/thumbs/2008_05_04%20Jonathan%20Pon%20Ride/jonpon_0157_hb.jpg
+  1 https://poohbot.com/ciclo/'+basenom+'.jpg
+  1 https://poohbot.com/ciclo/kml.php?file='+basenom+'.kml
+228 https://poohbot.com/css/images/cloudtile.jpg
+  1 https://poohbot.com/img/cloudtile.jpg
+  1 https://poohbot.com/img/europe.jpg
 
-# now check urls from WP (and their includes) and ensure they're on GL now..
-( for i in $(cat ~/poohbot/tmp/chex); do line; echo $i; wget --domains poohbot.com --page-requisites --no-verbose http:$i; done ) 2>&1 |tee frog
+  1 https://poohbot.com/img/nav/about.jpg
+  1 https://poohbot.com/img/nav/biking.jpg
+  1 https://poohbot.com/img/nav/favorites.jpg
+  1 https://poohbot.com/img/nav/new-bike.jpg
+  1 https://poohbot.com/img/nav/nice.jpg
+  1 https://poohbot.com/img/nav/photos.jpg
+  1 https://poohbot.com/img/nav/poohbot-header-by.jpg
+  1 https://poohbot.com/img/nav/quotes.jpg
+  1 https://poohbot.com/img/nav/timelapses.jpg
+  1 https://poohbot.com/img/nav/video.jpg
 
+  1 https://poohbot.com/img/tracey.jpg
+  1 https://poohbot.com/slide-responsively.htm
 
-```
-  - compare with crawl of hugo
-    - ensure on poohBot.com / not hugo explainable or alias..
-- crawl new site and fix all 404s
-- /category/ => /categories/ alias
-- /tag/      => /tags        alias
+  1 https://poohbot.com/categories/uncategorized/
+  1 https://poohbot.com/tags/h-264/
+  1 https://poohbot.com/tags/spottheshuttle/
 
 
 ## To Do - nice to have
-content/contact/_index.md
+- /img       => /images      alias
+- /category/ => /categories/ alias
+- /tag/      => /tags        alias
+- content/contact/_index.md
 fgrep '<?' $(finddot md)
 - `static/js/` location (re: production and post-DNS cutover)
 ```
+rj/
 gg lacer.php
 gg kml.php
 gg wp-
 gg featured-click
 ```
+- random pic?
+- random quote?
+- sliding door?
+- similar top page?
 - unbug users!
 - /video/ and /lapses/ - switch to CSS grid for centering filmstrip
 - /video/ and /lapses/ - 'Play all'
@@ -58,12 +73,14 @@ gg featured-click
 - link any <img> local tag in a post to fullsize naked img?
 - `embed: ` in .md auto does archive.org iframe..
 
+
 ### map route fails
 ```
 gg https://poohbot.com/alc/morgan-territory/kml.kml
 ```
 - http://localhost:1313/morgan-territory/
 - http://localhost:1313/three-bears-and-mt-diablo/
+
 
 ### Imagery++
 - http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
@@ -74,6 +91,7 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - http://localhost:1313/2011/05/natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding/
 - http://localhost:1313/2009/09/ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
 - http://localhost:1313/2009/04/ffmpeg-building-on-mac-intel/x386/
+
 
 ### CSP
 - gg -i onclick
