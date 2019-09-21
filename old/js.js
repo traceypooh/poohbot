@@ -13,7 +13,7 @@
 -DBP top jacked up a bit
  */
 
-var Pooh = 
+var Pooh =
 {
   xfile:'',
   lastmod:null,
@@ -30,11 +30,11 @@ var Pooh =
   xmlurls:[],
   blogged:false,
   dnowed:false,
-  
+
   // we allow iphone to do 2-per-row; rest do 4-per row.  we need 8 cells...
   albumChunkSize:8,
 
-  
+
   nav:{"Home"           :"index",
        "My favorite..." :"favorites",
        "Pictures"       :"pictures",
@@ -81,9 +81,9 @@ var Pooh =
           /**/{name:"helios.jpg"            ,w:"100",h:"174"},
           /**/{name:"sonoma.jpg"            ,w:"100",h:"160"},
           /**/{name:"traceyYahooAvatar.jpg" ,w:"100",h:"220"}
-          /*  {name:"new-bike.jpg"          ,w:" 92",h:"150"}*/
+          /*  {name:"../new-bike.jpg"          ,w:" 92",h:"150"}*/
     ],
-  
+
 
   init:function()
   {
@@ -106,10 +106,10 @@ var Pooh =
 
     if (this.xfile=='quotes')
       this.jsload('quotes.js'); // invokes quotes() below
-    
+
 
     // setup <head>
-    var headobj = document.getElementsByTagName("head")[0];         
+    var headobj = document.getElementsByTagName("head")[0];
     if (navigator.userAgent.indexOf('iPhone') >= 0 ||
         navigator.userAgent.indexOf('iPod'  ) >= 0)
     {
@@ -134,7 +134,7 @@ var Pooh =
     obj.setAttribute('name',    'viewport');
     obj.setAttribute('content', 'width=device-width, minimum-scale=0');
     headobj.appendChild(obj);
-    
+
     var obj = document.createElement('meta');
     obj.setAttribute('name',    'apple-touch-fullscreen');
     obj.setAttribute('content', 'YES');
@@ -145,23 +145,23 @@ var Pooh =
   [if lt IE 7]> <style> body { behavior:url("csshover.htc"); } </style> <![endif] \n\
 ');
     headobj.appendChild(obj);
-    
 
 
-    
+
+
 
     if (bodyclass=='album')
       return false; // photo album(s) -- they have totally separate look
-    
+
 
     // setup <body>
     var vacuum = bodyobj.innerHTML;
     bodyobj.innerHTML = '';
-    
+
     var container = document.createElement('div');
     container.setAttribute('id', 'container');
     bodyobj.appendChild(container);
-      
+
     var obj = document.createElement('div');
     obj.setAttribute('id', 'header');
     obj.innerHTML='<div class="bgcol" style="position: absolute; padding:5px 0px 0px 155px;">\
@@ -176,7 +176,7 @@ var Pooh =
 <param name="flashvars" value="config={hideControls:true, loop:true, autoPlay:true, showPlayList:false, videoHeight:100, initialScale:\'scale\', videoFile:\'../images/sunset.flv\'}"/>\
 </object>';
     container.appendChild(obj);
-    
+
     var obj1 = document.createElement('div');
     var obj2 = document.createElement('div');
     obj1.setAttribute('id', 'nav');
@@ -193,7 +193,7 @@ var Pooh =
     obj2.innerHTML=str;
     obj1.appendChild(obj2);
     container.appendChild(obj1);
-    
+
     var content = document.createElement('div');
     content.setAttribute('id', 'content');
     container.appendChild(content);
@@ -219,8 +219,8 @@ var Pooh =
 
 
     content.innerHTML += vacuum;
-    
-    
+
+
     var obj = document.createElement('div');
     obj.setAttribute('id', 'footer');
     obj.innerHTML='&#169;Copyright 2010 Dumb Bunny Productions&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;'+
@@ -242,7 +242,7 @@ var Pooh =
         'overlay' :el.getAttribute('overlay') //NOTE: not in use yet
             }, el.innerHTML);
     }
-  
+
     var els = document.getElementsByClassName('ALBUM-PICTURE');
     for (var i=0, el; el=els[i]; i++)
     {
@@ -302,7 +302,7 @@ var Pooh =
       content.appendChild(obj);
       IAV.setup();
     }
-    
+
     return false;
   },
 
@@ -336,8 +336,8 @@ var Pooh =
       this.jsload('albums/' + albumname + '.js');
     }
   },
-  
-  
+
+
   // eg: file="europe/106-0607_IMG.JPG"
   // eg: file="2004 biking/131-3159_IMG.JPG"
   albumPicture:function(el)
@@ -378,7 +378,7 @@ var Pooh =
 ';
       // aid to figure out which column, left or right, to add album to
       var half = Math.round(albums.length / 2) - 1;
-      
+
       for (var i=0, albumname; albumname=albums[i]; i++)
       {
         this.loads[albumname] = i; // save order in which albums should appear!
@@ -387,7 +387,7 @@ var Pooh =
         if (i==half)
           str += '</div><div style="float:left;">'; //start 2nd column
       }
-    
+
       var obj = document.getElementById('fillme');
       obj.innerHTML = str + '</div><br clear="all"/>';
     }
@@ -396,12 +396,12 @@ var Pooh =
       for (var i=0, albumname; albumname=albums[i]; i++)
         this.loads[albumname] = i; // save order in which albums should appear!
     }
-    
-    
+
+
     this.loadAlbums();
   },
 
-  
+
   // NOTE: this is invoked in individual album .js files like "albums/europe.js"
   albumCall:function(album)
   {
@@ -423,7 +423,7 @@ var Pooh =
       }
       return false;
     }
-    
+
 
     for (var j=0; j<this.randpix.length; j++)
     {
@@ -436,20 +436,20 @@ var Pooh =
 
       // pick a random picture from this album
       var fi = album.file[Math.round((album.file.length-1) * Math.random())];
-      
+
       this.insertPic(albpic, album, fi);
       this.randpix[j] = null; // flag this element as done by null-ing it
     }
-    
+
     for (var j=0; j<this.albpix.length; j++)
     {
       var albpic = this.albpix[j];
       if (albpic==null)
         continue; // picture already set up!
-      
+
       if (this.albpixAlbumName[j] != album.name)
         continue; // not the album this wanted picture is in
-      
+
       var file = albpic.getAttribute('file');
       var fi=null;
       var filepart = file.substring(file.indexOf('/')+1); // after "/" char
@@ -469,13 +469,13 @@ var Pooh =
     }
     return false;
   },
-  
-    
+
+
   insertPic:function(el, album, fi)
   {
     //console.log(el);
     var filename = this.filename(album, fi);
-    
+
     // tracey thumbnails are *always* 150px high; but width varies
     // determine what width to use (and scale appropriately to desired height)
     var ht = 150;
@@ -488,7 +488,7 @@ var Pooh =
     var href = el.getAttribute('href');
     if (typeof(href)=='undefined'  ||  href==null)
       href = 'album.htm#' + album.name;
-    
+
     el.innerHTML = this.roundPic({
         'filename'  :filename,
         'title'     :fi.title,
@@ -508,7 +508,7 @@ var Pooh =
     return (typeof(str)=='undefined' ? "" : str);
   },
 
-  
+
   // normally filename is "album.date album.name"/"file.name"
   // but album can override with attr...
   filename:function(album, fi)
@@ -518,7 +518,7 @@ var Pooh =
 
     return this.pr(album.subdir)+'/'+this.pr(fi.name);
   },
-  
+
   getImgSize:function(imgSrc)
   {
     var newImg = new Image();
@@ -527,7 +527,7 @@ var Pooh =
     newImg = null;
     return tmp;
   },
-  
+
 
   //REQUIRED:
   // pic.filename
@@ -544,7 +544,7 @@ var Pooh =
   {
     // setup defaults for optional elements
     if (typeof(pic.ht)=='undefined') pic.ht=150;
-    if (typeof(pic.src)=='undefined') 
+    if (typeof(pic.src)=='undefined')
       pic.src = 'albums/thumbs/' + pic.filename;
 
     if (typeof(pic.wd)=='undefined')
@@ -570,7 +570,7 @@ var Pooh =
 
       if (html)
         hid += '<span class="showOnHover">'+html+'</span>';
-      
+
       hid +=
       '<span class="showOnHover pixOverlay">' +
       (typeof(pic.overlay)=='undefined' || !pic.overlay ? pic.title :pic.overlay)+
@@ -596,7 +596,7 @@ var Pooh =
 \
 '
     + hid +
-    
+
     '\
 \
 \
@@ -609,7 +609,7 @@ var Pooh =
 ';
     return str;
   },
-  
+
 
   // YYYY_MM_DD         ==>   January 3, 2005
   // YYYY-MM            ==>   January 2005
@@ -619,7 +619,7 @@ var Pooh =
   {
     if (typeof(date)=='undefined'  ||  !date  ||  date=='200')
       return '';
-    
+
     var year = date.substring(0,4);
     var month= date.substring(5,7);
     var day  = date.substring(8,10);
@@ -631,12 +631,12 @@ var Pooh =
     {
       while (month.length && month[0]=='0') month = month.substr(1);
       str += this.month[month];
-    
+
       if (month3letters)
         str = str.substring(0,3);
       str += ' ';
     }
-    
+
     if (typeof(day)!='undefined'  &&  day!='')
       str += day+', ';
     str += year;
@@ -663,7 +663,7 @@ var Pooh =
   },
 
 
-  
+
 
   // for album.htm
   album_Loaded:function()
@@ -688,7 +688,7 @@ var Pooh =
   album_Single:function(album)
   {
     document.title = 'Photo album: '+album.name;
-    
+
     var str = '\
 <a name="'+album.name+'"> </a>\
 <span style="font: 20pt Verdana, Arial, Helvetica;">Album: '+
@@ -716,7 +716,7 @@ var Pooh =
       ht = parseInt(tmp); // 1/2 height pictures for inline frame on europe.htm!
     if (typeof(album.height)!='undefined')
       ht = parseInt(album.height); // NOTE: legacy; not used right now
-    
+
     for (var i=0; i<album.file.length; i++)
       str += this.pixcell(album, i, ht);
 
@@ -744,13 +744,13 @@ var Pooh =
     }
     return false;
   },
-  
+
 
   // for album.htm
   album_Overview:function(album)
   {
     // add this album to the album index/overview page
-   
+
     var str =
     '<table style="text-align:right;"><tr><td>\
 <a onclick="return Pooh.album_Go(this.href);" href="album.htm#'+album.name+'">' +
@@ -786,7 +786,7 @@ var Pooh =
               'ht'      :ht,
               'onclick' : 'return Pooh.album_Go(this.href)'
                 }, '');
-             
+
         str += '\
       </div>\
     </td>\
@@ -800,7 +800,7 @@ var Pooh =
     // previously (because remember, each album can load out of order...)
     var obj = document.getElementById('al'+this.loads[album.name]);
     obj.innerHTML = str;
-   
+
 
     // this allows us to know when every album has been loaded!
     delete(this.loads[album.name]);
@@ -808,11 +808,11 @@ var Pooh =
     for (var j in this.loads)
       return false; // not every album has been loaded yet
 
-    
+
     // ALL ALBUMS LOADED!
     // turn this mode "off" now so onclick-ing will load a given album
     this.albumsoverview = false;
-    
+
     return false;
   },
 
@@ -834,7 +834,7 @@ var Pooh =
 
     var href = (location.host.indexOf('.archive.org')>0 ?
                 '' : 'file:///Users/tracey/') + 'Pictures/' + filename;
-    
+
     return '\
      <div class="pixcell pc'+chunk+'" style="width:'+wd2+'px;">' +
     this.roundPic({
@@ -849,7 +849,7 @@ var Pooh =
     ';
   },
 
-  
+
 
   // for tours.htm
   tours:function()
@@ -876,8 +876,8 @@ var Pooh =
       ';
     }
   },
-  
-  
+
+
   // for jpegs.htm
   insertPICs:function()
   {
@@ -894,7 +894,7 @@ var Pooh =
         for (var x=0; x<10; x++)
         {
           file = jpegs[Math.round((jpegs.length - 1) * Math.random())];
-          
+
           // keep track of the pictures we use so we don't repeat
           if (typeof(used[file])=='undefined')
             break;
@@ -918,8 +918,8 @@ var Pooh =
           pieces = [dirs];
           //console.log("NO DICE "+file+ '  ==>  '+dirs+'  '+filepart);
         }
-        
-        
+
+
         var src = 'albums/thumbs/' + file;
         var href= 'albums/images/' + file;
         var str=
@@ -969,7 +969,7 @@ var Pooh =
             str += '<br clear="left"/>';
         }
       }
-      
+
       var obj = document.getElementById("fillme");
       obj.innerHTML = str;
     }
@@ -1052,7 +1052,7 @@ var Pooh =
     }
   },
 
-  
+
   handleXML:function(idx)
   {
     var xml = this.xmls[idx];
@@ -1062,10 +1062,10 @@ var Pooh =
       if (this.blogged)
         return;
       this.blogged = true;
-      
+
       // get most recent blog entry
       var e = xml.responseXML.getElementsByTagName('item')[0];
-      
+
       // render first 75 chars of title + description, where description has
       // had any HTML in it removed and is 'pretty truncated' at a
       // word boundary
@@ -1107,7 +1107,7 @@ Latest headlines<br/> \
   <div id="dnow"> \
 ';
       var els = xml.responseXML.getElementsByTagName('item');
-      
+
       var n=1;
       for (var i=0; i < els.length; i++)
       {
@@ -1118,17 +1118,17 @@ Latest headlines<br/> \
         {
           continue;
         }
-        
+
         // pretty truncate title
         title = title.substring(0, 60);
         title = title.substring(0, title.lastIndexOf(' ')) + ' ..';
-        
+
         var link = el.getElementsByTagName('link')[0].childNodes[0].nodeValue;
         str += '<div><a class="stealth" href="'+link+'">'+title+'</a></div>\n';
         if (n++ > 6)
           break; // only print most recent 7 headlines
       }
-      
+
       var el=document.getElementById('dnnew');
       el.innerHTML = str + '</div>';
     }
