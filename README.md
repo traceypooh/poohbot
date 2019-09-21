@@ -12,7 +12,6 @@ poohbot.com static site version
 gg albums/images
 gg albums/thumbs
 gg -i poohbot.com
-gg slide-responsively.htm
 - europe.md
 - photos.md
   - /albums/images
