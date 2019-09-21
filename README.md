@@ -27,16 +27,9 @@ gg -i poohbot.com
   1 https://poohbot.com/img/cloudtile.jpg
   1 https://poohbot.com/img/europe.jpg
 
-  1 https://poohbot.com/img/nav/about.jpg
-  1 https://poohbot.com/img/nav/biking.jpg
-  1 https://poohbot.com/img/nav/favorites.jpg
   1 https://poohbot.com/img/nav/new-bike.jpg
   1 https://poohbot.com/img/nav/nice.jpg
-  1 https://poohbot.com/img/nav/photos.jpg
   1 https://poohbot.com/img/nav/poohbot-header-by.jpg
-  1 https://poohbot.com/img/nav/quotes.jpg
-  1 https://poohbot.com/img/nav/timelapses.jpg
-  1 https://poohbot.com/img/nav/video.jpg
 
   1 https://poohbot.com/img/tracey.jpg
   1 https://poohbot.com/slide-responsively.htm
@@ -84,7 +77,7 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 
 
 ### Imagery++
-- http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm/css/js-inspired-by-sliding-door-from-wayne-connor/
+- http://localhost:1313/2015/05/slide-responsively-minimal-standalone-htm-css-js-inspired-by-sliding-door-from-wayne-connor/
 - http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
 - http://localhost:1313/2013/02/simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
 - http://localhost:1313/2012/06/convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/

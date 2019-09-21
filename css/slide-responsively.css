@@ -1,0 +1,85 @@
+/*****
+Image Menu
+v 2.2
+
+modified to be responsive @tracey_pooh 2015
+https://github.com/traceypooh/slide-responsively
+****/
+
+.slide-responsively {
+  overflow: hidden;
+  border-style: none;
+  padding: 8px 0 20px 0px;
+  margin: 0;
+  max-width:1000px;
+}
+
+.slide-responsively ul {
+  list-style: none;
+  display: block;
+  height: 200px;
+  padding: 0;
+  margin: 0;
+}
+
+.slide-responsively ul li {
+  float: left;
+  /* use CSS transitions (not JS/mootools), spluh! ;-) */
+  -webkit-transition: width 0.5s ease;
+     -moz-transition: width 0.5s ease;
+       -o-transition: width 0.5s ease;
+          transition: width 0.5s ease;
+}
+
+.slide-responsively ul li a {
+  text-indent: -1000px;
+  background:#FFFFFF none repeat scroll 0%;
+  border-right: 2px solid #fff;
+  display:block;
+  overflow:hidden;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  /* better nonrepeated noninline CSS */
+  background-position: 0% 50%;
+  background-repeat: repeat;
+  background-attachment: scroll;
+}
+
+.slide-responsively ul li:last-child a {
+  border-right-style: none;
+}
+
+/* THE RESPONSIVE WIDTHS */
+
+.slide-responsively ul li       { width:14%;   } /* 100% / 7  (using 7 images) */
+.slide-responsively ul li.in    { width:31%;   } /* about 1/3 total width */
+.slide-responsively ul li.out   { width:11.5%; } /* (100% - 31%) / 6 */
+
+@media (max-width:700px) { /* for quite narrow viewports, eg: phones */
+  .slide-responsively ul li.in  { width:50%;   } /* about 1/2 total width */
+  .slide-responsively ul li.out { width:8.3%;  } /* (100% - 51%) / 6 */
+}
+
+/*
+     FILE ARCHIVED ON 17:16:36 Mar 06, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 04:30:53 Sep 21, 2019.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  LoadShardBlock: 44.332 (3)
+  exclusion.robots.policy: 0.464
+  RedisCDXSource: 1.71
+  PetaboxLoader3.datanode: 58.498 (5)
+  PetaboxLoader3.resolve: 236.467 (2)
+  exclusion.robots: 0.501
+  esindex: 0.008
+  load_resource: 309.078
+  CDXLines.iter: 11.964 (3)
+  captures_list: 61.217
+*/

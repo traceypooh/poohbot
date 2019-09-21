@@ -10,6 +10,8 @@ disqusShortname         = ""
 googleAnalytics         = ""
 pluralizeListTitles     = false
 disableLanguages        = [""]
+ignoreFiles             = ["\\.crdownload$"]
+
 
 [permalinks]
   post = "/:year/:month/:title/"
