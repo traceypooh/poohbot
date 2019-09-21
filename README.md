@@ -28,12 +28,10 @@ gg slide-responsively.htm
   1 https://poohbot.com/img/cloudtile.jpg
   1 https://poohbot.com/img/europe.jpg
 
-  1 https://poohbot.com/img/nav/new-bike.jpg
   1 https://poohbot.com/img/nav/nice.jpg
   1 https://poohbot.com/img/nav/poohbot-header-by.jpg
 
   1 https://poohbot.com/img/tracey.jpg
-  1 https://poohbot.com/slide-responsively.htm
 
   1 https://poohbot.com/categories/uncategorized/
   1 https://poohbot.com/tags/h-264/

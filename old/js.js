@@ -81,7 +81,7 @@ var Pooh =
           /**/{name:"helios.jpg"            ,w:"100",h:"174"},
           /**/{name:"sonoma.jpg"            ,w:"100",h:"160"},
           /**/{name:"traceyYahooAvatar.jpg" ,w:"100",h:"220"}
-          /*  {name:"../new-bike.jpg"          ,w:" 92",h:"150"}*/
+          /*  {name:"new-bike.jpg"          ,w:" 92",h:"150"}*/
     ],
 
 
