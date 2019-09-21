@@ -465,7 +465,7 @@ a.image.featured.featured-bottom img {
 
 
 /* DARK MODE! */
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: darkxxx) {
   body,
   #site-header,
   #site-header .flyout-menu,
