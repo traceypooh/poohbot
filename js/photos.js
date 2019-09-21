@@ -142,9 +142,9 @@ class Pooh {
     // (to find a random pic in a random album for *each* random pic)
     // *OR* just load specific albums we know we need
     if (this.randpix.length > 0)
-      Pooh.jsload('albums/ALBUMS.js');//... this .js invokes albumsCall()
+      Pooh.jsload('albums/ALBUMS.js');//... this .js invokes albums_call()
     else
-      this.loadAlbums();
+      this.load_albums();
 
 
     var els = document.getElementsByClassName('RANDOM-QUOTE');
@@ -168,7 +168,7 @@ class Pooh {
   }
 
 
-  loadAlbums() {
+  load_albums() {
     for (let albumname in this.loads) {
       // this .js invokes album_call() below
       albumname = albumname.replace(/\-[0-9]+$/, '')
@@ -198,7 +198,7 @@ class Pooh {
   }
 
 
-  albumsCall(albums) { // array of album names
+  albums_call(albums) { // array of album names
     for (let i = 0, el; el = this.randpix[i]; i++) {
       var albumname = albums[Math.round((albums.length-1) * Math.random())]
       this.randpixAlbumName.push(albumname)
@@ -211,8 +211,6 @@ class Pooh {
 <span style="padding-left:200px;"></span>\
 2002 - 2010\
 <br/>\
-<span class="nav"><a href="pictures.htm">return to Tracey\'s Home</a></span><br/><br/>\
-\
 <div style="float:left;"> \
 ';
       // aid to figure out which column, left or right, to add album to
@@ -230,17 +228,17 @@ class Pooh {
       obj.innerHTML = obj.innerHTML + str + '</div><br clear="all"/>'
     }
 
-    this.loadAlbums()
+    this.load_albums()
   }
 
 
   // NOTE: this is invoked in individual album .js files like "albums/europe.js"
   album_call(album) {
     if (this.albumsoverview)
-      return this.album_Overview(album);
+      return this.album_Overview(album)
 
     if (this.albumsingle)
-      return this.album_Single(album);
+      return this.album_single(album)
 
 
     for (var j=0; j<this.randpix.length; j++) {
@@ -302,7 +300,7 @@ class Pooh {
     // if href *not* set, use album as target
     var href = el.getAttribute('href');
     if (typeof(href)=='undefined'  ||  href==null)
-      href = 'album.htm#' + album.name;
+      href = '/photos/?' + album.name
 
     el.innerHTML = this.roundPic({
         'filename'  :filename,
@@ -477,14 +475,14 @@ class Pooh {
   // for album.htm
   static album_loaded() {
     const pooh = new Pooh()
-    const tmp = location.href.indexOf('#')
-    if (tmp > 0) {
-      pooh.albumsingle = true
-      pooh.loads[location.href.substring(tmp + 1)] = 1
-      pooh.loadAlbums()
-    } else {
+    const tmp = location.search.replace(/\?/, '')
+    if (tmp === '') {
       pooh.albumsoverview = true
-      pooh.albumsCall(ALBUMS)
+      pooh.albums_call(ALBUMS)
+    } else {
+      pooh.albumsingle = true
+      pooh.loads[tmp] = 1
+      pooh.load_albums()
     }
   }
 
@@ -503,7 +501,7 @@ class Pooh {
     + Pooh.pretty(album.date) +
     '<br/>\
 \
-<span class="nav"><a onclick="return Pooh.album_Go(this.href);" target="_top" href="album.htm">See all albums</a></span>\
+<span class="nav"><a onclick="return Pooh.album_Go(this.href);" target="_top" href="/photos/">See all albums</a></span>\
 <br/>\
 '
     +
@@ -514,18 +512,17 @@ class Pooh {
 \
 ';
 
-    var ht=150;
-    var tmp = location.hash.substring(location.hash.lastIndexOf('-')+1);
-    if (typeof(tmp)!='undefined'  &&  tmp.match(/^[0-9]+$/))
-      ht = parseInt(tmp); // 1/2 height pictures for inline frame on europe.htm!
-    if (typeof(album.height)!='undefined')
-      ht = parseInt(album.height); // NOTE: legacy; not used right now
+    let ht = 150
+    const tmp = location.hash.substring(location.hash.lastIndexOf('-')+1)
+    if (typeof tmp !== 'undefined'  &&  tmp.match(/^[0-9]+$/))
+      ht = parseInt(tmp) // 1/2 height pictures for inline frame on europe.htm!
+    if (typeof album.height !== 'undefined')
+      ht = parseInt(album.height) // NOTE: legacy; not used right now
 
-    for (var i=0; i<album.file.length; i++)
-      str += this.pixcell(album, i, ht);
+    for (let i = 0; i < album.file.length; i++)
+      str += this.pixcell(album, i, ht)
 
-    var obj=document.getElementById('fillme');
-    obj.innerHTML = str;
+    document.getElementById('content').innerHTML = str
   }
 
 
@@ -535,7 +532,7 @@ class Pooh {
       this.albumsingle = true
       var albumname = albumurl.substring(tmp + 1)
       this.loads[albumname] = 1
-      this.loadAlbums()
+      this.load_albums()
       location.href = albumurl
     } else {
       //this, uh, got a bit convoluted (going back to overview from indiv album)
@@ -552,7 +549,7 @@ class Pooh {
 
     var str =
     '<table style="text-align:right;"><tr><td>\
-<a onclick="return Pooh.album_Go(this.href);" href="album.htm#'+album.name+'">' +
+<a onclick="return Pooh.album_Go(this.href);" href="/photos/?' + album.name + '">' +
     album.name + '</a><br/>\
 <span style="font-size: 6pt;">\
 '
@@ -578,7 +575,7 @@ class Pooh {
           + this.roundPic({
               'filename':filename,
               'title'   :'untitled',
-              'href'    :'album.htm#'+album.name,
+              'href'    :'/photos/?' + album.name,
               'wd'      :wd,
               'ht'      :ht,
               'onclick' : 'return Pooh.album_Go(this.href)'
@@ -676,19 +673,6 @@ class Pooh {
       obj.innerHTML = str
     }
     return false
-  }
-
-
-  static arg(theArgName) { //NOTE: presently not used
-    const sArgs = location.search.slice(1).split('&');
-    let r = ''
-    for (var i=0; i < sArgs.length; i++) {
-      if (sArgs[i].slice(0,sArgs[i].indexOf('=')) == theArgName) {
-        r = sArgs[i].slice(sArgs[i].indexOf('=')+1)
-        break
-      }
-    }
-    return (r.length > 0 ? unescape(r).split(',') : '')
   }
 }
 

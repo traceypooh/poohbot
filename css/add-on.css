@@ -6,23 +6,6 @@
 */
 
 
-/******************************************************************************
- * overrides to WP theme
- ******************************************************************************/
-
-#content a:link    { color: #428bca; }
-#content a:visited { color:rgb(99,209,255); } /*1.5 * each component of #428bca AKA rgb(66,139,202)*/
-
-.imbox2 { border-color:black; }
-
-/******************************************************************************
- * overrides to WP theme
- ******************************************************************************/
-
-
-
-
-
 
 
 
@@ -345,15 +328,13 @@ div.allalbums .asummary { max-width:133px; text-align:right; }
 }
 .imbox2 {
   /* top    layer (border) in container */
-  position:absolute;
-  top:-7px;
-  left:-7px;
-  border-width:7px;
-  border-style: solid;
-  -moz-border-radius:20px;
-  -webkit-border-radius:20px;
-  -khtml-border-radius:20px;
-  border-radius:20px;
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  border: 7px solid transparent;
+}
+.imbox img {
+  border-radius: 20px;
 }
 
 /******************** PICTURES -- NICE CORNERS ****************************/
