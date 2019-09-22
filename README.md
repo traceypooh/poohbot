@@ -8,6 +8,7 @@ poohbot.com static site version
 
 
 ## To Do - criticals
+- fix photos that are rotated
 - top nav
 gg albums/images
 gg albums/thumbs
