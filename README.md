@@ -8,22 +8,13 @@ poohbot.com static site version
 
 
 ## To Do - criticals
-- fix photos that are rotated
-- top nav
-gg albums/images
-gg albums/thumbs
 gg -i poohbot.com
+- top nav
 - europe.md
 - photos.md
-  - /albums/images
-  - /albums/thumbs
 - crawl GL site and fix all 404s
 
 ## 404s
-  2 https://poohbot.com/albums/images/2005_06_12%20morgan%20territory/IMG_1717.JPG
-  4 https://poohbot.com/albums/images/2007_10_14%20key%20west/keyWest_0136_tj.jpg
-  1 https://poohbot.com/albums/thumbs/2008_05_04%20Jonathan%20Pon%20Ride/jonpon_0157_hb.jpg
-
 228 https://poohbot.com/css/images/cloudtile.jpg
   1 https://poohbot.com/img/cloudtile.jpg
   1 https://poohbot.com/img/europe.jpg
