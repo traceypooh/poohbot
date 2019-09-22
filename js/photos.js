@@ -1,49 +1,41 @@
 /*
-   xxx IE: test album selection, blog (nix custom look?!), etc.
-   xxx preload images/js to avoid stalling
-
----top page:
+---top page xxx:
 -bunny logo jaggies; blog pic and title hardcoded @bot
 -ie dumbbunny.gif colors
-
----russ' safari (but not my windoze):
--europe-half
--about bottom fades/chops early  -- sporadically!
--DBP top jacked up a bit
- */
+*/
 
 const ALBUMS = [
-"ALC",
-"Briones",
-"Cape Rock Harbor",
-"Jonathan Pon Ride",
-"Kim Capitola",
-"New York City",
-"Tahoe with Dan",
-"Tyler Hamilton Foundation",
-"berkeley marina",
-"bike phonak redwood",
-"biking",
-"cape cod",
-"cape provincetown, hike, cottage",
-"disney MGM",
-"disney animal kingdom",
-"disney epcot",
-"disney magic kingdom",
-"drake moved in",
-"drake power outtage",
-"drake",
-"europe",
-"halloween",
-"helios",
-"hummingbird",
-"isaac",
-"key west",
-"madone",
-"morgan territory",
-"russ bike redwood loop",
-"sonoma",
-"winery bikeride",
+  "ALC",
+  "Briones",
+  "Cape Rock Harbor",
+  "Jonathan Pon Ride",
+  "Kim Capitola",
+  "New York City",
+  "Tahoe with Dan",
+  "Tyler Hamilton Foundation",
+  "berkeley marina",
+  "bike phonak redwood",
+  "biking",
+  "cape cod",
+  "cape provincetown, hike, cottage",
+  "disney MGM",
+  "disney animal kingdom",
+  "disney epcot",
+  "disney magic kingdom",
+  "drake moved in",
+  "drake power outtage",
+  "drake",
+  "europe",
+  "halloween",
+  "helios",
+  "hummingbird",
+  "isaac",
+  "key west",
+  "madone",
+  "morgan territory",
+  "russ bike redwood loop",
+  "sonoma",
+  "winery bikeride",
 ]
 
 const MONTH = {
@@ -92,19 +84,17 @@ const log = (typeof console === 'undefined'
 class Pooh {
   constructor() {
     this.albumsingle = false
-    this.albumsoverview = false  //true when at (top level/overview of) album.htm
     this.albpix = []
     this.albpixAlbumName = []
     this.randpix = []
     this.randpixAlbumName = []
-    this.randquotes = []
     this.loads = []
     // we allow iphone to do 2-per-row; rest do 4-per row.  we need 8 cells...
     this.albumChunkSize = 8
 
 
-    var els = document.getElementsByClassName('PICTURE')
-    for (var i=0, el; el=els[i]; i++) {
+    let els = document.getElementsByClassName('PICTURE')
+    for (let i=0, el; el=els[i]; i++) {
       el.innerHTML = this.roundPic({
         'filename':el.getAttribute('src'),
         'title'   :el.getAttribute('title'),
@@ -113,15 +103,13 @@ class Pooh {
         'ht'      :el.getAttribute('ht'),
         'src'     :el.getAttribute('src'),
         'overlay' :el.getAttribute('overlay') //NOTE: not in use yet
-            }, el.innerHTML);
+            }, el.innerHTML)
     }
 
-    var els = document.getElementsByClassName('ALBUM-PICTURE');
-    for (var i=0, el; el=els[i]; i++)
-    {
+    els = document.getElementsByClassName('ALBUM-PICTURE')
+    for (let i=0, el; el=els[i]; i++) {
       var fi = el.getAttribute('file');
-      if (typeof(fi)=='undefined'  ||  fi==null)
-      {
+      if (typeof(fi)=='undefined'  ||  fi==null) {
         // variant where we are to pick one from a bunch of options
         var opts = el.getAttribute('files').split(';');
         el.setAttribute(
@@ -130,51 +118,37 @@ class Pooh {
       this.albumPicture(el);
     }
 
-    var els = document.getElementsByClassName('RANDOM-PICTURE');
-    for (var i=0, el; el=els[i]; i++)
-    {
-      // marker to know what element gets replaced when "album_call()" invoked
-      this.randpix.push(el);
+    els = document.getElementsByClassName('RANDOM-PICTURE');
+    for (let i = 0, el; el = els[i]; i++) {
+      // marker to know what element gets replaced when "album_json_gotten()" invoked
+      this.randpix.push(el)
+
+      const albumname = ALBUMS[Math.round((ALBUMS.length-1) * Math.random())]
+      this.randpixAlbumName.push(albumname)
+      this.loads[albumname] = 1
+      this.randpix[i].innerHTML = 'WTF'
     }
 
-    // now that we have figured out all album and random pictures to insert,
-    // we either load the list of all albums
-    // (to find a random pic in a random album for *each* random pic)
-    // *OR* just load specific albums we know we need
-    if (this.randpix.length > 0)
-      Pooh.jsload('albums/ALBUMS.js');//... this .js invokes albums_call()
-    else
-      this.load_albums();
 
-
-    var els = document.getElementsByClassName('RANDOM-QUOTE');
-    for (var i=0, el; el=els[i]; i++)
-    {
-      // marker to know what element gets replaced when "quotes()" invoked
-      this.randquotes.push(el);
+    const q = location.search.replace(/\?/, '')
+    if (q === 'albums'  ||  q === '') {
+      this.albumsoverview = true
+      this.albums_overview()
+    } else {
+      this.albumsingle = true
+      this.loads[q] = 1
     }
-    if (this.randquotes.length > 0)
-      Pooh.jsload('quotes.js'); // invokes quotes() below
-  }
 
+    $('body').addClass('album')
 
-  // (*asynchronously*) loads a .js file
-  static jsload(jsfile) {
-    const head = document.getElementsByTagName("head")[0]
-    const script = document.createElement('script')
-    script.type = 'text/javascript'
-    script.src = jsfile
-    head.appendChild(script)
+    this.load_albums()
   }
 
 
   load_albums() {
-    let nloaded = 0
     for (let albumname in this.loads) {
-      // this .json invokes album_call() below
       $.getJSON(`/albums/${albumname}.json`, (json) => {
-        this.album_call(json)
-        log(++nloaded, 'have loaded', Object.keys(this.loads).length, 'to go')
+        this.album_json_gotten(json)
       })
     }
   }
@@ -189,7 +163,7 @@ class Pooh {
     if (file[0]=='2')
       albumname = albumname.substring(albumname.indexOf(' ')+1); // after " " char
 
-    // marker to know what element gets replaced when "album_call()" invoked
+    // marker to know what element gets replaced when "album_json_gotten()" invoked
     this.albpix.push(el)
     this.albpixAlbumName.push(albumname)
 
@@ -197,74 +171,69 @@ class Pooh {
   }
 
 
-  albums_call(albums) { // array of album names
-    for (let i = 0, el; el = this.randpix[i]; i++) {
-      var albumname = albums[Math.round((albums.length-1) * Math.random())]
-      this.randpixAlbumName.push(albumname)
-      this.loads[albumname] = 1
-    }
-
-    if (this.albumsoverview) {
-      let str = '\
+  albums_overview() { // array of album names
+    let str = '\
 <span style="font: 20pt Verdana, Arial, Helvetica;">Tracey\'s photo albums</span> \
 <span style="padding-left:200px;"></span>\
 2002 - 2010\
 <br/>\
 <div style="float:left"> \
 ';
-      // aid to figure out which column, left or right, to add album to
-      const half = Math.round(albums.length / 2) - 1
+    // aid to figure out which column, left or right, to add album to
+    const half = Math.round(ALBUMS.length / 2) - 1
 
-      for (var i=0, albumname; albumname=albums[i]; i++) {
-        this.loads[albumname] = i // save order in which albums should appear!
+    for (var i=0, albumname; albumname = ALBUMS[i]; i++) {
+      this.loads[albumname] = i // save order in which albums should appear
 
-        str += '<div id="al'+i+'"> </div>'
-        if (i == half)
-          str += '</div><div style="float:left;">' //start 2nd column
-      }
-
-      const e = document.getElementById('content')
-      e.innerHTML = e.innerHTML + str + '</div><br clear="all"/>'
+      str += '<div id="al'+i+'"> </div>'
+      if (i == half)
+        str += '</div><div style="float:left;">' //start 2nd column
     }
 
-    this.load_albums()
+    const e = document.getElementById('content')
+    e.innerHTML = e.innerHTML + str + '</div><br clear="all"/>'
   }
 
 
-  // NOTE: this is invoked in individual album .js files like "albums/europe.js"
-  album_call(album) {
+  // NOTE: this is invoked in individual album .json files like "albums/europe.json"
+  album_json_gotten(album) {
+    log(Object.keys(this.loads).length, 'album JSON loads to go')
+
     if (this.albumsoverview)
-      return this.album_Overview(album)
+      this.album_overview(album)
 
     if (this.albumsingle)
-      return this.album_single(album)
+      this.album_single(album)
 
+    this.randpix[0].innerHTML = 'FTWKSKSDF'
 
-    for (var j=0; j<this.randpix.length; j++) {
-      var albpic = this.randpix[j];
-      if (albpic==null)
-        continue; // picture already set up!
+    for (let j = 0; j < this.randpix.length; j++) {
+      const albpic = this.randpix[j]
+      if (albpic == null)
+        continue // picture already set up!
 
       if (this.randpixAlbumName[j] != album.name)
-        continue; // not the album this wanted picture is in
+        continue // not the album this wanted picture is in
 
       // pick a random picture from this album
-      var fi = album.file[Math.round((album.file.length-1) * Math.random())];
+      const fi = album.file[Math.round((album.file.length-1) * Math.random())]
 
-      this.insertPic(albpic, album, fi);
-      this.randpix[j] = null; // flag this element as done by null-ing it
+      albpic.innerHTML = '<h1>ftw</h1>'
+      this.insertPic(albpic, album, fi)
+      albpic.innerHTML = '<h1>ftw</h1>'
+      this.randpix[j] = null // flag this element as done by null-ing it
     }
 
-    for (var j=0; j<this.albpix.length; j++) {
-      var albpic = this.albpix[j];
-      if (albpic==null)
-        continue; // picture already set up!
+    for (let j = 0; j < this.albpix.length; j++) {
+      const albpic = this.albpix[j]
+      if (albpic === null)
+        continue // picture already set up!
 
       if (this.albpixAlbumName[j] != album.name)
-        continue; // not the album this wanted picture is in
+        continue // not the album this wanted picture is in
 
-      var file = albpic.getAttribute('file');
-      var fi=null;
+      const file = albpic.getAttribute('file')
+      let fi = null
       var filepart = file.substring(file.indexOf('/')+1); // after "/" char
       for (var i=0, el; el=album.file[i]; i++)
       {
@@ -290,15 +259,12 @@ class Pooh {
 
     // tracey thumbnails are *always* 150px high; but width varies
     // determine what width to use (and scale appropriately to desired height)
-    var ht = 150;
-    var ht = el.getAttribute('ht');
-    if (!ht)
-      ht = 150;
-    var wd = Math.round(fi.w * ht / 150);
+    const ht = (el.getAttribute('ht') ? el.getAttribute('ht') : 150)
+    const wd = Math.round(fi.w * ht / 150)
 
     // if href *not* set, use album as target
-    var href = el.getAttribute('href');
-    if (typeof(href)=='undefined'  ||  href==null)
+    var href = el.getAttribute('href')
+    if (typeof href === 'undefined'  ||  href==null)
       href = '/photos/?' + album.name
 
     el.innerHTML = this.roundPic({
@@ -347,7 +313,7 @@ class Pooh {
   //OPTIONAL:
   // pic.wd        - when not used, uses width of what is/will be pic.src
   // pic.ht        - when not used, we'll use 150
-  // pic.src       - when not used, uses 'albums/thumbs/' + filename
+  // pic.src       - when not used, uses 'albums/images/' + filename
   // pic.overlay   - overrides the "showOnHover" section
   // pic.onclick   - used in conjunction with href
   roundPic(pic, html) {
@@ -456,22 +422,6 @@ class Pooh {
 
 
   // for album.htm
-  static album_loaded() {
-    const pooh = new Pooh()
-    const tmp = location.search.replace(/\?/, '')
-    if (tmp === 'albums'  ||  tmp === '') {
-      pooh.albumsoverview = true
-      pooh.albums_call(ALBUMS)
-    } else {
-      pooh.albumsingle = true
-      pooh.loads[tmp] = 1
-      pooh.load_albums()
-    }
-    $('body').addClass('album')
-  }
-
-
-  // for album.htm
   album_single(album) {
     document.title = 'Photo album: '+album.name;
 
@@ -510,25 +460,8 @@ class Pooh {
   }
 
 
-  album_go(albumurl) {
-    var tmp = albumurl.indexOf('#')
-    if (tmp > 0) {
-      this.albumsingle = true
-      var albumname = albumurl.substring(tmp + 1)
-      this.loads[albumname] = 1
-      this.load_albums()
-      location.href = albumurl
-    } else {
-      //this, uh, got a bit convoluted (going back to overview from indiv album)
-      location.href = albumurl
-      this.album_Loaded()
-    }
-    return false
-  }
-
-
   // for album.htm
-  album_Overview(album) {
+  album_overview(album) {
     // add this album to the album index/overview page
 
     var str =
@@ -576,22 +509,13 @@ class Pooh {
 
     // insert this album's HTML into the div set aside for this album
     // previously (because remember, each album can load out of order...)
-    var obj = document.getElementById('al'+this.loads[album.name])
+    // log('hey', album.name, this.loads)
+    const obj = document.getElementById('al'+this.loads[album.name])
     obj.innerHTML = str
 
 
     // this allows us to know when every album has been loaded!
     delete(this.loads[album.name])
-
-    for (var j in this.loads)
-      return false // not every album has been loaded yet
-
-
-    // ALL ALBUMS LOADED!
-    // turn this mode "off" now so onclick-ing will load a given album
-    this.albumsoverview = false
-
-    return false
   }
 
 
@@ -625,41 +549,8 @@ class Pooh {
      </div>\
     '
   }
-
-
-  // for quotes.htm and <RANDOM-QUOTE>
-  quotes(quotes) {
-    if (this.randquotes.length > 0) {
-      for (var i=0, el; el=this.randquotes[i]; i++) {
-        var q=quotes.short[Math.round((quotes.short.length-1) * Math.random())];
-        el.innerHTML =
-        '<a class="stealth" href="quotes.htm"><dt>'+
-        q.q+'<dt><dd> - '+q.a + '<br/></dd></a>';
-      }
-    } else {
-      var str=''
-      for (var longy=0; longy<2; longy++) {
-        var qs = (longy ? quotes.long : quotes.short)
-        for (var i=0, q; q=qs[i]; i++)
-        {
-          str +=
-            '<div'+(longy  &&  i==qs.length-1 ? ' style="clear:left;"' :
-                    ' class="quote"')+
-            '><dl><dt><q>'+q.q+'</q></dt><dd> - '+q.a+'<br/>'+
-            (q.href ? '<a href="'+q.href+'">'+q.anchor+'</a>':'') +
-            '</dd></dl></div>';
-          if ((i+1) % 3 == 0  ||  i==qs.length-1)
-            str += '<br clear="left"/>';
-        }
-      }
-
-      var obj = document.getElementById("fillme")
-      obj.innerHTML = str
-    }
-    return false
-  }
 }
 
+$(() => log(Pooh.pretty()))
+$(() => new Pooh())
 
-$(Pooh.album_loaded)
-// window.onload = function() { Pooh.init(); } //xxx
