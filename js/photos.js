@@ -169,13 +169,12 @@ class Pooh {
 
 
   load_albums() {
+    let nloaded = 0
     for (let albumname in this.loads) {
-      // this .js invokes album_call() below
-      albumname = albumname.replace(/\-[0-9]+$/, '')
-      //console.log('loading... ' + albumname)
+      // this .json invokes album_call() below
       $.getJSON(`/albums/${albumname}.json`, (json) => {
-        log(json)
         this.album_call(json)
+        log(++nloaded, 'have loaded', Object.keys(this.loads).length, 'to go')
       })
     }
   }
@@ -211,21 +210,20 @@ class Pooh {
 <span style="padding-left:200px;"></span>\
 2002 - 2010\
 <br/>\
-<div style="float:left;"> \
+<div style="float:left"> \
 ';
       // aid to figure out which column, left or right, to add album to
       const half = Math.round(albums.length / 2) - 1
 
       for (var i=0, albumname; albumname=albums[i]; i++) {
-        this.loads[albumname] = i; // save order in which albums should appear!
+        this.loads[albumname] = i // save order in which albums should appear!
 
         str += '<div id="al'+i+'"> </div>'
         if (i == half)
           str += '</div><div style="float:left;">' //start 2nd column
       }
 
-      var obj = document.getElementById('content')
-      obj.innerHTML = obj.innerHTML + str + '</div><br clear="all"/>'
+      document.getElementById('content').innerHTML = str + '</div><br clear="all"/>'
     }
 
     this.load_albums()
@@ -399,22 +397,6 @@ class Pooh {
     ' src="'+pic.src+'"/>\
 \
     </a>\
-    <div class="imbox2">\
-      <a class="hoverShower"\
-         href="' + pic.href +
-    (typeof(pic.onclick)=='undefined' ? '' : '" onclick="'+pic.onclick) +
-    '" target="_top">\
-\
-'
-    + hid +
-
-    '\
-\
-\
-\
-        <div style="width:'+pic.wd+'px; height:'+pic.ht+'px;"></div>\
-      </a>\
-    </div>\
   </div>\
 \
 ';
@@ -476,14 +458,15 @@ class Pooh {
   static album_loaded() {
     const pooh = new Pooh()
     const tmp = location.search.replace(/\?/, '')
-    if (tmp === '') {
+    if (tmp === 'albums') {
       pooh.albumsoverview = true
       pooh.albums_call(ALBUMS)
-    } else {
+    } else if (tmp !== '') {
       pooh.albumsingle = true
       pooh.loads[tmp] = 1
       pooh.load_albums()
     }
+    $('body').addClass('album')
   }
 
 
@@ -501,7 +484,7 @@ class Pooh {
     + Pooh.pretty(album.date) +
     '<br/>\
 \
-<span class="nav"><a onclick="return Pooh.album_Go(this.href);" target="_top" href="/photos/">See all albums</a></span>\
+<span class="nav"><a onclick="return Pooh.album_Go(this.href);" target="_top" href="/photos/?albums">See all albums</a></span>\
 <br/>\
 '
     +
@@ -548,7 +531,7 @@ class Pooh {
     // add this album to the album index/overview page
 
     var str =
-    '<table style="text-align:right;"><tr><td>\
+    '<table><tr><td>\
 <a onclick="return Pooh.album_Go(this.href);" href="/photos/?' + album.name + '">' +
     album.name + '</a><br/>\
 <span style="font-size: 6pt;">\
@@ -559,14 +542,16 @@ class Pooh {
 '
 
     for (let i = 1; i <= 2; i++) {
-      if (typeof album['idx'+i] !== 'undefined') {
-        var fi=album.file[album['idx'+i]-1];
-        var ht=75;
-        // tracey thumbnails are *always* 150px high; but width varies
-        // determine what width to use (scale appropriately to desired height)
-        var wd = Math.round(fi.w * ht / 150);
-        var filename = Pooh.filename(album, fi);
-        str += '\
+      if (typeof album['idx' + i] === 'undefined')
+        continue
+
+      const fi = album.file[album['idx' + i] - 1]
+      const ht = 75
+      // tracey thumbnails are *always* 150px high; but width varies
+      // determine what width to use (scale appropriately to desired height)
+      const wd = Math.round(fi.w * ht / 150)
+      const filename = Pooh.filename(album, fi)
+      str += '\
     <td>\
 '
           + '\
@@ -581,11 +566,9 @@ class Pooh {
               'onclick' : 'return Pooh.album_Go(this.href)'
                 }, '');
 
-        str += '\
+       str += '\
       </div>\
-    </td>\
-';
-      }
+    </td>';
     }
     str += '</tr></table>'
 
@@ -629,7 +612,7 @@ class Pooh {
                 '' : 'file:///Users/tracey/') + 'Pictures/' + filename
 
     return '\
-     <div class="pixcell pc'+chunk+'" style="width:'+wd2+'px;">' +
+     <div class="pixcell topinblock pc'+chunk+'" style="width:'+wd2+'px;">' +
     this.roundPic({
           "filename" :filename,
           "title"    :fi.name,

@@ -6,9 +6,6 @@
 */
 
 
-
-
-
 div.asciiover pre {
   background-color:black;
   position:relative;
@@ -16,7 +13,6 @@ div.asciiover pre {
   font-size:10px !important;
   line-height:12px !important;
 }
-
 
 
 .topinblock {
@@ -144,48 +140,6 @@ div.protest div.txt {
 
 
 
-#dnow div {
-  border-bottom:1px dashed #FFF380;
-  font-style:italic;
-  font-size:9pt;
-  padding:10px 0px 10px 0px;
-}
-
-
-
-/******************** JPEGS STUFF ****************************/
-body.jpegs {
-  background: url('images/cloudtile.jpg') repeat;
-  color:yellow;
-}
-
-body.jpegs img {
-  border-width: 4px 0px 4px 0px;
-  border-color: yellow;
-  border-style: solid;
-  height:150px;
-  margin: 0px 0px 50px 0px;
-  padding: 0px;
-}
-body.jpegs img.left {
-  border-left-width:4px;
-}
-body.jpegs img.rite {
-  border-right-width:4px;
-}
-
-body.jpegs div.row {
-  clear:left;
-}
-
-/* JS flips this on */
-body.clouds {
-  text-align:center;
-}
-/******************** JPEGS STUFF ****************************/
-
-
-
 /******************** HOVER ****************************/
 /* this is the SWEET stuff! */
 .showOnHover { text-decoration: none; display:none; }
@@ -260,11 +214,38 @@ div.allalbums .asummary { max-width:133px; text-align:right; }
   padding-left:30px;
 }
 
-
+body.album table {
+  text-align: right;
+  /* override some theme defaults */
+  width: initial;
+  margin: 1em 0;
+  box-shadow: none;
+  /* override chrome default (for hover) */
+  border-spacing: 0;
+}
+body.album table>tbody>tr:hover {
+  background-color: transparent;
+}
 
 .pixcell.topinblock {
   margin-left:10px;
   min-height:300px;
+}
+
+/* override some theme setup for more content rich / denser page */
+body.album #wrapper {
+  grid-template-areas: 'intro' 'main' 'sidebar' 'footer';
+  grid-template-rows: auto 1fr auto auto;
+  grid-template-columns: initial;
+}
+body.album #site-sidebar {
+  display: none;
+}
+body.album .post {
+  max-width: initial;
+}
+body.album header {
+  display: none !important;
 }
 
 
@@ -316,22 +297,13 @@ div.allalbums .asummary { max-width:133px; text-align:right; }
 
 .imbox {
   /* container */
-  position:relative;
-  margin:7px;
-  /*not obvious fix for issue when imbox is inside div text-align:center on FF*/
-  text-align:left;
+  position: relative;
+  text-align: left;
 }
 .imbox1 {
   /* bottom layer (image) in container */
-  position:absolute;
-  border-width:0px;
-}
-.imbox2 {
-  /* top    layer (border) in container */
   position: absolute;
-  top: -7px;
-  left: -7px;
-  border: 7px solid transparent;
+  border-width: 0px;
 }
 .imbox img {
   border-radius: 20px;
