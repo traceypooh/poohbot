@@ -223,7 +223,8 @@ class Pooh {
           str += '</div><div style="float:left;">' //start 2nd column
       }
 
-      document.getElementById('content').innerHTML = str + '</div><br clear="all"/>'
+      const e = document.getElementById('content')
+      e.innerHTML = e.innerHTML + str + '</div><br clear="all"/>'
     }
 
     this.load_albums()
@@ -458,10 +459,10 @@ class Pooh {
   static album_loaded() {
     const pooh = new Pooh()
     const tmp = location.search.replace(/\?/, '')
-    if (tmp === 'albums') {
+    if (tmp === 'albums'  ||  tmp === '') {
       pooh.albumsoverview = true
       pooh.albums_call(ALBUMS)
-    } else if (tmp !== '') {
+    } else {
       pooh.albumsingle = true
       pooh.loads[tmp] = 1
       pooh.load_albums()
