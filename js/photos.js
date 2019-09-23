@@ -83,19 +83,18 @@ const log = (typeof console === 'undefined'
 
 class Pooh {
   constructor() {
-    this.albumsingle = false
+
     this.albpix = []
     this.albpixAlbumName = []
     this.randpix = []
-    this.randpixAlbumName = []
     this.loads = []
     // we allow iphone to do 2-per-row; rest do 4-per row.  we need 8 cells...
     this.albumChunkSize = 8
 
 
-    let els = document.getElementsByClassName('PICTURE')
+    let els = document.getElementsByClassName('round-picture')
     for (let i=0, el; el=els[i]; i++) {
-      el.innerHTML = this.roundPic({
+      el.outerHTML = this.roundPic({
         'filename':el.getAttribute('src'),
         'title'   :el.getAttribute('title'),
         'href'    :el.getAttribute('href'),
@@ -106,28 +105,16 @@ class Pooh {
             }, el.innerHTML)
     }
 
-    els = document.getElementsByClassName('ALBUM-PICTURE')
-    for (let i=0, el; el=els[i]; i++) {
-      var fi = el.getAttribute('file');
-      if (typeof(fi)=='undefined'  ||  fi==null) {
-        // variant where we are to pick one from a bunch of options
-        var opts = el.getAttribute('files').split(';');
-        el.setAttribute(
-          'file', opts[Math.round((opts.length-1) * Math.random())]);
-      }
-      this.albumPicture(el);
-    }
+    els = document.getElementsByClassName('album-picture')
+    for (let i = 0, el; el = els[i]; i++)
+      this.albumPicture(el)
 
-    els = document.getElementsByClassName('RANDOM-PICTURE');
-    for (let i = 0, el; el = els[i]; i++) {
-      // marker to know what element gets replaced when "album_json_gotten()" invoked
-      this.randpix.push(el)
-
+    $('.random-picture').each((idx, el) => {
       const albumname = ALBUMS[Math.round((ALBUMS.length-1) * Math.random())]
-      this.randpixAlbumName.push(albumname)
       this.loads[albumname] = 1
-      this.randpix[i].innerHTML = 'WTF'
-    }
+      // marker to know what element gets replaced when "album_json_gotten()" invoked
+      this.randpix.push({ albumname, el })
+    })
 
 
     const q = location.search.replace(/\?/, '')
@@ -136,10 +123,11 @@ class Pooh {
       this.albums_overview()
     } else {
       this.albumsingle = true
+      this.loads = {}
       this.loads[q] = 1
     }
-
     $('body').addClass('album')
+    $('#wrapper').show()
 
     this.load_albums()
   }
@@ -154,14 +142,17 @@ class Pooh {
   }
 
 
-  // eg: file="europe/106-0607_IMG.JPG"
+  // eg: file="best euro I/106-0607_IMG.JPG"
   // eg: file="2004 biking/131-3159_IMG.JPG"
   albumPicture(el) {
-    const file = el.getAttribute('file')
+    const file = el.getAttribute('src').replace(/\/albums\/images\//, '')
 
-    var albumname = file.substring(0, file.indexOf('/')); // before "/" char
-    if (file[0]=='2')
-      albumname = albumname.substring(albumname.indexOf(' ')+1); // after " " char
+    let albumname = file.substring(0, file.indexOf('/')) // before "/" char
+    if (file[0] === '2')
+      albumname = albumname.substring(albumname.indexOf(' ') + 1) // skip YYYY_MM_DD to after ' ' char
+    if (albumname === 'best euro I') // um.... handle the only anamoly manually...
+      albumname = 'europe'
+
 
     // marker to know what element gets replaced when "album_json_gotten()" invoked
     this.albpix.push(el)
@@ -182,7 +173,7 @@ class Pooh {
     // aid to figure out which column, left or right, to add album to
     const half = Math.round(ALBUMS.length / 2) - 1
 
-    for (var i=0, albumname; albumname = ALBUMS[i]; i++) {
+    for (var i = 0, albumname; albumname = ALBUMS[i]; i++) {
       this.loads[albumname] = i // save order in which albums should appear
 
       str += '<div id="al'+i+'"> </div>'
@@ -190,37 +181,32 @@ class Pooh {
         str += '</div><div style="float:left;">' //start 2nd column
     }
 
-    const e = document.getElementById('content')
-    e.innerHTML = e.innerHTML + str + '</div><br clear="all"/>'
+    $('#content').append(str + '</div><br clear="all"/>')
   }
 
 
-  // NOTE: this is invoked in individual album .json files like "albums/europe.json"
+  // NOTE: this is invoked in individual album .json files like "albums/biking.json"
   album_json_gotten(album) {
     log(Object.keys(this.loads).length, 'album JSON loads to go')
+
+    if (this.albumsingle)
+      return this.album_single(album)
 
     if (this.albumsoverview)
       this.album_overview(album)
 
-    if (this.albumsingle)
-      this.album_single(album)
-
-    this.randpix[0].innerHTML = 'FTWKSKSDF'
-
     for (let j = 0; j < this.randpix.length; j++) {
-      const albpic = this.randpix[j]
-      if (albpic == null)
+      let albpic = this.randpix[j]
+      if (albpic === null)
         continue // picture already set up!
 
-      if (this.randpixAlbumName[j] != album.name)
+      if (album.name !== albpic.albumname)
         continue // not the album this wanted picture is in
 
       // pick a random picture from this album
       const fi = album.file[Math.round((album.file.length-1) * Math.random())]
 
-      albpic.innerHTML = '<h1>ftw</h1>'
-      this.insertPic(albpic, album, fi)
-      albpic.innerHTML = '<h1>ftw</h1>'
+      this.insertPic(albpic.el, album, fi)
       this.randpix[j] = null // flag this element as done by null-ing it
     }
 
@@ -232,22 +218,20 @@ class Pooh {
       if (this.albpixAlbumName[j] != album.name)
         continue // not the album this wanted picture is in
 
-      const file = albpic.getAttribute('file')
+      const file = albpic.getAttribute('src').replace(/\/albums\/images\//, '')
       let fi = null
       var filepart = file.substring(file.indexOf('/')+1); // after "/" char
-      for (var i=0, el; el=album.file[i]; i++)
-      {
-        if (el.name==filepart)
-        {
-          fi=el;
-          break;
+      for (var i = 0, el; el = album.file[i]; i++) {
+        if (el.name == filepart) {
+          fi = el
+          break
         }
       }
       if (!fi)
-        return false; //picture not found in album!
+        return false //picture not found in album!
 
-      this.insertPic(albpic, album, fi);
-      this.albpix[j] = null; // flag this element as done by null-ing it
+      this.insertPic(albpic, album, fi)
+      this.albpix[j] = null // flag this element as done by null-ing it
     }
     return false
   }
@@ -264,10 +248,10 @@ class Pooh {
 
     // if href *not* set, use album as target
     var href = el.getAttribute('href')
-    if (typeof href === 'undefined'  ||  href==null)
+    if (typeof href === 'undefined'  ||  href === null)
       href = '/photos/?' + album.name
 
-    el.innerHTML = this.roundPic({
+    el.outerHTML = this.roundPic({
         'filename'  :filename,
         'title'     :fi.title,
         'href'      :href,
@@ -327,7 +311,7 @@ class Pooh {
       pic.wd = Pooh.getImgSize(pic.src)
 
 
-    var str = '\
+    let str = '\
   <div class="imbox" style="width:'+pic.wd+'px; height:'+pic.ht+'px;">\
     <a class="hoverShower"\
        href="' + pic.href +
@@ -336,16 +320,15 @@ class Pooh {
 
 
     // hidden part (NOTE HAS TO APPEAR TWICE!)
-    var hid = ''
-    if (pic.title != 'untitled')
-    {
+    let hid = ''
+    if (pic.title !== 'untitled') {
       hid = '\n\
 \n\
       <!-- HIDDEN BEG -->\n\
 ';
 
       if (html)
-        hid += '<span class="showOnHover">'+html+'</span>';
+        hid += '<span class="showOnHover">'+html+'</span>'
 
       hid +=
       '<span class="showOnHover pixOverlay">' +
@@ -354,7 +337,7 @@ class Pooh {
 \n\
       <!-- HIDDEN END -->\n\
 \n\
-';
+'
     }
 
 
@@ -366,8 +349,9 @@ class Pooh {
     </a>\
   </div>\
 \
-';
-    return str;
+'
+    // log(str)
+    return str
   }
 
 

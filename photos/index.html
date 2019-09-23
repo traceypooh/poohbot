@@ -4,21 +4,39 @@ type: page
 date: 2010-06-04
 title: Photos
 ---
+<script> document.getElementById('wrapper').style.display = 'none' </script>
+<style>
+#wrapper {
+  grid-template-areas: 'intro' 'main' 'sidebar' 'footer';
+  grid-template-rows: auto 1fr auto auto;
+  grid-template-columns: initial;
+}
+#site-sidebar {
+  display: none;
+}
+.post {
+  max-width: initial;
+}
+</style>
+
 
 <div class="col4left">
   <div style="position:absolute; right:0px;">
-    <div class="RANDOM-PICTURE"></div>
+    <img class="random-picture"
+      src="/albums/images/2005_07_04%20cape%20provincetown,%20hike,%20cottage/IMG_2060.JPG"/>
   </div>
 </div>
 <div class="col4rite">
-      <nobr><h5><a href="/photos/?albums">Recent Albums</a></h5></nobr>
-      Most of the new pictures are here.
+  <h5><a href="/photos/?albums">Recent&nbsp;Albums</a></h5>
+  Most of the new pictures are here.
 </div>
 
 
 <div class="col4left">
   <div style="position:absolute; right:0px;">
-    <?B::albumPicture("2004 biking/131-3159_IMG.JPG")?>
+    <img class="album-picture"
+      src="/albums/images/2004 biking/131-3159_IMG.JPG"
+      href="/photos/?biking"/>
   </div>
 </div>
 <div class="col4rite">
@@ -32,7 +50,9 @@ title: Photos
 
 <div class="col4left">
   <div style="position:absolute; right:0px;">
-    <?B::albumPicture("europe/106-0607_IMG.JPG", null, "/europe")?>
+    <img class="album-picture"
+      src="/albums/images/best euro I/106-0607_IMG.JPG"
+      href="/europe"/>
   </div>
 </div>
 <div class="col4rite">
@@ -45,8 +65,11 @@ title: Photos
 
 <div class="col4left">
   <div style="position:absolute; right:0px;">
-    <?B::picture(array('wd'=>"213", 'ht'=>"160", 'title'=>"Anti-war Protest!",
-                       'href'=>"/protest", 'src'=>"/images/protest/hunter.jpg"))?>
+    <img class="round-picture"
+      src="/img/protest/hunter.jpg"
+      href="/protest"
+      wd=213 ht=160
+      title="Anti-war Protest!"/>
   </div>
 </div>
 <div class="col4rite">

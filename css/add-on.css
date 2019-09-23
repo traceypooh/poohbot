@@ -244,9 +244,6 @@ body.album #site-sidebar {
 body.album .post {
   max-width: initial;
 }
-body.album header {
-  display: none !important;
-}
 
 
 /******************** PHOTO ALBUMS STUFF ****************************/
@@ -268,7 +265,10 @@ body.album header {
   background-color:black;
   color:white;
   filter:alpha(opacity=50);-moz-opacity:.50;opacity:.50;
-  line-height:1.0;
+  line-height: 1.0;
+}
+.pixOverlay hr {
+  margin: 10px 0; /* theme override */
 }
 
 
