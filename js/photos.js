@@ -92,8 +92,11 @@ class Pooh {
     this.albumChunkSize = 8
 
 
-    let els = document.getElementsByClassName('round-picture')
-    for (let i=0, el; el=els[i]; i++) {
+    $('.album-picture').each((idx, el) => {
+      this.albumPicture(el)
+    })
+
+    $('.round-picture').each((idx, el) => {
       el.outerHTML = this.roundPic({
         'filename':el.getAttribute('src'),
         'title'   :el.getAttribute('title'),
@@ -103,11 +106,7 @@ class Pooh {
         'src'     :el.getAttribute('src'),
         'overlay' :el.getAttribute('overlay') //NOTE: not in use yet
             }, el.innerHTML)
-    }
-
-    els = document.getElementsByClassName('album-picture')
-    for (let i = 0, el; el = els[i]; i++)
-      this.albumPicture(el)
+    })
 
     $('.random-picture').each((idx, el) => {
       const albumname = ALBUMS[Math.round((ALBUMS.length-1) * Math.random())]
@@ -118,16 +117,21 @@ class Pooh {
 
 
     const q = location.search.replace(/\?/, '')
-    if (q === 'albums'  ||  q === '') {
-      this.albumsoverview = true
-      this.albums_overview()
-    } else {
+    if (location.pathname === '/europe/') {
+      this.albumsingle = true
+      this.loads = { europe: 1 }
+    } else if (q !== ''  &&  q !== 'albums') {
       this.albumsingle = true
       this.loads = {}
       this.loads[q] = 1
+      $('body').addClass('album')
+      $('#wrapper').show()
+    } else {
+      this.albumsoverview = true
+      this.albums_overview()
+      $('body').addClass('album')
+      $('#wrapper').show()
     }
-    $('body').addClass('album')
-    $('#wrapper').show()
 
     this.load_albums()
   }
