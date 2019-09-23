@@ -10,8 +10,6 @@ poohbot.com static site version
 ## To Do - criticals
 gg -i poohbot.com
 - top nav
-- europe.md
-- photos.md
 - crawl GL site and fix all 404s
 
 ## 404s
@@ -36,8 +34,6 @@ gg -i poohbot.com
 - /category/     => /categories/
 - /tag/          => /tags
 - content/contact/_index.md
-fgrep '<?' $(finddot md)
-- `static/js/` location (re: production and post-DNS cutover)
 ```
 rj/
 gg lacer.php
