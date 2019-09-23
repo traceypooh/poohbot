@@ -5,16 +5,6 @@
   and follow the formatting and style given.
 */
 
-
-div.asciiover pre {
-  background-color:black;
-  position:relative;
-  top:-80px;
-  font-size:10px !important;
-  line-height:12px !important;
-}
-
-
 .topinblock {
   vertical-align:top;
   display:inline-block;
@@ -36,29 +26,11 @@ div.asciiover pre {
 }
 
 
-
-/* use with div elements when want to have 2 columns in my page */
-.col2 { width:375px; float:left; }
-
-/* like col2, but narrower and more padding */
-.col2p {
-  width:240px;
-  float:left;
-  padding-left:1%;
-  padding-right:1%;
-  padding-top:8px;
-  padding-bottom:8px;
-}
-
-
-
 /* use with div elements when want to have 4 columns in my page */
-.col4 { width:25%; float:left; }
-
-/* like col4, but extra 8px padding (1% of 800==8px)*/
-.col4p{ width:22.5%; float:left; padding-left:1%; padding-right:1%; padding-top:8px; padding-bottom:8px; }
-
-
+.col4 {
+  width:25%;
+  float:left;
+}
 
 /* use with div elements when want to have 4 columns in my page */
 .col4left {
@@ -78,34 +50,15 @@ div.asciiover pre {
 }
 
 
-.colctr, .colctrThird {
+
+div.quote {
   float:left;
-  font-size:9pt;
-  text-align:center;
+  width:245px;
+  padding:10px;
 }
-.colctrThird {  /* just like colctr but 1/3 width */
-  width:250px;
-}
-
-
-
-
-div.quote { float:left; width:245px; padding:10px; }
 #js-quotes .quote dd {
   color:#999;
 }
-#randquote dt,  h3.widget-title a.rsswidget
-{
-  color:white !important;  /*xxx WP CSS is braindead!! */
-}
-
-/* nicer/briefer DNow! RSS left-column widget */
-#rss-2 ul li {
-  display:block;
-  height:40px;
-  overflow:hidden;
-}
-
 
 #randquote {
   float:right;
@@ -114,6 +67,9 @@ div.quote { float:left; width:245px; padding:10px; }
   text-align:center;
   font-size:80%;
   font-style:italic;
+}
+#randquote dt {
+  color:white !important;  /*xxx WP CSS is braindead!! */
 }
 #randquote a {
   color:gray !important;
@@ -124,8 +80,7 @@ div.quote { float:left; width:245px; padding:10px; }
 
 
 div.protest div.txt,
-div.protest div.pic
-{
+div.protest div.pic {
   display:inline-block;
   *display:inline; /*for IEv8, at least*/
   vertical-align:middle;
@@ -152,13 +107,15 @@ a.hoverShower:hover .showOnHover {
 }
 
 
-/********* Visibility inverted (for tours.php)********/
-
-.showOnHover2
-  { display:inline; z-index:100; position:absolute; }
-.hoverShower2:hover .showOnHover2
-{ display:none; }
-
+/* Visibility inverted (for /tours/) */
+.showOnHover2 {
+  display:inline;
+  z-index:100;
+  position:absolute;
+}
+.hoverShower2:hover .showOnHover2 {
+  display:none;
+}
 
 .tourbox, .tourOverlay {
   background-color:#333;
@@ -187,31 +144,19 @@ a.hoverShower:hover .showOnHover {
   margin: 5px 0;
   color:white;
 }
-
-
 /******************** HOVER ****************************/
 
 
 
-
-
 /******************** PHOTO ALBUMS STUFF ****************************/
-div.allalbums { max-width:400px; } /* going for 2 columns (on non-iphone) */
-div.allalbums .asummary { max-width:133px; text-align:right; }
-
-#pdescription {
-  white-space:pre-wrap;
-  margin-top:10px;
-  margin-left:20px;
-  font-family: cursive;
-  font-size: 125%;
-  line-height:1.2;
-}
-
 #content span.pnav {
   font-size:8pt;
   white-space:nowrap;
   padding-left:30px;
+}
+.pixcell.topinblock {
+  margin-left: 10px;
+  min-height: 300px;
 }
 
 body.album table {
@@ -224,12 +169,7 @@ body.album table {
   border-spacing: 0;
 }
 body.album table>tbody>tr:hover {
-  background-color: transparent;
-}
-
-.pixcell.topinblock {
-  margin-left:10px;
-  min-height:300px;
+  background-color: transparent; /* theme override */
 }
 
 /* override some theme setup for more content rich / denser page */
@@ -244,16 +184,11 @@ body.album #site-sidebar {
 body.album .post {
   max-width: initial;
 }
-
-
 /******************** PHOTO ALBUMS STUFF ****************************/
 
 
 
 /******************** PICTURES -- NICE CORNERS ****************************/
-/* defaults for showing picture */
-
-
 .pixOverlay {
   margin-left:10px;
   margin-top:10px;
@@ -282,7 +217,6 @@ body.album .post {
 }
 
 
-
 /* for safari: */
 .imbox a:link,
 .imbox a:visited,
@@ -291,9 +225,6 @@ body.album .post {
   text-decoration: none !important;
   color:white !important;
 }
-
-
-
 
 .imbox {
   /* container */
@@ -308,7 +239,6 @@ body.album .post {
 .imbox img {
   border-radius: 20px;
 }
-
 /******************** PICTURES -- NICE CORNERS ****************************/
 
 
