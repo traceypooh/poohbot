@@ -13,10 +13,6 @@ gg -i poohbot.com
 - crawl GL site and fix all 404s
 
 ## 404s
-228 https://poohbot.com/css/images/cloudtile.jpg
-  1 https://poohbot.com/img/cloudtile.jpg
-  1 https://poohbot.com/img/europe.jpg
-
   1 https://poohbot.com/img/nav/nice.jpg
   1 https://poohbot.com/img/nav/poohbot-header-by.jpg
 
