@@ -168,7 +168,7 @@ body.album table {
   /* override chrome default (for hover) */
   border-spacing: 0;
 }
-body.album table>tbody>tr:hover {
+body.album table, body.album table>tbody>tr:hover {
   background-color: transparent; /* theme override */
 }
 
@@ -348,7 +348,7 @@ a.image.featured.featured-bottom img {
 
 
 /* DARK MODE! */
-@media (prefers-color-scheme: darkxxx) {
+@media (prefers-color-scheme: xxxdark) {
   body,
   #site-header,
   #site-header .flyout-menu,
