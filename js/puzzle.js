@@ -22,7 +22,7 @@ $.fn.shuffle = function() {
 
 
 $(() => {
-  const src = 'http://poohbot.com/albums/images/2007_10_14%20key%20west/keyWest_0136_tj.jpg'
+  const src = 'https://poohBot.com/albums/images/2007_10_14%20key%20west/keyWest_0136_tj.jpg'
   const cuts = 5
 
   const img = new Image()

@@ -8,7 +8,6 @@ poohbot.com static site version
 
 
 ## Fixme - criticals
-gg -i http://poohbot.com
 - crawl GL site and fix all 404s
 - top nav
 
@@ -28,7 +27,6 @@ gg -i http://poohbot.com
 rj/
 gg lacer.php
 gg kml.php
-gg wp-
 gg featured-click
 ```
 - random pic?
