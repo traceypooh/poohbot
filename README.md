@@ -7,23 +7,17 @@ poohbot.com static site version
 - https://fontawesome.com/v4.7.0/icons/
 
 
-## To Do - criticals
-gg -i poohbot.com
-- top nav
+## Fixme - criticals
+gg -i http://poohbot.com
 - crawl GL site and fix all 404s
+- top nav
 
-## 404s
-  1 https://poohbot.com/img/nav/nice.jpg
-  1 https://poohbot.com/img/nav/poohbot-header-by.jpg
-
-  1 https://poohbot.com/img/tracey.jpg
-
+## Fixme
+### 404s
   1 https://poohbot.com/categories/uncategorized/
   1 https://poohbot.com/tags/h-264/
   1 https://poohbot.com/tags/spottheshuttle/
 
-
-## To Do - nice to have
 ### aliases
 - /img           => /images
 - /albums/thumbs => /albums/images
