@@ -2,7 +2,7 @@ baseurl                 = "https://poohbot.com/"
 # this promising extra option breaks deployed site:
 # relativeurls            = true
 DefaultContentLanguage  = "en"
-title                   = "Tracey Pooh"
+title                   = "Tracey Jaquith · PoohBot Pictures"
 theme                   = "hugo-future-imperfect-slim"
 preserveTaxonomyNames   = true
 paginate                = 10
