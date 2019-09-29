@@ -3,8 +3,6 @@
 mydir=${0:a:h}
 cd $mydir
 
-export HUGO_BASEURL=https://traceypooh.gitlab.io
-
 rm -rfv public
 hugo
 ( sleep 3
