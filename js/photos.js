@@ -62,30 +62,12 @@ const MONTH = {
   '09':'September'
 }
 
-const NAVPIC = [
-  /**/{name:"../tracey.jpg"         ,w:" 80",h:"122"},
-  /**/{name:"keywest.jpg"           ,w:"100",h:"133"},
-  /**/{name:"nice.jpg"              ,w:"100",h:"142"},
-  /**/{name:"ggreg-pic.jpg"         ,w:"100",h:"160"},
-  /**/{name:"pride.jpg"             ,w:"100",h:"197"},
-  /**/{name:"happy.jpg"             ,w:"100",h:"120"},
-  /**/{name:"helios.jpg"            ,w:"100",h:"174"},
-  /**/{name:"sonoma.jpg"            ,w:"100",h:"160"},
-  /**/{name:"traceyYahooAvatar.jpg" ,w:"100",h:"220"}
-  /*  {name:"new-bike.jpg"          ,w:" 92",h:"150"}*/
-]
-
-const log = (typeof console === 'undefined'
-  ? () => {}
-  : console.log.bind(console)
-)
 
 
 class Pooh {
   constructor() {
 
     this.albpix = []
-    this.albpixAlbumName = []
     this.randpix = []
     this.loads = []
     // we allow iphone to do 2-per-row; rest do 4-per row.  we need 8 cells...
@@ -117,7 +99,8 @@ class Pooh {
 
 
     const q = location.search.replace(/\?/, '')
-    if (location.pathname === '/europe/') {
+    if (location.pathname === '/') {
+    } else if (location.pathname === '/europe/') {
       this.albumsingle = true
       this.loads = { europe: 1 }
     } else if (q !== ''  &&  q !== 'albums') {
@@ -159,8 +142,7 @@ class Pooh {
 
 
     // marker to know what element gets replaced when "album_json_gotten()" invoked
-    this.albpix.push(el)
-    this.albpixAlbumName.push(albumname)
+    this.albpix.push({ albumname, el })
 
     this.loads[albumname] = 1
   }
@@ -219,10 +201,10 @@ class Pooh {
       if (albpic === null)
         continue // picture already set up!
 
-      if (this.albpixAlbumName[j] != album.name)
+      if (album.name !== albpic.albumname)
         continue // not the album this wanted picture is in
 
-      const file = albpic.getAttribute('src').replace(/\/albums\/images\//, '')
+      const file = albpic.el.getAttribute('src').replace(/\/albums\/images\//, '')
       let fi = null
       var filepart = file.substring(file.indexOf('/')+1); // after "/" char
       for (var i = 0, el; el = album.file[i]; i++) {
@@ -391,24 +373,6 @@ class Pooh {
   }
 
 
-  // random tracey pic; centered inside 100x220 box
-  randNavPic() {
-    const pic = NAVPIC[Math.round((NAVPIC.length-1) * Math.random())]
-    const topspc = (220 - parseInt(pic.h)) / 2
-
-    return '\
-  <div id="navpic" style="position:relative; height:220px;">\
-    <div style="width:'+pic.w+'px; margin-left:auto; margin-right:auto;">\
-      <a href="index.htm">\
-        <img style="position:absolute; top:'+topspc+'px; z-index:0; width:'+
-    pic.w+'px; height:'+pic.h+'px;" src="images/nav/'+
-    pic.name+'" alt="Tracey Jaquith"/>\
-      </a>\
-    </div>\
-  </div>'
-  }
-
-
   // for album.htm
   album_single(album) {
     document.title = 'Photo album: '+album.name;
@@ -539,6 +503,4 @@ class Pooh {
   }
 }
 
-$(() => log(Pooh.pretty()))
 $(() => new Pooh())
-

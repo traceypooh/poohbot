@@ -60,22 +60,47 @@ div.quote {
   color:#999;
 }
 
-#randquote {
-  float:right;
-  width:400px;
-  margin-right:10%;
-  text-align:center;
-  font-size:80%;
-  font-style:italic;
+
+#quote-random {
+  float: right;
+  text-align: center;
+  max-width: 400px;
+  font-style: italic;
+  padding-right: 10px;
 }
-#randquote dt {
-  color:white !important;  /*xxx WP CSS is braindead!! */
-}
-#randquote a {
-  color:gray !important;
-  text-decoration: none !important;
+#quote-random dt {
+  font-weight: bold;
 }
 
+
+#home-pic {
+  float: left;
+  width: 80px;
+  height: 176px;
+}
+#home-pic img {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+#home-welcome {
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px;
+}
+
+
+.asciiover pre {
+  position:relative;
+  top: -180px;
+  font-size: 10px !important;
+  line-height: 12px !important;
+  color: black !important; /* xxx darkmode */
+}
 
 
 
