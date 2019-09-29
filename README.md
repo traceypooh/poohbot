@@ -29,10 +29,6 @@ gg lacer.php
 gg kml.php
 gg featured-click
 ```
-- random pic?
-- random quote?
-- sliding door?
-- similar top page?
 - unbug users!
 - /video/ and /lapses/ - switch to CSS grid for centering filmstrip
 - /video/ and /lapses/ - 'Play all'
@@ -62,6 +58,7 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 
 ### CSP
 - gg -i onclick
+- gg -i onmouse
 - gg -i '<script>' |chopper
 - gg '<style[^U]' |chopper |fgrep '<style'
 - gg 'style='
