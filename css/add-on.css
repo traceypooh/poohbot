@@ -64,17 +64,22 @@ div.quote {
 #quote-random {
   float: right;
   text-align: center;
-  max-width: 400px;
+  max-width: 90%;
+  min-height: 75px;
   font-style: italic;
   padding-right: 10px;
 }
-#quote-random dt {
-  font-weight: bold;
+
+
+#home-row {
+  display: flex;
+  justify-content: space-around;
+  vertical-align: middle;
 }
-
-
+#home-row img {
+  height:125px;
+}
 #home-pic {
-  float: left;
   width: 80px;
   height: 176px;
 }
@@ -87,14 +92,13 @@ div.quote {
 }
 
 #home-welcome {
-  float: left;
   text-align: center;
   vertical-align: middle;
   padding: 10px;
 }
 
 #hunter-pic {
-  height: 125px;
+  margin-right: 7px;
 }
 
 
