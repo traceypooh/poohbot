@@ -1,8 +1,3 @@
-/*
----top page xxx:
--bunny logo jaggies; blog pic and title hardcoded @bot
--ie dumbbunny.gif colors
-*/
 
 const ALBUMS = [
   'ALC',
