@@ -86,14 +86,13 @@ class Pooh {
 
     $('.round-picture').each((idx, el) => {
       el.outerHTML = this.roundPic({
-        'filename':el.getAttribute('src'),
-        'title'   :el.getAttribute('title'),
-        'href'    :el.getAttribute('href'),
-        'wd'      :el.getAttribute('wd'),
-        'ht'      :el.getAttribute('ht'),
-        'src'     :el.getAttribute('src'),
-        'overlay' :el.getAttribute('overlay') //NOTE: not in use yet
-            }, el.innerHTML)
+        filename:el.getAttribute('src'),
+        title   :el.getAttribute('title'),
+        href    :el.getAttribute('href'),
+        wd      :el.getAttribute('wd'),
+        ht      :el.getAttribute('ht'),
+        src     :el.getAttribute('src')
+      })
     })
 
     $('.random-picture').each((idx, el) => {
@@ -231,7 +230,7 @@ class Pooh {
 
 
   insertPic(el, album, fi) {
-    //console.log(el);
+    // log(el)
     const filename = Pooh.filename(album, fi)
 
     // tracey thumbnails are *always* 150px high; but width varies
@@ -245,28 +244,27 @@ class Pooh {
       href = '/photos/?' + album.name
 
     el.outerHTML = this.roundPic({
-        'filename'  :filename,
-        'title'     :fi.title,
-        'href'      :href,
-        'wd'        :wd,
-        'ht'        :ht,
-        'overlay'   :(Pooh.pretty(album.date) + '<hr/>' +
-                      album.name + '<hr/>' +
-                      fi.title)
-      }, el.innerHTML);
+      filename,
+      href,
+      wd,
+      ht,
+      title: fi.title,
+      dataset: el.dataset,
+      overlay: (Pooh.pretty(album.date) + '<hr/>' + album.name + '<hr/>' + fi.title)
+    });
     return false
   }
 
 
   static pr(str) {
-    return (typeof(str)=='undefined' ? "" : str);
+    return (typeof str === 'undefined' ? '' : str);
   }
 
 
   // normally filename is "album.date album.name"/"file.name"
   // but album can override with attr...
   static filename(album, fi) {
-    if (typeof(album.subdir)=='undefined')
+    if (typeof album.subdir === 'undefined')
       return Pooh.pr(album.date) + ' ' + Pooh.pr(album.name) + '/' + Pooh.pr(fi.name)
 
     return Pooh.pr(album.subdir) + '/' + Pooh.pr(fi.name)
@@ -274,58 +272,54 @@ class Pooh {
 
 
   static getImgSize(imgSrc) {
-    var newImg = new Image()
+    const newImg = new Image()
     newImg.src = imgSrc
-    var tmp = parseInt(newImg.width)
+    const tmp = parseInt(newImg.width)
     newImg = null
     return tmp
   }
 
 
-  //REQUIRED:
-  // pic.filename
-  // pic.title
-  // pic.href
-  //
-  //OPTIONAL:
-  // pic.wd        - when not used, uses width of what is/will be pic.src
-  // pic.ht        - when not used, we'll use 150
-  // pic.src       - when not used, uses 'albums/images/' + filename
-  // pic.overlay   - overrides the "showOnHover" section
-  // pic.onclick   - used in conjunction with href
-  roundPic(pic, html) {
+  roundPic({
+    href = '',     // required
+    src = '',      // when not set, uses 'albums/images/' + filename
+    filename = '', // required if 'src' is not set
+    title = '',
+    ht = 150,
+    wd = 0,        // when not set, uses width of what is/will be pic.src
+    overlay = '',  // set to override the "showOnHover" section
+    onclick = '',  // used in conjunction with href
+    classes = '',
+    dataset = {}
+  } = {}) {
     // setup defaults for optional elements
-    if (typeof pic.ht === 'undefined')
-      pic.ht = 150
-    if (typeof pic.src === 'undefined')
-      pic.src = '/albums/images/' + pic.filename
+    if (src === '')
+      src = '/albums/images/' + filename
 
-    if (typeof pic.wd === 'undefined')
-      pic.wd = Pooh.getImgSize(pic.src)
+    if (!wd)
+      wd = Pooh.getImgSize(src)
 
 
-    let str = '\
-  <div class="imbox" style="width:'+pic.wd+'px; height:'+pic.ht+'px;">\
-    <a class="hoverShower"\
-       href="' + pic.href +
-    (typeof(pic.onclick)=='undefined' ? '' : '" onclick="'+pic.onclick) +
-    '" target="_top">';
-
+    let str = `
+  <div class="imbox ${classes}" style="width:${wd}px; height:${ht}px">
+    <a class="hoverShower" href="${href}" target="_top"
+      ${(onclick === '' ? '' : `onclick="${onclick}"`)}>`
 
     // hidden part (NOTE HAS TO APPEAR TWICE!)
     let hid = ''
-    if (pic.title !== 'untitled') {
+    if (title !== '') {
       hid = '\n\
 \n\
       <!-- HIDDEN BEG -->\n\
 ';
 
-      if (html)
-        hid += '<span class="showOnHover">'+html+'</span>'
+      if (dataset.asciiover)
+        hid += `<span class="showOnHover"><div class="asciiover"><pre>${dataset.asciiover}</pre></div></span>`
+
 
       hid +=
       '<span class="showOnHover pixOverlay">' +
-      (typeof(pic.overlay)=='undefined' || !pic.overlay ? pic.title :pic.overlay)+
+      (overlay === '' ? title : overlay)+
       '</span>\
 \n\
       <!-- HIDDEN END -->\n\
@@ -335,9 +329,9 @@ class Pooh {
 
 
     str += hid + '\
-      <img class="imbox1" style="width:'+pic.wd+'px; height:'+pic.ht+'px;" ' +
-    (pic.title == 'untitled' ? '' : ' title="'+pic.title+'" alt="'+pic.title+'" ')+
-    ' src="'+pic.src+'"/>\
+      <img class="imbox1" style="width:'+wd+'px; height:'+ht+'px;" ' +
+    (title == 'untitled' ? '' : ' title="'+title+'" alt="'+title+'" ')+
+    ' src="'+src+'"/>\
 \
     </a>\
   </div>\
@@ -353,7 +347,7 @@ class Pooh {
   // ####.##.##         ==>   February 27, 2006
   // ####.##.##,true    ==>   Feb 27, 2006
   static pretty(date, month3letters) {
-    if (typeof(date)=='undefined'  ||  !date  ||  date=='200')
+    if (typeof date === 'undefined'  ||  !date  ||  date=='200')
       return '';
 
     var year = date.substring(0,4);
@@ -363,7 +357,7 @@ class Pooh {
     while (  day.length &&   day[0]=='0')   day =   day.substr(1);
 
     var str='';
-    if (typeof(month)!='undefined'  &&  month!=null  &&  month!='')
+    if (typeof month !== 'undefined'  &&  month != null  &&  month != '')
     {
       while (month.length && month[0]=='0') month = month.substr(1);
       str += MONTH[month];
@@ -373,7 +367,7 @@ class Pooh {
       str += ' ';
     }
 
-    if (typeof(day)!='undefined'  &&  day!='')
+    if (typeof day !== 'undefined'  &&  day!='')
       str += day+', ';
     str += year;
     return str;
@@ -451,13 +445,12 @@ class Pooh {
       <div class="pixcell" style="width:'+(wd+20)+'px;">\
 '
           + this.roundPic({
-              'filename':filename,
-              'title'   :'untitled',
+              filename,
+              wd,
+              ht,
               'href'    :'/photos/?' + album.name,
-              'wd'      :wd,
-              'ht'      :ht,
               'onclick' : 'return Pooh.album_Go(this.href)'
-                }, '');
+            })
 
        str += '\
       </div>\
@@ -498,12 +491,12 @@ class Pooh {
     return '\
      <div class="pixcell topinblock pc'+chunk+'" style="width:'+wd2+'px;">' +
     this.roundPic({
-          "filename" :filename,
-          "title"    :fi.name,
-          "href"     :href,
-          "wd"       :wd,
-          "ht"       :ht
-            }, '') +
+      title: fi.name,
+      filename,
+      href,
+      wd,
+      ht
+    }) +
     '<p style="width:'+wd3+'px;">'+fi.title+'</p>\
      </div>\
     '
