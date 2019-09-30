@@ -93,10 +93,14 @@ div.quote {
   padding: 10px;
 }
 
+#hunter-pic {
+  height: 125px;
+}
+
 
 .asciiover pre {
-  position:relative;
-  top: -180px;
+  position: absolute;
+  top: -60px;
   font-size: 10px !important;
   line-height: 12px !important;
   color: black !important; /* xxx darkmode */

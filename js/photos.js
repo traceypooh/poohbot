@@ -5,37 +5,37 @@
 */
 
 const ALBUMS = [
-  "ALC",
-  "Briones",
-  "Cape Rock Harbor",
-  "Jonathan Pon Ride",
-  "Kim Capitola",
-  "New York City",
-  "Tahoe with Dan",
-  "Tyler Hamilton Foundation",
-  "berkeley marina",
-  "bike phonak redwood",
-  "biking",
-  "cape cod",
-  "cape provincetown, hike, cottage",
-  "disney MGM",
-  "disney animal kingdom",
-  "disney epcot",
-  "disney magic kingdom",
-  "drake moved in",
-  "drake power outtage",
-  "drake",
-  "europe",
-  "halloween",
-  "helios",
-  "hummingbird",
-  "isaac",
-  "key west",
-  "madone",
-  "morgan territory",
-  "russ bike redwood loop",
-  "sonoma",
-  "winery bikeride",
+  'ALC',
+  'Briones',
+  'Cape Rock Harbor',
+  'Jonathan Pon Ride',
+  'Kim Capitola',
+  'New York City',
+  'Tahoe with Dan',
+  'Tyler Hamilton Foundation',
+  'berkeley marina',
+  'bike phonak redwood',
+  'biking',
+  'cape cod',
+  'cape provincetown, hike, cottage',
+  'disney MGM',
+  'disney animal kingdom',
+  'disney epcot',
+  'disney magic kingdom',
+  'drake moved in',
+  'drake power outtage',
+  'drake',
+  'europe',
+  'halloween',
+  'helios',
+  'hummingbird',
+  'isaac',
+  'key west',
+  'madone',
+  'morgan territory',
+  'russ bike redwood loop',
+  'sonoma',
+  'winery bikeride'
 ]
 
 const MONTH = {
@@ -62,6 +62,12 @@ const MONTH = {
   '09':'September'
 }
 
+const HUNTER = [
+  '2007_10_07 disney magic kingdom/disneyMagicK_0035_hb.jpg',
+  '2008_06_07 ALC/alc_0136_tp.jpg',
+  'best euro I/104-0419_IMG.JPG',
+  '2005_09_25 helios/IMG_2500.JPG'
+]
 
 
 class Pooh {
@@ -100,6 +106,7 @@ class Pooh {
 
     const q = location.search.replace(/\?/, '')
     if (location.pathname === '/') {
+      Pooh.hunterPic()
     } else if (location.pathname === '/europe/') {
       this.albumsingle = true
       this.loads = { europe: 1 }
@@ -500,6 +507,23 @@ class Pooh {
     '<p style="width:'+wd3+'px;">'+fi.title+'</p>\
      </div>\
     '
+  }
+
+
+  static hunterPic() {
+    // 33% of the time, stick w/ superman hunter static HTM
+    if (Math.random() <= 0.33)
+      return
+
+    const url = '/albums/images/' + Pooh.rand(HUNTER)
+    const $htr = $('#hunter-pic')
+    $htr.find('.showOnHover img').remove()
+    $htr.find('img').attr('src', url)
+  }
+
+
+  static rand(ary) {
+    return ary[Math.round((ary.length - 1) * Math.random())]
   }
 }
 
