@@ -106,7 +106,7 @@ class Pooh {
 
     const q = location.search.replace(/\?/, '')
     if (location.pathname === '/') {
-      Pooh.hunterPic()
+      Pooh.home_page()
     } else if (location.pathname === '/europe/') {
       this.albumsingle = true
       this.loads = { europe: 1 }
@@ -510,7 +510,14 @@ class Pooh {
   }
 
 
-  static hunterPic() {
+  static home_page() {
+    Pooh.hunter_pic()
+    $('.hover-quote-hide').
+      on('mouseover', () => $('#quote-random').css('visibility','hidden')).
+      on('mouseout',  () => $('#quote-random').css('visibility',''))
+  }
+
+  static hunter_pic() {
     // 33% of the time, stick w/ superman hunter static HTM
     if (Math.random() <= 0.33)
       return

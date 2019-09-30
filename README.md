@@ -1,6 +1,5 @@
 
 # poohbot
-
 poohbot.com static site version
 
 ## helpful related links
@@ -58,7 +57,6 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 
 ### CSP
 - gg -i onclick
-- gg -i onmouse
 - gg -i '<script>' |chopper
 - gg '<style[^U]' |chopper |fgrep '<style'
 - gg 'style='
