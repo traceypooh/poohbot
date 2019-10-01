@@ -57,7 +57,7 @@ div.quote {
   padding:10px;
 }
 #js-quotes .quote dd {
-  color:#999; /*xxx*/
+  color:#888; /* heh 1/2 gray! works for author for _both_ light and dark modes */
 }
 
 
@@ -107,7 +107,7 @@ div.quote {
   top: -60px;
   font-size: 10px !important;
   line-height: 12px !important;
-  color: black !important; /* xxx darkmode */
+  color: black;
 }
 
 
@@ -167,7 +167,7 @@ a.hoverShower:hover .showOnHover {
   width: 100%;
   font-style: italic;
   padding: 10px 20px;
-  color:white;
+  color: white;
   opacity: .70;
 }
 .tourOverlay hr {
@@ -175,7 +175,7 @@ a.hoverShower:hover .showOnHover {
 }
 .tourOverlay h5 {
   margin: 5px 0;
-  color:white;
+  color: white;
 }
 /******************** HOVER ****************************/
 
@@ -231,7 +231,7 @@ body.album .post {
   text-decoration: none !important;
   padding:5px;
   background-color:black;
-  color:white;
+  color: white;
   filter:alpha(opacity=50);-moz-opacity:.50;opacity:.50;
   line-height: 1.0;
 }
@@ -250,13 +250,12 @@ body.album .post {
 }
 
 
-/* for safari: */
 .imbox a:link,
 .imbox a:visited,
 .imbox a:active,
 .imbox a:hover {
-  text-decoration: none !important;
-  color:white !important;
+  text-decoration: none;
+  color: white;
 }
 
 .imbox {
@@ -380,7 +379,7 @@ a.image.featured.featured-bottom img {
 
 
 /* DARK MODE! */
-@media (prefers-color-scheme: xxxdark) {
+@media (prefers-color-scheme: dark) {
   body,
   #site-header,
   #site-header .flyout-menu,
@@ -395,7 +394,9 @@ a.image.featured.featured-bottom img {
     color: #ddd;
     background-color: #222;
   }
-  h1, h2, h3, h4, h5, h6, .pagination a {
+  h1, h2, h3, h4, h5, h6,
+  .pagination a,
+  .asciiover pre {
     color: #ddd;
   }
   img {

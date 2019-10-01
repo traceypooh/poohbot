@@ -65,6 +65,12 @@ const HUNTER = [
 ]
 
 
+const log = (typeof console === 'undefined'
+  ? () => {}
+  : console.log.bind(console)
+)
+
+
 class Pooh {
   constructor() {
 
@@ -76,7 +82,7 @@ class Pooh {
 
 
     $('.album-picture').each((idx, el) => {
-      this.albumPicture(el)
+      this.album_picture(el)
     })
 
     $('.round-picture').each((idx, el) => {
@@ -132,7 +138,7 @@ class Pooh {
 
   // eg: file="best euro I/106-0607_IMG.JPG"
   // eg: file="2004 biking/131-3159_IMG.JPG"
-  albumPicture(el) {
+  album_picture(el) {
     const file = el.getAttribute('src').replace(/\/albums\/images\//, '')
 
     let albumname = file.substring(0, file.indexOf('/')) // before "/" char
@@ -217,7 +223,7 @@ class Pooh {
       if (!fi)
         return false //picture not found in album!
 
-      this.insertPic(albpic, album, fi)
+      this.insertPic(albpic.el, album, fi)
       this.albpix[j] = null // flag this element as done by null-ing it
     }
     return false
@@ -234,7 +240,7 @@ class Pooh {
     const wd = Math.round(fi.w * ht / 150)
 
     // if href *not* set, use album as target
-    var href = el.getAttribute('href')
+    let href = el.getAttribute('href')
     if (typeof href === 'undefined'  ||  href === null)
       href = '/photos/?' + album.name
 

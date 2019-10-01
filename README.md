@@ -1,4 +1,7 @@
 
+defaults write com.google.Chrome NSRequiresAquaSystemAppearance -bool yes
+---
+
 # poohbot
 poohbot.com static site version
 
