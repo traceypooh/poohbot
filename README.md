@@ -15,15 +15,12 @@ poohbot.com static site version
 
 ## Fixme
 ### 404s
-  1 https://poohbot.com/categories/uncategorized/
   1 https://poohbot.com/tags/h-264/
   1 https://poohbot.com/tags/spottheshuttle/
 
 ### aliases
 - /img           => /images
 - /albums/thumbs => /albums/images
-- /category/     => /categories/
-- /tag/          => /tags
 - content/contact/_index.md
 ```
 rj/
