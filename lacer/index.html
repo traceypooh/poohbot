@@ -1,0 +1,72 @@
+<h1>
+  Deinterlacing 2:3:2:3 (2323) telecine video into fields for visual analysis
+</h1>
+(<a href="https://poohbot.com/2012/02/deinterlacing-2323-telecine-video-into-fields-for-visual-analysis/">post/info</a>)
+(<a href="https://poohBot.com">site</a>)
+
+
+<div id="xxx"></div>
+
+<link rel="stylesheet" href="lacer.css">
+<script src="/js/jquery.js"></script>
+<script src="lacer.js"></script>
+
+
+<div class="note note-padded">
+  <h3>Some notes about the DV video format (always interlaced!) with 3:2 pulldown:</h3>
+  <pre>
+  Most explanations that indicate how 2:3:2:3 frames are laid out are misleading or even wrong, especially for DV.
+  If you think of four progressive film frames as:
+     [A] [B] [C] [D]
+
+  what DV needs to do is "telecine" -- turn the 24P (from the camera sensor) into 60i to record to DV format.
+  So it needs to take those four full frames and make 10 half frames.
+  (Repeat that 6 times, and you have taken one second of 24 progressive (full frame) fps (frames per second)
+   and created one second of 60 half frame fields!)
+  If we split those frames into (starting at 0) even lines and odd lines (ie: fields), we get:
+    [A0 A1] [B0 B1] [C0 C1] [D0 D1]
+
+  Most explanations gloss over some explanation like: A0 A1 A1 B0 B1 C0 C1 C1 D0 D1
+  But this is not how the fields (1/2 frames) are laid out on tape!
+  It depends a bit on your camera (there area few ways to write them out), but for our
+  DV example above, they are written out like:
+    [A0 A1] [B0 A1] [C0 B1] [C0 C1] [D0 D1]
+
+  That strikes us both as *quite* weird and totally unexpected, right?
+  If you look a bit closer, it makes more sense -- the A1 field is repeated
+  in the same spot visually (the odd lines in 2 adjacent frames),
+  and so is the C0 field.  You can see this very clearly by stepping thru
+  the <a href="/lacer/?alt=1">sample set</a> and hitting NEXT PAIR four times.
+  You see as you step through them:
+     [good pairing] [bad pairing] [bad] [good] [good]
+
+  You can see a pair of duped fields (1 and 3) easily by clicking
+  <a href="/lacer/?alt=1&tN=1&bN=3">here</a>
+  and then trying the "SWAP TOP/BOTTOM" link.  Notice how nothing visually changes!
+
+  So the way one would "pullup" four progessive 24 fps frames from that DV encoding would be:
+  (if the A0 is the field=0; B0 is field=2; and so on...)
+      * throw out the 3rd (A1 dupe) and 4th (C0 dupe) fields
+      * basically re-merge the B0 and B1 fields back into a [B] frame
+      * merge the remaining pairs of fields into [A] [C] [D]
+  Click to step through the
+  <a href="/lacer/?deinterlaced=1">deinterlaced solution</a>
+  (then click "NEXT PAIR" until done)
+
+  Your "cadence" of "3 good, 2 bad" may start at a slightly different point that the DV sample above,
+  but the standard telecine pattern for DV will either be the same
+  (or can be an alternate repeatable pattern of 10 fields from 4 frames).
+
+  <hr/>
+
+  Best documentation I could find (from Cinema Tools) for 2:3:2:3 pulldown
+  with an *alternate* way to explain the cadence:
+  <a href="http://documentation.apple.com/en/cinematools/usermanual/index.html#chapter=13%26section=3%26hash=apple_ref:doc:uid:CinemaTools-UserManual-90861P24-1009353"><img src="http://documentation.apple.com/en/cinematools/usermanual/Art/L00/L0027_32Pulldown.png"></a>
+  It's a bit confusing for DV, since:
+     * DV starts 2 fields in from this
+     * if you look carefully, it can make you think [C] is field swapped
+       (compared to [A] [B] and [D])
+  So I find my detected and explained cadence pattern above more apropos for DV!
+  But YMMV 8-)
+  </pre>
+</div>

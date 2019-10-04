@@ -1,0 +1,42 @@
+body {
+  background-color: black;
+  color: yellow;
+  width:1000px;
+}
+a:link, a:visited, a:active {
+  color: #00AEF0 !important;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.topinblock {
+  vertical-align: top;
+  display: inline-block;
+  *display: inline; /*for IEv8, at least*/
+}
+
+.ttl {
+  position: absolute;
+  background-color:gray;
+  color: yellow;
+  font-weight: bold;
+  padding: 3px;
+}
+
+#lacer {
+  position: relative;
+}
+
+#lacer img {
+  position: absolute;
+}
+
+.note {
+  font-size: 90%;
+  color: #ddd;
+}
+.note-padded {
+  padding: 20px;
+}

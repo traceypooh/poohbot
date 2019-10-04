@@ -23,7 +23,6 @@ poohbot.com static site version
 - /albums/thumbs => /albums/images
 - content/contact/_index.md
 ```
-rj/
 gg lacer.php
 gg kml.php
 gg featured-click
