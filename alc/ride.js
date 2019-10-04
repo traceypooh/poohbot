@@ -350,8 +350,8 @@ table    { width:100%; border-collapse:collapse; border:1px solid black; } \n\
   arg(theArgName) {
     const sArgs = location.search.slice(1).split('&')
     let r = ''
-    for (var i=0; i < sArgs.length; i++) {
-      if (sArgs[i].slice(0,sArgs[i].indexOf('=')) == theArgName) {
+    for (var i = 0; i < sArgs.length; i++) {
+      if (sArgs[i].slice(0,sArgs[i].indexOf('=')) === theArgName) {
         r = sArgs[i].slice(sArgs[i].indexOf('=') + 1)
         break
       }
