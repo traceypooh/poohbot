@@ -1,11 +1,11 @@
 <?
 
-// NOTE: you can run this web page on the command-line in an alternate mode
-// to take a source video file and output some 1/2-height fields yourself!
-// Example::
-//     php ~/scripts/lacer.php good.mov  0.5  0.7
+// NOTE: you can run this on the command-line
+// to take a source video file and output some 1/2-height fields yourself.
+// Example:
+//     php lacer.php good.mov  0.5  0.7
 
-define('IMAGES', (isset($_GET['alt']) || isset($_GET['deinterlaced']) ? 'rj/2323/*png' :'rj/*png'));
+define('IMAGES', (isset($_GET['alt']) || isset($_GET['deinterlaced']) ? 'rj/2323/*png' : 'rj/*png'));
 define('CROP', '720x240');
 
 
