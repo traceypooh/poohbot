@@ -1,22 +1,14 @@
-
-defaults write com.google.Chrome NSRequiresAquaSystemAppearance -bool yes
----
-
 # poohbot
 poohbot.com static site version
 
-## helpful related links
-- https://fontawesome.com/v4.7.0/icons/
 
-
-## Fixme - criticals
+## Fixme
 - crawl GL site and fix all 404s
 - top nav
 
-## Fixme
 ### 404s
-  1 https://poohbot.com/tags/h-264/
-  1 https://poohbot.com/tags/spottheshuttle/
+- https://poohbot.com/tags/h-264/
+- https://poohbot.com/tags/spottheshuttle/
 
 ### aliases
 - /img           => /images
@@ -33,7 +25,6 @@ gg featured-click
 - make videos take up full 854px wide (720x480 now)
 - link any <img> local tag in a post to fullsize naked img?
 - `embed: ` in .md auto does archive.org iframe..
-
 
 ### map route fails
 ```
@@ -53,13 +44,18 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - http://localhost:1313/2009/04/ffmpeg-building-on-mac-intel/x386/
 
 
-### CSP
+## CSP
 - gg -i onclick
 - gg -i '<script>' |chopper
 - gg '<style[^U]' |chopper |fgrep '<style'
 - gg 'style='
 
 ---
+
+
+## helpful related links
+- https://fontawesome.com/v4.7.0/icons/
+
 
 ## Could Use
 - layouts/shortcodes/fancybox.html
