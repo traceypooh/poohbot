@@ -1,7 +1,7 @@
-// NOTE: you can run this companion file 'lacer.php' on the command-line
+// NOTE: you can run this companion file 'bash lacer.txt' on the command-line
 // to take a source video file and output some 1/2-height fields yourself.
 // Example:
-//     php lacer.php good.mov  0.5  0.7
+//     bash lacer.txt  good.mov  0.5  0.7
 
 const BFF = true // DV is typically Bottom Field First.  Set to 0/falsey if Top Field First
 const BASE = 'https://archive.org/download/lacer/' // imagery base url

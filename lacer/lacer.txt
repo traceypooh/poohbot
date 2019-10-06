@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Run this on the command-line to take a source video file
+# and output some 1/2-height fields yourself.
+#
+# Example:
+#    bash lacer.txt good.mov  0.5  0.7
+
+
+VID=${1:?"Usage: bash lacer.txt <video file> <-ss> <-endpos>"}
+ SS=${2:?"Usage: bash lacer.txt <video file> <-ss> <-endpos>"}
+END=${3:?"Usage: bash lacer.txt <video file> <-ss> <-endpos>"}
+CROP="720x240"
+
+
+echo -n "Removed: "
+rm -fv [01]/*pgmyuv  *pgmyuv  *-F[01].png | tr '\n' ' '
+echo
+
+for i in 0 1; do
+  mkdir -p $i
+  # 1st pass, dump even fields as *-F0.png
+  # 2nd pass, dump odd  fields as *-F1.png
+
+  mplayer -nosound -ss $SS -endpos $END $VID  -nosound  -vf field=$i  -vo pnm:pgmyuv
+  mv *pgmyuv $i/
+
+  # convert the "pgmyuv" format into web viewable PNG format,
+  # cropping out the "uv" (chroma) bottom parts so we just
+  # see the Y (luminance) part
+  for j in $i/*pgmyuv; do
+    convert -quality 100 -crop $CROP'+0+0!' $j $(basename $j)-F$i.png
+  done
+done
+
+
+# comment out this next line to compare all possible fields to each other...
+return
+
+
+
+php -- "$@" <<"EOF"
+<?
+  $pngs = glob('*-F[01].png');
+  foreach ($pngs as $i) {
+    $scores = [];
+    foreach ($pngs as $j) {
+      if ($i === $j) continue; // don't compare same field with itself
+
+      // use ImageMagick utility to compare the two fields and output a score
+      // (the lower the score, the more similar the fields are)
+      $scores[$j] = strtok(
+        trim(`env compare -verbose $i $j -metric MAE $i $j null: 2>&1 |fgrep all|cut -f2 -d:`),
+        ' '
+      );
+    }
+    asort($scores);
+    list($best,$score) = each($scores);
+    print_r($scores);
+    echo "best $i $best ($score)\n";
+  }
+}
+EOF
