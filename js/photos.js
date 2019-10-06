@@ -64,11 +64,12 @@ const HUNTER = [
   '2005_09_25 helios/IMG_2500.JPG'
 ]
 
-
-const log = (typeof console === 'undefined'
-  ? () => {}
-  : console.log.bind(console)
-)
+if (typeof log === 'undefined') {
+  const log = (typeof console === 'undefined'
+    ? () => {}
+    : console.log.bind(console)
+  )
+}
 
 
 class Pooh {
