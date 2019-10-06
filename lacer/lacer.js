@@ -44,18 +44,14 @@ $.getJSON('https://archive.org/metadata/lacer/files', (json) => {
   if (arg('deinterlaced')) {
     // counting first field as 0, throw out fields 3 and 4.
     // continue that pattern every 10 fields...
-    for (let i = 3; i < IMGS.length; i += 10) {
-      unset(IMGS[i+1]) //xxx
-      unset(IMGS[i]) //xxx
-    }
-    IMGS = array_values(IMGS) //xxx
+    IMGS = IMGS.filter((val,idx) => (3 !== idx % 10  &&  4 !== idx % 10))
   }
 
 
   let htm = ''
   if (arg('all')) {
-    for (let im in IMGS)
-      htm += `<div class="ttl ghost roundbox5">${im}</div><img xxx src="${im}"><br/>`
+    for (let im of IMGS)
+      htm += `<div class="ttl ghost roundbox5">${im}</div><img src="${BASE + im}"><br/>`
   }
 
 
@@ -90,7 +86,7 @@ $.getJSON('https://archive.org/metadata/lacer/files', (json) => {
   <br/>
   <a href="${url}all=1">show all fields</a>`
 
-    $('#xxx').html(htm)
+    $('#js-form').html(htm)
     return
   }
 
@@ -145,5 +141,5 @@ $.getJSON('https://archive.org/metadata/lacer/files', (json) => {
    ] <br>`
   )
 )
-  $('#xxx').html(htm)
+  $('#js-form').html(htm)
 })
