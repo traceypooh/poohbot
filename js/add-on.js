@@ -48,5 +48,19 @@ function rand(ary) {
   return ary[Math.round((ary.length - 1) * Math.random())]
 }
 
+
+
+if (window.matchMedia  &&  window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  log('bring on the darkness!')
+  const hour = new Date().getHours()
+  if (7 <= hour  &&  hour < 19) { // override [7am .. 7pm] localtime
+    log('.. but its vampire sleep time')
+    $('body').addClass('lite')
+  }
+  // macOS can force chrome to always use light mode (since it's slaved to mac sys pref otherwise)
+  //   defaults write com.google.Chrome NSRequiresAquaSystemAppearance -bool yesa
+}
+
+
 $(() => $('#home-pic img').attr('src', randNavPic()))
 $(randomQuote)
