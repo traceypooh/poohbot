@@ -366,7 +366,7 @@ IAV = {
     const e = document.getElementById('agif-wrap')
     e.style.float = 'right'
     e.style.margin = '10px 0 12px 30px'
-    e.style.color = 'blue'
+    e.style.color = '#888' // neutral for light or dark mode ;)
     e.style.textAlign = 'right'
 
     let gif = document.getElementById('agif')
@@ -377,7 +377,7 @@ IAV = {
       const img = link.getAttribute('href')
       link.addEventListener('mouseover', function() {
         log(img)
-        gif.src = '/img/' + img
+        gif.src = img
         log(gif.src)
       })
       link.addEventListener('click', function(evt) {

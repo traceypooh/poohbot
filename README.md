@@ -3,7 +3,6 @@ poohbot.com static site version
 
 
 ## Fixme
-- crawl GL site and fix all 404s
 - top nav
 
 ### 404s
@@ -55,6 +54,8 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 
 ## helpful related links
 - https://fontawesome.com/v4.7.0/icons/
+- crawl site (and find => fix all 404s)
+`wget --spider -o log -e robots=off -w 1 -r -nv -p https://poohbot.com  &&  fgrep -B1 'not exist' log`
 
 
 ## Could Use
