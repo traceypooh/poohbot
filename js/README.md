@@ -1,3 +1,6 @@
+## misc
+wget https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js
+wget https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js
 
 ## highlightjs gotten here
 - https://highlightjs.org/download/

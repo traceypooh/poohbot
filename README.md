@@ -17,7 +17,6 @@ poohbot.com static site version
 gg kml.php
 gg featured-click
 ```
-- unbug users!
 - /video/ and /lapses/ - switch to CSS grid for centering filmstrip
 - /video/ and /lapses/ - 'Play all'
 - pick 2 random posts for left side
