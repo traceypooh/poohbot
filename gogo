@@ -3,8 +3,7 @@
 mydir=${0:a:h}
 cd $mydir
 
-rm -rfv public
-hugo
+rm -rf public
 ( sleep 3
   open http://localhost:1313/
 ) &
