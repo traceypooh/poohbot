@@ -12,6 +12,9 @@ pluralizeListTitles     = false
 disableLanguages        = [""]
 ignoreFiles             = ["\\.crdownload$"]
 
+[markup.goldmark.renderer]
+  # show inline HTM
+  unsafe = true
 
 [permalinks]
   post = "/:year/:month/:title/"
