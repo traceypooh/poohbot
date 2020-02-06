@@ -43,10 +43,12 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 
 
 ## CSP
-- gg -i onclick
-- gg -i '<script>' |chopper
-- gg '<style[^U]' |chopper |fgrep '<style'
-- gg 'style='
+```bash
+gg -i onclick
+gg -i '<script>' |chopper
+gg '<style[^U]' |chopper |fgrep '<style'
+gg 'style='
+```
 
 ---
 
