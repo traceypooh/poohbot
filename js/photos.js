@@ -487,8 +487,7 @@ class Pooh {
 
     const chunk = ((idx) % this.albumChunkSize) + 1
 
-    const href = (location.host.indexOf('.archive.org')>0 ?
-                '' : 'file:///Users/tracey/') + 'Pictures/' + filename
+    const href = `../albums/images/${filename}`
 
     return '\
      <div class="pixcell topinblock pc'+chunk+'" style="width:'+wd2+'px;">' +
