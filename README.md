@@ -99,7 +99,14 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - https://gohugo.io/content-management/shortcodes/#youtube
 - archive.org video/book embeds
 - `hugo` # build public
-- `hugo new post/my-first-post.md`
+
+
+## make a post
+```bash
+PO=post/$(date +%Y)/$(date +%m)-title-something-something.md
+hugo new $PO
+code ~/poohbot/content/$PO
+```
 
 
 ## run and/or make `public/` subdir
