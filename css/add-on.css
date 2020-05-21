@@ -6,9 +6,8 @@
 */
 
 .topinblock {
-  vertical-align:top;
-  display:inline-block;
-  *display:inline; /*for IEv8, at least*/
+  vertical-align: top;
+  display: inline-block;
 }
 
 .rounded15 {
