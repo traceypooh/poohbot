@@ -15,24 +15,24 @@ _things turning me on this week_ <br/>
 _☕enjoy with a hot cupa java/script_ <br/>
 JavaScript is _mental_ now with `deno` --- forget `node` `npm` `package.json` `node_modules` and everything you growed up on.  This 🦕 changes _everything!_
 
-About a year ago, an amazing coworker who shall remain anonymous ([COUGH] Drini), casually mentioned ["Deno"](https://deno.land) in a team meeting (~12 of us), mentioning Ryan Dahl, creator of `node` created this as The Next Thing.  I'd never heard of it, checked it out, got excited and was... _delflated_ seeing _full urls_ in `import` statements (instead of relative urls) since that wasn't compatible with browsers.
+About a year ago, an amazing coworker who shall remain anonymous ([COUGH] Drini), casually mentioned ["Deno"](https://deno.land) in a team meeting (~12 of us).  They mentioned Ryan Dahl, the creator of `node`, created this as The Next Thing.  I'd never heard of it, checked it out, got excited and was... _delflated_ seeing _full urls_ in `import` statements (instead of relative urls) since that wasn't compatible with browsers.
 
-When an tech idea & premise is _so good_ with a fatal flaw, I _tend_ to revisit periodically...
+When a tech idea & premise is _so good_ with a fatal flaw, I _tend_ to revisit periodically...
 
 3 months ago, to my _amazement_ -- all the main browsers were totally loading full urls, eg:
 ```js
 import $ from 'https://esm.sh/jquery'
 ```
 
-"Cancel my appointments for the month!" --- I dove in _immediately_ to kick the tires on the back-end and see if _fully_ replacing `node` for `deno` in my work (mostly backend) main repository for TV, audio & video, containting 30,000+ JS lines, might work.
+"Cancel my appointments for the month!" --- I dove in _immediately_ to kick the tires on the back-end and see if _fully_ replacing `node` for `deno` in my work (mostly backend) main repository for TV, audio & video, containing 30,000+ JS lines, might work.
 
-In under 3 months, the entire repository has been moved over.
+In under 3 months, I migrated the entire repository to Deno.
 
 Here's a nice browser example:
 
 https://av.prod.archive.org/demo/deno.htm
 
-Pay especially attention to the top and later `import` statements here.
+Pay special attention to the top and later `import` statements here.
 
 You can load logical `npm` modules directly from the web (!) 😍
 
@@ -50,7 +50,7 @@ window.d3 = { version: '7.0.0', ...d3v7 }
 $('body').append(`
   <style>.card { width: 40%; margin: 3%; display: inline-block; vertical-align: top; }</style>
   <div id="x" class="card card-body bg-light">
-    <h1>ðŸ˜„ bootstrap hai whirld ðŸ˜„</h1>
+    <h1>bootstrap hai whirld</h1>
     no real idea why it's working to \`import\` with urls starting with 'https://' now!
     <p> working in (at least): chrome, safari, firefox, safari iOS</p>
   </div>
