@@ -108,6 +108,15 @@ gg 'style='
 PO=post/$(date +%Y)/$(date +%m)-title-something-something.md
 hugo new $PO
 code ~/poohbot/content/$PO
+
+# imagery is nice/fullsize at 880px wide, preview/shows at 880x375 (2.35:1) where you can
+# pick to show more of the top or bottom..
+#   class: featured-top
+#   class: featured-bottom
+# 880x495 is nice 16:9 pic size
+
+# center an image into 880x495 black background:
+# convert -size 880x495 xc:black in.jpg -gravity center -composite x.jpg; identify x.jpg; open x.jpg
 ```
 
 
