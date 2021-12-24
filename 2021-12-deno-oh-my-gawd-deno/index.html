@@ -116,3 +116,22 @@ I'm shook!
 (and won't go back)
 
 # ❤️ 🦕
+
+
+[postscript]
+
+BTW, it took a couple months to migrate, _not_ because migrating `node` => `deno` is _particularly_ involved or long.
+
+The conversion took awhile because:
+- major delay due to needing to find a minimal porting setup for code `lint`, test, and coverage.
+Ultimately, though `deno lint` is good (and blazing fast) ---
+at this point --- `eslint` is still better.
+I also didn't want to change my `expectations` based ES Modules `mocha` test files too much.
+My next Teco Tuesday post will be about a nice testing & coverage setup.
+- I decided it was time to move all synchronous/blocking network and shell-out calls to async i/o
+- I decided _not_ to use any of the available `node`-compatible layer -- and instead switch everything to _native_ `deno`.
+
+(There's only 2 files presently using a single node-compatible emulation `readdir()` call, since I already had performant complex async i/o doing parallel processing with it, running live 24x7, that I didn't want to destabilize, eg:
+```js
+import { readdir } from 'https://deno.land/std/node/fs/promises.ts'
+```
