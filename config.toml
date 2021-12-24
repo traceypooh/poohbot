@@ -68,7 +68,7 @@ ignoreFiles             = ["\\.crdownload$"]
   # required for proper functionality. HTML is supported within the params.
   [params.intro]
     header                = "Tracey Jaquith · PoohBot Pictures"
-    paragraph             = "Technophile · Optimist · <a href=/biking>Cyclist</a> · <a href=https://archive.org/about/bios.php>Archivist</a> · Design · <a href=/video>Video</a> · TV · Kubernetes · Docker"
+    paragraph             = "Technophile · Optimist · <a href=/biking>Cyclist</a> · <a href=https://archive.org/about/bios.php>Archivist</a> · Design · <a href=/video>Video</a> · TV · Nomad · Docker"
     rssIntro              = true
     socialIntro           = true
 
