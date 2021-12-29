@@ -1,20 +1,18 @@
 
-var nWheel=1
 // was 0
-var modeval=1
-//modeval is 1 for gear inches, 12.5 for meters, crank _diam._ for gain ratio
-//this currently is not working
-var cassette=1
+// modeval is 1 for gear inches, 12.5 for meters, crank _diam._ for gain ratio
+// this currently is not working
+const modeval = 1
+const cassette = 1
 
+let nWheel = 1
 
 // tjl
 // Extra multiplier for MPH data - based on GearInches
-var mphmult=1
-var modename
+let mphmult = 1
+let modename
 let hubMult
-var numHubs
-var hubname
-var nHub
+let nHub
 let nCassette
 let nMode
 let tiresize
@@ -26,37 +24,51 @@ let rears
 
 class Gears {
   static clearit() {
-    Gears.fill([['','',''],['', '', '', '', '', '', '', '', '', '']]);
+    Gears.fill([['', '', ''], ['', '', '', '', '', '', '', '', '', '']], true)
 
     const gearwin = document.getElementById('gearwin')
-    gearwin.innerHTML = 'For the most basic/quickest use, simply select enter the double or triple front ring gear tooth sizes (they are typically imprinted on the rings themselves), pick a "Stock Cassette", then hit "Calculate".  If your rear cassette is not in the list, enter the 7 to 10 gear teeth values in the "Custom Cassette" section.';
-    return false;
+    gearwin.innerHTML = 'For the most basic/quickest use, simply select enter the double or triple front ring gear tooth sizes (they are typically imprinted on the rings themselves), pick a "Stock Cassette", then hit "Calculate".  If your rear cassette is not in the list, enter the 7 to 10 gear teeth values in the "Custom Cassette" section.'
+    return false
   }
 
-  static tracey3(){Gears.fill([[52,42,30],[12,13,14,15,17,19,21,24,27,'']]);Gears.converter();}
-  static tracey2(){Gears.fill([[50,34,''],[11,12,13,14,15,17,19,21,24,28]]);Gears.converter();}
-  static traceyX(){Gears.fill([[50,34,''],[13,14,15,16,17,19,21,23,26,29]]);Gears.converter();}
-  static hunter (){Gears.fill([[50,34,''],[11,12,13,14,15,17,19,21,23,26]]);Gears.converter();}
+  static tracey3() { Gears.fill([[52, 42, 30],[12,13,14,15,17,19,21,24,27,'']]) }
 
-  // enter gear values into the form
-  static fill(gears) {
-    for (var n=0; n<3; n++)
-      document.ringform['ring'+(n+1)].value = gears[0][n];
-    for (var n=0; n<10; n++)
-      document.ringform['rear'+(n+1)].value = gears[1][n];
+  static tracey2() { Gears.fill([[50, 34, ''],[11,12,13,14,15,17,19,21,24,28]]) }
+
+  static traceyX() { Gears.fill([[50, 34, ''],[13,14,15,16,17,19,21,23,26,29]]) }
+
+  static hunter()  { Gears.fill([[50, 34, ''],[11,12,13,14,15,17,19,21,23,26]]) }
+
+  static salsa_timerjack_mtb() { Gears.fill([[32], [10, 51]]) }
+
+  static grizl_std() { Gears.fill([[40], [10, 11, 13, 15, 17, 19, 21, 24, 28, 32, 38, 44]]) }
+
+  static grizl_mod() { Gears.fill([[36], [10, 50]]) }
+
+
+  /**
+   * enters gear values into the form
+   * @param {object} gears
+   * @param {boolean} clear
+   */
+  static fill(gears, clear = false) {
+    for (let n = 0; n < 3; n++)
+      document.ringform[`ring${n + 1}`].value = gears[0][n] || ''
+    for (let n = 0; n < 12; n++)
+      document.ringform[`rear${n + 1}`].value = gears[1][n] || ''
+
+    if (!clear)
+      Gears.converter()
   }
-
-
 
 
   //----------------------------------------------------------
-
   static get_rings() {
     return [
       parseFloat(document.ringform.ring1.value),
       parseFloat(document.ringform.ring2.value),
       parseFloat(document.ringform.ring3.value),
-      0
+      0,
     ]
   }
 
@@ -72,50 +84,50 @@ class Gears {
       parseFloat(document.ringform.rear8.value),
       parseFloat(document.ringform.rear9.value),
       parseFloat(document.ringform.rear10.value),
-      0
+      parseFloat(document.ringform.rear11.value),
+      parseFloat(document.ringform.rear12.value),
+      0,
     ]
   }
 
   //----------------------------------------------------------
-
   static calc_rings(rings, rears) {
-    let wheelval = parseFloat(nWheel)
+    const wheelval = parseFloat(nWheel)
 
     const ringData = new Array(5)
     for (let n = 0; rings[n] > 0; n++) {
       ringData[n] = new Array(15);
       for (let c = 0; rears[c] > 0; c++) {
-        ringData[n][c]=mphmult*(rings[n]/rears[c])*wheelval/nMode;
-        // tjl - Do rounding at printout instead - ringData[n][c]=rounder(mphmult*(rings[n]/rears[c])*wheelval/nMode);
+        ringData[n][c] = mphmult * (rings[n] / rears[c]) * wheelval / nMode
+        // tjl - Do rounding at printout instead:
+        // ringData[n][c]=rounder(mphmult*(rings[n]/rears[c])*wheelval/nMode)
       }
     }
-    return ringData;
+    return ringData
   }
 
   //----------------------------------------------------------
-
   static converter() {
-    var viewInteger, viewString
-    viewInteger = document.ringform.diameter.selectedIndex
-    viewString = document.ringform.diameter.options[viewInteger].value
+    let viewInteger = document.ringform.diameter.selectedIndex
+    let viewString = document.ringform.diameter.options[viewInteger].value
     tiresize = document.ringform.diameter.options[viewInteger].text
     nWheel = parseFloat(viewString)
 
-    viewInteger=document.ringform.crankdiam.selectedIndex
-    viewString=document.ringform.crankdiam.options[viewInteger].value
-    cranklength=document.ringform.crankdiam.options[viewInteger].text
+    viewInteger = document.ringform.crankdiam.selectedIndex
+    viewString = document.ringform.crankdiam.options[viewInteger].value
+    cranklength = document.ringform.crankdiam.options[viewInteger].text
     const nCrank = parseFloat(viewString)
 
-    viewInteger=document.ringform.modeval.selectedIndex
-    viewString=document.ringform.modeval.options[viewInteger].value
-    modename=document.ringform.modeval.options[viewInteger].text
+    viewInteger = document.ringform.modeval.selectedIndex
+    viewString = document.ringform.modeval.options[viewInteger].value
+    modename = document.ringform.modeval.options[viewInteger].text
     nMode = parseFloat(viewString)
-    //tjl
-    if(nMode >= 30) {
-      mphmult = nMode / 336.135;
-      nMode = 1;
+    // tjl
+    if (nMode >= 30) {
+      mphmult = nMode / 336.135
+      nMode = 1
     } else {
-      mphmult = 1.0;
+      mphmult = 1.0
     }
 
     viewInteger = document.ringform.cassette.selectedIndex
@@ -125,15 +137,16 @@ class Gears {
 
     viewInteger = document.ringform.hubmodel.selectedIndex
     viewString = document.ringform.hubmodel.options[viewInteger].value
-    hubname = document.ringform.hubmodel.options[viewInteger].text
+    const hubname = document.ringform.hubmodel.options[viewInteger].text
     nHub = viewString
 
-    if (nMode == 0)
+    if (!nMode)
       nMode = nCrank
 
     Gears.main()
     return false
   }
+
   //----------------------------------------------------------
   //
   // This method rounds the passed number to one decimal place
@@ -146,6 +159,7 @@ class Gears {
     const tmp = String(Math.round(n*10) / 10.0)
     return tmp + (tmp.indexOf('.') < 0 ? '.0' : '')
   }
+
   //----------------------------------------------------------
   static main() {
     rings = Gears.get_rings()
@@ -159,22 +173,25 @@ class Gears {
 
       const ringData = Gears.calc_rings(rings, rears)
       hubMult = Gears.parse_hubmodel(nHub)
-      numHubs = hubMult.length - 1
+      let numHubs = hubMult.length - 1
       Gears.showit(ringData)
     }
   }
+
   //----------------------------------------------------------
   static parse_hubmodel() {
     const hubs = nHub.split('-', 14)
     hubs.push(0)
     return hubs
   }
+
   //----------------------------------------------------------
   static parse_cassette() {
     const rears = nCassette.split('-', 14)
     rears.push(0)
     return rears;
   }
+
   //----------------------------------------------------------
   static percentrear(c) {
     var percentage = 1
@@ -186,6 +203,7 @@ class Gears {
       return ("<tr><td><FONT SIZE=-1>"+percentage+" %</FONT></td></tr>");
     return '';
   }
+
   //----------------------------------------------------------
   static percentfront(rnum) {
     var percentage = 1
@@ -197,6 +215,7 @@ class Gears {
       return "<TD><FONT SIZE=-1>"+percentage+" %</FONT></TD>";
     return '';
   }
+
   //----------------------------------------------------------
   // **********output-big
   static showit(ringData) {
