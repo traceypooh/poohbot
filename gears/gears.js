@@ -31,19 +31,21 @@ class Gears {
     return false
   }
 
-  static tracey3() { Gears.fill([[52, 42, 30],[12,13,14,15,17,19,21,24,27,'']]) }
+  static tracey3() { Gears.fill([[52, 42, 30], [12, 13, 14, 15, 17, 19, 21, 24, 27, '']]) }
 
-  static tracey2() { Gears.fill([[50, 34, ''],[11,12,13,14,15,17,19,21,24,28]]) }
+  static tracey2() { Gears.fill([[50, 34, ''], [11, 12, 13, 14, 15, 17, 19, 21, 24, 28]]) }
 
-  static traceyX() { Gears.fill([[50, 34, ''],[13,14,15,16,17,19,21,23,26,29]]) }
+  static traceyX() { Gears.fill([[50, 34, ''], [13, 14, 15, 16, 17, 19, 21, 23, 26, 29]]) }
 
-  static hunter()  { Gears.fill([[50, 34, ''],[11,12,13,14,15,17,19,21,23,26]]) }
+  static hunter()  { Gears.fill([[50, 34, ''], [11, 12, 13, 14, 15, 17, 19, 21, 23, 26]]) }
 
   static salsa_timerjack_mtb() { Gears.fill([[32], [10, 51]]) }
 
-  static grizl_std() { Gears.fill([[40], [10, 11, 13, 15, 17, 19, 21, 24, 28, 32, 38, 44]]) }
+  static grizl_1044() { Gears.fill([[40], [10, 11, 13, 15, 17, 19, 21, 24, 28, 32, 38, 44]]) }
 
-  static grizl_mod() { Gears.fill([[36], [10, 50]]) }
+  static grizl_1050() { Gears.fill([[36], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 50]]) }
+
+  static grizl_1052() { Gears.fill([[36], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 52]]) }
 
 
   /**
