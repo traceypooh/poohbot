@@ -1,14 +1,14 @@
+/* eslint-disable no-console */
+/* eslint-disable no-console, no-alert */
 
 // was 0
 // modeval is 1 for gear inches, 12.5 for meters, crank _diam._ for gain ratio
-// this currently is not working
-const modeval = 1
-const cassette = 1
+// this currently is not working xxx
+// const modeval = 1
 
 let nWheel = 1
 
-// tjl
-// Extra multiplier for MPH data - based on GearInches
+// Extra multiplier for MPH data - based on GearInches (xxx?)
 let mphmult = 1
 let modename
 let hubMult
@@ -93,15 +93,15 @@ class Gears {
   }
 
   //----------------------------------------------------------
-  static calc_rings(rings, rears) {
+  static calc_rings() {
     const wheelval = parseFloat(nWheel)
 
     const ringData = new Array(5)
     for (let n = 0; rings[n] > 0; n++) {
-      ringData[n] = new Array(15);
+      ringData[n] = new Array(15)
       for (let c = 0; rears[c] > 0; c++) {
-        ringData[n][c] = mphmult * (rings[n] / rears[c]) * wheelval / nMode
-        // tjl - Do rounding at printout instead:
+        ringData[n][c] = ((mphmult * (rings[n] / rears[c])) * wheelval) / nMode
+        // xxx - Do rounding at printout instead:
         // ringData[n][c]=rounder(mphmult*(rings[n]/rears[c])*wheelval/nMode)
       }
     }
@@ -124,8 +124,8 @@ class Gears {
     viewString = document.ringform.modeval.options[viewInteger].value
     modename = document.ringform.modeval.options[viewInteger].text
     nMode = parseFloat(viewString)
-    // tjl
-    if (nMode >= 30) {
+
+    if (nMode >= 30) { // xxx
       mphmult = nMode / 336.135
       nMode = 1
     } else {
@@ -139,7 +139,6 @@ class Gears {
 
     viewInteger = document.ringform.hubmodel.selectedIndex
     viewString = document.ringform.hubmodel.options[viewInteger].value
-    const hubname = document.ringform.hubmodel.options[viewInteger].text
     nHub = viewString
 
     if (!nMode)
@@ -158,24 +157,23 @@ class Gears {
   // the variable passed in *is* a number.
   //
   static rounder(n) {
-    const tmp = String(Math.round(n*10) / 10.0)
+    const tmp = String(Math.round(n * 10) / 10.0)
     return tmp + (tmp.indexOf('.') < 0 ? '.0' : '')
   }
 
   //----------------------------------------------------------
   static main() {
     rings = Gears.get_rings()
-    if ((rings[0] == 0) || isNaN(rings[0])) {
-      alert("Enter a chainring value!")
+    if (!rings[0] || isNaN(rings[0])) {
+      alert('Enter a chainring value!')
     } else {
-      rears = (nCassette == "Custom"
+      rears = (nCassette === 'Custom'
         ? Gears.get_rears()
         : Gears.parse_cassette()
       )
 
-      const ringData = Gears.calc_rings(rings, rears)
+      const ringData = Gears.calc_rings()
       hubMult = Gears.parse_hubmodel(nHub)
-      let numHubs = hubMult.length - 1
       Gears.showit(ringData)
     }
   }
@@ -189,33 +187,33 @@ class Gears {
 
   //----------------------------------------------------------
   static parse_cassette() {
-    const rears = nCassette.split('-', 14)
+    rears = nCassette.split('-', 14)
     rears.push(0)
-    return rears;
+    return rears
   }
 
   //----------------------------------------------------------
   static percentrear(c) {
-    var percentage = 1
-    percentage = Gears.rounder(rears[c+1]/rears[c]*100-100);
-    if (rears[c]>rears[c+1])
-      percentage = Gears.rounder(rears[c]/rears[c+1]*100-100);
+    let percentage = 1
+    percentage = Gears.rounder((rears[c + 1] / rears[c]) * 100 - 100)
+    if (rears[c] > rears[c + 1])
+      percentage = Gears.rounder((rears[c] / rears[c + 1]) * 100 - 100)
 
-    if (rears[c+1]>0)
-      return ("<tr><td><FONT SIZE=-1>"+percentage+" %</FONT></td></tr>");
-    return '';
+    if (rears[c + 1] > 0)
+      return (`<tr><td><FONT SIZE=-1>${percentage} %</FONT></td></tr>`)
+    return ''
   }
 
   //----------------------------------------------------------
   static percentfront(rnum) {
-    var percentage = 1
-    percentage = Gears.rounder(rings[rnum-1]/rings[rnum]*100-100);
-    if (rings[rnum-1]<rings[rnum])
-      percentage = Gears.rounder(rings[rnum]/rings[rnum-1]*100-100);
+    let percentage = 1
+    percentage = Gears.rounder((rings[rnum - 1] / rings[rnum]) * 100 - 100)
+    if (rings[rnum - 1] < rings[rnum])
+      percentage = Gears.rounder((rings[rnum] / rings[rnum - 1]) * 100 - 100)
 
-    if (rings[rnum]>0)
-      return "<TD><FONT SIZE=-1>"+percentage+" %</FONT></TD>";
-    return '';
+    if (rings[rnum] > 0)
+      return `<TD><FONT SIZE=-1>${percentage} %</FONT></TD>`
+    return ''
   }
 
   //----------------------------------------------------------
@@ -223,61 +221,58 @@ class Gears {
   static showit(ringData) {
     let gwHTML = '<center><h2>Gear chart using '
 
-    //tjl
-    if      (mphmult != 1)gwHTML += modename;
-    else if (nMode==1)    gwHTML += '<a href="http://sheldonbrown.com/gloss_g.html#gearinch">Gear Inches</a>';
-    else if (nMode==12.5) gwHTML += '<a href="http://sheldonbrown.com/gloss_da-o.html#development">Meters Development</a>';
-    else                  gwHTML += '<a href="http://sheldonbrown.com/gain.html">Gain Ratios</a>';
+    // xxx
+    if      (mphmult !== 1)gwHTML += modename
+    else if (nMode === 1)    gwHTML += '<a href="http://sheldonbrown.com/gloss_g.html#gearinch">Gear Inches</a>'
+    else if (nMode === 12.5) gwHTML += '<a href="http://sheldonbrown.com/gloss_da-o.html#development">Meters Development</a>'
+    else                     gwHTML += '<a href="http://sheldonbrown.com/gain.html">Gain Ratios</a>'
 
 
     gwHTML +=
-      "</h2><i><h3>For "+tiresize+" tire with "+cranklength+" cranks</h3></i>" +
-      "<i><H3>With " +cassettename+ " Cassette</H3></i>" +
-      '</center>';
+      `</h2><i><h3>For ${tiresize} tire with ${cranklength} cranks</h3></i>` +
+      `<i><H3>With ${cassettename} Cassette</H3></i>` +
+      '</center>'
 
 
-
-    let hub=0
-    gwHTML += '<table class="grid"><tr><td> </td> <th>' + rings[0] + "</th>";
+    const hub = 0
+    gwHTML += `<table class="grid"><tr><td> </td> <th>${rings[0]}</th>`
 
     // **********  header of output
-    if (rings[1]>0) {
-      gwHTML   += Gears.percentfront(1) + '<th>'+rings[1]+"</th>";
-      if (rings[2]>0)
-        gwHTML += Gears.percentfront(2) + '<th>'+rings[2]+"</th>";
+    if (rings[1] > 0) {
+      gwHTML   += `${Gears.percentfront(1)}<th>${rings[1]}</th>`
+      if (rings[2] > 0)
+        gwHTML += `${Gears.percentfront(2)}<th>${rings[2]}</th>`
     }
-    gwHTML += ("</tr>");
-
+    gwHTML += ('</tr>')
 
 
     // ******** loop to calculate gears for each sprocket
-    for (let c=0; rears[c]>0; c++) {
-      gwHTML += ("<tr><th>"+rears[c]+'</th><td class="val">'+Gears.rounder(hubMult[hub]*ringData[0][c])+"</td>")
-      if (rings[1]>0) {
-        gwHTML += ('<td></td><td class="val">'+Gears.rounder(hubMult[hub]*ringData[1][c])+"</td>")
-        if (rings[2]>0)
-          gwHTML += ('<td></td><td class="val">'+Gears.rounder(hubMult[hub]*ringData[2][c])+"</td>")
+    for (let c = 0; rears[c] > 0; c++) {
+      gwHTML += (`<tr><th>${rears[c]}</th><td class="val">${Gears.rounder(hubMult[hub] * ringData[0][c])}</td>`)
+      if (rings[1] > 0) {
+        gwHTML += (`<td></td><td class="val">${Gears.rounder(hubMult[hub] * ringData[1][c])}</td>`)
+        if (rings[2] > 0)
+          gwHTML += (`<td></td><td class="val">${Gears.rounder(hubMult[hub] * ringData[2][c])}</td>`)
       }
-      gwHTML += "</tr>"
+      gwHTML += '</tr>'
       gwHTML += Gears.percentrear(c)
     }
-    gwHTML += "</table>"
-
+    gwHTML += '</table>'
 
 
     const gearwin = document.getElementById('gearwin')
-    //alert(gwHTML);
+    // alert(gwHTML);
     gearwin.innerHTML = gwHTML
   }
 }
 
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   Gears.tracey2()
-  document.querySelectorAll('[data-click]').forEach(function(e) {
+  document.querySelectorAll('[data-click]').forEach((e) => {
     const method = e.dataset.click
     console.log(method)
-    e.addEventListener('click', function(evt) {
+    e.addEventListener('click', (evt) => {
       Gears[method]()
       evt.preventDefault()
       evt.stopPropagation()
