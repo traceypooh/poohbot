@@ -47,6 +47,13 @@ class Gears {
 
   static grizl_1052() { Gears.fill([[36], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 52]]) }
 
+  static diverge1() { Gears.fill([[40], [11, 13, 15, 17, 19, 22, 25, 28, 32, 36, 42, 50]]) }
+
+  static diverge2() { Gears.fill([[40], [11, 13, 15, 17, 19, 22, 25, 28, 32, 36, 42, 52]]) }
+
+  static diverge3() { Gears.fill([[42], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 50]]) }
+
+  static diverge4() { Gears.fill([[42], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 52]]) }
 
   /**
    * enters gear values into the form
