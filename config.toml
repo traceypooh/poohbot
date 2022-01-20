@@ -106,7 +106,7 @@ ignoreFiles             = ["\\.crdownload$"]
     gitProvider         = "gitlab"  # either "github" or "gitlab"
     username            = "traceypooh"
     repo                = "poohbot"
-    branch              = "master"
+    branch              = "main"
 
     [params.staticman.recaptcha]
       # Both keys must be present to enable recaptcha
