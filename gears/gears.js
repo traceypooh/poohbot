@@ -31,29 +31,6 @@ class Gears {
     return false
   }
 
-  static tracey3() { Gears.fill([[52, 42, 30], [12, 13, 14, 15, 17, 19, 21, 24, 27, '']]) }
-
-  static tracey2() { Gears.fill([[50, 34, ''], [11, 12, 13, 14, 15, 17, 19, 21, 24, 28]]) }
-
-  static traceyX() { Gears.fill([[50, 34, ''], [13, 14, 15, 16, 17, 19, 21, 23, 26, 29]]) }
-
-  static hunter()  { Gears.fill([[50, 34, ''], [11, 12, 13, 14, 15, 17, 19, 21, 23, 26]]) }
-
-  static salsa_timerjack_mtb() { Gears.fill([[32], [10, 51]]) }
-
-  static grizl_1044() { Gears.fill([[40], [10, 11, 13, 15, 17, 19, 21, 24, 28, 32, 38, 44]]) }
-
-  static grizl_1050() { Gears.fill([[36], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 50]]) }
-
-  static grizl_1052() { Gears.fill([[36], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 52]]) }
-
-  static diverge1() { Gears.fill([[40], [11, 13, 15, 17, 19, 22, 25, 28, 32, 36, 42, 50]]) }
-
-  static diverge2() { Gears.fill([[40], [11, 13, 15, 17, 19, 22, 25, 28, 32, 36, 42, 52]]) }
-
-  static diverge3() { Gears.fill([[42], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 50]]) }
-
-  static diverge4() { Gears.fill([[42], [10, 12, 14, 16, 18, 21, 24, 28, 32, 36, 42, 52]]) }
 
   /**
    * enters gear values into the form
@@ -63,7 +40,7 @@ class Gears {
   static fill(gears, clear = false) {
     for (let n = 0; n < 3; n++)
       document.ringform[`ring${n + 1}`].value = gears[0][n] || ''
-    for (let n = 0; n < 12; n++)
+    for (let n = 0; n < 13; n++)
       document.ringform[`rear${n + 1}`].value = gears[1][n] || ''
 
     if (!clear)
@@ -95,6 +72,7 @@ class Gears {
       parseFloat(document.ringform.rear10.value),
       parseFloat(document.ringform.rear11.value),
       parseFloat(document.ringform.rear12.value),
+      parseFloat(document.ringform.rear13.value),
       0,
     ]
   }
@@ -226,23 +204,19 @@ class Gears {
   //----------------------------------------------------------
   // **********output-big
   static showit(ringData) {
-    let gwHTML = '<center><h2>Gear chart using '
+    let head = '<h2>Gear chart using '
 
     // xxx
-    if      (mphmult !== 1)gwHTML += modename
-    else if (nMode === 1)    gwHTML += '<a href="http://sheldonbrown.com/gloss_g.html#gearinch">Gear Inches</a>'
-    else if (nMode === 12.5) gwHTML += '<a href="http://sheldonbrown.com/gloss_da-o.html#development">Meters Development</a>'
-    else                     gwHTML += '<a href="http://sheldonbrown.com/gain.html">Gain Ratios</a>'
+    if      (mphmult !== 1)  head += modename
+    else if (nMode === 1)    head += '<a href="http://sheldonbrown.com/gloss_g.html#gearinch">Gear Inches</a>'
+    else if (nMode === 12.5) head += '<a href="http://sheldonbrown.com/gloss_da-o.html#development">Meters Development</a>'
+    else                     head += '<a href="http://sheldonbrown.com/gain.html">Gain Ratios</a>'
 
-
-    gwHTML +=
-      `</h2><i><h3>For ${tiresize} tire with ${cranklength} cranks</h3></i>` +
-      `<i><H3>With ${cassettename} Cassette</H3></i>` +
-      '</center>'
+    head += '</h2>'
 
 
     const hub = 0
-    gwHTML += `<table class="grid"><tr><td> </td> <th>${rings[0]}</th>`
+    let gwHTML = `<table class="grid"><tr><td> </td> <th>${rings[0]}</th>`
 
     // **********  header of output
     if (rings[1] > 0) {
@@ -264,7 +238,10 @@ class Gears {
       gwHTML += '</tr>'
       gwHTML += Gears.percentrear(c)
     }
-    gwHTML += '</table>'
+    gwHTML += `</table>
+      ${head}
+      <i><h3>For ${tiresize} tire with ${cranklength} cranks</h3></i>
+      <i><H3>With ${cassettename} Cassette</H3></i>`
 
 
     const gearwin = document.getElementById('gearwin')
@@ -275,7 +252,15 @@ class Gears {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  Gears.tracey2()
+  // create the preset links text - from their href
+  document.querySelectorAll('#presets > a').forEach((e) => {
+    if (e.innerText.trim() === 'x') {
+      const [front, rear, desc] = new URL(e.href).search.slice(1).split('/')
+      const range = `[${rear.split('-').shift(1)} .. ${rear.split('-').pop(1)}]`
+      e.innerHTML = `${desc.replace(/_/g, ' ')} -- ${front} / ${range}<br>`
+    }
+  })
+
   document.querySelectorAll('[data-click]').forEach((e) => {
     const method = e.dataset.click
     console.log(method)
@@ -285,4 +270,12 @@ document.addEventListener('DOMContentLoaded', () => {
       evt.stopPropagation()
     })
   })
+
+  const cgiarg = new URL(document.URL).search.slice(1)
+  if (cgiarg) {
+    const [front, rear, desc] = cgiarg.split('/')
+    console.log(front.split('-').map((e) => Number(e)), rear.split('-').map((e) => Number(e)))
+    Gears.fill([front.split('-').map((e) => Number(e)), rear.split('-').map((e) => Number(e))])
+  }
+
 })
