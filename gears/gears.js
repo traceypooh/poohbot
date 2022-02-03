@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('#presets > a').forEach((e) => {
     if (e.innerText.trim() === 'x') {
       const [front, rear, desc] = new URL(e.href).search.slice(1).split('/')
-      const range = `[${rear.split('-').shift(1)} .. ${rear.split('-').pop(1)}]`
+      const range = `[${rear.split(/[^\d]/).shift(1)} .. ${rear.split(/[^\d]/).pop(1)}]`
       e.innerHTML = `${desc.replace(/_/g, ' ')} -- ${front} / ${range}<br>`
     }
   })
@@ -274,8 +274,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cgiarg = new URL(document.URL).search.slice(1)
   if (cgiarg) {
     const [front, rear, desc] = cgiarg.split('/')
-    console.log(front.split('-').map((e) => Number(e)), rear.split('-').map((e) => Number(e)))
-    Gears.fill([front.split('-').map((e) => Number(e)), rear.split('-').map((e) => Number(e))])
+    console.log(front.split(/[^\d]/).map((e) => Number(e)), rear.split(/[^\d]/).map((e) => Number(e)))
+    Gears.fill([front.split(/[^\d]/).map((e) => Number(e)), rear.split(/[^\d]/).map((e) => Number(e))])
   }
 
 })
