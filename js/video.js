@@ -1,11 +1,12 @@
+// NOTE: perma-home is:  http://poohBot.com/js/video.js
 
-// const log = console.log.bind(console) // xxxhls
+/* global $ log jwplayer */
 
 class IAV {
   constructor() {
     IAV.ios = (navigator.userAgent.indexOf('iPhone') > 0  ||
-         navigator.userAgent.indexOf('iPad') > 0  ||
-         navigator.userAgent.indexOf('iPod') > 0)
+               navigator.userAgent.indexOf('iPad') > 0  ||
+               navigator.userAgent.indexOf('iPod') > 0)
 
     // ----------------  STUFF FOR THE "FILMSTRIP" PART  --------------
     // maps IDENTIFIER to thumbnail #/seconds (we'll left 0-pad to the 6 digits...)
@@ -116,7 +117,7 @@ class IAV {
     this.usingplayer = (this.lapsesurl || this.videourl)
 
     if (this.lapsesurl)
-      this.setup_lapses()
+      IAV.setup_lapses()
     else
       this.LAPSES = [] // no filtering needed!
 
@@ -127,8 +128,9 @@ class IAV {
       //    <br clear="left">
       const content = document.getElementById('content')
       if (!content) {
-        var obj = document.getElementById('wptouch-search')
+        const obj = document.getElementById('wptouch-search')
         if (!obj)
+          // eslint-disable-next-line no-constructor-return
           return false
         // else we are mobile theme for my site...
         this.mobile = true
@@ -137,7 +139,7 @@ class IAV {
       const post = document.getElementById('vvv')
       // var post = document.getElement('div.post');//mootools shortcut since have it!
 
-      var obj = document.createElement('div')
+      let obj = document.createElement('div')
       obj.setAttribute('id', 'filmstrip')
       post.appendChild(obj)
       obj = document.createElement('br')
@@ -148,8 +150,9 @@ class IAV {
     if (location.href.match(/filmstrip/)) {
       const bodyobj = document.getElementsByTagName('body')[0]
       if (!bodyobj)
+        // eslint-disable-next-line no-constructor-return
         return false
-      var obj = document.createElement('div')
+      let obj = document.createElement('div')
       obj.setAttribute('id', 'filmstrip')
       bodyobj.appendChild(obj)
 
@@ -159,17 +162,19 @@ class IAV {
     }
 
     if (document.getElementById('clips'))
+      // eslint-disable-next-line no-constructor-return
       return this.playClips()
 
 
     this.filmstrip = document.getElementById('filmstrip')
 
     if (!this.filmstrip)
+      // eslint-disable-next-line no-constructor-return
       return false
 
     if (this.usingplayer) {
       // allow for 4 vids per line!
-      this.css('div#content { padding-right:10px !important; }')// xxx
+      IAV.css('div#content { padding-right:10px !important; }')// xxx
       this.HALF = ''
     } else {
       // archive.org
@@ -178,77 +183,78 @@ class IAV {
 
     const imgPre = (location.hostname.match('archive.org') ? '/serve/poohBot/' : '/img/')
 
-    this.css(`\n\
-.topinblock {\n\
-  vertical-align:top;\n\
-  display:inline-block;\n\
-  *display:inline; /*for IEv8, at least*/\n\
-}\n\
-.rounded15 {\n\
-  -moz-border-radius:15px;\n\
-  -webkit-border-radius:15px;\n\
-  -khtml-border-radius:15px;\n\
-  border-radius:15px;\n\
-}\n\
-.strip {\n\
-  padding-top:25px;\n\
-  height:200px;\n\
-  position:relative;\n\
-  background:url('${imgPre}sprok200x174.jpg');\n\
-  background-repeat:no-repeat;\n\
-}\n\
-.stripHALF {\n\
-  padding-top:25px;\n\
-  height:130px;\n\
-  position:relative;\n\
-  background:url('${imgPre}sprok200x119.jpg');\n\
-  background-repeat:no-repeat;\n\
-}\n\
-.cell {\n\
-  width:160px;\n\
-  height:110px;\n\
-  margin:0px !important;\n\
-  /* these next 4 should be padding but IE sux */\n\
-  border-left:20px solid black;\n\
-  border-right:20px solid black;\n\
-  border-top:10px solid black;\n\
-  border-bottom:10px solid black;\n\
-}\n\
-.cellHALF {\n\
-  width:80px;\n\
-  height:55px;\n\
-  margin:0px !important;\n\
-  border:10px solid black; /* should really be padding but IE sux */\n\
-}\n\
-.placard {\n\
-  cursor:pointer;\n\
-  border:1px solid #333;\n\
-  color:white;\n\
-  filter:alpha(opacity=70);-moz-opacity:.70;opacity:.70;\n\
-  position:absolute;\n\
-  background-color:black;\n\
-  font-style:italic;\n\
-  font-size:10pt;\n\
-  padding:0 5 2 5;\n\
-}\n\
-.placard2 {\n\
-  top:140px;\n\
-  left:30px;\n\
-  min-width:110px;\n\
-}\n\
-.placard2HALF {\n\
-  min-width:55px;\n\
-  top:88px;\n\
-  left:5px;\n\
-}\n\
-.placard2HALFb {\n\
-  min-width:55px;\n\
-  top:88px;\n\
-  left:115px;\n\
-}\n\
+    IAV.css(`
+.topinblock {
+  vertical-align:top;
+  display:inline-block;
+  *display:inline; /*for IEv8, at least*/
+}
+.rounded15 {
+  -moz-border-radius:15px;
+  -webkit-border-radius:15px;
+  -khtml-border-radius:15px;
+  border-radius:15px;
+}
+.strip {
+  padding-top:25px;
+  height:200px;
+  position:relative;
+  background:url('${imgPre}sprok200x174.jpg');
+  background-repeat:no-repeat;
+}
+.stripHALF {
+  padding-top:25px;
+  height:130px;
+  position:relative;
+  background:url('${imgPre}sprok200x119.jpg');
+  background-repeat:no-repeat;
+}
+.cell {
+  width:160px;
+  height:110px;
+  margin:0px !important;
+  /* these next 4 should be padding but IE sux */
+  border-left:20px solid black;
+  border-right:20px solid black;
+  border-top:10px solid black;
+  border-bottom:10px solid black;
+}
+.cellHALF {
+  width:80px;
+  height:55px;
+  margin:0px !important;
+  border:10px solid black; /* should really be padding but IE sux */
+}
+.placard {
+  cursor:pointer;
+  border:1px solid #333;
+  color:white;
+  filter:alpha(opacity=70);-moz-opacity:.70;opacity:.70;
+  position:absolute;
+  background-color:black;
+  font-style:italic;
+  font-size:10pt;
+  padding:0 5 2 5;
+}
+.placard2 {
+  top:140px;
+  left:30px;
+  min-width:110px;
+}
+.placard2HALF {
+  min-width:55px;
+  top:88px;
+  left:5px;
+}
+.placard2HALFb {
+  min-width:55px;
+  top:88px;
+  left:115px;
+}
     `)
 
     this.filmstripSetup()
+    // eslint-disable-next-line no-constructor-return
     return false
   }
 
@@ -264,9 +270,10 @@ class IAV {
     if (!video.play)
       return
 
-    for (var clip, i = 0; clip = this.CLIPS[i]; i++) {
-      clip = clip.replace(/https:\/\/archive.org\/download\//, '')
-      const pcs = clip.split(/[\/\?]/)
+
+    for (const [i, clip] of Object.entries(this.CLIPS)) {
+      const pcs = clip.replace(/https:\/\/archive.org\/download\//, '').split(/[/?]/)
+      // eslint-disable-next-line prefer-destructuring
       this.IDS[i] = pcs[0]
       this.FILES[i] = pcs[1].replace(/(_512kb.mp4|.ogv)$/, '')
       this.QSTRINGS[i] = ((pcs.length > 2 ? `?${pcs[2]}` : '') +
@@ -280,7 +287,7 @@ class IAV {
   load(idx) {
     const id = this.IDS[idx]
     log(id, ' is loading')
-    this.nloading++
+    this.nloading += 1
     const v = document.createElement('video')
     v.autoload = true
     v.style.position = 'absolute'
@@ -303,7 +310,7 @@ class IAV {
   static canplay(idx) {
     const id = this.IDS[idx]
     log(id, ' can start playback')
-    if (!this.playing  &&  this.playnext == idx) {
+    if (!this.playing  &&  this.playnext === idx) {
       this.playing = true
       this.playnext = idx + 1
       this.v[idx].width = 640
@@ -325,7 +332,7 @@ class IAV {
   static loaded(idx) {
     const id = this.IDS[idx]
     log(id, ' has been 100% downloaded')
-    this.nloading--
+    this.nloading -= 1
 
     if (this.nloading < 2  &&  idx + 2 < this.IDS.length)
       this.load(idx + 2)
@@ -353,7 +360,8 @@ class IAV {
 
       if (!this.playallSetup) {
         this.playallSetup = true
-        $.getScript('https://archive.org/jw/jwplayer.js', () => {
+        // eslint-disable-next-line import/no-unresolved
+        import('https://archive.org/components/jwplayer/jwplayer.js').then(() => {
           log('play all setup')
           IAV.playmp4(0)
         })
@@ -364,6 +372,7 @@ class IAV {
       playlist = []
       for (const id in this.MAP) {
         if (this.omitClip(id))
+          // eslint-disable-next-line no-continue
           continue
 
         playlist.push({
@@ -426,61 +435,53 @@ class IAV {
   }
 
   omitClip(identifier) {
-    if (!this.LAPSES.length)
-      return false
-
-    // means we are on page "lapses.md" and need to omit non time lapses
-    for (let i = 0, id; id = this.LAPSES[i]; i++) {
-      if (id === identifier) return false // not a timelapse video, omit
-    }
-    return true
+    // nonempty means we are on page "lapses.md" and need to omit non time lapses
+    return this.LAPSES.length  &&  !this.LAPSES.includes(identifier)
   }
 
   filmstripSetup() {
     let str = ''
     if (this.usingplayer)
-      str += '\n\
-\n\
-<div style="margin-top:-10px;  float:right;">\n\
-  <a onclick="return IAV.playmp4()">Play all</a>\n\
-</div>\n\
-'
+      str += `
+<div style="margin-top:-10px;  float:right;">
+  <a onclick="return IAV.playmp4()">Play all</a>
+</div>`
 
-    str += `\n\
-<center>\n\
+    str += `
+<center>
   <div style="font-size:9pt;${this.usingplayer ? '' : 'padding-left:100px;'}font-style:italic;">\n \
-    mouse over an image to see more scenes\n\
-    -- click image to watch the full video\n\
-${this.usingplayer ? '-- click text for more info/formats' : ''}\n\
-  </div>\n\
-</center>\n\
-<div>\n\
-\n\
+    mouse over an image to see more scenes
+    -- click image to watch the full video
+${this.usingplayer ? '-- click text for more info/formats' : ''}
+  </div>
+</center>
+<div>
+
     `
     let n = 0
-
     for (const id in this.MAP) {
       if (this.omitClip(id))
+        // eslint-disable-next-line no-continue
         continue
 
       const thumbn = this.MAP[id][0]
       const title  = this.MAP[id][1]
 
-      if (!this.HALF  ||  (n % 2 == 0))
+      if (!this.HALF  ||  (n % 2 === 0))
         str += `</div><div class="topinblock strip${this.HALF}">`
       str += `<div title="click for more info" alt="click for more info" onclick="location.href='https://archive.org/details/${id}'" class="rounded15 placard placard2${this.HALF}${(this.HALF && n % 2) ? 'b' : ''}">${id}</div>`
 
       // left 0-pad to 6 digits as needed
       let thumb = `000000${thumbn}`
-      thumb = thumb.substr(thumb.length - 6, 6)
+      thumb = thumb.slice(thumb.length - 6, 12)
 
       const onclik = (this.usingplayer ? `data-id="${id}" onclick="return IAV.playmp4(this)"` : // xxx CSP onmouse.. 2 lines below..
         `href="https://archive.org/details/${id}"`)
 
       str += `<a ${onclik}><img title="${title}" alt="${title}" id="${id}" onmouseover="IAV.imtoggle('${id}')" onmouseout="IAV.imtoggle('${id}')" class="cell${this.HALF}" src="https://archive.org/serve/${id}/${id}.thumbs/${id}_${thumb}.jpg"/></a>`
 
-      n++
-      if (this.HALF  &&  n == 8)
+      n += 1
+      if (this.HALF  &&  n === 8)
         break
     }
     str += '</div>'
@@ -494,7 +495,7 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}\n\
   }
 
 
-  setup_lapses() {
+  static setup_lapses() {
     const e = document.getElementById('agif-wrap')
     e.style.float = 'right'
     e.style.margin = '10px 0 12px 30px'
@@ -534,7 +535,7 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}\n\
   }
 
 
-  css(str) {
+  static css(str) {
     const headobj = document.getElementsByTagName('head')[0]
     if (!headobj)
       return
@@ -551,4 +552,16 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}\n\
 }
 
 
-new IAV()
+if (typeof $ === 'undefined') {
+  // https://archive.org/details/poohBot   is the main usage here
+  import('https://esm.archive.org/jquery@^3.0.0').then(() => {
+    // eslint-disable-next-line no-console
+    window.log = console.log.bind(console)
+
+    // eslint-disable-next-line no-new
+    new IAV()
+  })
+} else {
+  // eslint-disable-next-line no-new
+  new IAV()
+}
