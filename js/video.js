@@ -1,14 +1,15 @@
-( function ($) { //wacky wrapper to allow us to use jQuery as $ w/o collision...
 
-const log = (typeof console === 'undefined'
-  ? () => {}
-  : console.log.bind(console)
-)
+// const log = console.log.bind(console) // xxxhls
 
-IAV = {
-  // ----------------  STUFF FOR THE "FILMSTRIP" PART  --------------
-  // maps IDENTIFIER to thumbnail #/seconds (we'll left 0-pad to the 6 digits...)
-  MAP:{
+class IAV {
+  constructor() {
+    IAV.ios = (navigator.userAgent.indexOf('iPhone')>0  ||
+         navigator.userAgent.indexOf('iPad')>0  ||
+         navigator.userAgent.indexOf('iPod')>0)
+
+    // ----------------  STUFF FOR THE "FILMSTRIP" PART  --------------
+    // maps IDENTIFIER to thumbnail #/seconds (we'll left 0-pad to the 6 digits...)
+    this.MAP = {
 "morebooks"               :[60, "The Archive gets 130K books!  2 days in 2 minutes!"],
 "dance4rescues"           :[57, "Dance for the Rescues -- charity animal rescue promo video"],
 "kauai"                   :[4,  "Kauai Hawaii sunrise -- vacation 2010"],
@@ -52,22 +53,25 @@ IAV = {
 "traceys-first-time-lapse":[1,  "2003 first scientific experiments with time lapsing"],
 
 "rotoscope"               :[2,  "Tracey being a geek experimenting with lightsabers!"]
+  }
 
-  },
-    LAPSES:["morebooks","kauai","road250","bali","nightbay","commute","meteorocino","funston","CapeCodMarshClouds",
-          "bikeDiablo","ALC_stop_motion","TourOfCA","Jessies_Sunrise","briones_dusk",
-          "baysunset","helios-sunset","SFOsouth","to-SF","from-SF",
-          "archivewalk","sunsetstrip","traceys-first-time-lapse",
-          "skyline-sunset","skyline-fireworks"],
+    this.LAPSES = [
+    "morebooks","kauai","road250","bali","nightbay","commute","meteorocino","funston","CapeCodMarshClouds",
+    "bikeDiablo","ALC_stop_motion","TourOfCA","Jessies_Sunrise","briones_dusk",
+    "baysunset","helios-sunset","SFOsouth","to-SF","from-SF",
+    "archivewalk","sunsetstrip","traceys-first-time-lapse",
+    "skyline-sunset","skyline-fireworks",
+  ]
 
-  HALF:'HALF',
-  playerHeight:480 + 24, // ... + controller height
-  filmstrip:null,
 
-  videourl:false,
-  lapsesurl:false,
-  usingplayer:false,
-  mobile:false,
+    this.HALF = 'HALF'
+    this.playerHeight = 480 + 24 // ... + controller height
+    this.filmstrip = null
+
+    this.videourl = false
+    this.lapsesurl = false
+    this.usingplayer = false
+    this.mobile = false
 
   //=========================================================================
   //
@@ -84,7 +88,7 @@ IAV = {
   //   |               |               |                           |
   // --+---------------+---------------+---------------------------+----- ...
   //
-  CLIPS:[
+    this.CLIPS = [
 "https://archive.org/download/BraveNewFilmsFoxAttacksObama/foxattacksobama320_512kb.mp4?t=60.5/79",
 "https://archive.org/download/SitaSingstheBlues_Trailer1/SitaTrailer1.2Sorensen_512kb.mp4?t=10/28",
 "https://archive.org/download/dragostea_tin_dei_by_ozone/Dragostea_din_tei_By_Ozone_512kb.mp4?t=13/42",
@@ -95,300 +99,18 @@ IAV = {
 "https://archive.org/download/inauguration2009/inauguration2009_512kb.mp4?t=220/239",
 "https://archive.org/download/night_of_the_living_dead/night_of_the_living_dead_512kb.mp4?t=365/369",
 "https://archive.org/download/alc7brownhunter/alc7brownhunter_512kb.mp4?t=137/153.5"
-    ],
+  ]
 
-  IDS:[],
-  FILES:[],
-  QSTRINGS:[],
-  v:[],
-  playable:[],
-  playing:false,
-  playnext:0,
-  nloading:0,
-
-
-  ios:(navigator.userAgent.indexOf('iPhone')>0  ||
-       navigator.userAgent.indexOf('iPad')>0  ||
-       navigator.userAgent.indexOf('iPod')>0),
+    this.IDS = []
+    this.FILES = []
+    this.QSTRINGS = []
+    this.v = []
+    this.playable = []
+    this.playing = false
+    this.playnext = 0
+    this.nloading = 0
 
 
-  playClips:function()
-  {
-    if (!document.getElementById('clips'))
-      return;
-
-    // newer browsers like FF 3.5+ and Safari 4+ can play the new <video> tag!
-    // check for browsers that can handle the <video> tag natively...
-    // (credit to J at v2v dot cc for this simpler JS detection technique!)
-    var video = document.createElement('video');
-    if (!video.play)
-      return;
-
-    for (var clip, i=0; clip=this.CLIPS[i]; i++)
-    {
-      clip = clip.replace(/https:\/\/archive.org\/download\//, '');
-      var pcs = clip.split(/[\/\?]/);
-      this.IDS[i] = pcs[0];
-      this.FILES[i] = pcs[1].replace(/(_512kb.mp4|.ogv)$/, '');
-      this.QSTRINGS[i] = ((pcs.length>2 ? '?'+pcs[2] : '') +
-                          (pcs.length>3 ? '/'+pcs[3] : ''));
-    }
-
-    this.load(0);
-    this.load(1);
-  },
-
-  load:function(idx)
-  {
-    var id=this.IDS[idx];
-    log(id,' is loading');
-    this.nloading++;
-    var v=document.createElement('video');
-    v.autoload = true;
-    v.style.position = 'absolute';
-    v.style.top=0;
-    v.style.left=0;
-    v.width = 10;
-    v.height = 10;
-    v.autoplay = false;
-    v.controls = false;
-    v.innerHTML = '<source type="video/mp4" src="https://archive.org/download/'+id+'/'+this.FILES[idx]+'_512kb.mp4'+this.QSTRINGS[idx]+'"/><source type="video/ogg" src="https://archive.org/download/'+id+'/'+this.FILES[idx]+'.ogv'+this.QSTRINGS[idx]+'"/>';
-
-    v.addEventListener("canplay", function() { IAV.canplay(idx); }, true);
-    v.addEventListener("load",    function() { IAV.loaded(idx); }, true);
-    v.addEventListener("ended",   function() { IAV.ended(idx); }, true);
-
-    this.v[idx] = v;
-    document.getElementById('clips').appendChild(v);
-  },
-
-  canplay:function(idx)
-  {
-    var id=this.IDS[idx];
-    log(id, ' can start playback');
-    if (!this.playing  &&  this.playnext == idx)
-    {
-      this.playing = true;
-      this.playnext = idx + 1;
-      this.v[idx].width = 640;
-      this.v[idx].height = 480;
-      this.v[idx].style.position = 'relative';
-
-      this.v[idx].play();
-      log(id, ' is playing');
-    }
-    else
-    {
-      if (this.playable[idx])  return; //xxx shouldnt need to do this?!
-      this.playable[idx] = true;
-
-      this.v[idx].currentTime=0;
-      this.v[idx].play();
-      this.v[idx].pause();
-    }
-  },
-
-  loaded:function(idx)
-  {
-    var id=this.IDS[idx];
-    log(id,' has been 100% downloaded');
-    this.nloading--;
-
-    if (this.nloading < 2  &&  idx+2 < this.IDS.length)
-      this.load(idx+2);
-  },
-
-  ended:function(idx)
-  {
-    var id=this.IDS[idx];
-    log(id,' has finished playback');
-    this.v[idx].width = 10;
-    this.v[idx].height = 10;
-    this.v[idx].style.position = 'absolute';
-    this.playing = false;
-    if (this.playable[idx+1])
-      this.canplay(idx+1);
-  },
-
-
-
-
-  // for video.md and lapses.md only
-  playmp4:function(evt) {
-    const identifier = (evt ? evt.dataset.id : '')
-    let playlist = false
-
-    if (!evt) {
-      // means play all videos
-
-      if (!this.playallSetup) {
-        this.playallSetup = true
-        $.getScript('https://archive.org/jw/jwplayer.js', function() {
-          log('play all setup')
-          IAV.playmp4(0)
-        })
-        return false
-      }
-
-
-      playlist = []
-      for (let id in this.MAP) {
-        if (this.omitClip(id))
-          continue
-
-        playlist.push({
-          'title': this.MAP[id][1],
-          'file': 'https://archive.org/download/'+id+'/format=h.264&x=ignore.mp4'
-        })
-      }
-
-      log(playlist)
-    }
-
-
-    // now figure out where we should place the player:
-    //   _after_ the last cell in the row w/ the clicked cell
-    //   _before_ the first cell in the row w/ the clicked cell (when last row clicked)
-    const firstY = $('.strip:first').offset().top
-    const lastY = $('.strip:last').offset().top
-    const clickedY = (evt ? $(evt.parentNode).offset().top : firstY)
-    log({ identifier, firstY, clickedY, lastY })
-    const $after = (clickedY === lastY
-      // if clicked on last row, find last element in prior row
-      ? $('.strip').filter((idx, e) => $(e).offset().top < clickedY).last()
-      // else find last element in clicked row
-      : $('.strip').filter((idx, e) => $(e).offset().top === clickedY).last()
-    )
-
-
-    // first clear and hide any already visible/playing player
-    $('body').append($('<div id="player1" style="display:none"></div>'))
-
-    $('#player1').hide('slow', () => {
-      $('#player1').remove()
-      $('<div id="player1" style="display:none"></div>').insertAfter($after)
-
-
-      if (playlist) {
-        $('#player1').html('<div id="mwplayer" width="800" height="480"> </div>')
-      } else {
-        $('#player1').html('<iframe src="https://archive.org/details/'+identifier+'?embed=1'+(IAV.ios?'':'&autoplay=1')+'" width="100%" style="min-width:320px" height="480" frameborder="0"></iframe>')
-      }
-
-      $('#player1').show('slow')
-
-
-      if (playlist) {
-        jwplayer('mwplayer').setup({
-          'http.startparam': 'start',
-          autoplay: (IAV.ios ? false : true),
-          playlist: playlist,
-          provider: 'http',
-          width: 800,
-          height: 480
-        })
-      }
-    })
-
-    return false;
-  },
-
-  omitClip:function(identifier) {
-    if (!this.LAPSES.length)
-      return false
-
-    // means we are on page "lapses.md" and need to omit non time lapses
-    for (let i = 0, id; id = this.LAPSES[i]; i++) {
-      if (id === identifier) return false // not a timelapse video, omit
-    }
-    return true
-  },
-
-  filmstripSetup:function() {
-    let str = ''
-    if (this.usingplayer)
-      str += '\n\
-\n\
-<div style="margin-top:-10px;  float:right;">\n\
-  <a onclick="return IAV.playmp4()">Play all</a>\n\
-</div>\n\
-';
-
-    str += '\n\
-<center>\n\
-  <div style="font-size:9pt;'+(this.usingplayer?'':'padding-left:100px;')+'font-style:italic;">\n \
-    mouse over an image to see more scenes\n\
-    -- click image to watch the full video\n\
-'+(this.usingplayer?'-- click text for more info/formats':'')+'\n\
-  </div>\n\
-</center>\n\
-<div>\n\
-\n\
-    ';
-    let n = 0
-
-    for (id in this.MAP) {
-      if (this.omitClip(id))
-        continue
-
-      const thumbn = this.MAP[id][0]
-      const title  = this.MAP[id][1]
-
-      if (!this.HALF  ||  (n % 2 == 0))
-        str += '</div><div class="topinblock strip'+this.HALF+'">';
-      str += '<div title="click for more info" alt="click for more info" onclick="location.href=\'https://archive.org/details/'+id+'\'" class="rounded15 placard placard2'+this.HALF+((this.HALF && n % 2)?'b':'')+'">'+id+'</div>';
-
-      // left 0-pad to 6 digits as needed
-      let thumb = '000000' + thumbn
-      thumb = thumb.substr(thumb.length-6, 6)
-
-      const onclik = (this.usingplayer ? 'data-id="'+id+'" onclick="return IAV.playmp4(this)"' : // xxx CSP onmouse.. 2 lines below..
-                    'href="https://archive.org/details/'+id+'"');
-
-      str += '<a '+ onclik + '><img title="'+title+'" alt="'+title+'" id="'+id+'" onmouseover="IAV.imtoggle(\''+id+'\')" onmouseout="IAV.imtoggle(\''+id+'\')" class="cell'+this.HALF+'" src="https://archive.org/serve/'+id+'/'+id+'.thumbs/'+id+'_'+thumb+'.jpg"/></a>';
-
-      n++;
-      if (this.HALF  &&  n==8)
-        break;
-    }
-    str += '</div>';
-
-
-    var obj = document.getElementById('numvid');
-    if (obj) obj.innerHTML = n;
-
-    this.filmstrip.innerHTML += str;
-    log(this.filmstrip);
-  },
-
-
-  setup_lapses:function() {
-    const e = document.getElementById('agif-wrap')
-    e.style.float = 'right'
-    e.style.margin = '10px 0 12px 30px'
-    e.style.color = '#888' // neutral for light or dark mode ;)
-    e.style.textAlign = 'right'
-
-    let gif = document.getElementById('agif')
-    gif.style.border = '5px solid black'
-
-    for (link of e.getElementsByTagName('a')) {
-      link.style.display = 'block'
-      const img = link.getAttribute('href')
-      link.addEventListener('mouseover', function() {
-        log(img)
-        gif.src = img
-        log(gif.src)
-      })
-      link.addEventListener('click', function(evt) {
-        evt.preventDefault()
-        evt.stopPropagation()
-      })
-    }
-  },
-
-
-  setup:function() {
     this.videourl  = location.href.match(/\/video\/*$/)
     this.lapsesurl = location.href.match(/\/lapses\/*$/)
     this.usingplayer = (this.lapsesurl || this.videourl)
@@ -397,7 +119,6 @@ IAV = {
       this.setup_lapses()
     else
       this.LAPSES = [] // no filtering needed!
-
 
 
     if (this.usingplayer) {
@@ -529,10 +250,278 @@ IAV = {
 
     this.filmstripSetup()
     return false
-  },
+  }
 
 
-  imtoggle:function(id) {
+  playClips() {
+    if (!document.getElementById('clips'))
+      return
+
+    // newer browsers like FF 3.5+ and Safari 4+ can play the new <video> tag!
+    // check for browsers that can handle the <video> tag natively...
+    // (credit to J at v2v dot cc for this simpler JS detection technique!)
+    var video = document.createElement('video')
+    if (!video.play)
+      return
+
+    for (var clip, i=0; clip=this.CLIPS[i]; i++) {
+      clip = clip.replace(/https:\/\/archive.org\/download\//, '');
+      var pcs = clip.split(/[\/\?]/);
+      this.IDS[i] = pcs[0];
+      this.FILES[i] = pcs[1].replace(/(_512kb.mp4|.ogv)$/, '');
+      this.QSTRINGS[i] = ((pcs.length>2 ? '?'+pcs[2] : '') +
+                          (pcs.length>3 ? '/'+pcs[3] : ''));
+    }
+
+    this.load(0)
+    this.load(1)
+  }
+
+  load(idx) {
+    var id=this.IDS[idx];
+    log(id,' is loading');
+    this.nloading++;
+    var v=document.createElement('video');
+    v.autoload = true;
+    v.style.position = 'absolute';
+    v.style.top=0;
+    v.style.left=0;
+    v.width = 10;
+    v.height = 10;
+    v.autoplay = false;
+    v.controls = false;
+    v.innerHTML = '<source type="video/mp4" src="https://archive.org/download/'+id+'/'+this.FILES[idx]+'_512kb.mp4'+this.QSTRINGS[idx]+'"/><source type="video/ogg" src="https://archive.org/download/'+id+'/'+this.FILES[idx]+'.ogv'+this.QSTRINGS[idx]+'"/>';
+
+    v.addEventListener("canplay", function() { IAV.canplay(idx); }, true);
+    v.addEventListener("load",    function() { IAV.loaded(idx); }, true);
+    v.addEventListener("ended",   function() { IAV.ended(idx); }, true);
+
+    this.v[idx] = v;
+    document.getElementById('clips').appendChild(v);
+  }
+
+  static canplay(idx) {
+    var id=this.IDS[idx];
+    log(id, ' can start playback');
+    if (!this.playing  &&  this.playnext == idx)
+    {
+      this.playing = true;
+      this.playnext = idx + 1;
+      this.v[idx].width = 640;
+      this.v[idx].height = 480;
+      this.v[idx].style.position = 'relative';
+
+      this.v[idx].play();
+      log(id, ' is playing');
+    }
+    else
+    {
+      if (this.playable[idx])  return; //xxx shouldnt need to do this?!
+      this.playable[idx] = true;
+
+      this.v[idx].currentTime=0;
+      this.v[idx].play();
+      this.v[idx].pause();
+    }
+  }
+
+  static loaded(idx) {
+    var id=this.IDS[idx];
+    log(id,' has been 100% downloaded');
+    this.nloading--;
+
+    if (this.nloading < 2  &&  idx+2 < this.IDS.length)
+      this.load(idx+2);
+  }
+
+  static ended(idx) {
+    var id=this.IDS[idx];
+    log(id,' has finished playback');
+    this.v[idx].width = 10;
+    this.v[idx].height = 10;
+    this.v[idx].style.position = 'absolute';
+    this.playing = false;
+    if (this.playable[idx+1])
+      this.canplay(idx+1);
+  }
+
+
+  // for video.md and lapses.md only
+  static playmp4(evt) {
+    const identifier = (evt ? evt.dataset.id : '')
+    let playlist = false
+
+    if (!evt) {
+      // means play all videos
+
+      if (!this.playallSetup) {
+        this.playallSetup = true
+        $.getScript('https://archive.org/jw/jwplayer.js', function() {
+          log('play all setup')
+          IAV.playmp4(0)
+        })
+        return false
+      }
+
+
+      playlist = []
+      for (let id in this.MAP) {
+        if (this.omitClip(id))
+          continue
+
+        playlist.push({
+          'title': this.MAP[id][1],
+          'file': 'https://archive.org/download/'+id+'/format=h.264&x=ignore.mp4'
+        })
+      }
+
+      log(playlist)
+    }
+
+
+    // now figure out where we should place the player:
+    //   _after_ the last cell in the row w/ the clicked cell
+    //   _before_ the first cell in the row w/ the clicked cell (when last row clicked)
+    const firstY = $('.strip:first').offset().top
+    const lastY = $('.strip:last').offset().top
+    const clickedY = (evt ? $(evt.parentNode).offset().top : firstY)
+    log({ identifier, firstY, clickedY, lastY })
+    const $after = (clickedY === lastY
+      // if clicked on last row, find last element in prior row
+      ? $('.strip').filter((idx, e) => $(e).offset().top < clickedY).last()
+      // else find last element in clicked row
+      : $('.strip').filter((idx, e) => $(e).offset().top === clickedY).last()
+    )
+
+
+    // first clear and hide any already visible/playing player
+    $('body').append($('<div id="player1" style="display:none"></div>'))
+
+    $('#player1').hide('slow', () => {
+      $('#player1').remove()
+      $('<div id="player1" style="display:none"></div>').insertAfter($after)
+
+
+      if (playlist) {
+        $('#player1').html('<div id="mwplayer" width="800" height="480"> </div>')
+      } else {
+        $('#player1').html('<iframe src="https://archive.org/details/'+identifier+'?embed=1'+(IAV.ios?'':'&autoplay=1')+'" width="100%" style="min-width:320px" height="480" frameborder="0"></iframe>')
+      }
+
+      $('#player1').show('slow')
+
+
+      if (playlist) {
+        jwplayer('mwplayer').setup({
+          'http.startparam': 'start',
+          autoplay: (IAV.ios ? false : true),
+          playlist: playlist,
+          provider: 'http',
+          width: 800,
+          height: 480
+        })
+      }
+    })
+
+    return false;
+  }
+
+  omitClip(identifier) {
+    if (!this.LAPSES.length)
+      return false
+
+    // means we are on page "lapses.md" and need to omit non time lapses
+    for (let i = 0, id; id = this.LAPSES[i]; i++) {
+      if (id === identifier) return false // not a timelapse video, omit
+    }
+    return true
+  }
+
+  filmstripSetup() {
+    let str = ''
+    if (this.usingplayer)
+      str += '\n\
+\n\
+<div style="margin-top:-10px;  float:right;">\n\
+  <a onclick="return IAV.playmp4()">Play all</a>\n\
+</div>\n\
+';
+
+    str += '\n\
+<center>\n\
+  <div style="font-size:9pt;'+(this.usingplayer?'':'padding-left:100px;')+'font-style:italic;">\n \
+    mouse over an image to see more scenes\n\
+    -- click image to watch the full video\n\
+'+(this.usingplayer?'-- click text for more info/formats':'')+'\n\
+  </div>\n\
+</center>\n\
+<div>\n\
+\n\
+    ';
+    let n = 0
+
+    for (const id in this.MAP) {
+      if (this.omitClip(id))
+        continue
+
+      const thumbn = this.MAP[id][0]
+      const title  = this.MAP[id][1]
+
+      if (!this.HALF  ||  (n % 2 == 0))
+        str += '</div><div class="topinblock strip'+this.HALF+'">';
+      str += '<div title="click for more info" alt="click for more info" onclick="location.href=\'https://archive.org/details/'+id+'\'" class="rounded15 placard placard2'+this.HALF+((this.HALF && n % 2)?'b':'')+'">'+id+'</div>';
+
+      // left 0-pad to 6 digits as needed
+      let thumb = '000000' + thumbn
+      thumb = thumb.substr(thumb.length-6, 6)
+
+      const onclik = (this.usingplayer ? 'data-id="'+id+'" onclick="return IAV.playmp4(this)"' : // xxx CSP onmouse.. 2 lines below..
+                    'href="https://archive.org/details/'+id+'"');
+
+      str += '<a '+ onclik + '><img title="'+title+'" alt="'+title+'" id="'+id+'" onmouseover="IAV.imtoggle(\''+id+'\')" onmouseout="IAV.imtoggle(\''+id+'\')" class="cell'+this.HALF+'" src="https://archive.org/serve/'+id+'/'+id+'.thumbs/'+id+'_'+thumb+'.jpg"/></a>';
+
+      n++;
+      if (this.HALF  &&  n==8)
+        break;
+    }
+    str += '</div>';
+
+
+    var obj = document.getElementById('numvid');
+    if (obj) obj.innerHTML = n;
+
+    this.filmstrip.innerHTML += str;
+    log(this.filmstrip);
+  }
+
+
+  setup_lapses() {
+    const e = document.getElementById('agif-wrap')
+    e.style.float = 'right'
+    e.style.margin = '10px 0 12px 30px'
+    e.style.color = '#888' // neutral for light or dark mode ;)
+    e.style.textAlign = 'right'
+
+    let gif = document.getElementById('agif')
+    gif.style.border = '5px solid black'
+
+    for (const link of e.getElementsByTagName('a')) {
+      link.style.display = 'block'
+      const img = link.getAttribute('href')
+      link.addEventListener('mouseover', function() {
+        log(img)
+        gif.src = img
+        log(gif.src)
+      })
+      link.addEventListener('click', function(evt) {
+        evt.preventDefault()
+        evt.stopPropagation()
+      })
+    }
+  }
+
+
+  static imtoggle(id) {
     const e = document.getElementById(id)
     if (e) {
       if (e.src.match(/.jpg$/)) {
@@ -543,10 +532,10 @@ IAV = {
       }
     }
     return false
-  },
+  }
 
 
-  css:function(str) {
+  css(str) {
     var headobj = document.getElementsByTagName("head")[0]
     if (!headobj)
       return
@@ -561,7 +550,6 @@ IAV = {
     headobj.appendChild(obj)
   }
 }
-}) ( jQuery )//wacky wrapper to allow us to use jQuery as $ w/o collision...
 
 
-IAV.setup()
+new IAV()
