@@ -41,6 +41,10 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - http://localhost:1313/2009/09/ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
 - http://localhost:1313/2009/04/ffmpeg-building-on-mac-intel/x386/
 
+#### GPS removal
+```
+exiftool "-gps*=" file1.jpg file2.jpg ...
+```
 
 ## CSP
 ```bash
