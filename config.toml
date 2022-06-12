@@ -172,6 +172,7 @@ ignoreFiles             = ["\\.crdownload$"]
   stackoverflow         = "11941875" # User Number
   flickr                = "46222920@N05"
   tumblr                = "traceypooh"
+  strava                = "traceypooh"
 
 # email                 = "example"
 # facebook              = "example"
