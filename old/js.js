@@ -1,7 +1,4 @@
 /*
-   xxx IE: test album selection, blog (nix custom look?!), etc.
-   xxx load dnow from live site via proxy at current host via PHP?!
-   xxx preload images/js to avoid stalling
 
 ---top page:
 -bunny logo jaggies; blog pic and title hardcoded @bot
