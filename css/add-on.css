@@ -417,8 +417,12 @@ a.image.featured.featured-bottom img {
   }
   h1, h2, h3, h4, h5, h6,
   .pagination a,
-  .asciiover pre {
-    color: #ddd;
+  .asciiover pre,
+  #comment-form input,
+  #comment-form textarea,
+  #contact input,
+  #contact textarea {
+      color: #ddd;
   }
   img {
     filter: grayscale(50%);
@@ -450,7 +454,11 @@ body.lite h4,
 body.lite h5,
 body.lite h6,
 body.lite .pagination a,
-body.lite .asciiover pre {
+body.lite .asciiover pre,
+body.lite #comment-form input,
+body.lite #comment-form textarea,
+body.lite #contact input,
+body.lite #contact textarea {
   color: #333;
 }
 body.lite img {
