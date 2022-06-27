@@ -72,7 +72,6 @@ class IAV {
     this.videourl = false
     this.lapsesurl = false
     this.usingplayer = false
-    this.mobile = false
 
     //= ========================================================================
     //
@@ -126,14 +125,10 @@ class IAV {
       // insert:
       //    <div id="filmstrip"></div>
       //    <br clear="left">
-      const content = document.getElementById('content')
+      const content = document.getElementsByClassName('content')[0]
       if (!content) {
-        const obj = document.getElementById('wptouch-search')
-        if (!obj)
-          // eslint-disable-next-line no-constructor-return
-          return false
-        // else we are mobile theme for my site...
-        this.mobile = true
+        // eslint-disable-next-line no-constructor-return
+        return false
       }
 
       const post = document.getElementById('vvv')
@@ -173,8 +168,8 @@ class IAV {
       return false
 
     if (this.usingplayer) {
-      // allow for 4 vids per line!
-      IAV.css('div#content { padding-right:10px !important; }')// xxx
+      // allow for 4 vids per line
+      IAV.css('.post.single { padding-right:7px; padding-left:7px; }')
       this.HALF = ''
     } else {
       // archive.org

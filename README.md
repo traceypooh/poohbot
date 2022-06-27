@@ -1,6 +1,25 @@
 # poohbot
 poohbot.com static site version
 
+## 2022 update
+live: check all top nav middle links
+live: check search
+live: check staticman
+
+- 404 page not working now
+- /about/ wunderground img fail
+- too wide http://localhost:1313/2010/04/star-wars-re-remastered-to-high-quality-1977-version/
+- http://localhost:1313/2013/02/new-php-htm-mode-for-emacs-intermixed-php-html-js-and-css-using-multi-modes/
+
+
+
+```sh
+cd ~/poohbot/lay;     ciff -rw ORIG/post/staticman.html ./post/staticman.html
+cd ~/poohbot/lay;     ciff -rw ORIG/partials/site-header.html ./partials/site-header.html
+
+cd ~/poohbot; ciff -w themes/hugo-future-imperfect-slim/exampleSite/config.toml .
+```
+
 
 ## Fixme
 - top nav

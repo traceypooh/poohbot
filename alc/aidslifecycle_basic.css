@@ -39,7 +39,7 @@ ol, ul, li {
 	}
 
 li {
-	margin-bottom: 0.5em;	
+	margin-bottom: 0.5em;
 }
 
 small {
@@ -58,7 +58,7 @@ blockquote {
 
 #top_banner {
 	background-color: #5F9BCF;
-	padding-top: 0.5em; 
+	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 }
 
@@ -67,7 +67,7 @@ blockquote {
 	margin: 0;
 }
 
-#content {
+.content {
 	line-height: 1.3em;
 	padding: 0em 1em 1em 1em;
 }
@@ -105,7 +105,7 @@ blockquote {
 
 .rule {border-top-width: 1px;
        border-top-style: solid;
-       border-color: #FF7D21; 
+       border-color: #FF7D21;
        margin: 0px;
 	   padding-top : 0.25em;
 }
@@ -154,7 +154,7 @@ A.toc_current:active {color: #A0522D;}
 A.toc_current:hover {
 	color: #0066FF;
 	font-weight: bold;
-	font-style: normal;	
+	font-style: normal;
 }
 
 A.sidenav_current:link,A.sidenav_current:visited,A.sidenav_current:active {
@@ -172,7 +172,7 @@ A.sidenav_highlight:link,A.sidenav_highlight:visited,A.sidenav_highlight:active 
 	color: #0033CC;
 	text-decoration: none;
 	padding-left: 10px;
-	font-weight: 400; 
+	font-weight: 400;
 }
 
 A.sidenav_highlight:hover {

@@ -16,16 +16,30 @@ ignoreFiles             = ["\\.crdownload$"]
   # show inline HTM
   unsafe = true
 
+[module]
+  [module.hugoVersion]
+  extended              = true
+  min                   = "0.62.0"
+
+[outputs]
+  home                  = ["html", "json", "rss"]
+
+
 [permalinks]
   post = "/:year/:month/:title/"
 
 [params]
+  enableCDN = false
+  search =  true
+  search_minify = false
+
+  removeBlur = true
   mainSections = ["post"]
   # Loads CSS and JavaScript files. The variable is an array so that you can load
   # multiple/additional files if necessary. The standard theme files can be loaded
   # by adding the value, "default". Default includes the add-on.css and and-on.js.
   # Example: ["default", "/path/to/file"]
-  cssFiles              = ["default"]
+  cssFiles              = ["default", "/css/atom-one-dark.css"]
   jsFiles               = ["default"]
   # Sets options for highlight.js
   highlightjs           = true

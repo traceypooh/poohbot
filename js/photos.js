@@ -30,7 +30,7 @@ const ALBUMS = [
   'morgan territory',
   'russ bike redwood loop',
   'sonoma',
-  'winery bikeride'
+  'winery bikeride',
 ]
 
 const MONTH = {
@@ -54,14 +54,14 @@ const MONTH = {
   '06':'June',
   '07':'July',
   '08':'August',
-  '09':'September'
+  '09':'September',
 }
 
 const HUNTER = [
   '2007_10_07 disney magic kingdom/disneyMagicK_0035_hb.jpg',
   '2008_06_07 ALC/alc_0136_tp.jpg',
   'best euro I/104-0419_IMG.JPG',
-  '2005_09_25 helios/IMG_2500.JPG'
+  '2005_09_25 helios/IMG_2500.JPG',
 ]
 
 if (typeof log === 'undefined') {
@@ -74,7 +74,6 @@ if (typeof log === 'undefined') {
 
 class Pooh {
   constructor() {
-
     this.albpix = []
     this.randpix = []
     this.loads = []
@@ -93,7 +92,7 @@ class Pooh {
         href    :el.getAttribute('href'),
         wd      :el.getAttribute('wd'),
         ht      :el.getAttribute('ht'),
-        src     :el.getAttribute('src')
+        src     :el.getAttribute('src'),
       })
     })
 
@@ -175,7 +174,7 @@ class Pooh {
         str += '</div><div style="float:left;">' //start 2nd column
     }
 
-    $('#content').append(str + '</div><br clear="all"/>')
+    $('.content').append(str + '</div><br clear="all"/>')
   }
 
 
@@ -411,7 +410,8 @@ class Pooh {
     for (let i = 0; i < album.file.length; i++)
       str += this.pixcell(album, i, ht)
 
-    document.getElementById('content').innerHTML = str
+    const con = document.getElementsByClassName('content')[0]
+    if (con) con.innerHTML = str
   }
 
 
