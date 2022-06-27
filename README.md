@@ -2,12 +2,8 @@
 poohbot.com static site version
 
 ## 2022 update
-- too wide http://localhost:1313/2020/02/hunter-birthday-50/
-- too wide http://localhost:1313/2010/04/star-wars-re-remastered-to-high-quality-1977-version/
-- http://localhost:1313/2013/02/new-php-htm-mode-for-emacs-intermixed-php-html-js-and-css-using-multi-modes/
-
 ```sh
-cd ~/poohbot; ciff -w themes/hugo-future-imperfect-slim/exampleSite/config.toml .
+colordiff -w themes/hugo-future-imperfect-slim/exampleSite/config.toml .
 ```
 
 
