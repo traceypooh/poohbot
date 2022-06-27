@@ -11,6 +11,11 @@ const log = (typeof console === 'undefined'
 )
 
 
+function rand(ary) {
+  return ary[Math.round((ary.length - 1) * Math.random())]
+}
+
+
 function randNavPic() {
   const NAVPIC = [
     'ggreg-pic.jpg',
@@ -23,9 +28,9 @@ function randNavPic() {
     'sonoma.jpg',
     'tracey.jpg',
     'traceyYahooAvatar.jpg',
-    'trek.jpg'
+    'trek.jpg',
   ]
-  return '/img/nav/' + rand(NAVPIC)
+  return `/img/nav/${rand(NAVPIC)}`
 }
 
 function randomQuote() {
@@ -42,12 +47,6 @@ function randomQuote() {
 </a>`)
   })
 }
-
-
-function rand(ary) {
-  return ary[Math.round((ary.length - 1) * Math.random())]
-}
-
 
 
 if (window.matchMedia  &&  window.matchMedia('(prefers-color-scheme: dark)').matches) {
