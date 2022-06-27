@@ -21,7 +21,6 @@ cd ~/poohbot; ciff -w themes/hugo-future-imperfect-slim/exampleSite/config.toml 
 ### aliases
 - /img           => /images
 - /albums/thumbs => /albums/images
-- content/contact/_index.md
 ```
 gg kml.php
 gg featured-click
@@ -151,3 +150,5 @@ cd ~/poohbot; ./comments2json; line; files data/comments|lc; line; grep -h autho
 echo -n post/2019/09-techo-tuesday-make-a-free-website-static-site-generators-and-hugo.md |md5
 ```
 
+## contact me / emails
+- [content/contact/_index.md](content/contact/_index.md) - (pathway setup via account signup)

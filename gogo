@@ -3,8 +3,7 @@
 mydir=${0:a:h}
 cd $mydir
 
-rm -rf public
-( sleep 3
+( sleep 5
   open http://localhost:1313/
 ) &
 hugo serve
