@@ -4,8 +4,6 @@
 
 CSSDIR=../../themes/hugo-future-imperfect-slim/assets/css/
 
-[ -e $CSSDIR/fonts-ORIG.css ]  ||  cp  $CSSDIR/fonts.css  $CSSDIR/fonts-ORIG.css
-
 
 for i in $(egrep -o 'https://[^\)]+' $CSSDIR/fonts.css); do
   f=$(basename "$i")
@@ -13,6 +11,7 @@ for i in $(egrep -o 'https://[^\)]+' $CSSDIR/fonts.css); do
 done
 
 
+cp  $CSSDIR/fonts.css  fonts.css
 for i in  https://fonts.gstatic.com/s/raleway/v14/  https://fonts.gstatic.com/s/sourcesanspro/v13/
-  do perl -i -pe "s|$i|/fonts|" $CSSDIR/fonts.css
+  do perl -i -pe "s|$i|/fonts/|" fonts.css
 done
