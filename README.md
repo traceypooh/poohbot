@@ -1,12 +1,6 @@
 # poohbot
 poohbot.com static site version
 
-## 2022 update
-```sh
-colordiff -w themes/hugo-future-imperfect-slim/exampleSite/config.toml .
-```
-
-
 ## Fixme
 - top nav
 

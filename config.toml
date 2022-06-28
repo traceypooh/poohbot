@@ -1,3 +1,5 @@
+# For a description of these parameters, please visit the theme wiki.
+# https://github.com/pacollins/hugo-future-imperfect-slim/wiki/config.toml
 baseurl                 = "https://poohbot.com/"
 # this promising extra option breaks deployed site:
 # relativeurls            = true
@@ -10,7 +12,6 @@ disqusShortname         = ""
 googleAnalytics         = ""
 pluralizeListTitles     = false
 disableLanguages        = [""]
-ignoreFiles             = ["\\.crdownload$"]
 
 [markup.goldmark.renderer]
   # show inline HTM
@@ -30,17 +31,17 @@ ignoreFiles             = ["\\.crdownload$"]
 
 [params]
   enableCDN = false
-  search =  true
-  search_minify = false
-
-  removeBlur = true
-  mainSections = ["post"]
   # Loads CSS and JavaScript files. The variable is an array so that you can load
   # multiple/additional files if necessary. The standard theme files can be loaded
   # by adding the value, "default". Default includes the add-on.css and and-on.js.
   # Example: ["default", "/path/to/file"]
   cssFiles              = ["default", "/fonts/fonts.css", "/css/atom-one-dark.css"]
   jsFiles               = ["default"]
+
+  search =  true
+  search_minify = false
+
+  mainSections = ["post"]
   # Sets options for highlight.js
   highlightjs           = true
   highlightjsTheme      = "github"
@@ -49,24 +50,25 @@ ignoreFiles             = ["\\.crdownload$"]
   viewMorePostsLink     = "/post/"
   # Activate Estimated Reading Times, which appear in the post headers
   readingTime           = true
+  imageStretch          = ""
+  removeBlur            = true
   # Sets which Social Share links appear in posts.
   # Options are twitter, facebook, reddit, linkedin, pinterest, email
-  socialShare           = ["twitter", "facebook", "reddit", "linkedin", "pinterest", "email"]
+  socialShare           = ["twitter", "facebook", "pinterest", "email", "linkedin", "reddit"]
+  hideEmptyStats        = false
+  toc                   = false
+  tocWords              = 400
 
   [params.meta]
     # Sets the meta tag description
     description         = "A theme by HTML5 UP, ported by Julio Pescador. Slimmed and enhanced by Patrick Collins. Powered by Hugo."
     # Sets the meta tag author
     author              = "HTML5UP and Hugo"
-    # If you would like to add more comprehensive favicon support passed root
-    # directory favicon.ico, utlize this funtion. It is recommened to use
-    # https://realfavicongenerator.net to generate your icons as that is the basis
-    # for the theme's naming.
     favicon             = false
     svg                 = true
     faviconVersion      = "1"
-    msColor             = "#ffffff" # Copy from the https://realfavicongenerator.net
-    iOSColor            = "#ffffff" # Copy from the https://realfavicongenerator.net
+    msColor             = "#ffffff"
+    iOSColor            = "#ffffff"
 
   [params.header]
     # Sets the navbarTitle that appears in the top left of the navigation bar
@@ -84,6 +86,8 @@ ignoreFiles             = ["\\.crdownload$"]
     paragraph             = "Technophile · Optimist · <a href=/biking>Cyclist</a> · <a href=https://archive.org/about/bios.php>Archivist</a> · Design · <a href=/video>Video</a> · TV · Nomad · Docker"
     rssIntro              = true
     socialIntro           = true
+    hideWhenSingleColumn  = false
+    alwaysOnHomepage      = false
 
     # This appears at the top of the sidebar above params.intro.header.
     # A width of less than 100px is recommended from a design perspective.
@@ -95,7 +99,7 @@ ignoreFiles             = ["\\.crdownload$"]
       alt                 = "Hugo Future Imperfect Slim"
 
   [params.sidebar]
-    about               = "tracey is a nonstop dance party.  so you dont have to.  dont ask me about <a href=/2019/08/meesa-3-k8s-annie/>k8s</a>.  thanks for dropping by today.  you look nice."
+    about               = "tracey is a nonstop dance party.  so you dont have to.  dont ask me about <a href=/2019/08/meesa-3-k8s-annie/>containers</a>.  thanks for dropping by today.  you look nice."
     # Sets the number of recent posts to show in the sidebar. The default value is 5.
     postAmount          = 5
     # set to show or to hide categories in the sidebar
@@ -108,6 +112,14 @@ ignoreFiles             = ["\\.crdownload$"]
     rssFooter           = true
     # Sets Social Media icons to appear on the sidebar
     socialFooter        = true
+
+  [params.utterances]
+    enabled             = false
+    repo                = ""
+    issueTerm           = "pathname"
+    issueNumber         = ""
+    label               = ""
+    theme               = "github-light"
 
   # Disqus will take priority over Staticman (github.com/eduardoboucas/staticman)
   # due to its ease of use. Feel free to check out both and decide which you would
@@ -124,7 +136,7 @@ ignoreFiles             = ["\\.crdownload$"]
 
     [params.staticman.recaptcha]
       # Both keys must be present to enable recaptcha
-      siteKey           = "" # Site Key
+      siteKey           = ""
       encryptedKey      = ""
 
 [menu]
@@ -188,32 +200,51 @@ ignoreFiles             = ["\\.crdownload$"]
   tumblr                = "traceypooh"
   strava                = "traceypooh"
 
-# email                 = "example"
-# facebook              = "example"
-# slideshare            = ""
+  # Coding Communities
+# github                = "pacollins/hugo-future-imperfect-slim"
+# gitlab                = ""
+# stackoverflow         = "" # User Number
+# bitbucket             = ""
+# jsfiddle              = ""
+# codepen               = ""
+  # Visual Art Communities
+# deviantart            = ""
+# flickr                = "example"
+# behance               = ""
+# dribbble              = ""
+  # Publishing Communities
+# wordpress             = ""
 # medium                = ""
-# instagram             = "example"
-# keybase               = "example"
-# mastodon              = "example.com/@example"
-
-# googleplus            = ""
-# reddit                = "example"
-# quora                 = ""
+  # Professional/Business Oriented Communities
+# linkedin              = "example"
 # linkedin_company      = "examplebusiness"
 # foursquare            = ""
 # xing                  = ""
-# wordpress             = ""
-# bitbucket             = ""
-# jsfiddle              = ""
-# deviantart            = ""
-# behance               = ""
-# dribbble              = ""
+# slideshare            = ""
+  # Social Networks
+# facebook              = "example"
+# googleplus            = ""
+# reddit                = "example"
+# quora                 = ""
+# youtube               = ""
 # vimeo                 = ""
 # whatsapp              = "" # WhatsApp Number
+    # WeChat and QQ need testing.
+#   wechat              = ""
+#   qq                  = "" # User ID Number
+# instagram             = "example"
+# tumblr                = ""
+# twitter               = "example"
+# strava                = ""
 # skype                 = ""
 # snapchat              = ""
+# pinterest             = "example"
 # telegram              = "example"
 # vine                  = ""
 # googlescholar         = ""
 # orcid                 = ""
 # researchgate          = "example"
+# keybase               = "example"
+# mastodon              = "example.com/@example"
+  # Email
+# email                 = "example"
