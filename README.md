@@ -107,9 +107,11 @@ gg 'style='
 
 ## make a post
 ```bash
+cd ~/poohbot/
 PO=post/$(date +%Y)/$(date +%m)-title-something-something.md
 hugo new $PO
-code ~/poohbot/content/$PO
+code .
+code content/$PO
 
 # imagery is nice/fullsize at 880px wide, preview/shows at 880x375 (2.35:1) where you can
 # pick to show more of the top or bottom..
