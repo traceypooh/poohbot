@@ -144,3 +144,16 @@ echo -n post/2019/09-techo-tuesday-make-a-free-website-static-site-generators-an
 
 ## contact me / emails
 - [content/contact/_index.md](content/contact/_index.md) - (pathway setup via account signup)
+
+
+## browser search
+files involved:
+- [themes/hugo-future-imperfect-slim/layouts/_default/index.json.json](themes/hugo-future-imperfect-slim/layouts/_default/index.json.json)
+```ini
+[outputs]
+  home                  = ["html", "json", "rss"]
+```
+- these create a top-level [index.json](https://poohbot.com/index.json) during `hugo` build/serve
+- browser then uses for search:
+- [themes/hugo-future-imperfect-slim/assets/js/main.js](themes/hugo-future-imperfect-slim/assets/js/main.js)
+- [themes/hugo-future-imperfect-slim/assets/js/lunr.js](themes/hugo-future-imperfect-slim/assets/js/lunr.js)
