@@ -139,7 +139,10 @@ wget -qO- 'https://poohbot.com/wp-json/wp/v2/comments?per_page=100' |jq .
 
 cd ~/poohbot; ./comments2json; line; files data/comments|lc; line; grep -h author_url *.json|sort|uniq -c|sort -n; line; grep -rh '"website": ' data/comments/|sort|uniq -c|sort -n; line; files data/comments/|lc
 
+cd ~/poohbot/content
 echo -n post/2019/09-techo-tuesday-make-a-free-website-static-site-generators-and-hugo.md |md5
+ls ../data/comments/5b6d1bc047bbc56899539265e4728d16
+
 ```
 
 ## contact me / emails
