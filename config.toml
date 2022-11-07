@@ -245,6 +245,6 @@ disableLanguages        = [""]
 # orcid                 = ""
 # researchgate          = "example"
 # keybase               = "example"
-# mastodon              = "example.com/@example"
+mastodon                = "mastodon.social/@traceypooh"
   # Email
 # email                 = "example"
