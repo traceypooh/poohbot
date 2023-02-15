@@ -7,7 +7,15 @@ import dayjs from 'https://esm.archive.org/dayjs'
 
 const URL = 'https://www.strava.com/activities/8546316583' // xxx
 
-const htm = Deno.readTextFileSync('strava.htm') || await (await fetch(URL)).text()
+const htm = await (async () => {
+  try {
+    return Deno.readTextFileSync('strava.htm')
+  } catch {
+    const ret = await (await fetch(URL)).text()
+    Deno.writeTextFileSync('strava.htm', ret)
+    return ret
+  }
+})()
 
 const { activity, photos } = JSON.parse(htm.match(/data-react-props='([^']+)/)?.pop().replace(/&quot;/g, '"'))
 
@@ -16,13 +24,14 @@ delete activity.streams.distance
 delete activity.streams.latlng
 warnfull(activity)
 
+// eg: ROCK COBBLER 10.0!!   =>   rock-cobbler-10-0
 const slug = activity.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-+/, '').replace(/-+$/, '')
 
 const ymd = dayjs(activity.date).format('YYYY-MM-DD')
 const YYYY = ymd.split('-').slice(0, 1)
 const MM = ymd.split('-').slice(1, 2)
 const info = Object.fromEntries(['distance', 'time', 'elevation', 'calories'].map(k => [k, activity[k]]))
-warnfull({ info, slug, ymd, YYYY, MM })
+warnfull({ photos, info, slug, ymd, YYYY, MM })
 
 
 
@@ -47,21 +56,23 @@ Description xxx
 
 `)
 
-warnfull(photos)
 
 for (const [n, pix] of Object.entries(photos)) {
   const n0 = String(n).padStart(2, 0)
-
-  warnfull(pix.urls)
-  const pixdata = await (await fetch(Object.values(pix.urls).pop())).arrayBuffer()
 
   const IMGFI = `img/${slug}-${n0}.jpg`
 
   Deno.writeTextFileSync(
     FILE,
-    `<img src="/post/'${YYYY}'/${IMGFI}">\n${pix.caption ?? ''}\n\n`,
+    `<img src="/post/${YYYY}/${IMGFI}">\n${pix.caption ?? ''}\n\n`,
     { append: true }
   )
 
-  Deno.writeFileSync(IMGFI, new Uint8Array(pixdata))
+  warnfull(pix.urls)
+  try {
+    Deno.readFileSync(IMGFI)
+  } catch {
+    const pixdata = await (await fetch(Object.values(pix.urls).pop())).arrayBuffer()
+    Deno.writeFileSync(IMGFI, new Uint8Array(pixdata))
+  }
 }
