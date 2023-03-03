@@ -5,7 +5,7 @@
 import { warnfull } from 'https://av.prod.archive.org/js/util/log.js'
 import dayjs from 'https://esm.archive.org/dayjs'
 
-const URL = 'https://www.strava.com/activities/8546316583' // xxx
+const URL = Deno.args[0] // eg: https://www.strava.com/activities/8546316583
 
 const htm = await (async () => {
   try {
@@ -20,7 +20,7 @@ const htm = await (async () => {
 const { activity, photos } = JSON.parse(htm.match(/data-react-props='([^']+)/)?.pop().replace(/&quot;/g, '"'))
 
 delete activity.streams.altitude
-delete activity.streams.distance
+//delete activity.streams.distance
 delete activity.streams.latlng
 warnfull(activity)
 
