@@ -61,7 +61,7 @@ disableLanguages        = [""]
 
   [params.meta]
     # Sets the meta tag description
-    description         = "A theme by HTML5 UP, ported by Julio Pescador. Slimmed and enhanced by Patrick Collins. Powered by Hugo."
+    description         = "Tracey Jaquith / traceypooh website & blog.  Tech, Cycling, Video, DevOps, JS & more.  Live nonstop."
     # Sets the meta tag author
     author              = "HTML5UP and Hugo"
     favicon             = false
