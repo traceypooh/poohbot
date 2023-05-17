@@ -356,7 +356,7 @@ class IAV {
       if (!this.playallSetup) {
         this.playallSetup = true
         // eslint-disable-next-line import/no-unresolved
-        import('https://archive.org/components/jwplayer/jwplayer.js').then(() => {
+        import('https://av.prod.archive.org/js/jwplayer.js').then(() => {
           log('play all setup')
           IAV.playmp4(0)
         })
