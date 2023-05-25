@@ -60,8 +60,8 @@ window.onload = function () {
   $searchInput   = document.getElementById('search-input');
 
   var lang = document.documentElement.lang;
-  var pathArgs = ["{{ replaceRE "/$" "" .Site.BaseURL }}", "index.json"];
-  if (lang != "{{ .Site.Language }}") {
+  var pathArgs = ["{{ replaceRE "/$" "" "https://poohbot.com/" }}", "index.json"];
+  if (lang != "en") {
     pathArgs.splice(1, 0, lang);
   }
   path = pathArgs.join("/");
