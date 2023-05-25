@@ -76,9 +76,12 @@ window.onload = function () {
       idx = lunr(function () {
         this.ref('ref');
         this.field('title');
-        this.field('data');
+        this.field('date');
         this.field('description');
         this.field('body');
+
+        this.field('tags');
+        this.field('categories');
 
         // Loop through all the items in the JSON file and add them to the index
         // so they can be searched.
