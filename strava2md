@@ -64,7 +64,7 @@ for (const [n, pix] of Object.entries(photos)) {
 
   Deno.writeTextFileSync(
     FILE,
-    `<img src="/post/${YYYY}/${IMGFI}">\n${pix.caption ?? ''}\n\n`,
+    `<img src="/post/${YYYY}/${IMGFI}">\n${pix.caption ?? ''}\n\n`.replace(/&#39;/g, "'"),
     { append: true }
   )
 
