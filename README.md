@@ -1,5 +1,5 @@
 # poohbot
-poohbot.com static site version
+https://poohbot.com static site version
 
 ## Fixme
 - top nav
