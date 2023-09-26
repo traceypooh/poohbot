@@ -367,10 +367,10 @@ a.image.featured img {
 }
 
 
-img[src*="#bottom"] {
+a.image.featured img[src*="#bottom"] {
   object-position: bottom;
 }
-img[src*="#top"] {
+a.image.featured img[src*="#top"] {
   object-position: top;
 }
 
