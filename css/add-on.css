@@ -365,11 +365,13 @@ a.image.featured img {
   left: 0;
   height: 100%;
 }
-a.image.featured.featured-top img {
-  object-position: top;
-}
-a.image.featured.featured-bottom img {
+
+
+img[src*="#bottom"] {
   object-position: bottom;
+}
+img[src*="#top"] {
+  object-position: top;
 }
 
 /* OK now when we're showing a full single post, let the image height be fully natural */

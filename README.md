@@ -115,8 +115,8 @@ code content/$PO
 
 # imagery is nice/fullsize at 880px wide, preview/shows at 880x375 (2.35:1) where you can
 # pick to show more of the top or bottom..
-#   class: featured-top
-#   class: featured-bottom
+#   featured: littlefingers.jpg#top
+#   featured: https://archive.org/download/reremaster/both10107.jpg#bottom
 # 880x495 is nice 16:9 pic size
 
 # center an image into 880x495 black background:
