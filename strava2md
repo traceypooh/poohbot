@@ -52,8 +52,6 @@ featured: ${slug}-01.jpg
 ---
 Description xxx
 
-<style>.content img { display: block }</style>
-
 `)
 
 

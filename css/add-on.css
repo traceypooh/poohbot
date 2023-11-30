@@ -324,6 +324,10 @@ body.album .post {
 }
 
 
+.post.single .content img,
+.content .image img {
+  display: block;
+}
 
 /* https://codepen.io/burtclan/pen/mLqxC */
 a.image.featured {
