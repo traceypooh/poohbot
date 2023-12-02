@@ -123,6 +123,8 @@ code content/$PO
 # convert -size 880x495 xc:black in.jpg -gravity center -composite x.jpg; identify x.jpg; open x.jpg
 ```
 
+Try `ispell` spell checker before you publish (commit & push).
+
 
 ## run and/or make `public/` subdir
 - `brew install hugo`
