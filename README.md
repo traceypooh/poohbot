@@ -88,7 +88,7 @@ gg 'style='
 - https://themes.gohugo.io/hugo-future-imperfect-slim/
   - `mkdir -p themes`
   - `cd themes`
-  - `git submodule add https://github.com/pacollins/hugo-future-imperfect-slim`
+  - `git submodule add https://github.com/traceypooh/hugo-future-imperfect-slim`
   - or if cloned to another machine:
   - `git submodule update --init --recursive`
 

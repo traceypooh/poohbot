@@ -1,4 +1,5 @@
 # For a description of these parameters, please visit the theme wiki.
+# https://github.com/traceypooh/hugo-future-imperfect-slim/wiki/config.toml
 # https://github.com/pacollins/hugo-future-imperfect-slim/wiki/config.toml
 baseurl                 = "https://poohbot.com/"
 # this promising extra option breaks deployed site:
