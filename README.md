@@ -121,9 +121,12 @@ code content/$PO
 
 # center an image into 880x495 black background:
 # convert -size 880x495 xc:black in.jpg -gravity center -composite x.jpg; identify x.jpg; open x.jpg
+
+# more recently, have been using `Photos` to export pix to "max dimension" of 2016px, since
+# my iphone 12 mini shoots at 4032px on the long side
 ```
 
-Try `ispell` spell checker before you publish (commit & push).
+Try `ispell` spell checker before you publish (commit & push).  ( `brew install ispell` )
 
 
 ## run and/or make `public/` subdir
