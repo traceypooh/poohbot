@@ -8,7 +8,7 @@ DefaultContentLanguage  = "en"
 title                   = "Tracey Jaquith · PoohBot Pictures"
 theme                   = "hugo-future-imperfect-slim"
 preserveTaxonomyNames   = true
-paginate                = 10
+pagination.pagerSize    = 10
 disqusShortname         = ""
 googleAnalytics         = ""
 pluralizeListTitles     = false
@@ -188,7 +188,7 @@ disableLanguages        = [""]
 # Sets Social Media icons to appear and link to your account. Value should be your
 # username unless otherwise noted. These are the icons affected by socialAppearAtTop
 # and socialAppearAtBottom.
-[social]
+[params.social]
   twitter               = "tracey_pooh"
   youtube               = "@traceypooh"
   linkedin              = "tracey-jaquith-929432"
