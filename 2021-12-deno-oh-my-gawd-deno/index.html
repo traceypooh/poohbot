@@ -40,9 +40,9 @@ You can load logical `npm` modules directly from the web (!) 😍
 Omitting (just) the pie chart setup clutter (it's a lot of JSON config for the data -- you can [see the full source here](https://av.prod.archive.org/demo/deno.js)):
 
 ```js
-import $ from 'https://esm.archive.org/jquery@^3.0.0'
-import dayjs from 'https://esm.archive.org/dayjs'
-import * as d3v7 from 'https://esm.archive.org/d3'
+import $ from 'https://esm.ext.archive.org/jquery@3.7.1'
+import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
+import * as d3v7 from 'https://esm.ext.archive.org/d3@7.9.0'
 
 import { log } from '../js/util/log.js'
 
@@ -71,10 +71,10 @@ $('body').append(`
     self-hosted
     <a href="https://esm.sh">esm.sh</a>
     -- at
-    <a href="https://esm.archive.org">esm.archive.org</a>
+    <a href="https://esm.ext.archive.org">esm.ext.archive.org</a>
     <pre>
-import dayjs from 'https://esm.archive.org/dayjs'
-import $ from 'https://esm.archive.org/jquery@^3.0.0'
+import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
+import $ from 'https://esm.ext.archive.org/jquery@3.7.1'
     </pre>
   </div>
 
@@ -83,7 +83,7 @@ import $ from 'https://esm.archive.org/jquery@^3.0.0'
 $('#x h1').hide().fadeIn('slow')
 
 async function dpie() {
-  const d3pie = (await import('https://esm.archive.org/d3pie')).default
+  const d3pie = (await import('https://esm.ext.archive.org/d3pie@0.2.1')).default
 
   const pie = new d3pie('pieChart', {
     ...

@@ -3,7 +3,7 @@
 // Takes a strava.com public activity url and generates a markdown blog post entry from it
 
 import { warnfull } from 'https://av.prod.archive.org/js/util/log.js'
-import dayjs from 'https://esm.archive.org/dayjs'
+import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
 
 const URL = Deno.args[0] // eg: https://www.strava.com/activities/8546316583
 

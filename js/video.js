@@ -549,7 +549,7 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
 
 if (typeof $ === 'undefined') {
   // https://archive.org/details/poohBot   is the main usage here
-  import('https://esm.archive.org/jquery@^3.0.0').then(() => {
+  import('https://esm.ext.archive.org/jquery@3.7.1').then(() => {
     // eslint-disable-next-line no-console
     window.log = console.log.bind(console)
 
