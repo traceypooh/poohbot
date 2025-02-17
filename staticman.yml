@@ -19,6 +19,8 @@ comments:
   # "config.toml".
   branch: "main"
 
+  commitMessage: "New comment {fields.date} by {fields.name}"
+
   # List of fields to be populated automatically by Staticman and included in
   # the data file. Keys are the name of the field. The value can be an object
   # with a `type` property, which configures the generated field, or any value
@@ -42,7 +44,7 @@ comments:
   # (*) REQUIRED
   #
   # Destination path (directory) for the data files. Accepts placeholders.
-  path: "data/comments/{options.entryId}"
+  path: "comments/{options.entryId}"
 
   # (*) REQUIRED
   #
@@ -57,15 +59,3 @@ comments:
   # the name of the field and values are possible transformation types.
   transforms:
     email: md5
-
-  # reCAPTCHA (OPTIONAL)
-  # Register your domain at https://www.google.com/recaptcha/ and choose
-  # reCAPTCHA V2. Use your OWN siteKey and secret.
-  reCaptcha:
-    enabled: false
-    # siteKey and secret should match your config.toml
-    siteKey: ""
-    # (!) ENCRYPT reCaptcha secret key using Staticman /encrypt endpoint
-    # i.e. https://{your-staticman-api}/v3/encrypt/{your-site-secret}
-    # For more information, visit https://staticman.net/docs/encryption
-    secret: ""

@@ -269,12 +269,15 @@ rsync -Pav ../poohtini/comments/ comments/
 
 
 
-# resolve
-echo diff -r ../poohtini/index.html ./index.html
-echo diff -r ../poohtini/staticman.yml ./staticman.yml
-
-
+# manually resolve later
 echo Only in GL: wp.jpg
+
+
+# manually resolve
+colordiff -r ../poohtini/index.html ./index.html
+colordiff -r ../poohtini/staticman.yml ./staticman.yml
+
+
 
 ```markdown
 # xxx for GH Action deploy, delete:
