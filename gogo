@@ -23,9 +23,11 @@ if [ "$UNAMEY" = Darwin ]; then
 else
   # GitHub Actions
   # Setup theme
-  wget https://github.com/traceypooh/hugo-future-imperfect-slim/archive/refs/heads/master.zip
-  unzip master.zip
+  set -x
+  wget -q https://github.com/traceypooh/hugo-future-imperfect-slim/archive/refs/heads/master.zip
+  unzip -q master.zip
   ln -s hugo-future-imperfect-slim-master theme
+  set +x
 fi
 
 
@@ -86,7 +88,7 @@ done
 echo Number Posts: $NPOSTS
 echo Number Pages: $NPAGES
 
-( set -eux; hugo build )
+( set -eux; hugo )
 
 # cheap check if GitHub Actions or dev mode on mac
 if [ "$UNAMEY" = Darwin ]; then
