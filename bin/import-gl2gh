@@ -287,4 +287,7 @@ colordiff -r ../poohtini/staticman.yml ./staticman.yml
 - config.toml
 - staticman.yml
 - README.md?
+
+# xxx etc.
+gg 2023/06/
 ```

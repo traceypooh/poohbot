@@ -10,12 +10,12 @@ mkdir -p public
 
 for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/); do
   if ( ! grep -qE '^---' $HTM ); then
-    echo "skipping $HTM w/o frontmatter"
+    # echo "skipping $HTM w/o frontmatter"
     continue
   fi
 
   MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
-  [ -e $MD ]  ||  ( set -eux; ln $HTM $MD )
+  [ -e $MD ]  ||  ( set -eux; ln -s index.html $MD )
 
   set +e
   if ( ! grep -qE '^type: post$' $HTM ); then
