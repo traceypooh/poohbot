@@ -46,7 +46,7 @@ jobs:
 #xxx      lfs: true
       - name: traceypooh setup
         run: |
-          apt-get install -yqq zsh
+          sudo apt-get install -yqq zsh
           ./gogo
       - name: Setup Pages
         id: pages
