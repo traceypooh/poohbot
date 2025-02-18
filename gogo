@@ -1,9 +1,35 @@
-#!/bin/zsh -ex
-
+#!/bin/zsh -eu
 mydir=${0:a:h}
+
+# does some minor manipulations to get HuGo to work nicely w/ the desired repo directory layout
+
 cd $mydir
 
-( sleep 5
-  open http://localhost:1313/
-) &
-hugo serve
+mkdir -p public
+( set -eux; find public -delete )
+
+for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/); do
+  if ( ! grep -qE '^---' $HTM ); then
+    echo "skipping $HTM w/o frontmatter"
+    continue
+  fi
+
+  MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
+  [ -e $MD ]  ||  ( set -eux; ln $HTM $MD )
+
+  set +e
+  if ( ! grep -qE '^type: post$' $HTM ); then
+    if ( ! grep -qE '^type: page$' $HTM ); then
+      NDATE=$(grep -cE '^date: ' $HTM)
+      if [ $NDATE != 1 ]; then
+        echo "$HTM has no 'date:'"
+        exit 1
+      fi
+      echo "Adding 'type: post' to $HTM"
+      perl -i -pe 's/^(date: .*)/$1\ntype: post/' $HTM
+    fi
+  fi
+  set -e
+done
+
+( set -eux; hugo serve --watch=false )
