@@ -4,7 +4,11 @@ https://poohbot.com static site version
 ## Fixme
 - top nav
 ```sh
-gg '/20[0-9][0-9]/[0-9][0-9]'|fgrep -v gl2gh|grep '/20[0-9][0-9]/[0-9][0-9]'
+gg '/20[0-9][0-9]/[0-9][0-9]'|fgrep -v gl2gh|grep '/20[0-9][0-9]/[0-9][0-9]' # xxx
+
+# http://localhost:1313/post/ # xxx
+# comments # xxx
+# contact # chexxxx
 ```
 
 ### 404s
