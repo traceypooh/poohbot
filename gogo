@@ -5,31 +5,47 @@ mydir=${0:a:h}
 
 cd $mydir
 
-mkdir -p public
-( set -eux; find public -delete )
-
-for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/); do
+NPAGES=0
+NPOSTS=0
+for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -Ev ^public/); do
   if ( ! grep -qE '^---' $HTM ); then
     # echo "skipping $HTM w/o frontmatter"
     continue
   fi
 
-  MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
-  [ -e $MD ]  ||  ( set -eux; ln -s index.html $MD )
-
   set +e
-  if ( ! grep -qE '^type: post$' $HTM ); then
-    if ( ! grep -qE '^type: page$' $HTM ); then
-      NDATE=$(grep -cE '^date: ' $HTM)
-      if [ $NDATE != 1 ]; then
-        echo "$HTM has no 'date:'"
-        exit 1
-      fi
-      echo "Adding 'type: post' to $HTM"
-      perl -i -pe 's/^(date: .*)/$1\ntype: post/' $HTM
+  if ( grep -qE '^type: post$' $HTM ); then
+    ((NPOSTS++))
+  elif ( grep -qE '^type: page$' $HTM ); then
+    ((NPAGES++))
+  else
+    ((NPOSTS++))
+    NDATE=$(grep -cE '^date: ' $HTM)
+    if [ $NDATE != 1 ]; then
+      echo "$HTM has no 'date:'"
+      exit 1
     fi
+    echo "Adding 'type: post' to $HTM"
+    perl -i -pe 's/^(date: .*)/$1\ntype: post/' $HTM
   fi
   set -e
+
+  MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
+  mv $HTM $MD
 done
 
-( set -eux; hugo serve --watch=false )
+echo Number Posts: $NPOSTS
+echo Number Pages: $NPAGES
+
+
+( set -eux; hugo build )
+
+
+# revert source files
+for MD in $(find . -mindepth 2 -type f -name 'index.md' |cut -f2- -d/ |grep -Ev ^public/); do
+  HTM=$(echo $MD |perl -pe 's/\.md$/.html/')
+  mv $MD $HTM
+done
+
+
+( set -eux; caddy file-server -r public --listen :1313 )

@@ -6,13 +6,26 @@ baseurl                 = "https://poohbot.com/"
 # relativeurls            = true
 DefaultContentLanguage  = "en"
 title                   = "Tracey Jaquith · PoohBot Pictures"
-theme                   = "hugo-future-imperfect-slim"
+
+# I'm using a forked version of abandoned theme:
+#   https://github.com/traceypooh/hugo-future-imperfect-slim
+theme                   = "theme"
+
 preserveTaxonomyNames   = true
 pagination.pagerSize    = 10
 disqusShortname         = ""
 googleAnalytics         = ""
 pluralizeListTitles     = false
 disableLanguages        = [""]
+
+# we like everything in top dir
+contentDir = "."
+assetDir = "."
+themesDir = "."
+
+# dont process or copy these into dest 'public/' dir:
+ignoreFiles = ['archetypes/default.md', 'comments', 'config.toml', 'staticman.yml', 'bin/', 'public', '.git']
+
 
 [markup.goldmark.renderer]
   # show inline HTM
@@ -28,7 +41,7 @@ disableLanguages        = [""]
 
 
 [permalinks]
-  post = "/:year/:month/:title/"
+  post = "/:year-:month-:title/" # chexxx
 
 [params]
   enableCDN = false
@@ -48,7 +61,7 @@ disableLanguages        = [""]
   highlightjsTheme      = "github"
   highlightjsLang       = []
   # Sets where "View More Posts" links to
-  viewMorePostsLink     = "/post/"
+  viewMorePostsLink     = "/post/" # xxx
   # Activate Estimated Reading Times, which appear in the post headers
   readingTime           = true
   imageStretch          = ""
@@ -130,15 +143,10 @@ disableLanguages        = [""]
     # If using GitLab, just add the GitLab bot, NO need to hit `/connect/v3/...`
     enabled             = true
     api                 = "traceypooh-staticman.dev.archive.org"  # without trailing slash, defaults to "staticman3.herokuapp.com"
-    gitProvider         = "gitlab"  # either "github" or "gitlab"
+    gitProvider         = "github"  # either "github" or "gitlab"
     username            = "traceypooh"
     repo                = "poohbot"
     branch              = "main"
-
-    [params.staticman.recaptcha]
-      # Both keys must be present to enable recaptcha
-      siteKey           = ""
-      encryptedKey      = ""
 
 [menu]
   # Sets the menu items in the navigation bar
