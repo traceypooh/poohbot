@@ -3,6 +3,9 @@ https://poohbot.com static site version
 
 ## Fixme
 - top nav
+```sh
+gg '/20[0-9][0-9]/[0-9][0-9]'|fgrep -v gl2gh|grep '/20[0-9][0-9]/[0-9][0-9]'
+```
 
 ### 404s
 - https://poohbot.com/tags/h-264/
@@ -31,13 +34,13 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 
 
 ### Imagery++
-- http://localhost:1313/2013/02/how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
-- http://localhost:1313/2013/02/simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
-- http://localhost:1313/2012/06/convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/
-- http://localhost:1313/2012/01/natively-compiling-ffmpeg-mplayer-mencoder-on-macos-lion-with-x264/
-- http://localhost:1313/2011/05/natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding/
-- http://localhost:1313/2009/09/ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
-- http://localhost:1313/2009/04/ffmpeg-building-on-mac-intel/x386/
+- http://localhost:1313/2013-02-how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
+- http://localhost:1313/2013-02-simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
+- http://localhost:1313/2012-06-convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/
+- http://localhost:1313/2012-01-natively-compiling-ffmpeg-mplayer-mencoder-on-macos-lion-with-x264/
+- http://localhost:1313/2011-05-natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding/
+- http://localhost:1313/2009-09-ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
+- http://localhost:1313/2009-04-ffmpeg-building-on-mac-intel/x386/
 
 #### GPS removal
 ```

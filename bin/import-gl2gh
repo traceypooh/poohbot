@@ -278,16 +278,5 @@ colordiff -r ../poohtini/index.html ./index.html
 colordiff -r ../poohtini/staticman.yml ./staticman.yml
 
 
-
-```markdown
-# xxx for GH Action deploy, delete:
-- .git*
-- bin
-- comments
-- config.toml
-- staticman.yml
-- README.md?
-
-# xxx etc.
-gg 2023/06/
-```
+# manually/script resolve:
+git grep 20[0-9][0-9]/[0-9][0-9]/

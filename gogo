@@ -3,6 +3,8 @@ mydir=${0:a:h}
 
 # does some minor manipulations to get HuGo to work nicely w/ the desired repo directory layout
 
+# xxx GH Action: hugo image, add zsh, perl, run gogo
+
 cd $mydir
 
 function restore-source-files() {
@@ -13,7 +15,20 @@ function restore-source-files() {
   done
 }
 
-trap restore-source-files EXIT
+UNAMEY=$(uname)
+
+if [ "$UNAMEY" = Darwin ]; then
+  # in dev mode
+  trap restore-source-files EXIT
+else
+  # GitHub Actions
+  # Setup theme
+  wget https://github.com/traceypooh/hugo-future-imperfect-slim/archive/refs/heads/master.zip
+  unzip master.zip
+  ln -s hugo-future-imperfect-slim-master theme
+fi
+
+
 
 NPAGES=0
 NPOSTS=0
@@ -73,6 +88,9 @@ echo Number Pages: $NPAGES
 
 ( set -eux; hugo build )
 
-restore-source-files
+# cheap check if GitHub Actions or dev mode on mac
+if [ "$UNAMEY" = Darwin ]; then
+  restore-source-files
 
-( set -eux; caddy file-server -r public --listen :1313 )
+  ( set -eux; caddy file-server -r public --listen :1313 )
+fi
