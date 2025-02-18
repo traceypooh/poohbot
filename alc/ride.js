@@ -12,7 +12,7 @@ class Ride {
     // NOTE: router web service replaces all these when it is used...
     this.custom = '<center><i>NOTE: all rides *do* start/finish at Orinda BART<br/><span style="font-size:80%">(I sometimes had to omit a segment near BART station to make them map nicely 8-)</span></i><br/></center>'
     this.series  = 'Cat 3 East Bay Rides'
-    this.leaders = ['Tracey Jaquith: (415)-xxx-xxxx', 'Hunter Brown: (510)-xxx-xxxx']
+    this.leaders = ['Tracey Jaquith: (415)-###-####', 'Hunter Brown: (510)-###-####']
     this.location   = 'Orinda BART, eastern parking lot';
     this.meettime   = '7:30am';
     this.ridetime   = '8am';

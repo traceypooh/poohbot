@@ -5,6 +5,16 @@ mydir=${0:a:h}
 
 cd $mydir
 
+function restore-source-files() {
+  for MD in $(find . -mindepth 2 -type f -name 'index.md' |cut -f2- -d/ |grep -Ev ^public/); do
+    HTM=$(echo $MD |perl -pe 's/\.md$/.html/')
+    mv $HTM.tmp $HTM
+    rm $MD
+  done
+}
+
+trap restore-source-files EXIT
+
 NPAGES=0
 NPOSTS=0
 for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -Ev ^public/); do
@@ -13,39 +23,56 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
     continue
   fi
 
+  MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
+  cp $HTM $MD
+  mv $HTM $HTM.tmp
+
+  ALIASED=
+
   set +e
-  if ( grep -qE '^type: post$' $HTM ); then
-    ((NPOSTS++))
-  elif ( grep -qE '^type: page$' $HTM ); then
+  if ( grep -qE '^type: page$' $MD ); then
     ((NPAGES++))
   else
     ((NPOSTS++))
-    NDATE=$(grep -cE '^date: ' $HTM)
-    if [ $NDATE != 1 ]; then
+    DATE=$(grep -Eo '^date: [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' $MD |cut -f2 -d ' ')
+    if [ "$DATE" = "" ]; then
       echo "$HTM has no 'date:'"
       exit 1
     fi
-    echo "Adding 'type: post' to $HTM"
-    perl -i -pe 's/^(date: .*)/$1\ntype: post/' $HTM
+
+    if ( grep -qE '^aliases:' $MD ); then
+      ALIASED=1
+    fi
+
+    if ( grep -qE '^type: post$' $MD ); then
+      if [[ $MD == 20* ]]; then
+        # post with filename staring with '20'(YY-MM-..)
+        # TTL is dirname with lead YYYY-MM- removed
+        YYYY=$(echo $DATE |cut -d- -f1)
+          MM=$(echo $DATE |cut -d- -f2)
+          DD=$(echo $DATE |cut -d- -f3)
+        TTL=$(echo $MD |rev |cut -f2- -d/ |rev |cut -f3- -d-)
+        ALIASES="aliases: ['/$YYYY/$MM/$DD/$TTL/', '/$YYYY/$MM/$TTL/']"
+
+        if [ $ALIASED ]; then
+          echo xxx $HTM $ALIASES
+        else
+          perl -i -pe 's#^(date: .*)#$1\n'$ALIASES'#' $MD
+        fi
+      fi
+    else
+      echo "Adding 'type: post' to $MD"
+      perl -i -pe 's#^(date: .*)#$1\ntype: post#' $MD
+    fi
   fi
   set -e
-
-  MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
-  mv $HTM $MD
 done
 
 echo Number Posts: $NPOSTS
 echo Number Pages: $NPAGES
 
-
 ( set -eux; hugo build )
 
-
-# revert source files
-for MD in $(find . -mindepth 2 -type f -name 'index.md' |cut -f2- -d/ |grep -Ev ^public/); do
-  HTM=$(echo $MD |perl -pe 's/\.md$/.html/')
-  mv $MD $HTM
-done
-
+restore-source-files
 
 ( set -eux; caddy file-server -r public --listen :1313 )
