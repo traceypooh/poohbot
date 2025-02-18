@@ -24,9 +24,10 @@ else
   # GitHub Actions
   # Setup theme
   set -x
+  pwd
   wget -q https://github.com/traceypooh/hugo-future-imperfect-slim/archive/refs/heads/master.zip
   unzip -q master.zip
-  ln -s hugo-future-imperfect-slim-master theme
+  mv hugo-future-imperfect-slim-master theme
   set +x
 fi
 
