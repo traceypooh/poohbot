@@ -43,13 +43,14 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+#xxx      lfs: true
+      - name: traceypooh setup
+        run: |
+          apt-get install -yqq zsh
+          ./gogo
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Install Node.js dependencies
-        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
-      - name: traceypooh setup
-        run: ./gogo
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
