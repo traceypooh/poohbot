@@ -41,7 +41,7 @@ ignoreFiles = ['archetypes/default.md', 'comments', 'config.toml', 'staticman.ym
 
 
 [permalinks]
-  post = "/:year-:month-:title/" # chexxx
+  post = "/:year-:month-:title/"
 
 [params]
   enableCDN = false
@@ -61,7 +61,7 @@ ignoreFiles = ['archetypes/default.md', 'comments', 'config.toml', 'staticman.ym
   highlightjsTheme      = "github"
   highlightjsLang       = []
   # Sets where "View More Posts" links to
-  viewMorePostsLink     = "/post/" # xxx
+  viewMorePostsLink     = "/page/"
   # Activate Estimated Reading Times, which appear in the post headers
   readingTime           = true
   imageStretch          = ""
@@ -113,7 +113,7 @@ ignoreFiles = ['archetypes/default.md', 'comments', 'config.toml', 'staticman.ym
       alt                 = "Hugo Future Imperfect Slim"
 
   [params.sidebar]
-    about               = "tracey is a nonstop dance party.  so you dont have to.  dont ask me about <a href=/2019/08/meesa-3-k8s-annie/>containers</a>.  thanks for dropping by today.  you look nice."
+    about               = "tracey is a nonstop dance party.  so you dont have to.  dont ask me about <a href=/2019-08-meesa-3-k8s-annie/>containers</a>.  thanks for dropping by today.  you look nice."
     # Sets the number of recent posts to show in the sidebar. The default value is 5.
     postAmount          = 5
     # set to show or to hide categories in the sidebar

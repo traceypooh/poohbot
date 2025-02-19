@@ -1,9 +1,8 @@
 #!/bin/zsh -eu
 mydir=${0:a:h}
 
-# does some minor manipulations to get HuGo to work nicely w/ the desired repo directory layout
-
-# xxx GH Action: hugo image, add zsh, perl, run gogo
+# Does some minor manipulations to get HuGo to work nicely w/ the desired repo directory layout.
+# Used in local dev on a mac; and in GitHub Actions
 
 cd $mydir
 
@@ -70,10 +69,17 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
           MM=$(echo $DATE |cut -d- -f2)
           DD=$(echo $DATE |cut -d- -f3)
         TTL=$(echo $MD |rev |cut -f2- -d/ |rev |cut -f3- -d-)
-        ALIASES="aliases: ['/$YYYY/$MM/$DD/$TTL/', '/$YYYY/$MM/$TTL/']"
+        ALIAS1="/$YYYY/$MM/$DD/$TTL/"
+        ALIAS2="/$YYYY/$MM/$TTL/"
+        ALIASES="aliases: ['$ALIAS1', '$ALIAS2']"
 
         if [ $ALIASED ]; then
-          echo xxx $HTM $ALIASES
+          # check the front matter for the 2 aliases we always want to be present
+          # (there should be 1+ more, too)
+          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS1 || \
+            echo ERROR: $HTM is missing alias: $ALIAS1
+          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS2 || \
+            echo ERROR: $HTM is missing alias: $ALIAS2
         else
           perl -i -pe 's#^(date: .*)#$1\n'$ALIASES'#' $MD
         fi

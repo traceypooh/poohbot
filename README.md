@@ -2,13 +2,11 @@
 https://poohbot.com static site version
 
 ## Fixme
-- top nav
 ```sh
-gg '/20[0-9][0-9]/[0-9][0-9]'|fgrep -v gl2gh|grep '/20[0-9][0-9]/[0-9][0-9]' # xxx
+# comments # xxxx entryId _id replyThread, etc.?!
+# dark mode form & button colors # xxxx
 
-# http://localhost:1313/post/ # xxx
-# comments # xxx
-# contact # chexxxx
+gg -i poohbot # xxx
 ```
 
 ### 404s

@@ -42,8 +42,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive
-#xxx      lfs: true
+          lfs: true
+          # submodules: recursive
       - name: traceypooh setup
         run: |
           sudo apt-get install -yqq zsh
