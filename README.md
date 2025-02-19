@@ -4,7 +4,7 @@ https://poohbot.com static site version
 ## Fixme
 ```sh
 # comments # xxxx entryId _id replyThread, etc.?!
-# dark mode form & button colors # xxxx
+# http://localhost:1313/page/2/  nix (broken) home page nav topper  xxxx
 
 gg -i poohbot # xxx
 ```
