@@ -135,15 +135,11 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'bin/', 
     label               = ""
     theme               = "github-light"
 
-  # Disqus will take priority over Staticman (github.com/eduardoboucas/staticman)
-  # due to its ease of use. Feel free to check out both and decide which you would
-  # prefer to use. See staticman.yml for additional settings.
   [params.staticman]
-    # If using GitHub, go to https://github.com/apps/staticman-net
-    # If using GitLab, just add the GitLab bot, NO need to hit `/connect/v3/...`
+    # See staticman.yml for additional settings.
     enabled             = true
-    api                 = "traceypooh-staticman.dev.archive.org"  # without trailing slash, defaults to "staticman3.herokuapp.com"
-    gitProvider         = "github"  # either "github" or "gitlab"
+    api                 = "blogtini.netlify.app"
+    gitProvider         = "github"
     username            = "traceypooh"
     repo                = "poohbot"
     branch              = "main"
