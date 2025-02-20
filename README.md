@@ -1,13 +1,9 @@
 # poohbot
-https://poohbot.com static site version
+tracey pooh's site & blog, static site generated
 
-## Fixme
-```sh
-# comments # xxxx entryId _id replyThread, etc.?!
-# http://localhost:1313/page/2/  nix (broken) home page nav topper  xxxx
+- https://poohbot.com
+- https://traceypooh.com
 
-gg -i poohbot # xxx
-```
 
 ### 404s
 - https://poohbot.com/tags/h-264/
