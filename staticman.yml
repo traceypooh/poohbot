@@ -9,10 +9,6 @@ comments:
   # not here is part of the request, an error will be thrown.
   allowedFields: ["name", "email", "website", "body", "replyID", "replyName", "replyThread"]
 
-  # When allowedOrigins is defined, only requests sent from one of the domains
-  # listed will be accepted.
-  allowedOrigins: ["localhost", "poohbot.com", "poohBot.com", "traceypooh.com"]
-
   # (*) REQUIRED
   #
   # Name of the branch being used. Must match the branch configured in
