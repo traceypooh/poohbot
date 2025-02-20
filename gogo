@@ -7,6 +7,7 @@ mydir=${0:a:h}
 cd $mydir
 
 function restore-source-files() {
+  ( set +e; mv data/comments . && rmdir data )
   for MD in $(find . -mindepth 2 -type f -name 'index.md' |cut -f2- -d/ |grep -Ev ^public/); do
     HTM=$(echo $MD |perl -pe 's/\.md$/.html/')
     mv $HTM.tmp $HTM
@@ -31,6 +32,9 @@ else
 fi
 
 
+# sigh :p
+mkdir -p data
+mv comments data
 
 NPAGES=0
 NPOSTS=0
