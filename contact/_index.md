@@ -1,4 +1,4 @@
-+++
+---
 title = "Contact"
 type = "contact"
 netlify = false
@@ -9,4 +9,4 @@ contactsubject = "Subject"
 contactmessage = "Your Message"
 contactlang = "en"
 contactanswertime = 24
-+++
+---

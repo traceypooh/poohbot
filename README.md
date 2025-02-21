@@ -1,3 +1,6 @@
+
+CRAWL CHECK
+---
 # poohbot
 tracey pooh's site & blog, static site generated
 
@@ -87,11 +90,7 @@ gg 'style='
 
 ## theme setup
 - https://themes.gohugo.io/hugo-future-imperfect-slim/
-  - `mkdir -p themes`
-  - `cd themes`
-  - `git submodule add https://github.com/traceypooh/hugo-future-imperfect-slim`
-  - or if cloned to another machine:
-  - `git submodule update --init --recursive`
+  - `git clone https://github.com/traceypooh/hugo-future-imperfect-slim theme`
 
 
 ## initial setup
@@ -109,10 +108,10 @@ gg 'style='
 ## make a post
 ```bash
 cd ~/poohbot/
-PO=post/$(date +%Y)/$(date +%m)-title-something-something.md
+PO=$(date +%Y)/$(date +%m)-title-something-something.md
 hugo new $PO
 code .
-code content/$PO
+code $PO
 
 # imagery is nice/fullsize at 880px wide, preview/shows at 880x375 (2.35:1) where you can
 # pick to show more of the top or bottom..
@@ -137,27 +136,14 @@ Try `ispell` spell checker before you publish (commit & push).  ( `brew install 
   - `CTL-C` at any point..
 
 
-## comments ingesting
-https://yasoob.me/posts/running_staticman_on_static_hugo_blog_with_nested_comments/
-
-```bash
-wget -qO- 'https://poohbot.com/wp-json/wp/v2/comments?per_page=100' |jq .
-
-cd ~/poohbot; ./comments2json; line; files data/comments|lc; line; grep -h author_url *.json|sort|uniq -c|sort -n; line; grep -rh '"website": ' data/comments/|sort|uniq -c|sort -n; line; files data/comments/|lc
-
-cd ~/poohbot/content
-echo -n 2019-09-techo-tuesday-make-a-free-website-static-site-generators-and-hugo |md5
-ls ../data/comments/5b6d1bc047bbc56899539265e4728d16
-
-```
 
 ## contact me / emails
-- [content/contact/_index.md](content/contact/_index.md) - (pathway setup via account signup)
+- [content/contact/_index.md](contact/_index.md) - (pathway setup via account signup)
 
 
 ## browser search
 files involved:
-- [themes/hugo-future-imperfect-slim/layouts/_default/index.json.json](themes/hugo-future-imperfect-slim/layouts/_default/index.json.json)
+- `theme/layouts/_default/index.json.json`
 ```ini
 [outputs]
   home                  = ["html", "json", "rss"]
