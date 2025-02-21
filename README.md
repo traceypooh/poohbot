@@ -130,7 +130,7 @@ Try `ispell` spell checker before you publish (commit & push).  ( `brew install 
 
 
 ## run and/or make `public/` subdir
-- `brew install hugo`
+- `brew install hugo caddy`
 - ensures fresh - removes prior run
 - [gogo](gogo)
   - `CTL-C` at any point..
@@ -138,7 +138,7 @@ Try `ispell` spell checker before you publish (commit & push).  ( `brew install 
 
 
 ## contact me / emails
-- [content/contact/_index.md](contact/_index.md) - (pathway setup via account signup)
+- [contact/_index.md](contact/_index.md) - (pathway setup via account signup)
 
 
 ## browser search
