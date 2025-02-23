@@ -9,6 +9,7 @@ tracey pooh's site & blog, static site generated
 
 
 ### 404s
+- github.min.css
 - https://poohbot.com/tags/h-264/
 - https://poohbot.com/tags/spottheshuttle/
 

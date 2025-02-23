@@ -54,7 +54,7 @@ date: 2019-09-01
   </div>
   <div class="hover-quote-hide">
     <img class="random-picture" ht="125"
-      src=albums/images/2005_07_04%20cape%20provincetown,%20hike,%20cottage/IMG_2060.JPG"
+      src="albums/images/2005_07_04%20cape%20provincetown,%20hike,%20cottage/IMG_2060.JPG"
       data-asciiover="
 picture from a
 recent photo album

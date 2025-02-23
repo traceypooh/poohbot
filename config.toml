@@ -61,7 +61,7 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'bin/', 
   highlightjsTheme      = "github"
   highlightjsLang       = []
   # Sets where "View More Posts" links to
-  viewMorePostsLink     = "/page/"
+  viewMorePostsLink     = "/page/2"
   # Activate Estimated Reading Times, which appear in the post headers
   readingTime           = true
   imageStretch          = ""
