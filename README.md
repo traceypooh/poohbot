@@ -1,6 +1,3 @@
-
-CRAWL CHECK
----
 # poohbot
 tracey pooh's site & blog, static site generated
 
@@ -8,7 +5,21 @@ tracey pooh's site & blog, static site generated
 - https://traceypooh.com
 
 
-### 404s
+## Comments setup
+I'm using a forked version of `Staticman` here:
+
+https://github.com/traceypooh/staticmin
+
+that is hosted free on https://netlify.com
+and you can, too!
+
+- See [staticman.yml](staticman.yml) for the setup.
+- Submitted comments go into approval (by you) mode, where your GitHub repo hosting your blog/site gets a "Pull Request" and new branch for each comment.
+- Current setup puts comments in [comments/](comments/) top-level subdir, as JSON files.
+- Each post or page gets the comment added to a `comments/` subdir, based on the corresponding post/page's path name [example](comments/about)
+
+
+### 404s fixme xxx
 - https://poohbot.com/tags/h-264/
 - https://poohbot.com/tags/spottheshuttle/
 
@@ -34,15 +45,6 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - http://localhost:1313/three-bears-and-mt-diablo/
 
 
-### still need to add `feature` image xxx
-- http://localhost:1313/2013-02-how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
-- http://localhost:1313/2013-02-simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
-- http://localhost:1313/2012-06-convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/
-- http://localhost:1313/2012-01-natively-compiling-ffmpeg-mplayer-mencoder-on-macos-lion-with-x264/
-- http://localhost:1313/2011-05-natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding/
-- http://localhost:1313/2009-09-ffmpeg-for-time-lapse-sets-of-images-and-even-archiving/
-- http://localhost:1313/2009-04-ffmpeg-building-on-mac-intel/x386/
-
 #### GPS removal
 ```sh
 exiftool "-gps*=" file1.jpg file2.jpg ...
@@ -61,7 +63,8 @@ gg 'style='
 
 ## helpful related links
 - https://fontawesome.com/v4.7.0/icons/
-- crawl site (and find => fix all 404s)
+
+## crawl site (and find => fix all 404s) xxx
 `wget --spider -o log -e robots=off -w 1 -r -nv -p https://poohbot.com  &&  fgrep -B1 'not exist' log`
 
 
