@@ -9,7 +9,7 @@ tracey pooh's site & blog, static site generated
 
 
 ### 404s
-- github.min.css
+- github.min.css  xxxx brighter highlight colors, esp. in dark mode
 - https://poohbot.com/tags/h-264/
 - https://poohbot.com/tags/spottheshuttle/
 
