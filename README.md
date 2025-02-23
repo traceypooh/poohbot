@@ -9,7 +9,6 @@ tracey pooh's site & blog, static site generated
 
 
 ### 404s
-- github.min.css  xxxx brighter highlight colors, esp. in dark mode
 - https://poohbot.com/tags/h-264/
 - https://poohbot.com/tags/spottheshuttle/
 
@@ -35,7 +34,7 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - http://localhost:1313/three-bears-and-mt-diablo/
 
 
-### Imagery++
+### still need to add `feature` image xxx
 - http://localhost:1313/2013-02-how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition/
 - http://localhost:1313/2013-02-simple-way-to-make-h.264-mp4-web-and-ios/mobile-playable-video-mp4-files-for-linux-and-macosx-using-ffmpeg/
 - http://localhost:1313/2012-06-convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canon/nikon-video/
@@ -45,12 +44,12 @@ gg https://poohbot.com/alc/morgan-territory/kml.kml
 - http://localhost:1313/2009-04-ffmpeg-building-on-mac-intel/x386/
 
 #### GPS removal
-```
+```sh
 exiftool "-gps*=" file1.jpg file2.jpg ...
 ```
 
 ## CSP
-```bash
+```sh
 gg -i onclick
 gg -i '<script>' |chopper
 gg '<style[^U]' |chopper |fgrep '<style'
@@ -90,7 +89,8 @@ gg 'style='
 ---
 
 ## theme setup
-- https://themes.gohugo.io/hugo-future-imperfect-slim/
+- https://themes.gohugo.io/hugo-future-imperfect-slim/ (unmaintained)
+- https://github.com/traceypooh/hugo-future-imperfect-slim (tracey forked & maintains)
   - `git clone https://github.com/traceypooh/hugo-future-imperfect-slim theme`
 
 
@@ -98,12 +98,10 @@ gg 'style='
 - https://gohugo.io/hosting-and-deployment/hosting-on-gitlab/
 - https://about.gitlab.com/2016/04/07/gitlab-pages-setup/
 - https://github.com/pacollins/hugo-future-imperfect-slim/wiki/Staticman-config
-- added Git LFS (esp. for imagery / big files and if i future resize/recrop, etc.)
-  - `git lfs track "*.jpg"`
-- had to sort out http://localhost:1313/post/
+- had to sort out http://localhost:1313/
 - https://gohugo.io/content-management/shortcodes/#youtube
 - archive.org video/book embeds
-- `hugo` # build public
+- [gogo](gogo) # build `public/`
 
 
 ## make a post
@@ -144,12 +142,12 @@ Try `ispell` spell checker before you publish (commit & push).  ( `brew install 
 
 ## browser search
 files involved:
-- `theme/layouts/_default/index.json.json`
+- [theme/layouts/_default/index.json.json](https://github.com/traceypooh/hugo-future-imperfect-slim/tree/master/layouts/_default/index.json.json)
 ```ini
 [outputs]
   home                  = ["html", "json", "rss"]
 ```
 - these create a top-level [index.json](https://poohbot.com/index.json) during `hugo` build/serve
 - browser then uses for search:
-- [themes/hugo-future-imperfect-slim/assets/js/main.js](themes/hugo-future-imperfect-slim/assets/js/main.js)
-- [themes/hugo-future-imperfect-slim/assets/js/lunr.js](themes/hugo-future-imperfect-slim/assets/js/lunr.js)
+- [theme/assets/js/main.js](https://github.com/traceypooh/hugo-future-imperfect-slim/tree/master//assets/js/main.js)
+- [theme/assets/js/lunr.js](https://github.com/traceypooh/hugo-future-imperfect-slim/tree/master/assets/js/lunr.js)
