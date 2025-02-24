@@ -24,7 +24,7 @@ assetDir = "."
 themesDir = "."
 
 # dont process or copy these into dest 'public/' dir:
-ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'bin/', 'theme', 'public', '.git']
+ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,'bin/', 'theme', 'public', '.git', '\.tmp$']
 
 
 [markup.goldmark.renderer]
