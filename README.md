@@ -21,7 +21,16 @@ and you can, too!
 
 ### 404s fixme xxx
 - https://poohbot.com/tags/h-264/
-- https://poohbot.com/tags/spottheshuttle/
+- https://poohbot.com/05/new-shoes-day-tracey-loves-candy/
+- https://poohbot.com/2022-01-traceys-tamalpais-thirty-3t/gravel
+- https://poohbot.com/2023-02-gravel-bike-mt-tam.-muir-beach-highway-1-ocean/
+- https://poohbot.com/2023-06-lost-and-found-race-won-womens-100-mile-50-years-and-up/
+- https://poohbot.com/categories/biking/page/2/gravel
+- https://poohbot.com/gravel-race-lost-and-found-sierra-tahoe/
+- https://poohbot.com/page/2/gravel
+- https://poohbot.com/tags/biking/page/2/gravel
+- https://poohbot.com/tags/gravel-bike/page/2/gravel
+- https://poohbot.com/tags/mt-tamalpais/gravel
 
 ### aliases
 - /img           => /images
@@ -64,7 +73,7 @@ gg 'style='
 ## helpful related links
 - https://fontawesome.com/v4.7.0/icons/
 
-## crawl site (and find => fix all 404s) xxx
+## crawl site to find any 404s
 `wget --spider -o log -e robots=off -w 1 -r -nv -p https://poohbot.com  &&  fgrep -B1 'not exist' log`
 
 
