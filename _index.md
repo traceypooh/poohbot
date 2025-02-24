@@ -25,7 +25,7 @@ date: 2019-09-01
 
 <div id="home-row">
   <div id="home-pic">
-    <a href=about">
+    <a href="about/">
       <img src="img/nav/happy.jpg" title="your host, tracey pooh" alt="your host, tracey pooh"/>
     </a>
   </div>
@@ -36,7 +36,7 @@ date: 2019-09-01
     <i>Now let's start the show..</i>
   </div>
   <div id="hunter-pic" class="imbox hover-quote-hide">
-    <a class="hoverShower" href=hunter">
+    <a class="hoverShower" href="hunter/">
       <span class="showOnHover">
         <div class="asciiover"><pre>
       my pumpkin
