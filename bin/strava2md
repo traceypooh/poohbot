@@ -1,11 +1,14 @@
-#!/usr/bin/env -S deno run --allow-net --allow-read=. --allow-write=. --no-check
+#!/usr/bin/env -S deno run --allow-net --allow-read=. --allow-write=. --allow-import
 
 // Takes a strava.com public activity url and generates a markdown blog post entry from it
 
-import { warnfull } from 'https://av.prod.archive.org/js/util/log.js'
+import { warn, warnfull, fatal } from 'https://av.prod.archive.org/js/util/log.js'
 import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
 
 const URL = Deno.args[0] // eg: https://www.strava.com/activities/8546316583
+
+// extracted imagery resize, (in 2025) defaults to '512x384', so '4' would 4x to '2048x1536'
+const IMG_SIZE = 4
 
 const htm = await (async () => {
   try {
@@ -17,26 +20,33 @@ const htm = await (async () => {
   }
 })()
 
-const { activity, photos } = JSON.parse(htm.match(/data-react-props='([^']+)/)?.pop().replace(/&quot;/g, '"'))
+// fish out the JSON
+const mat = htm.replace(/<\/script>/g, '\n').match(/<script id="__NEXT_DATA__" type="application\/json">(.*)/)
+if (!mat) fatal('JSON not found')
+// warnfull(mat[1])
 
-delete activity.streams.altitude
-//delete activity.streams.distance
-delete activity.streams.latlng
+const { activity } = JSON.parse(mat[1].replace(/&quot;/g, '"')).props.pageProps
+const { media } = activity
+delete activity.streams
 warnfull(activity)
 
 // eg: ROCK COBBLER 10.0!!   =>   rock-cobbler-10-0
-const slug = activity.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-+/, '').replace(/-+$/, '')
+const slug = activity.name.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-+/, '')
+  .replace(/-+$/, '')
+  .replace('o-m-g', 'omg')
 
-const ymd = dayjs(activity.date).format('YYYY-MM-DD')
+const ymd = dayjs(activity.startLocal).format('YYYY-MM-DD')
 const YYYY = ymd.split('-').slice(0, 1)
 const MM = ymd.split('-').slice(1, 2)
-const info = Object.fromEntries(['distance', 'time', 'elevation', 'calories'].map(k => [k, activity[k]]))
-warnfull({ photos, info, slug, ymd, YYYY, MM })
+warnfull({
+  media, slug, ymd, YYYY, MM,
+})
 
 
-
-const FILE = `${MM}-${slug}.md`
+const DIR = `${YYYY}-${MM}-${slug}`
+const FILE = `${DIR}/index.html`
 Deno.mkdirSync('img', { recursive: true })
+Deno.mkdirSync(DIR,  { recursive: true })
 
 Deno.writeTextFileSync(FILE, `---
 title: ${activity.name}
@@ -47,30 +57,40 @@ categories:
 tags:
   - biking
   - gravel bike
+  - mountain bike
   - candy
+  - phoenix
 featured: ${slug}-01.jpg
+type: post
 ---
 Description xxx
 
 `)
 
 
-for (const [n, pix] of Object.entries(photos)) {
+for (const [n, pix] of Object.entries(media)) {
+  warn({ n, pix })
   const n0 = String(n).padStart(2, 0)
 
   const IMGFI = `img/${slug}-${n0}.jpg`
 
   Deno.writeTextFileSync(
     FILE,
-    `![xxx](/post/${YYYY}/${IMGFI})\n${pix.caption ?? ''}\n\n`.replace(/&#39;/g, "'"),
-    { append: true }
+    `![xxx](/${IMGFI})\n${pix.metadata?.caption ?? ''}\n\n`.replace(/&#39;/g, "'"),
+    { append: true },
   )
 
-  warnfull(pix.urls)
+  const img = pix.imageUrl.replace(
+    /(\d+)x(\d+)(\.jpg)$/,
+    (overall, ...ary) => `${parseInt(ary[0], 10) * IMG_SIZE}x${parseInt(ary[1], 10) * IMG_SIZE}${ary[2]}`,
+  )
+  if (img === pix.imageUrl) fatal('unexpected img name')
+
   try {
     Deno.readFileSync(IMGFI)
   } catch {
-    const pixdata = await (await fetch(Object.values(pix.urls).pop())).arrayBuffer()
+    warn(`fetch ${img}`)
+    const pixdata = await (await fetch(img)).arrayBuffer()
     Deno.writeFileSync(IMGFI, new Uint8Array(pixdata))
   }
 }
