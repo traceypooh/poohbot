@@ -170,25 +170,32 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,
     weight            = 3
 
   [[menu.main]]
+    name              = "Talks"
+    identifier        = "talks"
+    url               = "https://tracey.archive.org/"
+    pre               = "<i class='fas fa-microphone'></i>"
+    weight            = 4
+
+  [[menu.main]]
     name              = "Favorites"
     identifier        = "favorites"
     url               = "/favorites/"
     pre               = "<i class='far fa-star'></i>"
-    weight            = 4
+    weight            = 5
 
   [[menu.main]]
     name              = "Quotes"
     identifier        = "quotes"
     url               = "/quotes/"
     pre               = "<i class='fa fa-quote-left'></i>"
-    weight            = 5
+    weight            = 6
 
   [[menu.main]]
     name              = "Contact"
     identifier        = "contact"
     url               = "/contact/"
     pre               = "<i class='far fa-envelope'></i>"
-    weight            = 6
+    weight            = 7
 
 # Sets Social Media icons to appear and link to your account. Value should be your
 # username unless otherwise noted. These are the icons affected by socialAppearAtTop
