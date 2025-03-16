@@ -8,7 +8,7 @@ import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
 const URL = Deno.args[0] // eg: https://www.strava.com/activities/8546316583
 
 // extracted imagery resize, (in 2025) defaults to '512x384', so '4' would 4x to '2048x1536'
-const IMG_SIZE = 4
+const IMG_SIZE = 3
 
 const htm = await (async () => {
   try {
@@ -70,6 +70,13 @@ Description xxx
 
 for (const [n, pix] of Object.entries(media)) {
   warn({ n, pix })
+
+  if (!Object.keys(pix).length) {
+    warn('BIG WARNING EMPTY PICTUR INFO!  VIDEO MAYBE??!')
+    // eslint-disable-next-line no-continue
+    continue
+  }
+
   const n0 = String(n).padStart(2, 0)
 
   const IMGFI = `img/${slug}-${n0}.jpg`
