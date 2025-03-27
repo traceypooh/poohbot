@@ -1,0 +1,73 @@
+---
+title: Sqlite inet_aton()
+date: 2025-03-27
+type: post
+categories:
+  - technical
+  - linux
+tags:
+  - geek
+  - sql
+  - sqlite
+  - coding
+  - linux
+  - work
+featured: traceymonet.jpg
+---
+I made a `sqlite` equivalent of `inet_aton()` built-in for `postgresql` and `mysql`.  This takes an v4 IP address string and turns it into a number.
+
+LLM `chatgpt` and `Claude` couldn't come up with this (only the first two numbers) after hours.  Neither could understand nesting multiple `INSTR()` calls -- while keeping them each to the required 2 arguments only (kept adding more arguments).
+
+Taking some inspiration from: https://stackoverflow.com/a/70073610 which parsed first 2 pieces of an address using COMMA separators, I was _eventually_ able to unroll the 3rd and 4th number extraction equivalents.
+
+```bash
+# this is posgresql: inet_aton(ip) in sqlite:
+IP_FIRST_NUMBER="SUBSTRING(ip, 1, INSTR(ip, '.') - 1)"
+IP_SECOND_NUMBER="SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), 1, INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') - 1)"
+IP_THIRD_NUMBER="SUBSTRING(SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1), 1, INSTR(SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1), '.') - 1)"
+IP_LAST_NUMBER="SUBSTRING(SUBSTRING((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), INSTR((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), '.') + 1), 1, INSTR(SUBSTRING((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), INSTR((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), '.') + 1), '.') - 1)"
+
+INET_ATON_IP="(
+  CAST($IP_FIRST_NUMBER  AS INTEGER) * 16777216 +
+  CAST($IP_SECOND_NUMBER AS INTEGER) * 65536 +
+  CAST($IP_THIRD_NUMBER  AS INTEGER) * 256 +
+  CAST($IP_LAST_NUMBER   AS INTEGER)
+)"
+```
+
+## Run it, or expand it
+So then if you're using a shell script, you can do something like below.
+- Change column name `ip` and table `my_table` accordingly
+
+```bash
+echo "SELECT ip, $IP_FIRST_NUMBER, $IP_SECOND_NUMBER, $IP_THIRD_NUMBER, $IP_LAST_NUMBER, $INET_ATON_IP FROM my_table"
+```
+
+I threw 1000+ IP addresses at this, and they came out as expected (yay).
+
+
+## Example
+| IP            | first  | second  | third  | last  | inet_aton() |
+| ------------- | ------ | ------- | ------ | ----- | ----------- |
+| 207.241.224.2 | 207    | 241     | 224    | 2     | 3488735234  |
+
+
+## Expanded
+For the complete expanded:
+```sql
+SELECT $INET_ATON_IP FROM my_table
+```
+
+it becomes:
+```sql
+SELECT (
+  CAST(SUBSTRING(ip, 1, INSTR(ip, '.') - 1)  AS INTEGER) * 16777216 +
+  CAST(SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), 1, INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') - 1) AS INTEGER) * 65536 +
+  CAST(SUBSTRING(SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1), 1, INSTR(SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1), '.') - 1)  AS INTEGER) * 256 +
+  CAST(SUBSTRING(SUBSTRING((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), INSTR((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), '.') + 1), 1, INSTR(SUBSTRING((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), INSTR((SUBSTRING(SUBSTRING(ip, INSTR(ip, '.') + 1), INSTR(SUBSTRING(ip, INSTR(ip, '.') + 1), '.') + 1)||'.'), '.') + 1), '.') - 1)   AS INTEGER)
+) FROM my_table
+```
+- Change column name `ip` and table `my_table` accordingly
+
+
+Your [sic] welcome. 😝🤓
