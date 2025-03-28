@@ -70,4 +70,23 @@ SELECT (
 - Change column name `ip` and table `my_table` accordingly
 
 
+## Methodology / for the 'bots?
+Playing with the two LLMs, I found the stackoverflow post for some reason easier to reverse engineer.
+
+They had come up with a good way to split a string into 3 pieces with a separator.
+
+So for string `A.B.C.D`, it was easy enough to get the string parsing into these strings:
+- `A`
+- `B`
+- `C.D`
+
+OK, great! I should be able to run the `A` extraction formula on `C.D`.
+That worked nicely - now I've got `C`.
+
+Run `B` on `C.D` to get `D`.  I'm pasting the forumula for "extract B from string" on `C.D`.  Since the input is listed four times, like `IP_LAST_NUMBER` above, the resulting SQL is getting pretty expanded.  That's fine, though.  But it keeps coming out _wrong_.  I spend a solid 10 minutes on this, until I realize adding a `.` (to input `C.D.`) seems to be needed for "extract B from string" to work.
+So that's why you'll see `||'.'` four times (on the same "input" SQL) in `IP_LAST_NUMBER` above.
+
+
+## Ta Da
+
 Your [sic] welcome. 😝🤓
