@@ -382,7 +382,7 @@ table    { width:100%; border-collapse:collapse; border:1px solid black; } \n\
       return 'http://maps.google.com/maps?f=d&source=s_d&saddr=37.89101,-122.17093&daddr=Pleasant+Hill+Rd+to:Danville+Blvd+to:CA-84%2FNiles+Canyon+Rd+to:Palomares+Rd+to:E+Castro+Valley+Blvd+to:Heyer+Ave+to:Redwood+Rd+to:37.834836,-122.129045+to:11+camino+pablo,+orinda,+ca&hl=en&geocode=%3BFfk6QgIdVvi4-A%3BFVrOQQIdCMW5-A%3BFVKqPQIdKH67-A%3BFc19PgId_sS6-A%3BFTgsPwIdxpG5-A%3BFUtQPwIdZpK5-A%3BFf1nQAIdGY24-A%3B%3B&mra=dpe&mrcr=0&mrsp=8&sz=15&via=1,2,3,4,5,6,7,8&dirflg=w&sll=37.831141,-122.117929&sspn=0.03193,0.049009&ie=UTF8&ll=37.741399,-122.000427&spn=0.511493,0.784149&z=11'
 
     if (ttl.match(/morgan-territory/))
-      return 'http://maps.google.com/?q=https://poohBot.com/alc/morgan-territory/kml.kml'
+      return 'http://maps.google.com/?q=https://traceypooh.com/alc/morgan-territory/kml.kml'
 
     if (ttl.match(/oil-sugar-beef/))
       return 'http://maps.google.com/maps?f=d&source=s_d&saddr=11+camino+pablo+rd,+orinda,+ca&daddr=Pinole+Valley+Rd+to:Rolph+Ave+to:Loring+Ave+to:Carquinez+Scenic+Dr+to:Reliez+Valley+Rd+to:37.925006,-122.108874+to:37.89101,-122.1709&hl=en&geocode=%3BFf6JQwIdCmC2-A%3BFeakRAIdJhK3-A%3BFRSwRAIdmyC3-A%3BFe2iRAIdCFC3-A%3BFZVKQwId46W4-A%3B%3BFcIrQgId7NG3-A&mra=dpe&mrcr=0&mrsp=6&sz=15&via=1,2,3,4,5,6&dirflg=w&sll=37.924498,-122.106729&sspn=0.031821,0.039139&ie=UTF8&ll=37.957463,-122.175865&spn=0.254457,0.31311&z=12'

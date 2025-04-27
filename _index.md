@@ -5,7 +5,6 @@ type: page
 date: 2019-09-01
 ---
 
-<img src="img/logo/poohbot-header.jpg"/>
 <link rel="stylesheet" href="css/slide-responsively.css"/>
 <div class="slide-responsively">
   <ul>

@@ -1,4 +1,4 @@
-// NOTE: perma-home is:  http://poohBot.com/js/video.js
+// NOTE: perma-home is:  http://traceypooh.com/js/video.js
 
 /* global $ log jwplayer */
 

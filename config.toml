@@ -1,11 +1,11 @@
 # For a description of these parameters, please visit the theme wiki.
 # https://github.com/traceypooh/hugo-future-imperfect-slim/wiki/config.toml
 # https://github.com/pacollins/hugo-future-imperfect-slim/wiki/config.toml
-baseurl                 = "https://poohbot.com/"
+baseurl                 = "https://traceypooh.com/"
 # this promising extra option breaks deployed site:
 # relativeurls            = true
 DefaultContentLanguage  = "en"
-title                   = "Tracey Jaquith · PoohBot Pictures"
+title                   = "Tracey Jaquith · Tracey Pooh"
 
 # I'm using a forked version of abandoned theme:
 #   https://github.com/traceypooh/hugo-future-imperfect-slim
@@ -74,6 +74,8 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,
   toc                   = false
   tocWords              = 400
 
+  banner                = "<img src='img/banner/traceypooh.avif'/>"
+
   [params.meta]
     # Sets the meta tag description
     description         = "Tracey Jaquith / traceypooh website & blog.  Tech, Cycling, Video, DevOps, JS & more.  Live nonstop."
@@ -97,7 +99,7 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,
   # These are optional params related to the sidebar. They are recommended, but not
   # required for proper functionality. HTML is supported within the params.
   [params.intro]
-    header                = "Tracey Jaquith · PoohBot Pictures"
+    header                = "Tracey Jaquith · Tracey Pooh"
     paragraph             = "Technophile · Optimist · <a href=/biking>Cyclist</a> · <a href=https://archive.org/about/bios.php>Archivist</a> · Design · <a href=/video>Video</a> · TV · Nomad · Docker"
     rssIntro              = true
     socialIntro           = true

@@ -1,8 +1,8 @@
 # poohbot
 tracey pooh's site & blog, static site generated
 
-- https://poohbot.com
 - https://traceypooh.com
+- https://poohbot.com
 
 
 ## Comments setup
@@ -20,17 +20,17 @@ and you can, too!
 
 
 ### 404s fixme xxx
-- https://poohbot.com/tags/h-264/
-- https://poohbot.com/05/new-shoes-day-tracey-loves-candy/
-- https://poohbot.com/2022-01-traceys-tamalpais-thirty-3t/gravel
-- https://poohbot.com/2023-02-gravel-bike-mt-tam.-muir-beach-highway-1-ocean/
-- https://poohbot.com/2023-06-lost-and-found-race-won-womens-100-mile-50-years-and-up/
-- https://poohbot.com/categories/biking/page/2/gravel
-- https://poohbot.com/gravel-race-lost-and-found-sierra-tahoe/
-- https://poohbot.com/page/2/gravel
-- https://poohbot.com/tags/biking/page/2/gravel
-- https://poohbot.com/tags/gravel-bike/page/2/gravel
-- https://poohbot.com/tags/mt-tamalpais/gravel
+- https://traceypooh.com/tags/h-264/
+- https://traceypooh.com/05/new-shoes-day-tracey-loves-candy/
+- https://traceypooh.com/2022-01-traceys-tamalpais-thirty-3t/gravel
+- https://traceypooh.com/2023-02-gravel-bike-mt-tam.-muir-beach-highway-1-ocean/
+- https://traceypooh.com/2023-06-lost-and-found-race-won-womens-100-mile-50-years-and-up/
+- https://traceypooh.com/categories/biking/page/2/gravel
+- https://traceypooh.com/gravel-race-lost-and-found-sierra-tahoe/
+- https://traceypooh.com/page/2/gravel
+- https://traceypooh.com/tags/biking/page/2/gravel
+- https://traceypooh.com/tags/gravel-bike/page/2/gravel
+- https://traceypooh.com/tags/mt-tamalpais/gravel
 
 ### aliases
 - /img           => /images
@@ -48,7 +48,7 @@ gg featured-click
 
 ### map route fails
 ```
-gg https://poohbot.com/alc/morgan-territory/kml.kml
+gg https://traceypooh.com/alc/morgan-territory/kml.kml
 ```
 - http://localhost:1313/morgan-territory/
 - http://localhost:1313/three-bears-and-mt-diablo/
@@ -74,7 +74,7 @@ gg 'style='
 - https://fontawesome.com/v4.7.0/icons/
 
 ## crawl site to find any 404s
-`wget --spider -o log -e robots=off -w 1 -r -nv -p https://poohbot.com  &&  fgrep -B1 'not exist' log`
+`wget --spider -o log -e robots=off -w 1 -r -nv -p https://traceypooh.com  &&  fgrep -B1 'not exist' log`
 
 
 ## Could Use
@@ -159,7 +159,7 @@ files involved:
 [outputs]
   home                  = ["html", "json", "rss"]
 ```
-- these create a top-level [index.json](https://poohbot.com/index.json) during `hugo` build/serve
+- these create a top-level [index.json](https://traceypooh.com/index.json) during `hugo` build/serve
 - browser then uses for search:
 - [theme/assets/js/main.js](https://github.com/traceypooh/hugo-future-imperfect-slim/tree/master//assets/js/main.js)
 - [theme/assets/js/lunr.js](https://github.com/traceypooh/hugo-future-imperfect-slim/tree/master/assets/js/lunr.js)
