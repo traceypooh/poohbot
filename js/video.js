@@ -15,7 +15,7 @@ class IAV {
       dance4rescues: [57, 'Dance for the Rescues -- charity animal rescue promo video'],
       kauai: [4,  'Kauai Hawaii sunrise -- vacation 2010'],
       road250: [1,  'Road 250 -- 50th birthday for friend'],
-      bali: [117, 'Bali island vacation 2010'],
+      'bali-trip': [117, 'Bali island vacation 2010'],
       nightbay: [1,  'Night time-lapse of bustling SF bay -- music by Hunter!'],
       drake_saga1: [30, 'The Drake Saga -- lightsabers!'],
       alc2008: [1194, 'AIDS LifeCycle 2008 -- biked SF to LA'],
@@ -57,7 +57,7 @@ class IAV {
     }
 
     this.LAPSES = [
-      'morebooks', 'kauai', 'road250', 'bali', 'nightbay', 'commute', 'meteorocino', 'funston', 'CapeCodMarshClouds',
+      'morebooks', 'kauai', 'road250', 'bali-trip', 'nightbay', 'commute', 'meteorocino', 'funston', 'CapeCodMarshClouds',
       'bikeDiablo', 'ALC_stop_motion', 'TourOfCA', 'Jessies_Sunrise', 'briones_dusk',
       'baysunset', 'helios-sunset', 'SFOsouth', 'to-SF', 'from-SF',
       'archivewalk', 'sunsetstrip', 'traceys-first-time-lapse',
