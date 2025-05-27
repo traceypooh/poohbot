@@ -473,9 +473,7 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
       const onclik = (this.usingplayer ? `data-id="${id}" onclick="return IAV.playmp4(this)"` : // xxx CSP onmouse.. 2 lines below..
         `href="https://archive.org/details/${id}"`)
 
-      const imgbase = id === 'bali-trip' ? 'bali' : id
-
-      str += `<a ${onclik}><img title="${title}" alt="${title}" id="${id}" onmouseover="IAV.imtoggle('${id}')" onmouseout="IAV.imtoggle('${id}')" class="cell${this.HALF}" src="https://archive.org/serve/${id}/${imgbase}.thumbs/${imgbase}_${thumb}.jpg"/></a>`
+      str += `<a ${onclik}><img title="${title}" alt="${title}" id="${id}" onmouseover="IAV.imtoggle('${id}')" onmouseout="IAV.imtoggle('${id}')" class="cell${this.HALF}" src="https://archive.org/serve/${id}/${IAV.imgbase(id)}.thumbs/${IAV.imgbase(id)}_${thumb}.jpg"/></a>`
 
       n += 1
       if (this.HALF  &&  n === 8)
@@ -523,7 +521,7 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
     if (e) {
       if (e.src.match(/.jpg$/)) {
         e.jpg = e.src
-        e.src = `https://archive.org/serve/${id}/${id}.gif`
+        e.src = `https://archive.org/serve/${id}/${IAV.imgbase(id)}.gif`
       } else {
         e.src = e.jpg
       }
@@ -545,6 +543,10 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
       obj.appendChild(document.createTextNode(str)) // other browsers
 
     headobj.appendChild(obj)
+  }
+
+  static imgbase(id) {
+    return id === 'bali-trip' ? 'bali' : id
   }
 }
 
