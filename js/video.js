@@ -1,9 +1,6 @@
 // NOTE: perma-home is:  http://traceypooh.com/js/video.js
 
-/* global $ jwplayer */
-
-// eslint-disable-next-line no-console
-const log = console.log.bind(console)
+/* global $ log jwplayer */
 
 class IAV {
   constructor() {
@@ -555,6 +552,9 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
 if (typeof $ === 'undefined') {
   // https://archive.org/details/poohBot   is the main usage here
   import('https://esm.ext.archive.org/jquery@3.7.1').then(() => {
+    // eslint-disable-next-line no-console
+    globalThis.log = console.log.bind(console)
+
     // eslint-disable-next-line no-new
     new IAV()
   })
