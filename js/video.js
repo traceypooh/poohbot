@@ -1,6 +1,9 @@
 // NOTE: perma-home is:  http://traceypooh.com/js/video.js
 
-/* global $ log jwplayer */
+/* global $ jwplayer */
+
+// eslint-disable-next-line no-console
+const log = console.log.bind(console)
 
 class IAV {
   constructor() {
@@ -391,9 +394,9 @@ class IAV {
     })
     const $after = (clickedY === lastY
       // if clicked on last row, find last element in prior row
-      ? $('.strip').filter((idx, e) => $(e).offset().top < clickedY).last()
+      ? $('.strip').filter((_idx, e) => $(e).offset().top < clickedY).last()
       // else find last element in clicked row
-      : $('.strip').filter((idx, e) => $(e).offset().top === clickedY).last()
+      : $('.strip').filter((_idx, e) => $(e).offset().top === clickedY).last()
     )
 
 
@@ -473,7 +476,9 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
       const onclik = (this.usingplayer ? `data-id="${id}" onclick="return IAV.playmp4(this)"` : // xxx CSP onmouse.. 2 lines below..
         `href="https://archive.org/details/${id}"`)
 
-      str += `<a ${onclik}><img title="${title}" alt="${title}" id="${id}" onmouseover="IAV.imtoggle('${id}')" onmouseout="IAV.imtoggle('${id}')" class="cell${this.HALF}" src="https://archive.org/serve/${id}/${id}.thumbs/${id}_${thumb}.jpg"/></a>`
+      const imgbase = id === 'bali-trip' ? 'bali' : id
+
+      str += `<a ${onclik}><img title="${title}" alt="${title}" id="${id}" onmouseover="IAV.imtoggle('${id}')" onmouseout="IAV.imtoggle('${id}')" class="cell${this.HALF}" src="https://archive.org/serve/${id}/${imgbase}.thumbs/${imgbase}_${thumb}.jpg"/></a>`
 
       n += 1
       if (this.HALF  &&  n === 8)
@@ -550,9 +555,6 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
 if (typeof $ === 'undefined') {
   // https://archive.org/details/poohBot   is the main usage here
   import('https://esm.ext.archive.org/jquery@3.7.1').then(() => {
-    // eslint-disable-next-line no-console
-    window.log = console.log.bind(console)
-
     // eslint-disable-next-line no-new
     new IAV()
   })
