@@ -119,7 +119,8 @@ gg 'style='
 ## make a post
 ```sh
 cd ~/poohbot/
-PO=$(date +%Y)-$(date +%m)-title-something-something/index.html
+DAT=$(date +%Y)-$(date +%m)
+PO=${DAT}-title-something-something/index.html
 hugo new $PO
 code .
 code $PO
