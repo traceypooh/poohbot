@@ -117,14 +117,12 @@ gg 'style='
 
 
 ## make a post
-```sh
-cd ~/poohbot/
-DAT=$(date +%Y)-$(date +%m)
-PO=${DAT}-title-something-something/index.html
-hugo new $PO
-code .
-code $PO
+[bin/post](bin/post)
 
+# for imagery, see
+[bin/avif-blog-img](bin/avif-blog-img)
+
+```sh
 # imagery is nice/fullsize at 880px wide, preview/shows at 880x375 (2.35:1) where you can
 # pick to show more of the top or bottom..
 #   featured: littlefingers.jpg#top

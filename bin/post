@@ -1,0 +1,33 @@
+#!/bin/zsh -eu
+
+# makes a new post
+
+TITLE=${1:?"Usage: $0 <Title Like This>"}
+SLUG=$(echo "$TITLE" |tr ' ' - |tr '[:upper:]' '[:lower:]' |tr -s -)
+
+cd ~/poohbot/
+
+YM=$(date +%Y)-$(date +%m)
+YMD=${YM}-$(date +%d)
+DIR=${YM}-$SLUG
+mkdir -p $DIR
+PO=$DIR/index.html
+
+
+cat > $PO <<EOF
+---
+title: $TITLE
+date: $YMD
+featured: traceymonet.jpg
+categories:
+  - xxx
+tags:
+  - xxx
+type: post
+---
+EOF
+
+
+# open in editor
+code .
+code $PO
