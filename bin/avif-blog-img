@@ -3,12 +3,18 @@
 # creates AVIF images from list of input files, given a "base" string initial argument
 
 MAX_WIDTH=2500
-BASE=${1:?"Usage: $0 <basename eg: '2025-europe'>  <image input file1> .."}
+BASE=${1:?"Usage: $0 <basename eg: '2025-europe'>  <image input file1> ..  You can also add -strip as 2nd CLI arg to remove image metadata"}
 shift
 
 if [ -e "$BASE" ]; then
   echo "flipped args?"
   return
+fi
+
+ARGS=(-auto-orient)
+if [ "$1" = "-strip" ]; then
+  ARGS=(-strip)
+  shift
 fi
 
 while true; do
@@ -38,5 +44,5 @@ while true; do
   echo "$OUT\t${WIDTH}w => $RESIZED_WIDTH"
 
   # avif:effort => higher === slower & higher quality
-  magick "$IMG" -resize $RESIZED_WIDTH -define avif:effort=6 -quality 90 $OUT
+  magick "$IMG" $ARGS -resize $RESIZED_WIDTH -define avif:effort=6 -quality 90 $OUT
 done
