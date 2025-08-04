@@ -5,6 +5,26 @@ tracey pooh's site & blog, static site generated
 - https://poohbot.com
 
 
+# todo
+```sh
+cd ~/poohbot/comments; gg qtfast;
+# user email may not be showing up same/right, compared to:
+cd ~/bup/WP; cat comments-wp.json|jq .|fgrep -C10 qtfast
+```
+
+# bikes
+- puch
+- purple bike
+- bmx silver red checkered
+- blue 10 speed
+- trek ~860 mtn bike
+- blue carbon fork road bike (=> NH)
+- trek white road bike (=> Irvine)
+- cape fixie
+- trek boone
+- trek supercaliber
+
+
 ## Comments setup
 I'm using a forked version of `Staticman` here:
 
