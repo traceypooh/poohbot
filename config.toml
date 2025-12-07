@@ -205,7 +205,7 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,
 [params.social]
   twitter               = "tracey_pooh"
   youtube               = "@traceypooh"
-  linkedin              = "tracey-jaquith-929432"
+  linkedin              = "traceypooh"
   pinterest             = "poohbot"
   github                = "traceypooh"
   gitlab                = "traceypooh"
