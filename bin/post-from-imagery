@@ -1,0 +1,220 @@
+#!/bin/zsh -eu
+
+function usage() {
+  cat <<EOF
+Usage: $0 <base>
+  Opens a drag-and-drop browser preview for reordering avif files.
+  "Generate mv Commands" emits a two-phase rename script to copy-paste.
+  "Generate post command" scaffolds a new blog post frontmatter.
+  Example: $0 2026-oops-bang-
+EOF
+}
+
+[[ $# -eq 1 ]] || { usage; exit 1; }
+BASE=$1
+
+local -a files
+for f in ${BASE}[0-9][0-9]*.avif(Nn); do
+  files+=($f)
+done
+# tolerate missing trailing dash (eg. 'post-from-imagery 2026-foo' finds '2026-foo-00.avif')
+if [[ ${#files} -eq 0 ]]; then
+  BASE="${BASE}-"
+  for f in ${BASE}[0-9][0-9]*.avif(Nn); do
+    files+=($f)
+  done
+fi
+[[ ${#files} -gt 0 ]] || { echo "No files found for base '${BASE}'"; exit 1; }
+
+TMPHTML=preview.html
+CWD=$PWD
+TODAY=$(date +%Y-%m-%d)
+
+# detect featured webp (first .webp matching the base, if any)
+FEATURED_FILE=xxx
+for f in ${BASE}[0-9][0-9]*.webp(Nn); do
+  FEATURED_FILE=${f:t}
+  break
+done
+
+# base slug for title default: strip trailing dash
+BASE_SLUG=${BASE%-}
+
+# Build JS array literal of basenames
+local js_files='['
+for f in $files; do
+  js_files+="'${f:t}',"
+done
+js_files="${js_files%,}]"
+
+# --- static header + CSS ---
+cat > $TMPHTML << 'EOF'
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #111; color: #eee; font-family: monospace; }
+h2 { padding: 10px 16px; margin: 0; background: #1a1a1a; font-size: 13px; font-weight: normal; letter-spacing: .05em; }
+#gallery { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; min-height: 80px; }
+.item { width: 320px; cursor: grab; border: 2px solid #333; border-radius: 4px; overflow: hidden; background: #222; transition: border-color .1s; }
+.item.dragging { opacity: 0.2; }
+.item.over { border-color: #4af; }
+.item img { width: 100%; display: block; pointer-events: none; }
+.num { text-align: center; padding: 3px; font-size: 11px; color: #888; background: #1a1a1a; }
+#bar { padding: 10px 16px; background: #1a1a1a; display: flex; gap: 8px; }
+button { padding: 5px 14px; background: #2a2a2a; color: #ccc; border: 1px solid #444; border-radius: 3px; cursor: pointer; font-family: monospace; font-size: 12px; }
+button:hover { background: #383838; color: #fff; }
+.out { display: none; margin: 16px; padding: 12px; background: #0a1a0a; color: #4f4; border-radius: 4px; white-space: pre; font-size: 12px; overflow-x: auto; }
+hr { border: none; border-top: 1px solid #2a2a2a; margin: 8px 0; }
+#post-form { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+#post-form h3 { margin: 0 0 4px; font-size: 13px; color: #aaa; font-weight: normal; }
+.field { display: flex; flex-direction: column; gap: 3px; }
+.field label { font-size: 11px; color: #666; }
+.field input { background: #1e1e1e; color: #eee; border: 1px solid #444; border-radius: 3px; padding: 5px 8px; font-family: monospace; font-size: 12px; width: 500px; }
+.field input:focus { outline: none; border-color: #4af; }
+</style></head><body>
+EOF
+
+# --- dynamic: title + gallery items ---
+print "  <h2>post-from-imagery: ${BASE} (${#files} files)</h2>" >> $TMPHTML
+print '  <div id="gallery">' >> $TMPHTML
+for f in $files; do
+  local name=${f:t}
+  local num=${name#$BASE}; num=${num%.avif}
+  print "    <div class=\"item\" draggable=\"true\" data-file=\"${name}\"><a href=\"file://${CWD}/${name}\" target=\"_blank\"><img src=\"file://${CWD}/${name}\"></a><div class=\"num\">${num}</div></div>" >> $TMPHTML
+done
+print '  </div>' >> $TMPHTML
+
+# --- static controls ---
+cat >> $TMPHTML << 'EOF'
+  <div id="bar">
+    <button onclick="genCmds()">Generate mv Commands</button>
+  </div>
+  <pre id="out" class="out"></pre>
+  <hr>
+  <div id="post-form">
+    <h3>New Post Scaffold</h3>
+    <div class="field"><label>Title</label><input id="f-title"></div>
+    <div class="field"><label>Date</label><input id="f-date"></div>
+    <div class="field"><label>Categories (comma-separated)</label><input id="f-cats"></div>
+    <div class="field"><label>Tags (comma-separated)</label><input id="f-tags"></div>
+    <div class="field"><label>Featured image</label><input id="f-feat"></div>
+    <div><button onclick="genPost()">Generate post command</button></div>
+  </div>
+  <pre id="post-out" class="out"></pre>
+<script>
+const gallery = document.getElementById('gallery');
+let drag = null;
+EOF
+
+# --- dynamic: inject shell context into JS ---
+print "const files       = ${js_files};" >> $TMPHTML
+print "const cwd         = '${CWD}';" >> $TMPHTML
+print "const today       = '${TODAY}';" >> $TMPHTML
+print "const baseSlug    = '${BASE_SLUG}';" >> $TMPHTML
+print "const featuredFile= '${FEATURED_FILE}';" >> $TMPHTML
+
+# --- static JS ---
+cat >> $TMPHTML << 'EOF'
+
+// init form fields
+(function() {
+  const slug = baseSlug.replace(/^\d{4}-(?:\d{2}-)?/, '').replace(/-/g, ' ');
+  document.getElementById('f-title').value = slug.replace(/\b\w/g, c => c.toUpperCase());
+  document.getElementById('f-date').value  = today;
+  document.getElementById('f-cats').value  = 'xxx';
+  document.getElementById('f-tags').value  = 'xxx';
+  document.getElementById('f-feat').value  = featuredFile;
+})();
+
+document.querySelectorAll('.item').forEach(el => {
+  el.addEventListener('dragstart', e => {
+    drag = el;
+    setTimeout(() => el.classList.add('dragging'), 0);
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  el.addEventListener('dragend', () => {
+    el.classList.remove('dragging');
+    document.querySelectorAll('.over').forEach(x => x.classList.remove('over'));
+  });
+  el.addEventListener('dragover', e => { e.preventDefault(); if (drag !== el) el.classList.add('over'); });
+  el.addEventListener('dragleave', () => el.classList.remove('over'));
+  el.addEventListener('drop', e => {
+    e.preventDefault(); el.classList.remove('over');
+    if (drag && drag !== el) gallery.insertBefore(drag, el);
+  });
+});
+
+// drop on empty gallery space = append to end
+gallery.addEventListener('dragover', e => e.preventDefault());
+gallery.addEventListener('drop', e => {
+  if (e.target === gallery && drag) { e.preventDefault(); gallery.appendChild(drag); }
+});
+
+function pad(n) { return String(n).padStart(2, '0'); }
+
+function buildScript() {
+  const order = [...document.querySelectorAll('.item')].map(el => el.dataset.file);
+  const base  = files[0].replace(/[0-9]+\.\w+$/, '');
+  const tmp   = '.post-from-imagery-tmp-';
+  const q     = f => "'" + f + "'";
+  const ext   = f => f.split('.').pop();
+  const lines = ['#!/bin/zsh', "cd " + q(cwd), '', '# phase 1: to tmp names'];
+  order.forEach((f, i) => lines.push('mv ' + q(f) + ' ' + q(tmp + pad(i) + '.' + ext(f))));
+  lines.push('', '# phase 2: to final names');
+  order.forEach((f, i) => lines.push('mv ' + q(tmp + pad(i) + '.' + ext(f)) + ' ' + q(base + pad(i) + '.' + ext(f))));
+  return lines.join('\n') + '\n';
+}
+
+function genCmds() {
+  const out = document.getElementById('out');
+  out.textContent = buildScript();
+  out.style.display = 'block';
+}
+
+function toYamlList(csv) {
+  return csv.split(',').map(s => s.trim()).filter(Boolean).map(s => '  - ' + s).join('\n');
+}
+
+function slugify(s) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+function genPost() {
+  const title = document.getElementById('f-title').value.trim();
+  const date  = document.getElementById('f-date').value.trim();
+  const cats  = document.getElementById('f-cats').value;
+  const tags  = document.getElementById('f-tags').value;
+  const feat  = document.getElementById('f-feat').value.trim();
+  const dir   = date + '-' + slugify(title);
+  const front = [
+    '---',
+    'title: ' + title,
+    'date: ' + date,
+    'categories:',
+    toYamlList(cats),
+    'tags:',
+    toYamlList(tags),
+    'featured: ' + feat,
+    'type: post',
+    '---'
+  ].join('\n');
+  const order   = [...document.querySelectorAll('.item')].map(el => el.dataset.file);
+  const imgBody = order.map(f => '![xxx](../img/' + f + ')').join('\n\n');
+  const lines = [
+    "mkdir -p ~/poohbot/" + dir,
+    "cat > ~/poohbot/" + dir + "/index.html << 'FRONTMATTER'",
+    front,
+    '',
+    imgBody,
+    'FRONTMATTER',
+    '',
+    'code ~/poohbot/' + dir + '/index.html'
+  ];
+  document.getElementById('post-out').textContent = lines.join('\n') + '\n';
+  document.getElementById('post-out').style.display = 'block';
+}
+</script></body></html>
+EOF
+
+open $TMPHTML
+echo "Opened: $TMPHTML"

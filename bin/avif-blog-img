@@ -1,30 +1,68 @@
 #!/bin/zsh -eu
 
 # creates AVIF images from list of input files, given a "base" string initial argument
+function usage() {
+  cat<<EOF
+Usage: $0 <basename eg: '2025-europe'>  <image input file1> <image input file2> ..
+
+You can also add first args like
+  -oldest         sort input files by capture time (DateTimeOriginal; else FS birth time) oldest first
+  -keepgps        preserve GPS data (default: stripped for privacy)
+  -featured FILE  convert FILE to .webp instead of .avif (for og:image / iOS sharing)
+EOF
+}
+
 
 MAX_WIDTH=2500
-BASE=${1:?"Usage: $0 <basename eg: '2025-europe'>  <image input file1> ..  You can also add -strip as 2nd CLI arg to remove image metadata"}
+ARGS=(-auto-orient)
+OLDEST=0
+KEEPGPS=0
+FEATURED=
+
+
+[[ -n $1 ]] || { usage; exit 1; }
+while [[ $1 == -* ]]; do
+  case $1 in
+    -oldest)   OLDEST=1 ;;
+    -keepgps)  KEEPGPS=1 ;;
+    -featured) FEATURED=$2; shift ;;
+    *) usage; exit 1 ;;
+  esac
+  shift
+done
+
+BASE=$1
 shift
+
+if (( OLDEST )); then
+  local -a time_tagged
+  for f in "$@"; do
+    # prefer embedded capture time; fall back to filesystem birth time
+    local t=$(exiftool -s3 -DateTimeOriginal "$f" 2>/dev/null | tr -dc '0-9')
+    [[ -z $t ]] && t=$(stat -f '%SB' -t '%Y%m%d%H%M%S' -- "$f")
+    time_tagged+=("$t $f")
+  done
+  time_tagged=("${(@n)time_tagged}")
+
+  # *REWRITE* CLI args — sorted oldest first
+  set -- "${time_tagged[@]#* }"
+fi
 
 if [ -e "$BASE" ]; then
   echo "flipped args?"
   return
 fi
 
-ARGS=(-auto-orient)
-if [ "$1" = "-strip" ]; then
-  ARGS=(-strip)
-  shift
-fi
-
-while true; do
+while (( $# )); do
   IMG="$1"
   shift
-  if [ ! "$IMG" ]; then break; fi
   if [ ! -e "$IMG" ]; then break; fi
 
+  local EXT=avif
+  [[ -n $FEATURED && $IMG == $FEATURED ]] && EXT=webp
+
   for n in $(seq -w 0 99); do
-    OUT=${BASE}-$n.avif
+    OUT=${BASE}-$n.$EXT
     if [ ! -e $OUT ]; then break; fi
   done
 
@@ -33,7 +71,6 @@ while true; do
   DIVISOR=1
   while true; do
     local RESIZED_WIDTH=$(( WIDTH * 2 / (2**DIVISOR) ))
-    # echo how about $RESIZED_WIDTH?
     if [ $RESIZED_WIDTH -le $MAX_WIDTH ]; then
       break
     fi
@@ -43,6 +80,17 @@ while true; do
   RESIZED_WIDTH=$(( RESIZED_WIDTH - RESIZED_WIDTH % 2 ))
   echo "$OUT\t${WIDTH}w => $RESIZED_WIDTH"
 
-  # avif:effort => higher === slower & higher quality
-  magick "$IMG" $ARGS -resize $RESIZED_WIDTH -define avif:effort=6 -quality 90 $OUT
+  if [[ $EXT == avif ]]; then
+    # avif:effort => higher === slower & higher quality
+    magick "$IMG" $ARGS -resize $RESIZED_WIDTH -define avif:effort=6 -quality 90 $OUT
+  else
+    magick "$IMG" $ARGS -resize $RESIZED_WIDTH -quality 90 $OUT
+  fi
+
+  # always drop Orientation (baked in by -auto-orient); strip GPS unless -keepgps
+  local exif_args=(-Orientation= -overwrite_original -quiet)
+  (( KEEPGPS )) || exif_args+=(-gps:all=)
+  exiftool $exif_args "$OUT"
 done
+
+echo "\n/post-from-imagery ${BASE}-"
