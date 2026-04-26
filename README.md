@@ -16,11 +16,13 @@ cd ~/bup/WP; cat comments-wp.json|jq .|fgrep -C10 qtfast
 - puch
 - purple bike
 - bmx silver red checkered
-- blue 10 speed
+- blue 10 speed ./2004-blue-bike.jpg (from Pictures/2004-* cape has "some" blue 10spd..)
 - trek ~860 mtn bike
-- blue carbon fork road bike (=> NH)
+- 1992 trek "930" mtn bike
+- blue carbon fork road bike ~2004 (=> NH) aluminum `Inspiration.jpg`
 - trek white road bike (=> Irvine)
 - cape fixie
+- trek NBD Madone Pictures/2008/02/26
 - trek boone
 - trek supercaliber
 
@@ -137,10 +139,31 @@ gg 'style='
 
 
 ## make a post
-[bin/post](bin/post)
+### collect your imagery first
+- an easy thing is to select 2+ imagery in Photos app, then drag to CLI.
+- that will write the filenames of everything to use, which you use with:
+- [bin/avif-blog-img](bin/avif-blog-img)
+  - NOTE: it ^ will make the width size even if the source is odd and < 2500px wide
 
-# for imagery, see
-[bin/avif-blog-img](bin/avif-blog-img)
+example (heic3 is listed twice, it will become a `.webp` instead of an `.avif`):
+```sh
+cd img
+../bin/avif-blog-img -oldest -featured heic3  2026-my-filenames-slug  jpg1 jpg2 heic1 heic2 heic3
+```
+
+if you dont have any imagery, add this to your frontmatter:
+```yml
+featured: traceymonet.jpg
+```
+
+### preview imagery and post setup
+- set `categories` and `tags`
+- adjust `title` (if needed)
+- adjust `date` (if needed)
+- drag-and-drop imagery ordering from above (if needed)
+- the `featured` image should automatically be set (needs to be `.webp` from above for iOS sharing, etc)
+- `[Generate post command]` will setup a basic post from the info
+
 
 ```sh
 # imagery is nice/fullsize at 880px wide, preview/shows at 880x375 (2.35:1) where you can
