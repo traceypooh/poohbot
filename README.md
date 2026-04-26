@@ -55,7 +55,7 @@ and you can, too!
 ### aliases
 - /img           => /images
 - /albums/thumbs => /albums/images
-```
+```sh
 gg kml.php
 gg featured-click
 ```
