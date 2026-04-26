@@ -61,8 +61,8 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,
   highlightjs           = true
   highlightjsLang       = []
 
-  # Sets where "View More Posts" links to
-  viewMorePostsLink     = "/page/2"
+  # Sets where "View More Posts" links to if want a custom page instead of /#post5 etc.
+  # viewMorePostsLink     = "/all-my-posts-grid"
   # Activate Estimated Reading Times, which appear in the post headers
   readingTime           = true
   imageStretch          = ""

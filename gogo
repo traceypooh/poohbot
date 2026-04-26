@@ -67,7 +67,7 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
 
     if ( grep -qE '^type: post$' $MD ); then
       if [[ $MD == 20* ]]; then
-        # post with filename staring with '20'(YY-MM-..)
+        # post with filename starting with '20'(YY-MM-..)
         # TTL is dirname with lead YYYY-MM- removed
         YYYY=$(echo $DATE |cut -d- -f1)
           MM=$(echo $DATE |cut -d- -f2)
@@ -78,12 +78,18 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
         ALIASES="aliases: ['$ALIAS1', '$ALIAS2']"
 
         if [ $ALIASED ]; then
-          # check the front matter for the 2 aliases we always want to be present
-          # (there should be 1+ more, too)
-          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS1 || \
-            echo ERROR: $HTM is missing alias: $ALIAS1
-          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS2 || \
-            echo ERROR: $HTM is missing alias: $ALIAS2
+          # check the front matter for the 2 standard aliases we always want present
+          MISSING=
+          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS1 || MISSING=1
+          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS2 || MISSING=1
+          if [ $MISSING ]; then
+            echo "ERROR: $HTM has manual aliases but is missing standard date-path aliases."
+            echo "  When adding a manual alias, also keep the standard ones:"
+            echo "  aliases:"
+            echo "    - $ALIAS1"
+            echo "    - $ALIAS2"
+            echo "    - /your-manual-alias/"
+          fi
         else
           perl -i -pe 's#^(date: .*)#$1\n'$ALIASES'#' $MD
         fi
