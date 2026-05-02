@@ -107,6 +107,13 @@ echo Number Pages: $NPAGES
 
 ( set -eux; hugo )
 
+# Hugo skips .htm files (no frontmatter); copy them manually
+find alc -type f -name '*.htm' -o -name '*.html' | while IFS= read -r f; do
+  mkdir -p "public/${f%/*}"
+  if [ -e "public/$f" ]; then continue; fi
+  cp "$f" "public/$f"
+done
+
 # cheap check if GitHub Actions or dev mode on mac
 if [ "$UNAMEY" = Darwin ]; then
   restore-source-files
