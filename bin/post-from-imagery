@@ -185,7 +185,7 @@ function genPost() {
   const cats  = document.getElementById('f-cats').value;
   const tags  = document.getElementById('f-tags').value;
   const feat  = document.getElementById('f-feat').value.trim();
-  const dir   = date + '-' + slugify(title);
+  const dir   = date.slice(0,7) + '-' + slugify(title);
   const front = [
     '---',
     'title: ' + title,
