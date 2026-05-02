@@ -1,14 +1,25 @@
-#!/bin/zsh -eu
+#!/bin/zsh -e
 
 # creates AVIF images from list of input files, given a "base" string initial argument
 function usage() {
   cat<<EOF
-Usage: $0 <basename eg: '2025-europe'>  <image input file1> <image input file2> ..
+Usage: $1 <basename eg: '2025-europe'>  <image input file1> <image input file2> ..
 
 You can also add first args like
   -oldest         sort input files by capture time (DateTimeOriginal; else FS birth time) oldest first
   -keepgps        preserve GPS data (default: stripped for privacy)
   -featured FILE  convert FILE to .webp instead of .avif (for og:image / iOS sharing)
+
+
+Script will print the invocation for this at the end:
+  bin/post-from-imagery
+
+
+
+TYPICAL USAGE:
+
+$1 -oldest -featured heic3  2026-my-filenames-slug  jpg1 jpg2 heic1 heic2 heic3
+
 EOF
 }
 
@@ -20,13 +31,14 @@ KEEPGPS=0
 FEATURED=
 
 
-[[ -n $1 ]] || { usage; exit 1; }
+[[ -n $1 ]] || set -- '-usage' "$@"
+set -u
 while [[ $1 == -* ]]; do
   case $1 in
     -oldest)   OLDEST=1 ;;
     -keepgps)  KEEPGPS=1 ;;
     -featured) FEATURED=$2; shift ;;
-    *) usage; exit 1 ;;
+    *) usage $0; exit 1 ;;
   esac
   shift
 done
