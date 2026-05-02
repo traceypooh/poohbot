@@ -31,11 +31,13 @@ function encodeStream64(filestream, beg = 0, fin = filestream.length) {
 export default class MotionJpeg {
   constructor(mapId = 'map') {
     this.map = document.getElementById(mapId)
-    this.fi = null       // loaded filestream
-    this.prevStart = 0   // byte offset of last found JPEG frame start
-    this.imgNo = 0
+    this.fi = null          // loaded filestream
+    this.prevStart = 0      // byte offset of last found JPEG frame start
+    this.frames = []        // [{start, end}] byte ranges for each decoded frame
+    this.currentFrame = -1
+    this.fps = 0
     this.delay = 0
-    this.timerId = null  // stored for future pause/cancel
+    this.timerId = null
   }
 
   // fetches binary files synchronously via XHR (sync XHR deprecated; still works locally)
@@ -50,18 +52,41 @@ export default class MotionJpeg {
 
   // initialise and start playing an .avi -- local to this HTM/JS file
   play(avi, fps) {
-    if (this.timerId) clearTimeout(this.timerId)
+    this.stop()
     this.fi = null
     this.prevStart = 0
-    this.imgNo = 0
+    this.frames = []
+    this.currentFrame = -1
+    this.fps = fps
     this.delay = (navigator.userAgent.includes(' Firefox') ? 3 : 1) *
                  Math.round(1000 / fps)
     this.map.innerHTML = `loading ${avi} (${fps} FPS)...`
     setTimeout(() => {
       this.fi = this.loadUrl(avi)
-      this.map.innerHTML = ''
+      this.map.innerHTML = '<img id="mj-frame">'
+      document.getElementById('mj-controls').hidden = false
       this.mjpeg(0)
     }, this.delay)
+  }
+
+  stop() {
+    if (this.timerId) clearTimeout(this.timerId)
+    this.timerId = null
+  }
+
+  // render a specific frame by index (re-encodes from stored byte range on demand)
+  showFrame(idx) {
+    const i = Math.max(0, Math.min(idx, this.frames.length - 1))
+    this.currentFrame = i
+    const { start, end } = this.frames[i]
+    const img = document.getElementById('mj-frame')
+    if (img) img.src = `data:image/jpg;base64,${encodeStream64(this.fi, start, end)}`
+  }
+
+  // stop autoplay and step n frames (negative = back, ±fps = ±1 second)
+  step(n) {
+    this.stop()
+    if (this.frames.length) this.showFrame(this.currentFrame + n)
   }
 
   mjpeg(start) {
@@ -89,14 +114,8 @@ export default class MotionJpeg {
           }
           // eslint-disable-next-line no-console
           console.log(`frame @bytes: [=${this.prevStart}..~${prevEnd}]`)
-          document.getElementById(`i${this.imgNo - 2}`)?.remove()  // avoid DOM/RAM bloat
-          const frameId = this.imgNo
-          this.imgNo += 1
-          const b64 = encodeStream64(this.fi, this.prevStart, prevEnd)
-          this.map.insertAdjacentHTML(
-            'beforeend',
-            `<img id="i${frameId}" src="data:image/jpg;base64,${b64}">`,
-          )
+          this.frames.push({ start: this.prevStart, end: prevEnd })
+          this.showFrame(this.frames.length - 1)
         }
         this.prevStart = i
         this.timerId = setTimeout(() => this.mjpeg(i + 1), this.delay)
@@ -107,18 +126,31 @@ export default class MotionJpeg {
 
   testImg(src) {
     this.fi = this.loadUrl(src)
-    this.map.innerHTML = `<img src="data:image;base64,${encodeStream64(this.fi)}">`
+    this.map.innerHTML = `<img src="data:image;base64,${encodeStream64(this.fi)}"> `
     this.fi = null
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const mj = new MotionJpeg()
+
   document.querySelectorAll('[data-mj-src]').forEach((btn) => {
     btn.addEventListener('click', () => mj.testImg(btn.dataset.mjSrc))
   })
   document.querySelectorAll('[data-mj-avi]').forEach((btn) => {
     btn.addEventListener('click', () => mj.play(btn.dataset.mjAvi, Number(btn.dataset.mjFps)))
+  })
+
+  document.getElementById('mj-stop')?.addEventListener('click', () => mj.stop())
+  document.querySelectorAll('[data-mj-step]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const { mjStep } = btn.dataset
+      let n
+      if (mjStep === 'fps')       n = mj.fps
+      else if (mjStep === '-fps') n = -mj.fps
+      else                        n = Number(mjStep)
+      mj.step(n)
+    })
   })
 
   // populate #src textarea with page body + this script's source
