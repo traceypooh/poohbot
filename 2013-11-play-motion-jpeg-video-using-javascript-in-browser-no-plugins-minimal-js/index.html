@@ -56,6 +56,14 @@ aliases:
     </div>
     <noscript>Any app that can be written in JavaScript, will eventually be written in JavaScript.<br/>- Jeff Atwood<br/><b><i>enable thy javascript</i></b></noscript>
   </div>
+  <div id="mj-controls" hidden>
+    <button data-mj-step="-fps">[&lt;&lt;]</button>
+    <button data-mj-step="-1">[&lt;]</button>
+    <button id="mj-stop">[&#9632;]</button>
+    <button data-mj-step="1">[&gt;]</button>
+    <button data-mj-step="fps">[&gt;&gt;]</button>
+    <button id="mj-save">[save frame]</button>
+  </div>
   <div>
     Huh?
     <i>
@@ -77,12 +85,12 @@ aliases:
       <small>(probably not happy w/ missing huffman compression tables in img headers)</small>
       <ul>
         <li>safari/iOS</li>
-        <li>MS IE</li>
       </ul>
     <hr/>
     <small>
-      Originally created 2006 by Tracey Jaquith.
-      minor updates to jQuery and simplifying 2013
+      2006: Originally created by Tracey Jaquith.
+      2013: minor updates to jQuery and simplifying.
+      2026: add playback buttons and save full frame JPG, to ES module, dump jQuery, lints nicely.
     </small>
   </div>
 
