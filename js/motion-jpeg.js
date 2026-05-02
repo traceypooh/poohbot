@@ -1,157 +1,129 @@
-window.MJ = {
-  fi:false, // filestream
-  prevStart:0, // byte location of found JPEG frame
-  imgNo:0,
+/* eslint-disable no-bitwise */
 
-  //fetches BINARY FILES synchronously using XMLHttpRequest
-  load_url:function(url){
-    //uncomment next line when file:// not http://localhost
-    //netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-    var req = new XMLHttpRequest();
-    req.open('GET',url,false);
-    //XHR binary charset opt by Marcus Granado 2006 [http://mgran.blogspot.com]
-    req.overrideMimeType('text/plain; charset=x-user-defined');
-    req.send(null);
-    if (req.status != 200) return '';
-    return req.responseText;
-  },
+// Base64-encodes a binary string slice. (CryptoMX Tools, GPL v2+, © 2004-2006 Derek Buitenhuis)
+const KEY64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 
-  // source .avi arg -- local to this HTM/JS file
-  mjpeg:function (start, avi, FPS){
-    if (!MJ.fi  &&  start<0){
-      MJ.DELAY = ((navigator.userAgent.match(/ Firefox/) ? 3 : 1) *
-                  Math.round(1000 / // setTimeout() uses milliseconds...
-                             FPS)); // <==  set to FPS of source .avi!
-      jQuery('#map').html('loading '+avi+' ('+FPS+' FPS)...');
-      setTimeout(function(){
-        MJ.fi = MJ.load_url(avi);
-        jQuery('#map').html('');
-        MJ.mjpeg(0);
-      }, MJ.DELAY);
-      return;
+function encodeStream64(filestream, beg = 0, fin = filestream.length) {
+  let output = ''
+  let i = beg
+  do {
+    const chr1 = filestream.charCodeAt(i) & 0xff
+    i += 1
+    const chr2 = filestream.charCodeAt(i) & 0xff
+    i += 1
+    const chr3 = filestream.charCodeAt(i) & 0xff
+    i += 1
+    const enc1 = chr1 >> 2
+    const enc2 = ((chr1 & 3) << 4) | (chr2 >> 4)
+    let enc3 = ((chr2 & 15) << 2) | (chr3 >> 6)
+    let enc4 = chr3 & 63
+    if (isNaN(chr2)) {
+      enc3 = 64
+      enc4 = 64
+    } else if (isNaN(chr3)) {
+      enc4 = 64
     }
+    output += KEY64[enc1] + KEY64[enc2] + KEY64[enc3] + KEY64[enc4]
+  } while (i < fin)
+  return output
+}
 
-    for ( ; start <= MJ.fi.length; start++)
-    {
-      // JPEG images start with (hex) "ffd8" (d8==216, ff==255) and end with "ffd9".
-      // Canon elph JPEG frames start with "ffd8ffe0001041564931".
-      if ((MJ.fi.charCodeAt(start  ) & 0xff) == 255  && //ff
-          (MJ.fi.charCodeAt(start+1) & 0xff) == 216  && //d8
-          (MJ.fi.charCodeAt(start+2) & 0xff) == 255  && //ff
-          (MJ.fi.charCodeAt(start+3) & 0xff) == 224  && //e0
-          (MJ.fi.charCodeAt(start+4) & 0xff) ==   0  && //00
-          (MJ.fi.charCodeAt(start+5) & 0xff) ==  16  && //10
-          (MJ.fi.charCodeAt(start+6) & 0xff) ==  65  && //41
-          (MJ.fi.charCodeAt(start+7) & 0xff) ==  86  && //56
-          (MJ.fi.charCodeAt(start+8) & 0xff) ==  73  && //49
-          (MJ.fi.charCodeAt(start+9) & 0xff) ==  49  && //31
-          1){
+export default class MotionJpeg {
+  constructor(mapId = 'map') {
+    this.map = document.getElementById(mapId)
+    this.fi = null       // loaded filestream
+    this.prevStart = 0   // byte offset of last found JPEG frame start
+    this.imgNo = 0
+    this.delay = 0
+    this.timerId = null  // stored for future pause/cancel
+  }
 
-        if (MJ.prevStart){
+  // fetches binary files synchronously via XHR (sync XHR deprecated; still works locally)
+  loadUrl(url) {
+    const req = new XMLHttpRequest()
+    req.open('GET', url, false)
+    // XHR binary charset trick by Marcus Granado 2006
+    req.overrideMimeType('text/plain; charset=x-user-defined')
+    req.send(null)
+    return req.status === 200 ? req.responseText : ''
+  }
 
-          // try our best to find the end
-          var prevEnd = start-1;
-          for (var j=MJ.prevStart; j < start-1; j++){
-            if ((MJ.fi.charCodeAt(j  ) & 0xff) == 255  && //ff
-                (MJ.fi.charCodeAt(j+1) & 0xff) == 217  && //d9
-                1){
-              prevEnd = j+2;
-              break;
+  // initialise and start playing an .avi -- local to this HTM/JS file
+  play(avi, fps) {
+    if (this.timerId) clearTimeout(this.timerId)
+    this.fi = null
+    this.prevStart = 0
+    this.imgNo = 0
+    this.delay = (navigator.userAgent.includes(' Firefox') ? 3 : 1) *
+                 Math.round(1000 / fps)
+    this.map.innerHTML = `loading ${avi} (${fps} FPS)...`
+    setTimeout(() => {
+      this.fi = this.loadUrl(avi)
+      this.map.innerHTML = ''
+      this.mjpeg(0)
+    }, this.delay)
+  }
+
+  mjpeg(start) {
+    for (let i = start; i <= this.fi.length; i += 1) {
+      // Canon Elph JPEG frames: ffd8ffe0 0010 "AVI1"
+      if ((this.fi.charCodeAt(i)     & 0xff) === 0xff &&
+          (this.fi.charCodeAt(i + 1) & 0xff) === 0xd8 &&
+          (this.fi.charCodeAt(i + 2) & 0xff) === 0xff &&
+          (this.fi.charCodeAt(i + 3) & 0xff) === 0xe0 &&
+          (this.fi.charCodeAt(i + 4) & 0xff) === 0x00 &&
+          (this.fi.charCodeAt(i + 5) & 0xff) === 0x10 &&
+          (this.fi.charCodeAt(i + 6) & 0xff) === 0x41 &&  // A
+          (this.fi.charCodeAt(i + 7) & 0xff) === 0x56 &&  // V
+          (this.fi.charCodeAt(i + 8) & 0xff) === 0x49 &&  // I
+          (this.fi.charCodeAt(i + 9) & 0xff) === 0x31) {  // 1
+        if (this.prevStart) {
+          // scan for ffd9 (JPEG EOI) to find the clean frame end
+          let prevEnd = i - 1
+          for (let j = this.prevStart; j < i - 1; j += 1) {
+            if ((this.fi.charCodeAt(j)     & 0xff) === 0xff &&
+                (this.fi.charCodeAt(j + 1) & 0xff) === 0xd9) {
+              prevEnd = j + 2
+              break
             }
           }
-
-
-
-          MJ.log('frame @bytes: [='+MJ.prevStart+'..~'+prevEnd+']');
-          jQuery('#i'+(MJ.imgNo-2)).remove();//avoid DOM overload/RAM bloat
-          jQuery('#map').append('<img id="i'+(MJ.imgNo++)+'" src="data:image/jpg;base64,' +
-                                encodeStream64(MJ.fi, MJ.prevStart, prevEnd) +
-                                '"/>');
-
+          // eslint-disable-next-line no-console
+          console.log(`frame @bytes: [=${this.prevStart}..~${prevEnd}]`)
+          document.getElementById(`i${this.imgNo - 2}`)?.remove()  // avoid DOM/RAM bloat
+          const frameId = this.imgNo
+          this.imgNo += 1
+          const b64 = encodeStream64(this.fi, this.prevStart, prevEnd)
+          this.map.insertAdjacentHTML(
+            'beforeend',
+            `<img id="i${frameId}" src="data:image/jpg;base64,${b64}">`,
+          )
         }
-        MJ.prevStart = start;
-        setTimeout(function(){ MJ.mjpeg(start+1); }, MJ.DELAY);
-        break;
+        this.prevStart = i
+        this.timerId = setTimeout(() => this.mjpeg(i + 1), this.delay)
+        break
       }
     }
-  },
-
-
-  test_img:function(img) {
-    MJ.fi = MJ.load_url(img)
-
-    // now encode the safely transported byte stream into base64
-    jQuery('#map').html('<img src="data:image;base64,' + encodeStream64(MJ.fi) + '"/>')
-    delete MJ.fi
-    MJ.fi = false
-  },
-
-
-  log:function(str){
-    if (console  &&  console.log)
-      console.log(str);
-  }
-};// end MJ
-
-
-/*
-    <!--
-      CryptoMX Tools
-      Copyright (C) 2004 - 2006 Derek Buitenhuis
-
-      This program is free software; you can redistribute it and/or
-      modify it under the terms of the GNU General Public License
-      as published by the Free Software Foundation; either version 2
-      of the License, or (at your option) any later version.
-
-      This program is distributed in the hope that it will be useful,
-      but WITHOUT ANY WARRANTY; without even the implied warranty of
-      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-      GNU General Public License for more details.
-
-      You should have received a copy of the GNU General Public License
-      along with this program; if not, write to the Free Software
-      Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-    -->
-*/
-// takes binary stream of chars in and returns base64 (ASCII) string out!
-function encodeStream64(filestream, beg, fin) {
-  var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-  if (!beg  &&  !fin){
-    beg = 0;
-    fin = filestream.length;
   }
 
-  var output = "";
-  var chr1, chr2, chr3 = "";
-  var enc1, enc2, enc3, enc4 = "";
-  var i = beg;
-
-  do {
-    chr1 = filestream.charCodeAt(i++) & 0xff;
-    chr2 = filestream.charCodeAt(i++) & 0xff;
-    chr3 = filestream.charCodeAt(i++) & 0xff;
-
-    enc1 = chr1 >> 2;
-    enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-    enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-    enc4 = chr3 & 63;
-
-    if (isNaN(chr2)) {
-      enc3 = enc4 = 64;
-    } else if (isNaN(chr3)) {
-      enc4 = 64;
-    }
-
-    output = output +
-      keyStr.charAt(enc1) +
-      keyStr.charAt(enc2) +
-      keyStr.charAt(enc3) +
-      keyStr.charAt(enc4);
-    chr1 = chr2 = chr3 = "";
-    enc1 = enc2 = enc3 = enc4 = "";
-  } while (i < fin);
-
-  return output;
+  testImg(src) {
+    this.fi = this.loadUrl(src)
+    this.map.innerHTML = `<img src="data:image;base64,${encodeStream64(this.fi)}">`
+    this.fi = null
+  }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const mj = new MotionJpeg()
+  document.querySelectorAll('[data-mj-src]').forEach((btn) => {
+    btn.addEventListener('click', () => mj.testImg(btn.dataset.mjSrc))
+  })
+  document.querySelectorAll('[data-mj-avi]').forEach((btn) => {
+    btn.addEventListener('click', () => mj.play(btn.dataset.mjAvi, Number(btn.dataset.mjFps)))
+  })
+
+  // populate #src textarea with page body + this script's source
+  fetch('/js/motion-jpeg.js').then((r) => r.text()).then((js) => {
+    const src = document.getElementById('src')
+    if (src) src.textContent = `${document.getElementById('bodydiv').innerHTML}<script>${js}</script>`
+  })
+})
