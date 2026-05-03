@@ -12,20 +12,6 @@ cd ~/poohbot/comments; gg qtfast;
 cd ~/bup/WP; cat comments-wp.json|jq .|fgrep -C10 qtfast
 ```
 
-# bikes
-- puch
-- purple bike
-- bmx silver red checkered
-- blue 10 speed ./2004-blue-bike.jpg (from Pictures/2004-* cape has "some" blue 10spd..)
-- trek ~860 mtn bike
-- 1992 trek "930" mtn bike
-- blue carbon fork road bike ~2004 (=> NH) aluminum `Inspiration.jpg`
-- trek white road bike (=> Irvine)
-- cape fixie
-- trek NBD Madone Pictures/2008/02/26
-- trek boone
-- trek supercaliber
-
 
 ## Comments setup
 I'm using a forked version of `Staticman` here:
