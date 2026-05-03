@@ -105,7 +105,11 @@ done
 echo Number Posts: $NPOSTS
 echo Number Pages: $NPAGES
 
-( set -eux; hugo )
+ARGS=()
+if [ "$UNAMEY" = Darwin ]; then
+  ARGS+=(--buildDrafts)
+fi
+( set -eux; hugo $ARGS )
 
 # Hugo skips .htm files (no frontmatter); copy them manually
 find alc -type f -name '*.htm' -o -name '*.html' | while IFS= read -r f; do
