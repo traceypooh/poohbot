@@ -63,4 +63,4 @@ recent photo album
 </div>
 
 <script src="js/slide-responsively.js" type="module"></script>
-<script defer src="js/photos.js"></script>
+<script src="js/photos.js" type="module"></script>
