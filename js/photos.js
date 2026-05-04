@@ -1,3 +1,5 @@
+/* eslint-disable no-continue */
+import { log } from 'https://av.archive.org/js/util/log.js'
 
 const ALBUMS = [
   'ALC',
@@ -64,14 +66,6 @@ const HUNTER = [
   '2005_09_25 helios/IMG_2500.JPG',
 ]
 
-if (typeof log === 'undefined') {
-  const log = (typeof console === 'undefined'
-    ? () => {}
-    : console.log.bind(console)
-  )
-}
-
-
 class Pooh {
   constructor() {
     this.albpix = []
@@ -81,11 +75,11 @@ class Pooh {
     this.albumChunkSize = 8
 
 
-    $('.album-picture').each((idx, el) => {
+    $('.album-picture').each((_idx, el) => {
       this.album_picture(el)
     })
 
-    $('.round-picture').each((idx, el) => {
+    $('.round-picture').each((_idx, el) => {
       el.outerHTML = this.roundPic({
         filename: el.getAttribute('src'),
         title: el.getAttribute('title'),
@@ -96,7 +90,7 @@ class Pooh {
       })
     })
 
-    $('.random-picture').each((idx, el) => {
+    $('.random-picture').each((_idx, el) => {
       const albumname = ALBUMS[Math.round((ALBUMS.length - 1) * Math.random())]
       this.loads[albumname] = 1
       // marker to know what element gets replaced when "album_json_gotten()" invoked
@@ -166,11 +160,13 @@ class Pooh {
     // aid to figure out which column, left or right, to add album to
     const half = Math.round(ALBUMS.length / 2) - 1
 
-    for (var i = 0, albumname; albumname = ALBUMS[i]; i++) {
+    let albumname
+    // deno-lint-ignore no-cond-assign
+    for (let i = 0; albumname = ALBUMS[i]; i++) {
       this.loads[albumname] = i // save order in which albums should appear
 
       str += `<div id="al${i}"> </div>`
-      if (i == half)
+      if (i === half)
         str += '</div><div style="float:left;">' // start 2nd column
     }
 
@@ -214,8 +210,9 @@ class Pooh {
       const file = albpic.el.getAttribute('src').replace(/\/albums\/images\//, '')
       let fi = null
       const filepart = file.substring(file.indexOf('/') + 1) // after "/" char
-      for (var i = 0, el; el = album.file[i]; i++) {
-        if (el.name == filepart) {
+      // deno-lint-ignore no-cond-assign
+      for (let i = 0, el; el = album.file[i]; i++) {
+        if (el.name === filepart) {
           fi = el
           break
         }
@@ -273,9 +270,9 @@ class Pooh {
 
 
   static getImgSize(imgSrc) {
-    const newImg = new Image()
+    let newImg = new Image()
     newImg.src = imgSrc
-    const tmp = parseInt(newImg.width)
+    const tmp = parseInt(newImg.width, 10)
     newImg = null
     return tmp
   }

@@ -1,6 +1,6 @@
 // NOTE: perma-home is:  http://traceypooh.com/js/video.js
 
-/* global $ log jwplayer */
+import { log } from 'https://av.archive.org/js/util/log.js'
 
 class IAV {
   constructor() {
@@ -172,7 +172,9 @@ class IAV {
       this.HALF = ''
     } else {
       // archive.org
-      $('#picks').insertAfter('#spotlight')
+      const picks = document.getElementById('picks')
+      const spotlight = document.getElementById('spotlight')
+      if (picks && spotlight) spotlight.insertAdjacentElement('afterend', picks)
     }
 
     const imgPre = (location.hostname.match('archive.org') ? '/serve/poohBot/' : '/img/')
@@ -345,7 +347,7 @@ class IAV {
 
 
   // for video.md and lapses.md only
-  static playmp4(evt) {
+  playmp4(evt) {
     const identifier = (evt ? evt.dataset.id : '')
     let playlist = false
 
@@ -357,7 +359,7 @@ class IAV {
 
         import('https://av.archive.org/js/jwplayer.js').then(() => {
           log('play all setup')
-          IAV.playmp4(0)
+          this.playmp4(0)
         })
         return false
       }
@@ -375,55 +377,63 @@ class IAV {
         })
       }
 
-      log(playlist)
+      log({ playlist })
     }
 
 
     // now figure out where we should place the player:
     //   _after_ the last cell in the row w/ the clicked cell
     //   _before_ the first cell in the row w/ the clicked cell (when last row clicked)
-    const firstY = $('.strip:first').offset().top
-    const lastY = $('.strip:last').offset().top
-    const clickedY = (evt ? $(evt.parentNode).offset().top : firstY)
+    const strips = Array.from(document.querySelectorAll('.strip'))
+    const firstY = strips.length ? strips[0].getBoundingClientRect().top + scrollY : 0
+    const lastY = strips.length
+      ? strips[strips.length - 1].getBoundingClientRect().top + scrollY
+      : 0
+    const clickedY = evt ? evt.parentNode.getBoundingClientRect().top + scrollY : firstY
     log({
       identifier, firstY, clickedY, lastY,
     })
-    const $after = (clickedY === lastY
+    const after = clickedY === lastY
       // if clicked on last row, find last element in prior row
-      ? $('.strip').filter((_idx, e) => $(e).offset().top < clickedY).last()
+      ? strips.filter((e) => e.getBoundingClientRect().top + scrollY < clickedY).at(-1)
       // else find last element in clicked row
-      : $('.strip').filter((_idx, e) => $(e).offset().top === clickedY).last()
-    )
+      : strips.filter((e) => e.getBoundingClientRect().top + scrollY === clickedY).at(-1)
 
 
-    // first clear and hide any already visible/playing player
-    $('body').append($('<div id="player1" style="display:none"></div>'))
+    // clear any already visible/playing player, then insert new one
+    const existing = document.getElementById('player1')
+    if (existing) existing.remove()
 
-    $('#player1').hide('slow', () => {
-      $('#player1').remove()
-      $('<div id="player1" style="display:none"></div>').insertAfter($after)
+    const player1 = document.createElement('div')
+    player1.id = 'player1'
+    if (after) {
+      after.insertAdjacentElement('afterend', player1)
+    } else {
+      document.body.appendChild(player1)
+    }
 
+    if (playlist) {
+      player1.innerHTML = '<div id="mwplayer" width="800" height="480"> </div>'
+    } else {
+      player1.innerHTML = `<iframe src="https://archive.org/details/${identifier}?embed=1${IAV.ios ? '' : '&autoplay=1'}" width="100%" style="min-width:320px" height="480" frameborder="0"></iframe>`
+    }
 
-      if (playlist) {
-        $('#player1').html('<div id="mwplayer" width="800" height="480"> </div>')
-      } else {
-        $('#player1').html(`<iframe src="https://archive.org/details/${identifier}?embed=1${IAV.ios ? '' : '&autoplay=1'}" width="100%" style="min-width:320px" height="480" frameborder="0"></iframe>`)
-      }
+    if (playlist) {
+      const prv = '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon jw-svg-icon-next" style="transform: rotate(180deg)" viewBox="0 0 240 240"><path d="M165,60v53.3L59.2,42.8C56.9,41.3,55,42.3,55,45v150c0,2.7,1.9,3.8,4.2,2.2L165,126.6v53.3h20v-120L165,60L165,60z"></path></svg>'
 
-      $('#player1').show('slow')
+      const nxt = '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon jw-svg-icon-next" viewBox="0 0 240 240"><path d="M165,60v53.3L59.2,42.8C56.9,41.3,55,42.3,55,45v150c0,2.7,1.9,3.8,4.2,2.2L165,126.6v53.3h20v-120L165,60L165,60z"></path></svg>'
 
-
-      if (playlist) {
-        jwplayer('mwplayer').setup({
-          'http.startparam': 'start',
-          autoplay: (!IAV.ios),
-          playlist,
-          provider: 'http',
-          width: 800,
-          height: 480,
-        })
-      }
-    })
+      // eslint-disable-next-line no-undef
+      const player = jwplayer('mwplayer').setup({
+        base: 'https://av.archive.org/jw/8',
+        autoplay: (!IAV.ios),
+        playlist,
+        width: 800,
+        height: 480,
+      })
+      player.addButton(nxt, 'next',     () => player.playlistNext(), 'btn-nxt')
+      player.addButton(prv, 'previous', () => player.playlistPrev(), 'btn-prv')
+    }
 
     return false
   }
@@ -438,7 +448,7 @@ class IAV {
     if (this.usingplayer)
       str += `
 <div style="margin-top:-10px;  float:right;">
-  <a onclick="return IAV.playmp4()">Play all</a>
+  <a onclick="return iav.playmp4()">Play all</a>
 </div>`
 
     str += `
@@ -469,7 +479,7 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
       let thumb = `000000${thumbn}`
       thumb = thumb.slice(thumb.length - 6, 12)
 
-      const onclik = (this.usingplayer ? `data-id="${id}" onclick="return IAV.playmp4(this)"` : // xxx CSP onmouse.. 2 lines below..
+      const onclik = (this.usingplayer ? `data-id="${id}" onclick="return iav.playmp4(this)"` : // xxx CSP onmouse.. 2 lines below..
         `href="https://archive.org/details/${id}"`)
 
       str += `<a ${onclik}><img title="${title}" alt="${title}" id="${id}" onmouseover="IAV.imtoggle('${id}')" onmouseout="IAV.imtoggle('${id}')" class="cell${this.HALF}" src="https://archive.org/serve/${id}/${IAV.imgbase(id)}.thumbs/${IAV.imgbase(id)}_${thumb}.jpg"/></a>`
@@ -550,16 +560,9 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
 }
 
 
-if (typeof $ === 'undefined') {
-  // https://archive.org/details/poohBot   is the main usage here
-  import('https://esm.ext.archive.org/jquery@3.7.1').then(() => {
-    // eslint-disable-next-line no-console
-    globalThis.log = console.log.bind(console)
-
-    // eslint-disable-next-line no-new
-    new IAV()
-  })
-} else {
-  // eslint-disable-next-line no-new
-  new IAV()
-}
+globalThis.IAV = IAV
+let iav
+document.addEventListener('DOMContentLoaded', () => {
+  iav = new IAV()
+  globalThis.iav = iav
+})
