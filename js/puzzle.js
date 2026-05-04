@@ -1,39 +1,33 @@
 
-
-// from http://css-tricks.com/snippets/jquery/shuffle-dom-elements/
-$.fn.shuffle = function () {
-  const allElems = this.get()
-  const getRandom = function (max) {
-    return Math.floor(Math.random() * max)
+function shuffleTiles(div) {
+  const tiles = Array.from(div.querySelectorAll('li'))
+  const positions = tiles.map((li) => ({
+    x: li.style.backgroundPositionX,
+    y: li.style.backgroundPositionY,
+  }))
+  for (let i = positions.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[positions[i], positions[j]] = [positions[j], positions[i]]
   }
-  const shuffled = $.map(allElems, () => {
-    const random = getRandom(allElems.length)
-    const randEl = $(allElems[random]).clone(true)[0]
-    allElems.splice(random, 1)
-    return randEl
-  })
-
-  this.each(function (i) {
-    $(this).replaceWith($(shuffled[i]))
-  })
-
-  return $(shuffled)
+  for (let i = 0; i < tiles.length; i += 1) {
+    tiles[i].style.backgroundPositionX = positions[i].x
+    tiles[i].style.backgroundPositionY = positions[i].y
+  }
 }
 
 
-$(() => {
+document.addEventListener('DOMContentLoaded', () => {
   const src = 'https://traceypooh.com/albums/images/2007_10_14%20key%20west/keyWest_0136_tj.jpg'
   const cuts = 5
 
   const img = new Image()
   img.onload = function () {
-    const $div = $('#pieces')
-    const wdP = $div.width()
-    const htP = 0.8 * $(window).height()
-    $div.height(htP)
+    const div = document.getElementById('pieces')
+    const wdP = div.offsetWidth
+    const htP = 0.8 * innerHeight
+    div.style.height = `${htP}px`
 
-    const left_offset = (img.naturalWidth > wdP ? (img.naturalWidth - wdP) / 4 : 0)
-    // console.log({ left_offset, wdP, natw: img.naturalWidth })
+    const leftOffset = (img.naturalWidth > wdP ? (img.naturalWidth - wdP) / 4 : 0)
 
     const splitW = Math.min(wdP, img.width) - cuts * 10
     const splitH = Math.min(htP, img.height) - cuts * 5
@@ -44,20 +38,45 @@ $(() => {
     // tile up the image, perfectly...
     for (let top = 0; splitH >= top + ht; top += ht) {
       for (let left = 0; splitW >= left + wd; left += wd) {
-        $div.append($('<li/>')
-          .css({
-            width: wd,
-            height: ht,
-            'background-image': `url(${src})`,
-            'background-position-x': -left - left_offset,
-            'background-position-y': -top,
-            margin: '3px',
-          }))
+        const li = document.createElement('li')
+        li.style.width = `${wd}px`
+        li.style.height = `${ht}px`
+        li.style.backgroundImage = `url(${src})`
+        li.style.backgroundPositionX = `${-left - leftOffset}px`
+        li.style.backgroundPositionY = `${-top}px`
+        li.style.margin = '3px'
+        li.draggable = true
+        div.appendChild(li)
       }
     }
 
-    $div.sortable()
-    $div.disableSelection()
+    document.getElementById('shuffle').addEventListener('click', () => shuffleTiles(div))
+
+    let dragSrc = null
+
+    div.addEventListener('dragstart', (e) => {
+      dragSrc = e.target
+      e.dataTransfer.effectAllowed = 'move'
+    })
+
+    div.addEventListener('dragover', (e) => {
+      e.preventDefault()
+      e.dataTransfer.dropEffect = 'move'
+    })
+
+    div.addEventListener('drop', (e) => {
+      e.preventDefault()
+      if (!dragSrc || dragSrc === e.target) return
+      const target = e.target.closest('li')
+      if (!target) return
+      // swap background positions
+      const tmpX = dragSrc.style.backgroundPositionX
+      const tmpY = dragSrc.style.backgroundPositionY
+      dragSrc.style.backgroundPositionX = target.style.backgroundPositionX
+      dragSrc.style.backgroundPositionY = target.style.backgroundPositionY
+      target.style.backgroundPositionX = tmpX
+      target.style.backgroundPositionY = tmpY
+    })
   }
   img.src = src
 })

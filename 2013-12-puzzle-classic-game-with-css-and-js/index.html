@@ -15,8 +15,8 @@ tags:
 <style>
 #pieces {
   list-style-type: none;
-  width: 90%;
   margin: 50px auto;
+  padding: 0;
 }
 #pieces li {
   float: left;
@@ -24,7 +24,7 @@ tags:
 </style>
 
 
-## <div onclick="$('#pieces li').shuffle()"> puzzling <span class="fa fa-random"></span> shuffle!</div>
+## <div id="shuffle"> puzzling <span class="fa fa-random"></span> shuffle!</div>
 
 Hit the <span class="fa fa-random"></span> shuffle button to scramble the picture.
 You can drag the pieces around to get it back together - like the classic game.
@@ -36,6 +36,4 @@ _* this cute picture is us driving in Key West (a Chrysler 300 rental)_
 <ul id="pieces">
 </ul>
 
-
-<script defer src="https://archive.org/includes/build/npm/jquery-ui.min.js?v1.12.1"></script>
-<script defer src="/js/puzzle.js"></script>
+<script src="/js/puzzle.js" type="module"></script>
