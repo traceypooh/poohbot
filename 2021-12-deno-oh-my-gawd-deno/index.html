@@ -41,15 +41,14 @@ You can load logical `npm` modules directly from the web (!) 😍
 Omitting (just) the pie chart setup clutter (it's a lot of JSON config for the data -- you can [see the full source here](https://av.archive.org/demo/deno.js)):
 
 ```js
-import $ from 'https://esm.ext.archive.org/jquery@3.7.1'
 import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
 import * as d3v7 from 'https://esm.ext.archive.org/d3@7.9.0'
 
-import { log } from '../js/util/log.js'
+import { log } from 'https://av.archive.org/js/util/log.js'
 
 window.d3 = { version: '7.0.0', ...d3v7 }
 
-$('body').append(`
+document.body.innerHTML += `
   <style>.card { width: 40%; margin: 3%; display: inline-block; vertical-align: top; }</style>
   <div id="x" class="card card-body bg-light">
     <h1>bootstrap hai whirld</h1>
@@ -75,23 +74,19 @@ $('body').append(`
     <a href="https://esm.ext.archive.org">esm.ext.archive.org</a>
     <pre>
 import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
-import $ from 'https://esm.ext.archive.org/jquery@3.7.1'
     </pre>
   </div>
 
   <div id="pieChart"></div>
-`)
-$('#x h1').hide().fadeIn('slow')
+`
+const el = document.querySelector('#x h1')
+el.style.opacity = '0'
+el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, fill: 'forwards' })
 
-async function dpie() {
-  const d3pie = (await import('https://esm.ext.archive.org/d3pie@0.2.1')).default
-
-  const pie = new d3pie('pieChart', {
-    ...
-  })
-}
-
-void dpie()
+const d3pie = (await import('https://esm.ext.archive.org/d3pie@0.2.1')).default
+const pie = new d3pie('pieChart', {
+  ...
+})
 ```
 
 Look how clean that is!

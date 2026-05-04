@@ -59,7 +59,7 @@ if (window.matchMedia  &&  window.matchMedia('(prefers-color-scheme: dark)').mat
   const hour = new Date().getHours()
   if (7 <= hour  &&  hour < 19) { // override [7am .. 7pm] localtime
     log('.. but its vampire sleep time - back to day mode')
-    $('body').addClass('lite')
+    document.body.classList.add('lite')
   }
 }
 ```
