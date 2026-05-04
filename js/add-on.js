@@ -52,7 +52,7 @@ function randomQuote() {
 if (window.matchMedia  &&  window.matchMedia('(prefers-color-scheme: dark)').matches) {
   log('bring on the darkness!')
   const hour = new Date().getHours()
-  if (7 <= hour  &&  hour < 17) { // override [7am .. 5pm] localtime
+  if (hour >= 7  &&  hour < 17) { // override [7am .. 5pm] localtime
     log('.. but its vampire sleep time')
     $('body').addClass('lite')
   }

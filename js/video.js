@@ -127,7 +127,6 @@ class IAV {
       //    <br clear="left">
       const content = document.getElementsByClassName('content')[0]
       if (!content) {
-        // eslint-disable-next-line no-constructor-return
         return false
       }
 
@@ -145,7 +144,7 @@ class IAV {
     if (location.href.match(/filmstrip/)) {
       const bodyobj = document.getElementsByTagName('body')[0]
       if (!bodyobj)
-        // eslint-disable-next-line no-constructor-return
+
         return false
       let obj = document.createElement('div')
       obj.setAttribute('id', 'filmstrip')
@@ -157,14 +156,14 @@ class IAV {
     }
 
     if (document.getElementById('clips'))
-      // eslint-disable-next-line no-constructor-return
+
       return this.playClips()
 
 
     this.filmstrip = document.getElementById('filmstrip')
 
     if (!this.filmstrip)
-      // eslint-disable-next-line no-constructor-return
+
       return false
 
     if (this.usingplayer) {
@@ -249,7 +248,7 @@ class IAV {
     `)
 
     this.filmstripSetup()
-    // eslint-disable-next-line no-constructor-return
+
     return false
   }
 
@@ -355,7 +354,7 @@ class IAV {
 
       if (!this.playallSetup) {
         this.playallSetup = true
-        // eslint-disable-next-line import/no-unresolved
+
         import('https://av.archive.org/js/jwplayer.js').then(() => {
           log('play all setup')
           IAV.playmp4(0)
