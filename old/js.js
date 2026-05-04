@@ -10,6 +10,8 @@
 -DBP top jacked up a bit
  */
 
+/* eslint-disable */
+// deno-lint-ignore-file
 var Pooh =
 {
   xfile:'',
