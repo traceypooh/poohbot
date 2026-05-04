@@ -5,16 +5,11 @@
   and follow the formatting and style given.
 */
 
-const log = (typeof console === 'undefined'
-  ? () => {}
-  : console.log.bind(console)
-)
-
+/* eslint-disable no-console */
 
 function rand(ary) {
   return ary[Math.round((ary.length - 1) * Math.random())]
 }
-
 
 function randNavPic() {
   const NAVPIC = [
@@ -34,32 +29,37 @@ function randNavPic() {
 }
 
 function randomQuote() {
-  const $q = $('#quote-random')
-  if (!$q.length)
+  const el = document.getElementById('quote-random')
+  if (!el)
     return
-  $.getJSON('/js/quotes.json', (json) => {
-    const q = rand(json.short)
-
-    $q.html(`
+  fetch('/js/quotes.json')
+    .then((r) => r.json())
+    .then((json) => {
+      const q = rand(json.short)
+      el.innerHTML = `
 <a href="/quotes">
   <dt>${q.q}<dt>
   <dd> - ${q.a}<br/></dd>
-</a>`)
-  })
+</a>`
+    })
 }
 
 
-if (window.matchMedia  &&  window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  log('bring on the darkness!')
+if (globalThis.matchMedia && globalThis.matchMedia('(prefers-color-scheme: dark)').matches) {
+  console.log('bring on the darkness!')
   const hour = new Date().getHours()
-  if (hour >= 7  &&  hour < 17) { // override [7am .. 5pm] localtime
-    log('.. but its vampire sleep time')
-    $('body').addClass('lite')
+  if (hour >= 7 && hour < 17) { // override [7am .. 5pm] localtime
+    console.log('.. but its vampire sleep time')
+    document.body.classList.add('lite')
   }
   // macOS can force chrome to always use light mode (since it's slaved to mac sys pref otherwise)
   //   defaults write com.google.Chrome NSRequiresAquaSystemAppearance -bool yesa
 }
 
 
-$(() => $('#home-pic img').attr('src', randNavPic()))
-$(randomQuote)
+document.addEventListener('DOMContentLoaded', () => {
+  const img = document.querySelector('#home-pic img')
+  if (img)
+    img.src = randNavPic()
+  randomQuote()
+})
