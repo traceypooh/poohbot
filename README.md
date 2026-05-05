@@ -7,9 +7,6 @@ tracey pooh's site & blog, static site generated
 
 # todo
 ```sh
-gg -F '$('
-gg -F 'log('
-
 cd ~/poohbot/comments; gg qtfast;
 # user email may not be showing up same/right, compared to:
 cd ~/bup/WP; cat comments-wp.json|jq .|fgrep -C10 qtfast

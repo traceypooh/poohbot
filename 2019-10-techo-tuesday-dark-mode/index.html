@@ -55,10 +55,10 @@ At the time of this writing:
 So for non-mobile, if you want _time-based_ dark mode, you can use `javascript` to _additionally_ use the browser's localtime to do dark mode when it's evening hours _and_ dark mode is enabled (and otherwise do default/light/day mode).
 ```js
 if (window.matchMedia  &&  window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  log('bring on the darkness!')
+  console.log('bring on the darkness!')
   const hour = new Date().getHours()
   if (7 <= hour  &&  hour < 19) { // override [7am .. 7pm] localtime
-    log('.. but its vampire sleep time - back to day mode')
+    console.log('.. but its vampire sleep time - back to day mode')
     document.body.classList.add('lite')
   }
 }
