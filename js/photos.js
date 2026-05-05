@@ -75,11 +75,10 @@ class Pooh {
     this.albumChunkSize = 8
 
 
-    $('.album-picture').each((_idx, el) => {
+    for (const el of document.querySelectorAll('.album-picture'))
       this.album_picture(el)
-    })
 
-    $('.round-picture').each((_idx, el) => {
+    for (const el of document.querySelectorAll('.round-picture')) {
       el.outerHTML = this.roundPic({
         filename: el.getAttribute('src'),
         title: el.getAttribute('title'),
@@ -88,14 +87,14 @@ class Pooh {
         ht: el.getAttribute('ht'),
         src: el.getAttribute('src'),
       })
-    })
+    }
 
-    $('.random-picture').each((_idx, el) => {
+    for (const el of document.querySelectorAll('.random-picture')) {
       const albumname = ALBUMS[Math.round((ALBUMS.length - 1) * Math.random())]
       this.loads[albumname] = 1
       // marker to know what element gets replaced when "album_json_gotten()" invoked
       this.randpix.push({ albumname, el })
-    })
+    }
 
 
     const q = location.search.replace(/\?/, '')
@@ -108,13 +107,13 @@ class Pooh {
       this.albumsingle = true
       this.loads = {}
       this.loads[q] = 1
-      $('body').addClass('album')
-      $('#wrapper').show()
+      document.body.classList.add('album')
+      document.getElementById('wrapper').style.display = 'block'
     } else {
       this.albumsoverview = true
       this.albums_overview()
-      $('body').addClass('album')
-      $('#wrapper').show()
+      document.body.classList.add('album')
+      document.getElementById('wrapper').style.display = 'block'
     }
 
     this.load_albums()
@@ -122,10 +121,10 @@ class Pooh {
 
 
   load_albums() {
-    for (const albumname in this.loads) {
-      $.getJSON(`/albums/${albumname}.json`, (json) => {
-        this.album_json_gotten(json)
-      })
+    for (const albumname of Object.keys(this.loads)) {
+      fetch(`/albums/${albumname}.json`)
+        .then((r) => r.json())
+        .then((json) => this.album_json_gotten(json))
     }
   }
 
@@ -161,8 +160,8 @@ class Pooh {
     const half = Math.round(ALBUMS.length / 2) - 1
 
     let albumname
-    // deno-lint-ignore no-cond-assign
-    for (let i = 0; albumname = ALBUMS[i]; i++) {
+    for (let i = 0; i < ALBUMS.length; i += 1) {
+      albumname = ALBUMS[i]
       this.loads[albumname] = i // save order in which albums should appear
 
       str += `<div id="al${i}"> </div>`
@@ -170,7 +169,7 @@ class Pooh {
         str += '</div><div style="float:left;">' // start 2nd column
     }
 
-    $('.content').append(`${str}</div><br clear="all"/>`)
+    document.querySelector('.content').insertAdjacentHTML('beforeend', `${str}</div><br clear="all"/>`)
   }
 
 
@@ -210,8 +209,8 @@ class Pooh {
       const file = albpic.el.getAttribute('src').replace(/\/albums\/images\//, '')
       let fi = null
       const filepart = file.substring(file.indexOf('/') + 1) // after "/" char
-      // deno-lint-ignore no-cond-assign
-      for (let i = 0, el; el = album.file[i]; i++) {
+      for (let i = 0; i < album.file.length; i += 1) {
+        const el = album.file[i]
         if (el.name === filepart) {
           fi = el
           break
@@ -234,13 +233,12 @@ class Pooh {
     // tracey thumbnails are *always* 150px high; but width varies
     // determine what width to use (and scale appropriately to desired height)
     const ht = (el.getAttribute('ht') ? el.getAttribute('ht') : 150)
-    const wd = Math.round(fi.w * ht / 150)
+    const wd = Math.round((fi.w * ht) / 150)
 
     // if href *not* set, use album as target
-    let href = el.getAttribute('href')
-    if (typeof href === 'undefined'  ||  href === null)
-      href = `/photos/?${album.name}`
+    const href = el.getAttribute('href') ?? `/photos/?${album.name}`
 
+    // eslint-disable-next-line no-param-reassign
     el.outerHTML = this.roundPic({
       filename,
       href,
@@ -291,11 +289,10 @@ class Pooh {
     dataset = {},
   } = {}) {
     // setup defaults for optional elements
-    if (src === '')
-      src = `/albums/images/${filename}`
-
-    if (!wd)
-      wd = Pooh.getImgSize(src)
+    // eslint-disable-next-line no-param-reassign
+    if (src === '') src = `/albums/images/${filename}`
+    // eslint-disable-next-line no-param-reassign
+    if (!wd) wd = Pooh.getImgSize(src)
 
 
     let str = `
@@ -328,7 +325,7 @@ class Pooh {
 
     str += `${hid}\
       <img class="imbox1" style="width:${wd}px; height:${ht}px;" ${
-  title == 'untitled' ? '' : ` title="${title}" alt="${title}" `
+  title === 'untitled' ? '' : ` title="${title}" alt="${title}" `
 } src="${src}"/>\
 \
     </a>\
@@ -345,18 +342,18 @@ class Pooh {
   // ####.##.##         ==>   February 27, 2006
   // ####.##.##,true    ==>   Feb 27, 2006
   static pretty(date, month3letters) {
-    if (typeof date === 'undefined'  ||  !date  ||  date == '200')
+    if (typeof date === 'undefined'  ||  !date  ||  date === '200')
       return ''
 
     const year = date.substring(0, 4)
     let month = date.substring(5, 7)
     let day  = date.substring(8, 10)
     // need to remove lead 0s!
-    while (day.length &&   day[0] == '0')   day =   day.substr(1)
+    while (day.length && day[0] === '0')   day = day.substr(1)
 
     let str = ''
-    if (typeof month !== 'undefined'  &&  month != null  &&  month != '') {
-      while (month.length && month[0] == '0') month = month.substr(1)
+    if (month !== null && month !== '') {
+      while (month.length && month[0] === '0') month = month.substr(1)
       str += MONTH[month]
 
       if (month3letters)
@@ -364,7 +361,7 @@ class Pooh {
       str += ' '
     }
 
-    if (typeof day !== 'undefined'  &&  day != '')
+    if (day !== '')
       str += `${day}, `
     str += year
     return str
@@ -398,12 +395,12 @@ ${
 
     let ht = 150
     const tmp = location.hash.substring(location.hash.lastIndexOf('-') + 1)
-    if (typeof tmp !== 'undefined'  &&  tmp.match(/^[0-9]+$/))
-      ht = parseInt(tmp) // 1/2 height pictures for inline frame on europe.htm!
+    if (tmp.match(/^[0-9]+$/))
+      ht = parseInt(tmp, 10) // 1/2 height pictures for inline frame on europe.htm!
     if (typeof album.height !== 'undefined')
-      ht = parseInt(album.height) // NOTE: legacy; not used right now
+      ht = parseInt(album.height, 10) // NOTE: legacy; not used right now
 
-    for (let i = 0; i < album.file.length; i++)
+    for (let i = 0; i < album.file.length; i += 1)
       str += this.pixcell(album, i, ht)
 
     const con = document.getElementsByClassName('content')[0]
@@ -434,7 +431,7 @@ ${
       const ht = 75
       // tracey thumbnails are *always* 150px high; but width varies
       // determine what width to use (scale appropriately to desired height)
-      const wd = Math.round(fi.w * ht / 150)
+      const wd = Math.round((fi.w * ht) / 150)
       const filename = Pooh.filename(album, fi)
       str += '\
     <td>\
@@ -476,7 +473,7 @@ ${
 
     // tracey thumbnails are *always* 150px high; but width varies
     // determine what width to use (and scale appropriately to desired height)
-    const wd = Math.round(fi.w * ht / 150)
+    const wd = Math.round((fi.w * ht) / 150)
 
     const wd2 = wd + (ht < 76 ? 50 : 14)
     const wd3 = wd - 7
@@ -502,9 +499,11 @@ ${
 
   static home_page() {
     Pooh.hunter_pic()
-    $('.hover-quote-hide').
-      on('mouseover', () => $('#quote-random').css('visibility', 'hidden')).
-      on('mouseout',  () => $('#quote-random').css('visibility', ''))
+    const quoteEl = document.getElementById('quote-random')
+    for (const el of document.querySelectorAll('.hover-quote-hide')) {
+      el.addEventListener('mouseover', () => { quoteEl.style.visibility = 'hidden' })
+      el.addEventListener('mouseout',  () => { quoteEl.style.visibility = '' })
+    }
   }
 
   static hunter_pic() {
@@ -513,9 +512,9 @@ ${
       return
 
     const url = `/albums/images/${Pooh.rand(HUNTER)}`
-    const $htr = $('#hunter-pic')
-    $htr.find('.showOnHover img').remove()
-    $htr.find('img').attr('src', url)
+    const htr = document.getElementById('hunter-pic')
+    for (const el of htr.querySelectorAll('.showOnHover img')) el.remove()
+    htr.querySelector('img').src = url
   }
 
 
@@ -524,4 +523,4 @@ ${
   }
 }
 
-$(() => new Pooh())
+document.addEventListener('DOMContentLoaded', () => new Pooh())
