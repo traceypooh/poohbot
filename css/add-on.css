@@ -442,7 +442,7 @@ a.image.featured img[src*="#top15"] {
       color: #ddd;
   }
   img {
-    filter: grayscale(50%);
+    filter: grayscale(33%);
   }
 }
 
