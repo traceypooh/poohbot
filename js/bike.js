@@ -1,8 +1,9 @@
 
-$($('.js-bike').each((idx, e) => {
-  // console.log(e)
-  // console.log(e.dataset)
+export {}
+
+for (const e of document.querySelectorAll('.js-bike')) {
   const d = e.dataset
+  const prev = e.innerHTML
   e.innerHTML = `
 <div class="tourbox">
   <div style="0 5px 5px 5px">
@@ -11,11 +12,11 @@ $($('.js-bike').each((idx, e) => {
   </div>
   <a class="hoverShower2" href="/ciclo/${d.name}-overview.jpg">
     <span class="showOnHover2 tourOverlay">
-      ${e.innerHTML}
+      ${prev}
       <hr/>
       <h5>${d.miles} miles</h5>
     </span>
     <img src="/ciclo/${d.name}-thumb.jpg"/>
   </a>
 </div>`
-}))
+}
