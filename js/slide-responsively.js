@@ -17,6 +17,7 @@ const main = () => {
   const els = document.querySelector('bt-post-full')?.shadowRoot?.querySelectorAll('.slide-responsively li') ||
     document.querySelectorAll('.slide-responsively li')
 
+  // eslint-disable-next-line no-console
   console.log({ retries_slide, els })
 
   // eslint-disable-next-line no-plusplus

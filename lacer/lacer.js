@@ -45,7 +45,7 @@ fetch('https://archive.org/metadata/lacer/files').then((r) => r.json()).then((js
   if (arg('deinterlaced')) {
     // counting first field as 0, throw out fields 3 and 4.
     // continue that pattern every 10 fields...
-    IMGS = IMGS.filter((val, idx) => (idx % 10 !== 3  &&  idx % 10 !== 4))
+    IMGS = IMGS.filter((_val, idx) => (idx % 10 !== 3  &&  idx % 10 !== 4))
   }
 
 

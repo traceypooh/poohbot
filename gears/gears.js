@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+
 /* eslint-disable no-console, no-alert */
 
 // was 0
@@ -273,9 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cgiarg = new URL(document.URL).search.slice(1)
   if (cgiarg) {
-    const [front, rear, desc] = cgiarg.split('/')
+    const [front, rear] = cgiarg.split('/')
     console.log(front.split(/[^\d]/).map((e) => Number(e)), rear.split(/[^\d]/).map((e) => Number(e)))
     Gears.fill([front.split(/[^\d]/).map((e) => Number(e)), rear.split(/[^\d]/).map((e) => Number(e))])
   }
-
 })

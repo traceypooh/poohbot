@@ -1,9 +1,9 @@
 
 
 function kml() {
-  const loc = window.location.href.substring(1)
+  const loc = globalThis.location.href.substring(1)
   let splits = loc.split('/')
-  splits = splits[splits.length-1]
+  splits = splits[splits.length - 1]
   splits = splits.split('.')
   const basenom = splits[0]
 
@@ -17,7 +17,7 @@ function kml() {
 
 <a style="font-weight:bold;" href="${basenom}.jpg">Climbing profile</a>
 
-<hr/><br/>` + document.body.innerHTML
+<hr/><br/>${document.body.innerHTML}`
 
   // append to body
   const i = document.createElement('i')

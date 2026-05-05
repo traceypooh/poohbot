@@ -1,5 +1,8 @@
+// import 'https://av.archive.org/jw/8/jwplayer.js'
+import 'https://av.archive.org/js/jwplayer.js'
 
-jwplayer('jw').setup({
+globalThis.jwplayer('jw').setup({
+  base: 'https://av.archive.org/jw/8',
   playlist: [
     { file: 'https://www-tc.pbs.org/wgbh/pages/frontline/video/flv/2812/ch1.mp4', title: 'chapter 1', image: 'https://www.pbs.org/wgbh/pages/frontline/woundedplatoon/art/h_primary.jpg' },
     { file: 'https://www-tc.pbs.org/wgbh/pages/frontline/video/flv/2812/ch2.mp4', title: 'chapter 2', image: 'https://www.pbs.org/wgbh/pages/frontline/woundedplatoon/art/h_m4p.jpg' },
