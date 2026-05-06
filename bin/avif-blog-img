@@ -9,6 +9,7 @@ You can also add first args like
   -oldest         sort input files by capture time (DateTimeOriginal; else FS birth time) oldest first
   -keepgps        preserve GPS data (default: stripped for privacy)
   -featured FILE  convert FILE to .webp instead of .avif (for og:image / iOS sharing)
+  -v              verbose show the CLI magick command for each
 
 
 Script will print the invocation for this at the end:
@@ -29,7 +30,7 @@ ARGS=(-auto-orient)
 OLDEST=0
 KEEPGPS=0
 FEATURED=
-
+VERBOSE=
 
 [[ -n $1 ]] || set -- '-usage' "$@"
 set -u
@@ -37,6 +38,7 @@ while [[ $1 == -* ]]; do
   case $1 in
     -oldest)   OLDEST=1 ;;
     -keepgps)  KEEPGPS=1 ;;
+    -v)        VERBOSE=1 ;;
     -featured) FEATURED=$2; shift ;;
     *) usage $0; exit 1 ;;
   esac
@@ -92,12 +94,16 @@ while (( $# )); do
   RESIZED_WIDTH=$(( RESIZED_WIDTH - RESIZED_WIDTH % 2 ))
   echo "$OUT\t${WIDTH}w => $RESIZED_WIDTH"
 
+  ARGS2=()
   if [[ $EXT == avif ]]; then
     # avif:effort => higher === slower & higher quality
-    magick "$IMG" $ARGS -resize $RESIZED_WIDTH -define avif:effort=6 -quality 90 $OUT
-  else
-    magick "$IMG" $ARGS -resize $RESIZED_WIDTH -quality 90 $OUT
+    ARGS2+=(-define avif:effort=6)
   fi
+
+  (
+    [ $VERBOSE ] && set -x
+    magick "$IMG" $ARGS -resize $RESIZED_WIDTH $ARGS2 -quality 90 $OUT
+  )
 
   # always drop Orientation (baked in by -auto-orient); strip GPS unless -keepgps
   local exif_args=(-Orientation= -overwrite_original -quiet)
