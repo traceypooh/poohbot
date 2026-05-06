@@ -70,6 +70,7 @@ exiftool "-gps*=" file1.jpg file2.jpg ...
 ## CSP
 ```sh
 gg -i onclick
+gg -i onload
 gg -i '<script>' |chopper
 gg '<style[^U]' |chopper |fgrep '<style'
 gg 'style='
