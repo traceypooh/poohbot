@@ -5,7 +5,7 @@ let retries = 1
 
 const main = () => {
   console.log(`try ${retries}`)
-  fetch('/js/quotes.json').then((res) => res.json()).then((resp) => {
+  void fetch('/js/quotes.json').then((res) => res.json()).then((resp) => {
     console.log({ resp })
     let htm = ''
     for (let longy = 0; longy < 2; longy++) {

@@ -1,4 +1,4 @@
-/* eslint-disable no-continue */
+
 import { log } from 'https://av.archive.org/js/util/log.js'
 
 const ALBUMS = [
@@ -122,7 +122,7 @@ class Pooh {
 
   load_albums() {
     for (const albumname of Object.keys(this.loads)) {
-      fetch(`/albums/${albumname}.json`)
+      void fetch(`/albums/${albumname}.json`)
         .then((r) => r.json())
         .then((json) => this.album_json_gotten(json))
     }
@@ -292,7 +292,7 @@ class Pooh {
     // eslint-disable-next-line no-param-reassign
     if (src === '') src = `/albums/images/${filename}`
     // eslint-disable-next-line no-param-reassign
-    if (!wd) wd = Pooh.getImgSize(src)
+    wd ||= Pooh.getImgSize(src)
 
 
     let str = `
@@ -313,9 +313,9 @@ class Pooh {
 
 
       hid +=
-      `<span class="showOnHover pixOverlay">${
-        overlay === '' ? title : overlay
-      }</span>\
+        `<span class="showOnHover pixOverlay">${
+          overlay === '' ? title : overlay
+        }</span>\
 \n\
       <!-- HIDDEN END -->\n\
 \n\
@@ -325,8 +325,8 @@ class Pooh {
 
     str += `${hid}\
       <img class="imbox1" style="width:${wd}px; height:${ht}px;" ${
-  title === 'untitled' ? '' : ` title="${title}" alt="${title}" `
-} src="${src}"/>\
+        title === 'untitled' ? '' : ` title="${title}" alt="${title}" `
+      } src="${src}"/>\
 \
     </a>\
   </div>\
@@ -386,7 +386,8 @@ ${
 <br/>\
 ${
 
-  typeof (album.description) === 'undefined' ? '' :
+  typeof (album.description) === 'undefined'
+    ? '' :
     `<div id="description">${album.description}</div>`
 }\
 <div style="padding:20px;"></div>\
@@ -413,7 +414,7 @@ ${
     // add this album to the album index/overview page
 
     let str =
-    `<table><tr><td>\
+      `<table><tr><td>\
 <a onclick="return Pooh.album_Go(this.href);" href="/photos/?${album.name}">${
   album.name}</a><br/>\
 <span style="font-size: 6pt;">\
@@ -436,7 +437,7 @@ ${
       str += '\
     <td>\
 '
-          + `\
+        + `\
       <div class="pixcell" style="width:${wd + 20}px;">\
 ${
   this.roundPic({
@@ -484,14 +485,14 @@ ${
 
     return `\
      <div class="pixcell topinblock pc${chunk}" style="width:${wd2}px;">${
-  this.roundPic({
-    title: fi.name,
-    filename,
-    href,
-    wd,
-    ht,
-  })
-}<p style="width:${wd3}px;">${fi.title}</p>\
+        this.roundPic({
+          title: fi.name,
+          filename,
+          href,
+          wd,
+          ht,
+        })
+      }<p style="width:${wd3}px;">${fi.title}</p>\
      </div>\
     `
   }

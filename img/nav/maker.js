@@ -1,5 +1,5 @@
 #!/usr/bin/env -S deno run --allow-env --allow-import --allow-run --allow-read --allow-write --location=https://traceypooh.com
-/* eslint-disable max-len */
+
 
 // website top-page navigation imagery maker
 

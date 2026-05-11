@@ -40,12 +40,14 @@ class Ride {
 
     // setup zoom level for the embedded (small/inline) map
     const ZOOM = location.pathname.match(/palomares-canyon/)
-      ? '&z=10&sz=10' : '&z=11&sz=11'
+      ? '&z=10&sz=10'
+      : '&z=11&sz=11'
     // setup the url to use in the embedded (small/inline) map
     const U2 = data.URL.replace(/&(mra|mrcr|mrsp|sz|sspn|ie|ll|sll|spn|z)=[^&]+/g, '') + ZOOM
 
     const terrain = location.pathname.match(/three-bears-and-mt-diablo/)
-      ? '4 - steep hills, long climbs' : this.terrain
+      ? '4 - steep hills, long climbs'
+      : this.terrain
 
     indy.innerHTML = `
 <center><h1>${data.title || indy.dataset.title || ''}</h1></center>
@@ -110,7 +112,8 @@ ${this.custom}
     const n = this.leaders.length
 
     const terrain = location.pathname.match(/three-bears-and-mt-diablo/)
-      ? '4 - steep hills, long climbs' : this.terrain
+      ? '4 - steep hills, long climbs'
+      : this.terrain
 
     let str = `\n\
 <table style="font-weight:bold;">\n \
@@ -127,7 +130,8 @@ ${this.custom}
     str += '<tr><th>Mile</th><th>Turn</th><th>Route/Street</th><th>Notes</th></tr>'
     data.rows.forEach((row) => {
       const turn = row[1] === 'X'
-        ? `<span style="font-size:130%; font-weight:bold;">${row[1]}</span>` : row[1]
+        ? `<span style="font-size:130%; font-weight:bold;">${row[1]}</span>`
+        : row[1]
       str += `<tr><td class="miles">${parseFloat(row[0]).toFixed(1)}</td><td>${turn}</td><td>${
         row[2]}</td><td>${row[3] ?? ''}</td></tr>`
     })
@@ -246,8 +250,8 @@ table    { width:100%; border-collapse:collapse; border:1px solid black; } \n\
     str += '<tr><td colspan="3">' +
       `<div style="font-size:90%; padding-top:10px; float:right;">Approximate #feet climbed: ${
         Math.round(this.feetClimbed)}</div>` +
-      `<center><${legbot}>Approximate distance:<br/>${parseInt(data.maxX, 10).toFixed(1)} miles</${
-        legbot}></center></td></tr>`
+        `<center><${legbot}>Approximate distance:<br/>${parseInt(data.maxX, 10).toFixed(1)} miles</${
+          legbot}></center></td></tr>`
     str += '</table>'
     o.innerHTML = str
     bodyobj.appendChild(o)

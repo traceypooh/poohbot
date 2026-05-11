@@ -1,4 +1,4 @@
-/* eslint-disable no-bitwise */
+
 
 // Base64-encodes a binary string slice. (CryptoMX Tools, GPL v2+, © 2004-2006 Derek Buitenhuis)
 const KEY64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
@@ -98,7 +98,7 @@ export default class MotionJpeg {
     this.currentFrame = -1
     this.fps = fps
     this.delay = (navigator.userAgent.includes(' Firefox') ? 3 : 1) *
-                 Math.round(1000 / fps)
+      Math.round(1000 / fps)
     this.map.innerHTML = `loading ${avi} (${fps} FPS)...`
     setTimeout(() => {
       this.fi = this.loadUrl(avi)
@@ -132,21 +132,21 @@ export default class MotionJpeg {
     for (let i = start; i <= this.fi.length; i += 1) {
       // Canon Elph JPEG frames: ffd8ffe0 0010 "AVI1"
       if ((this.fi.charCodeAt(i)     & 0xff) === 0xff &&
-          (this.fi.charCodeAt(i + 1) & 0xff) === 0xd8 &&
-          (this.fi.charCodeAt(i + 2) & 0xff) === 0xff &&
-          (this.fi.charCodeAt(i + 3) & 0xff) === 0xe0 &&
-          (this.fi.charCodeAt(i + 4) & 0xff) === 0x00 &&
-          (this.fi.charCodeAt(i + 5) & 0xff) === 0x10 &&
-          (this.fi.charCodeAt(i + 6) & 0xff) === 0x41 &&  // A
-          (this.fi.charCodeAt(i + 7) & 0xff) === 0x56 &&  // V
-          (this.fi.charCodeAt(i + 8) & 0xff) === 0x49 &&  // I
-          (this.fi.charCodeAt(i + 9) & 0xff) === 0x31) {  // 1
+        (this.fi.charCodeAt(i + 1) & 0xff) === 0xd8 &&
+        (this.fi.charCodeAt(i + 2) & 0xff) === 0xff &&
+        (this.fi.charCodeAt(i + 3) & 0xff) === 0xe0 &&
+        (this.fi.charCodeAt(i + 4) & 0xff) === 0x00 &&
+        (this.fi.charCodeAt(i + 5) & 0xff) === 0x10 &&
+        (this.fi.charCodeAt(i + 6) & 0xff) === 0x41 &&  // A
+        (this.fi.charCodeAt(i + 7) & 0xff) === 0x56 &&  // V
+        (this.fi.charCodeAt(i + 8) & 0xff) === 0x49 &&  // I
+        (this.fi.charCodeAt(i + 9) & 0xff) === 0x31) {  // 1
         if (this.prevStart) {
           // scan for ffd9 (JPEG EOI) to find the clean frame end
           let prevEnd = i - 1
           for (let j = this.prevStart; j < i - 1; j += 1) {
             if ((this.fi.charCodeAt(j)     & 0xff) === 0xff &&
-                (this.fi.charCodeAt(j + 1) & 0xff) === 0xd9) {
+              (this.fi.charCodeAt(j + 1) & 0xff) === 0xd9) {
               prevEnd = j + 2
               break
             }
@@ -175,7 +175,9 @@ export default class MotionJpeg {
     let pos = 2  // skip SOI (FF D8)
     while (pos + 3 < len && raw[pos] === 0xff) {
       const marker = raw[pos + 1]
+      // eslint-disable-next-line @stylistic/max-statements-per-line
       if (marker === 0xc4) { hasDHT = true; break }
+      // eslint-disable-next-line @stylistic/max-statements-per-line
       if (marker === 0xda) { sosPos = pos; break }
       if (marker === 0xd9) break
       const segLen = (raw[pos + 2] << 8) | raw[pos + 3]
@@ -236,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // populate #src textarea with page body + this script's source
-  fetch('/js/motion-jpeg.js').then((r) => r.text()).then((js) => {
+  void fetch('/js/motion-jpeg.js').then((r) => r.text()).then((js) => {
     const src = document.getElementById('src')
     if (src) src.textContent = `${document.getElementById('bodydiv').innerHTML}<script>${js}</script>`
   })

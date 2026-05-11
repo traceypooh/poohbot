@@ -32,7 +32,7 @@ function randomQuote() {
   const el = document.getElementById('quote-random')
   if (!el)
     return
-  fetch('/js/quotes.json')
+  void fetch('/js/quotes.json')
     .then((r) => r.json())
     .then((json) => {
       const q = rand(json.short)

@@ -1,5 +1,5 @@
 
-/* eslint-disable no-console, no-alert */
+/* eslint-disable no-console */
 
 // was 0
 // modeval is 1 for gear inches, 12.5 for meters, crank _diam._ for gain ratio
@@ -48,7 +48,7 @@ class Gears {
   }
 
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static get_rings() {
     return [
       parseFloat(document.ringform.ring1.value),
@@ -77,7 +77,7 @@ class Gears {
     ]
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static calc_rings() {
     const wheelval = parseFloat(nWheel)
 
@@ -93,7 +93,7 @@ class Gears {
     return ringData
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static converter() {
     let viewInteger = document.ringform.diameter.selectedIndex
     let viewString = document.ringform.diameter.options[viewInteger].value
@@ -126,14 +126,13 @@ class Gears {
     viewString = document.ringform.hubmodel.options[viewInteger].value
     nHub = viewString
 
-    if (!nMode)
-      nMode = nCrank
+    nMode ||= nCrank
 
     Gears.main()
     return false
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   //
   // This method rounds the passed number to one decimal place
   // and returns it as a string.
@@ -146,7 +145,7 @@ class Gears {
     return tmp + (tmp.indexOf('.') < 0 ? '.0' : '')
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static main() {
     rings = Gears.get_rings()
     if (!rings[0] || isNaN(rings[0])) {
@@ -163,21 +162,21 @@ class Gears {
     }
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static parse_hubmodel() {
     const hubs = nHub.split('-', 14)
     hubs.push(0)
     return hubs
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static parse_cassette() {
     rears = nCassette.split('-', 14)
     rears.push(0)
     return rears
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static percentrear(c) {
     let percentage = 1
     percentage = Gears.rounder((rears[c + 1] / rears[c]) * 100 - 100)
@@ -189,7 +188,7 @@ class Gears {
     return ''
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   static percentfront(rnum) {
     let percentage = 1
     percentage = Gears.rounder((rings[rnum - 1] / rings[rnum]) * 100 - 100)
@@ -201,7 +200,7 @@ class Gears {
     return ''
   }
 
-  //----------------------------------------------------------
+  // ----------------------------------------------------------
   // **********output-big
   static showit(ringData) {
     let head = '<h2>Gear chart using '

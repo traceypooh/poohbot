@@ -3,7 +3,7 @@
 // Example:
 //     bash lacer.txt  good.mov  0.5  0.7
 
-/* eslint-disable no-console, no-nested-ternary */
+/* eslint-disable no-console */
 
 const BFF = true // DV is typically Bottom Field First.  Set to 0/falsey if Top Field First
 const BASE = 'https://archive.org/download/lacer/' // imagery base url
@@ -26,7 +26,7 @@ function arg(theArgName) {
 }
 
 
-fetch('https://archive.org/metadata/lacer/files').then((r) => r.json()).then((json) => {
+void fetch('https://archive.org/metadata/lacer/files').then((r) => r.json()).then((json) => {
   console.log(json)
 
   let IMGS = []
@@ -34,7 +34,7 @@ fetch('https://archive.org/metadata/lacer/files').then((r) => r.json()).then((js
   for (const file of json.result) {
     const twothreeFi = file.name.match(/2323\/.*\.png$/)
     if ((twothree  &&   twothreeFi)  ||
-        (!twothree  &&  !twothreeFi  &&  file.name.match(/[^/]+\.png$/))) {
+      (!twothree  &&  !twothreeFi  &&  file.name.match(/[^/]+\.png$/))) {
       console.log(file.name)
       IMGS.push(file.name)
     }

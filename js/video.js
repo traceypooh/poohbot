@@ -5,8 +5,8 @@ import { log } from 'https://av.archive.org/js/util/log.js'
 class IAV {
   constructor() {
     IAV.ios = (navigator.userAgent.indexOf('iPhone') > 0  ||
-               navigator.userAgent.indexOf('iPad') > 0  ||
-               navigator.userAgent.indexOf('iPod') > 0)
+      navigator.userAgent.indexOf('iPad') > 0  ||
+      navigator.userAgent.indexOf('iPod') > 0)
 
     // ----------------  STUFF FOR THE "FILMSTRIP" PART  --------------
     // maps IDENTIFIER to thumbnail #/seconds (we'll left 0-pad to the 6 digits...)
@@ -73,15 +73,15 @@ class IAV {
     this.lapsesurl = false
     this.usingplayer = false
 
-    //= ========================================================================
+    // = ========================================================================
     //
     //           CLIP EVENTS:
-    //= ========================================================================
+    // = ========================================================================
     // [page start]  [0 can play]  [0 all loaded]  [1 can play]  [0 played] ...
-    //= ========================================================================
+    // = ========================================================================
     //
     //           WHAT HAPPENS:
-    //= ========================================================================
+    // = ========================================================================
     // load(0)         play(0)        load(2)                     hide(0)
     // load(1)           |               |                        show(1)
     //   |               |               |                        play(1)
@@ -269,11 +269,11 @@ class IAV {
 
     for (const [i, clip] of Object.entries(this.CLIPS)) {
       const pcs = clip.replace(/https:\/\/archive.org\/download\//, '').split(/[/?]/)
-      // eslint-disable-next-line prefer-destructuring
+
       this.IDS[i] = pcs[0]
       this.FILES[i] = pcs[1].replace(/(_512kb.mp4|.ogv)$/, '')
       this.QSTRINGS[i] = ((pcs.length > 2 ? `?${pcs[2]}` : '') +
-                          (pcs.length > 3 ? `/${pcs[3]}` : ''))
+        (pcs.length > 3 ? `/${pcs[3]}` : ''))
     }
 
     this.load(0)
@@ -357,7 +357,7 @@ class IAV {
       if (!this.playallSetup) {
         this.playallSetup = true
 
-        import('https://av.archive.org/js/jwplayer.js').then(() => {
+        void import('https://av.archive.org/js/jwplayer.js').then(() => {
           log('play all setup')
           this.playmp4(0)
         })
@@ -368,7 +368,7 @@ class IAV {
       playlist = []
       for (const id in this.MAP) {
         if (this.omitClip(id))
-          // eslint-disable-next-line no-continue
+
           continue
 
         playlist.push({
@@ -465,7 +465,7 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
     let n = 0
     for (const id in this.MAP) {
       if (this.omitClip(id))
-        // eslint-disable-next-line no-continue
+
         continue
 
       const thumbn = this.MAP[id][0]
@@ -479,8 +479,9 @@ ${this.usingplayer ? '-- click text for more info/formats' : ''}
       let thumb = `000000${thumbn}`
       thumb = thumb.slice(thumb.length - 6, 12)
 
-      const onclik = (this.usingplayer ? `data-id="${id}" onclick="return iav.playmp4(this)"` : // xxx CSP onmouse.. 2 lines below..
-        `href="https://archive.org/details/${id}"`)
+      const onclik = this.usingplayer
+        ? `data-id="${id}" onclick="return iav.playmp4(this)"`
+        : `href="https://archive.org/details/${id}"` // xxx CSP onmouse.. 2 lines below..
 
       str += `<a ${onclik}><img title="${title}" alt="${title}" id="${id}" onmouseover="IAV.imtoggle('${id}')" onmouseout="IAV.imtoggle('${id}')" class="cell${this.HALF}" src="https://archive.org/serve/${id}/${IAV.imgbase(id)}.thumbs/${IAV.imgbase(id)}_${thumb}.jpg"/></a>`
 
