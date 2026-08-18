@@ -111,4 +111,4 @@ while (( $# )); do
   exiftool $exif_args "$OUT"
 done
 
-echo "\n/post-from-imagery ${BASE}-"
+echo "\n/../bin/post-from-imagery ${BASE}-"
