@@ -111,16 +111,19 @@ async function downloadFilesAsZip() {
 
 // Inject the UI markup (button + hidden progress bar).
 // `type=module` scripts are deferred, so the document is already parsed here.
-document.body.insertAdjacentHTML('afterbegin', `
+const body = document.querySelector('#site-main .content') || document.body
+body.insertAdjacentHTML('afterbegin', `
 <button id="downloadBtn">Download ZIP</button>
 
 <!-- Progress Bar Container (Hidden by default) -->
 <div id="progressContainer" style="display: none; margin-top: 15px; width: 300px;">
-    <div style="background-color: #f3f3f3; border: 1px solid #ccc; border-radius: 4px; overflow: hidden;">
-      <div id="progressBar" style="width: 0%; height: 20px; background-color: #4CAF50; transition: width 0.3s ease;">
-      </div>
+  <div style="background-color: #f3f3f3; border: 1px solid #ccc; border-radius: 4px; overflow: hidden;">
+    <div id="progressBar" style="width: 0%; height: 20px; background-color: #4CAF50; transition: width 0.3s ease;">
     </div>
-    <small id="progressText" style="display: block; margin-top: 5px; color: #555;">Preparing files...</small>
+  </div>
+  <small id="progressText" style="display: block; margin-top: 5px; color: #555;">
+    Preparing files...
+  </small>
 </div>
 `)
 
