@@ -126,6 +126,11 @@ gg 'style='
 
 
 ## make a post
+Setup post as a draft (womt publish)
+```yaml
+draft: true
+```
+
 ### collect your imagery first
 - an easy thing is to select 2+ imagery in Photos app, then drag to CLI.
 - that will write the filenames of everything to use, which you use with:
