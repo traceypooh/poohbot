@@ -380,6 +380,9 @@ a.image.featured img[src*="#top"] {
 a.image.featured img[src*="#top15"] {
   object-position: 50% 15%;
 }
+a.image.featured img[src*="#top30"] {
+  object-position: 50% 30%;
+}
 
 /* OK now when we're showing a full single post, let the image height be fully natural */
 /* ie: reverse our customizations above.  Also don't do the edge blurring. */
