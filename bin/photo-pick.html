@@ -1,0 +1,844 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>photo-pick</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #111; color: #eee; font-family: monospace; font-size: 13px; }
+h2 { padding: 10px 16px; margin: 0; background: #1a1a1a; font-size: 13px; font-weight: normal; letter-spacing: .05em; }
+a { color: #4af; }
+
+#tabs { display: flex; gap: 0; background: #1a1a1a; border-bottom: 1px solid #2a2a2a; }
+#tabs button { border: none; border-bottom: 2px solid transparent; border-radius: 0; padding: 9px 18px; }
+#tabs button.on { color: #fff; border-bottom-color: #4af; background: #222; }
+button { padding: 5px 14px; background: #2a2a2a; color: #ccc; border: 1px solid #444; border-radius: 3px; cursor: pointer; font-family: monospace; font-size: 12px; }
+button:hover { background: #383838; color: #fff; }
+button:disabled { opacity: .4; cursor: default; }
+.pane { display: none; padding: 16px; }
+.pane.on { display: block; }
+.hint { color: #888; margin: 0 0 14px; line-height: 1.5; max-width: 78ch; }
+.hint b { color: #ccc; font-weight: normal; }
+.warn { color: #fb4; }
+
+/* ---- align ---- */
+table { border-collapse: collapse; margin-bottom: 18px; }
+th, td { text-align: left; padding: 5px 12px 5px 0; vertical-align: top; }
+th { color: #666; font-weight: normal; border-bottom: 1px solid #2a2a2a; }
+td.who { color: #ccc; }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; }
+.state-reference { color: #4f8; }
+.state-looks-ok { color: #8c8; }
+.state-needs-anchor { color: #fb4; }
+.state-broken { color: #f77; }
+input[type=text], input[type=number] { background: #1e1e1e; color: #eee; border: 1px solid #444; border-radius: 3px; padding: 4px 7px; font-family: monospace; font-size: 12px; width: 8em; }
+input:focus { outline: none; border-color: #4af; }
+
+#anchor-bar { background: #1a1a1a; padding: 12px 16px; border-radius: 4px; margin-bottom: 16px; }
+#anchor-slots { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; }
+.slot { width: 240px; }
+.slot .box { height: 150px; border: 2px dashed #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #555; background: #161616; overflow: hidden; }
+.slot .box img { max-width: 100%; max-height: 100%; display: block; }
+.slot .box.filled { border-style: solid; }
+.slot .cap { color: #888; padding-top: 4px; font-size: 11px; min-height: 2.4em; }
+
+/* ---- grids ---- */
+#grid { display: flex; flex-wrap: wrap; gap: 6px; }
+.cell { width: 150px; border: 3px solid #333; border-radius: 3px; overflow: hidden; background: #1c1c1c; cursor: pointer; position: relative; }
+.cell img { width: 100%; height: 110px; object-fit: cover; display: block; }
+.cell .meta { font-size: 10px; color: #888; padding: 2px 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cell.cursor { outline: 2px solid #fff; outline-offset: 1px; }
+.cell.extrap { border-style: dashed; }
+.cell.extrap .meta::before { content: '~'; color: #fb4; }
+.cell.hand .meta::before { content: '✋'; }
+.cell .badge { position: absolute; top: 2px; right: 2px; font-size: 10px; padding: 1px 4px; border-radius: 2px; background: #000c; }
+.cell.m-keep   .badge { background: #2a7; color: #000; }
+.cell.m-blog   .badge { background: #4af; color: #000; }
+.cell.m-discard { opacity: .35; }
+.cell.m-discard .badge { background: #a33; }
+#grid.only-unplaced .cell.placed { display: none; }
+/* Discarded frames shrink rather than disappear: they have to stay on screen and
+   clickable, or [u] can never reach them again.  Faded and tiny gets them out of the
+   way while leaving the undo path open. */
+#grid.sz-small .cell.m-discard,
+#grid.sz-med   .cell.m-discard,
+#grid.sz-large .cell.m-discard { width: 92px; }
+#grid.sz-small .cell.m-discard img,
+#grid.sz-med   .cell.m-discard img,
+#grid.sz-large .cell.m-discard img { height: 66px; max-height: 66px; object-fit: cover; }
+#grid.sz-large .cell.m-discard { align-self: flex-start; }
+.cell.m-discard .meta { font-size: 9px; }
+/* medium: enough to judge a face; large: one per row, the real judgement view */
+#grid.sz-med  { gap: 10px; }
+#grid.sz-med  .cell { width: 320px; }
+#grid.sz-med  .cell img { height: 240px; }
+#grid.sz-large { flex-direction: column; align-items: center; gap: 16px; }
+#grid.sz-large .cell { width: min(1800px, 98vw); }
+#grid.sz-large .cell img { height: auto; max-height: 88vh; object-fit: contain; background: #000; }
+#grid.sz-large .meta { font-size: 12px; padding: 5px 7px; }
+/* two-up puts near-identical frames side by side, which is what picking between them
+   actually requires -- scrolling back and forth in one-per-row loses the comparison */
+#grid.sz-pair { gap: 10px; }
+#grid.sz-pair .cell { width: calc(50% - 6px); }
+#grid.sz-pair .cell img { height: auto; max-height: 82vh; object-fit: contain; background: #000; }
+#grid.sz-pair .meta { font-size: 12px; padding: 5px 7px; }
+#grid.sz-pair .cell.m-discard { width: 92px; }
+#grid.sz-pair .cell.m-discard img { height: 66px; max-height: 66px; object-fit: cover; }
+
+/* ---- blog column ---- */
+#blog-list { display: flex; flex-direction: column; gap: 6px; max-width: 620px; }
+.row { display: flex; gap: 10px; align-items: center; background: #1c1c1c; border: 2px solid #333; border-radius: 4px; padding: 6px; cursor: grab; }
+.row.dragging { opacity: .25; }
+.row.over { border-color: #4af; }
+.row img { width: 120px; height: 80px; object-fit: cover; border-radius: 2px; pointer-events: none; }
+.row .idx { color: #666; width: 2.5em; text-align: right; }
+.row .nm { color: #ccc; }
+.row .sub { color: #777; font-size: 11px; }
+
+pre.out { display: none; margin: 14px 0 0; padding: 12px; background: #0a1a0a; color: #4f4; border-radius: 4px; white-space: pre-wrap; font-size: 12px; overflow-x: auto; }
+#status { padding: 6px 16px; background: #161616; color: #888; border-top: 1px solid #2a2a2a; position: sticky; bottom: 0; }
+#lightbox { display: none; position: fixed; inset: 0; background: #000e; z-index: 50; align-items: center; justify-content: center; flex-direction: column; }
+#lightbox img { max-width: 94vw; max-height: 86vh; }
+#lightbox .cap { color: #aaa; padding-top: 8px; }
+</style></head><body>
+
+<h2>photo-pick &mdash; wedding originals</h2>
+<div id="tabs">
+  <button data-pane="align" class="on">1 &middot; align clocks</button>
+  <button data-pane="triage">2 &middot; triage</button>
+  <button data-pane="blog">3 &middot; blog order</button>
+</div>
+
+<div class="pane on" id="pane-align">
+  <p class="hint">
+    Only <b>Reenie's</b> clock is trusted &mdash; she was there for the whole event and her
+    stamps match the timeline notes in the post. Cameras marked
+    <span class="state-needs-anchor">needs-anchor</span> or <span class="state-broken">broken</span>
+    have to be pinned by hand: pick a photo from a trusted camera, then the photo of the
+    <b>same moment</b> from the broken one.
+    Automatic detection was tried and removed &mdash; at a wedding every camera shoots
+    continuously through the same hours, so there is no distinctive pattern to lock onto.
+  </p>
+  <table id="cam-table"></table>
+  <div id="anchor-bar">
+    <div>
+      anchor: <select id="anchor-cam"></select>
+      <button id="anchor-clear">clear all anchors</button>
+      <span id="anchor-msg" class="hint" style="margin:0"></span>
+    </div>
+    <div id="anchor-list"></div>
+    <div id="anchor-slots">
+      <div class="slot">
+        <div class="box" id="slot-ref">click a reference photo below</div>
+        <div class="cap" id="cap-ref"></div>
+      </div>
+      <div class="slot">
+        <div class="box" id="slot-tgt">then the matching one</div>
+        <div class="cap" id="cap-tgt"></div>
+      </div>
+      <div class="slot" style="width:auto">
+        <button id="anchor-apply" disabled>set from this pair</button>
+        <div class="cap" id="cap-result"></div>
+        <div style="margin-top:14px">
+          <div class="cap" style="min-height:0">or type the time, when no reference photo
+            exists for that moment (rehearsal dinner, the morning after):</div>
+          <input type="text" id="manual-time" placeholder="08-07 8:15pm" style="width:11em">
+          <button id="anchor-manual" disabled>set from typed time</button>
+          <div class="cap" id="manual-why"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="anchor-grid-wrap">
+    <div style="margin-bottom:8px">
+      browsing:
+      <button data-browse="auto" class="on">follow the pairing</button>
+      <button data-browse="ref">reference camera</button>
+      <button data-browse="tgt">this camera</button>
+    </div>
+    <p class="hint" id="anchor-grid-hint"></p>
+    <div id="anchor-grid" class="cells"></div>
+  </div>
+</div>
+
+<div class="pane" id="pane-triage">
+  <p class="hint">
+    Timeline order, corrected. <b>Click</b> a frame to select it, <b>&larr; &rarr;</b> to move,
+    <b>k</b> keep &middot; <b>b</b> blog &middot; <b>x</b> discard &middot; <b>u</b> unset.
+    Marks overwrite each other freely, so to change your mind just press another key &mdash;
+    marking advances the cursor, so press <b>&larr;</b> first to redo the one you just did.
+    <b>Enter</b> or double-click opens the full-size original; <b>Esc</b> closes it.
+    Keep and blog both go to the archive.org item; blog additionally gets a 2000px avif.
+    Discards shrink but stay put, so <b>u</b> can always reach them; they only move to <b>img/.trash/</b> on Apply, and are never deleted.
+    A <b>dashed</b> border with <b>~</b> means the time is extrapolated past that camera's anchors, so treat its position as approximate.
+  </p>
+  <div style="margin-bottom:10px; display:flex; gap:18px; flex-wrap:wrap; align-items:center">
+    <span>size:
+      <button data-size="small">grid</button>
+      <button data-size="med" class="on">medium</button>
+      <button data-size="large">one per row</button>
+        <button data-size="pair">two up (compare)</button>
+    </span>
+    <label><input type="checkbox" id="only-unplaced"> only unplaced</label>
+    <span class="hint" style="margin:0" id="triage-count"></span>
+  </div>
+  <div id="grid"></div>
+</div>
+
+<div class="pane" id="pane-blog">
+  <p class="hint">Drag to reorder. This is the sequence the post will read in.</p>
+  <div style="margin-bottom:10px"><button id="btn-apply">Apply &mdash; write lists, move discards</button></div>
+  <div id="blog-list"></div>
+  <pre id="apply-out" class="out"></pre>
+</div>
+
+<div id="status">loading&hellip;</div>
+<div id="lightbox"><img><div class="cap"></div></div>
+
+<script type="module">
+const CAM_COLOR = {
+  'wed':       '#4af',
+  'wed-bokeh': '#fa4',
+  'wed-mom':   '#4f8',
+  'wed-nikon': '#c7f',
+  'wed-canon': '#f77',
+}
+const MARK_KEY = { k: 'keep', b: 'blog', x: 'discard', u: null }
+
+let D = null          // server payload
+let cursor = 0        // triage keyboard cursor
+let anchor_cam = null
+let pick_ref = null
+let pick_tgt = null
+let browse = 'auto'   // which camera the picker grid is showing
+let size = 'med'      // triage review size: small | med | large
+
+const $ = (s) => document.querySelector(s)
+const el = (tag, cls, txt) => {
+  const e = document.createElement(tag)
+  if (cls) e.className = cls
+  if (txt !== undefined) e.textContent = txt
+  return e
+}
+const status = (m) => { $('#status').textContent = m }
+const color = (dir) => CAM_COLOR[dir] ?? '#888'
+
+/** EXIF times are naive wall-clock, so render them as UTC to avoid a second shift. */
+const clock = (t) => t === null || t === undefined
+  ? '--:--'
+  : new Date(t * 1000).toISOString().slice(5, 16).replace('T', ' ')
+
+async function load() {
+  D = await (await fetch('/data.json')).json()
+  anchor_cam ??= Object.keys(D.cameras).find((d) => D.cameras[d].clock !== 'reference'
+    && D.cameras[d].clock !== 'looks-ok') ?? null
+  draw_cameras()
+  draw_anchor_ui()
+  draw_grid()
+  draw_blog()
+  const placed = D.photos.filter((p) => p.placed !== null).length
+  status(`${D.photos.length} photos · ${placed} placed on the timeline · `
+    + `${D.photos.length - placed} unplaced · ${marked_count()} marked`)
+}
+
+const marked_count = () => D.photos.filter((p) => p.mark).length
+
+async function push(patch) {
+  await fetch('/state', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(patch),
+  })
+}
+
+// ------------------------------------------------------------------ align
+
+/**
+ * Has this camera actually been dealt with?
+ *
+ * The indexer's `clock` field describes the raw EXIF and is deliberately immutable --
+ * 'broken' is a fact about a dead coin cell, not a to-do. So judge doneness from the
+ * corrections that now exist, and from whether every frame ended up placed without
+ * extrapolation.
+ * @returns {{done: boolean, why: string}}
+ */
+function resolution(dir, cam) {
+  const roll = D.photos.filter((p) => p.dir === dir)
+  const unplaced = roll.filter((p) => p.placed === null).length
+  const extrap = roll.filter((p) => p.extrapolated).length
+  const anchors = (D.state.anchors[dir] ?? []).length
+  const offset = D.state.offsets[dir] ?? 0
+
+  if (cam.clock === 'reference')
+    return { done: true, why: 'the trusted clock everything else is aligned against' }
+  if (cam.clock === 'looks-ok')
+    return { done: true, why: `${Math.round((cam.inside ?? 0) * 100)}% of this roll already lands in the event window` }
+  if (cam.clock === 'needs-anchor')
+    return offset
+      ? { done: true, why: `corrected by ${(offset / 3600).toFixed(3)}h from a matched pair` }
+      : { done: false, why: `only ${Math.round((cam.inside ?? 0) * 100)}% of this roll lands in the event window` }
+
+  // broken: needs anchors, everything placed, and nothing left extrapolating
+  if (anchors < 2)
+    return { done: false, why: `dead clock — ${anchors} anchor(s), needs at least 2` }
+  if (unplaced)
+    return { done: false, why: `${unplaced} frames still unplaced` }
+  if (extrap)
+    return { done: false, why: `${extrap} frames extrapolated past the outermost anchors` }
+  return { done: true, why: `dead clock, but ${anchors} anchors place all ${roll.length} frames with no extrapolation` }
+}
+
+function draw_cameras() {
+  const t = $('#cam-table')
+  t.innerHTML = ''
+  const head = el('tr')
+  for (const h of ['camera', 'who', 'frames', 'clock', 'offset (h)', 'EXIF span'])
+    head.append(el('th', null, h))
+  t.append(head)
+
+  for (const [dir, cam] of Object.entries(D.cameras)) {
+    const tr = el('tr')
+    const c0 = el('td')
+    const sw = el('span', 'swatch')
+    sw.style.background = color(dir)
+    c0.append(sw, document.createTextNode(dir))
+    tr.append(c0)
+    tr.append(el('td', 'who', cam.who))
+    tr.append(el('td', null, String(cam.count)))
+
+    // `cam.clock` is what the indexer found in the raw EXIF and never changes.  Once
+    // you've actually fixed a camera, strike it through rather than leaving a stale
+    // warning sitting there looking like outstanding work.
+    const st = el('td', `state-${cam.clock}`)
+    const settled = resolution(dir, cam)
+    const label = el('span', null, cam.clock)
+    if (settled.done) label.style.textDecoration = 'line-through'
+    st.append(label)
+    if (settled.done) st.append(document.createTextNode(' ✅'))
+    st.title = settled.why
+    tr.append(st)
+
+    const off = el('td')
+    if (cam.clock === 'broken') {
+      off.append(el('span', 'hint', 'n/a — anchored by frame number'))
+    } else {
+      const inp = el('input')
+      inp.type = 'number'
+      inp.step = '0.25'
+      inp.value = String(((D.state.offsets[dir] ?? 0) / 3600).toFixed(2))
+      inp.disabled = cam.clock === 'reference'
+      inp.addEventListener('change', async () => {
+        D.state.offsets[dir] = Math.round(Number(inp.value) * 3600)
+        await push({ offsets: D.state.offsets })
+        await load()
+      })
+      off.append(inp)
+    }
+    tr.append(off)
+
+    const span = cam.span
+      ? `${cam.span[0].slice(5, 16).replace('T', ' ')} → ${cam.span[1].slice(5, 16).replace('T', ' ')}`
+      : '—'
+    tr.append(el('td', 'hint', span))
+    t.append(tr)
+  }
+}
+
+/**
+ * Anchors only pin down the frames *between* them.  Everything outside is
+ * extrapolated by multiplying out the end segment's rate, which goes wrong fast
+ * because nobody shoots at a constant rate. So say plainly how much of the roll is
+ * still guesswork, and which frame numbers to anchor next.
+ */
+function anchor_coverage(dir, anchors) {
+  const roll = D.photos.filter((p) => p.dir === dir && p.seq !== null)
+  if (!roll.length || anchors.length < 2) return ''
+  const seqs = anchors.map((a) => a.seq)
+  const lo = Math.min(...seqs)
+  const hi = Math.max(...seqs)
+  const all = roll.map((p) => p.seq)
+  const first = Math.min(...all)
+  const last = Math.max(...all)
+  const out = roll.filter((p) => p.seq < lo || p.seq > hi)
+  if (!out.length)
+    return '<br><span class="state-looks-ok">whole roll is between anchors — no extrapolation</span>'
+
+  const span = D.photos.filter((p) => p.dir === dir && p.placed !== null)
+    .map((p) => p.placed).sort((a, b) => a - b)
+  return `<br><span class="warn">${out.length} of ${roll.length} frames`
+    + ` are extrapolated past your anchors (seq ${lo}–${hi} of ${first}–${last}).</span>`
+    + `<br>Currently spans ${clock(span[0])} → ${clock(span[span.length - 1])}.`
+    + ` Anchor something near <b>seq ${first}</b> and <b>seq ${last}</b> to make this`
+    + ' interpolation instead of extrapolation.'
+}
+
+/**
+ * The anchors already set, each individually removable.  Fixing one typo should not
+ * mean redoing the other four.
+ */
+function draw_anchor_list() {
+  const box = $('#anchor-list')
+  box.innerHTML = ''
+  const list = (D.state.anchors[anchor_cam] ?? []).slice().sort((a, b) => a.seq - b.seq)
+  if (!list.length) return
+
+  const tbl = el('table')
+  tbl.style.margin = '10px 0 0'
+  for (const a of list) {
+    const tr = el('tr')
+    tr.append(el('td', null, `seq ${a.seq}`))
+    tr.append(el('td', null, clock(a.time)))
+    tr.append(el('td', 'hint', a.from === 'typed' ? 'typed' : `paired · ${a.from}`))
+    const rm = el('td')
+    const b = el('button', null, 'remove')
+    b.addEventListener('click', async () => {
+      D.state.anchors[anchor_cam] = (D.state.anchors[anchor_cam] ?? [])
+        .filter((x) => !(x.seq === a.seq && x.time === a.time))
+      await push({ anchors: D.state.anchors })
+      await load()
+      draw_anchor_ui()
+    })
+    rm.append(b)
+    tr.append(rm)
+    tbl.append(tr)
+  }
+  box.append(tbl)
+}
+
+function draw_anchor_ui() {
+  const sel = $('#anchor-cam')
+  sel.innerHTML = ''
+  for (const [dir, cam] of Object.entries(D.cameras)) {
+    if (cam.clock === 'reference') continue
+    const o = el('option', null, `${dir} (${cam.clock})`)
+    o.value = dir
+    sel.append(o)
+  }
+  if (anchor_cam) sel.value = anchor_cam
+  anchor_cam = sel.value || null
+
+  const cam = D.cameras[anchor_cam] ?? {}
+  const anchors = D.state.anchors[anchor_cam] ?? []
+  $('#anchor-msg').innerHTML = cam.clock === 'broken'
+    ? `dead clock — interpolated across the frame counter; ${anchors.length} anchor(s) set`
+    : 'one pair is enough: the offset applies to the whole roll'
+  if (cam.clock === 'broken')
+    $('#anchor-msg').innerHTML += anchor_coverage(anchor_cam, anchors)
+
+  $('#anchor-grid-hint').innerHTML = browse === 'tgt'
+    ? `Showing <b>${anchor_cam}</b> in frame-number order. Click a frame, then type its`
+      + ' time above \u2014 for moments no reference camera was present for.'
+    : pick_ref === null
+      ? 'Pick a <b>reference</b> photo (Reenie\u2019s, in timeline order) showing a recognisable moment.'
+      : `Now find the <b>same moment</b> in <b>${anchor_cam}</b>.`
+  draw_anchor_list()
+  draw_anchor_grid()
+  render_slots()
+}
+
+function render_slots() {
+  const fill = (box, cap, p) => {
+    box.innerHTML = ''
+    box.classList.toggle('filled', !!p)
+    if (!p) { cap.textContent = ''; return }
+    const im = el('img')
+    im.src = `/thumbs/${p.thumb.replace('thumbs/', '')}`
+    box.append(im)
+    box.style.borderColor = color(p.dir)
+    cap.textContent = `${p.file} · ${clock(p.exif_time)}`
+  }
+  fill($('#slot-ref'), $('#cap-ref'), pick_ref)
+  fill($('#slot-tgt'), $('#cap-tgt'), pick_tgt)
+
+  const ok = pick_ref && pick_tgt
+  $('#anchor-apply').disabled = !ok
+  $('#anchor-manual').disabled = !pick_tgt
+  $('#cap-result').textContent = ok
+    ? `offset would be ${(((pick_ref.placed ?? pick_ref.exif_time) - pick_tgt.exif_time) / 3600).toFixed(2)}h`
+    : ''
+  // never leave a disabled button unexplained
+  $('#manual-why').textContent = pick_tgt
+    ? `will pin ${pick_tgt.file} to the time you type`
+    : `pick a frame from ${anchor_cam} first (use "browsing: this camera")`
+}
+
+
+/**
+ * Parse a hand-typed wall-clock time as naive UTC, matching how EXIF stamps are
+ * treated everywhere else.
+ *
+ * Accepts am/pm, because that is how everyone actually thinks about a wedding day
+ * ("cake cut ~9:19pm").  A 24-hour-only parser silently read '8:15' as breakfast
+ * when an evening rehearsal dinner was meant -- ten hours out, and nothing on
+ * screen to catch it.  Bare hours are still 24-hour: '20:30' works.
+ *   '08-07 8:15pm'  '8/7 8:15 PM'  '2026-08-07 20:30'  '08-07 20:30:15'
+ * @returns {number|null} epoch seconds
+ */
+function parse_typed(str, default_year) {
+  const m = /^\s*(?:(\d{4})[-/])?(\d{1,2})[-/](\d{1,2})[ T,]+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([ap])\.?m?\.?\s*$/i
+    .exec(str) ?? /^\s*(?:(\d{4})[-/])?(\d{1,2})[-/](\d{1,2})[ T,]+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*$/.exec(str)
+  if (!m) return null
+  const [, y, mo, d, hh, mi, s, ampm] = m
+  let h = Number(hh)
+  if (ampm) {
+    if (h < 1 || h > 12) return null
+    const pm = ampm.toLowerCase() === 'p'
+    h = pm ? (h === 12 ? 12 : h + 12) : (h === 12 ? 0 : h)
+  } else if (h > 23) {
+    return null
+  }
+  return Date.UTC(Number(y ?? default_year), Number(mo) - 1, Number(d),
+    h, Number(mi), Number(s ?? 0)) / 1000
+}
+
+function draw_anchor_grid() {
+  const wrap = $('#anchor-grid')
+  wrap.innerHTML = ''
+  wrap.className = 'cells'
+  wrap.style.display = 'flex'
+  wrap.style.flexWrap = 'wrap'
+  wrap.style.gap = '6px'
+
+  // 'auto' follows the pairing flow: reference first, then the target.  The explicit
+  // modes exist because a rehearsal-dinner or morning-after frame has no reference
+  // photo to pair with -- you go straight to the target and type its time.
+  const want = browse === 'ref' ? D.reference_dir
+    : browse === 'tgt' ? anchor_cam
+      : (pick_ref === null ? D.reference_dir : anchor_cam)
+  const list = D.photos.filter((p) => p.dir === want)
+    .sort((a, b) => (want === anchor_cam && D.cameras[want].clock === 'broken')
+      ? (a.seq ?? 0) - (b.seq ?? 0)
+      : (a.placed ?? a.exif_time ?? 0) - (b.placed ?? b.exif_time ?? 0))
+  for (const p of list) {
+    const c = build_cell(p, false)
+    c.addEventListener('click', (ev) => {
+      ev.preventDefault()
+      // Which slot a click fills is decided by the photo's own camera, not by which
+      // slot happens to be empty.  Browsing the target camera directly -- the whole
+      // point of a typed anchor -- would otherwise drop its frame into the reference
+      // slot and leave the typed-time button disabled with no explanation.
+      if (p.dir === anchor_cam) pick_tgt = p
+      else pick_ref = p
+      draw_anchor_ui()
+    })
+    wrap.append(c)
+  }
+}
+
+for (const b of document.querySelectorAll('[data-browse]')) {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-browse]').forEach((x) => x.classList.remove('on'))
+    b.classList.add('on')
+    browse = b.dataset.browse
+    draw_anchor_ui()
+  })
+}
+
+$('#anchor-cam').addEventListener('change', (e) => {
+  anchor_cam = e.target.value
+  pick_ref = null
+  pick_tgt = null
+  draw_anchor_ui()
+})
+
+$('#anchor-clear').addEventListener('click', async () => {
+  delete D.state.anchors[anchor_cam]
+  D.state.offsets[anchor_cam] = 0
+  await push({ anchors: D.state.anchors, offsets: D.state.offsets })
+  pick_ref = null
+  pick_tgt = null
+  await load()
+  draw_anchor_ui()
+})
+
+$('#anchor-manual').addEventListener('click', async () => {
+  // the reference camera's own year, so '08-07 20:30' resolves to the right one
+  const ref_any = D.photos.find((p) => p.dir === D.reference_dir && p.exif_time)
+  const year = new Date((ref_any?.exif_time ?? Date.now() / 1000) * 1000).getUTCFullYear()
+  const t = parse_typed($('#manual-time').value, year)
+  if (t === null) {
+    $('#cap-result').textContent = "couldn't read that — try 08-07 8:15pm or 08-07 20:15"
+    return
+  }
+  const cam = D.cameras[anchor_cam]
+  if (cam.clock === 'broken') {
+    const list = D.state.anchors[anchor_cam] ?? []
+    list.push({ seq: pick_tgt.seq, time: t, from: 'typed', to: pick_tgt.id })
+    D.state.anchors[anchor_cam] = list
+    await push({ anchors: D.state.anchors })
+  } else {
+    D.state.offsets[anchor_cam] = Math.round(t - pick_tgt.exif_time)
+    await push({ offsets: D.state.offsets })
+  }
+  pick_ref = null
+  pick_tgt = null
+  $('#manual-time').value = ''
+  await load()
+  draw_anchor_ui()
+})
+
+$('#anchor-apply').addEventListener('click', async () => {
+  const cam = D.cameras[anchor_cam]
+  const ref_t = pick_ref.placed ?? pick_ref.exif_time
+  if (cam.clock === 'broken') {
+    // no usable clock: record "frame N happened at T" and interpolate between them
+    const list = D.state.anchors[anchor_cam] ?? []
+    list.push({ seq: pick_tgt.seq, time: ref_t, from: pick_ref.id, to: pick_tgt.id })
+    D.state.anchors[anchor_cam] = list
+    await push({ anchors: D.state.anchors })
+  } else {
+    D.state.offsets[anchor_cam] = Math.round(ref_t - pick_tgt.exif_time)
+    await push({ offsets: D.state.offsets })
+  }
+  pick_ref = null
+  pick_tgt = null
+  await load()
+  draw_anchor_ui()
+})
+
+// ----------------------------------------------------------------- triage
+
+function build_cell(p, with_badge = true) {
+  const c = el('div', 'cell')
+  c.dataset.id = p.id
+  c.style.borderColor = color(p.dir)
+  if (p.placed !== null) c.classList.add('placed')
+  if (p.extrapolated) c.classList.add('extrap')
+  if (p.hand_placed) c.classList.add('hand')
+  if (with_badge && p.mark) c.classList.add(`m-${p.mark}`)
+  const im = el('img')
+  im.loading = 'lazy'
+  // the 400px tier is unusable for judging a shot, so anything above the dense grid
+  // pulls the 1000px tier instead
+  im.src = size === 'small'
+    ? `/thumbs/${p.thumb.replace('thumbs/', '')}`
+    : `/large/${p.large.replace('large/', '')}`
+  c.append(im)
+  c.append(el('div', 'meta',
+    `${clock(p.placed)} · ${D.cameras[p.dir].who} · ${p.file} · ${p.width}x${p.height}`))
+  if (with_badge && p.mark) c.append(el('div', 'badge', p.mark[0].toUpperCase()))
+  return c
+}
+
+function draw_grid() {
+  const g = $('#grid')
+  g.className = `sz-${size}`
+    + ($('#only-unplaced')?.checked ? ' only-unplaced' : '')
+  g.innerHTML = ''
+  D.photos.forEach((p, i) => {
+    const c = build_cell(p)
+    if (i === cursor) c.classList.add('cursor')
+    // click moves the cursor only -- so clicking a frame then pressing k/b/x/u just
+    // works.  The full-size view is opt-in via double-click or Enter, since at these
+    // cell sizes an overlay mostly hides the grid you are marking.
+    c.addEventListener('click', () => { cursor = i; sync_cursor() })
+    c.addEventListener('dblclick', () => { cursor = i; sync_cursor(); show(p) })
+    g.append(c)
+  })
+  tally()
+}
+
+
+/** Running counts, so you can see how the 501 are breaking down as you go. */
+function tally() {
+  const n = { keep: 0, blog: 0, discard: 0, unset: 0 }
+  for (const p of D.photos) n[p.mark ?? 'unset'] += 1
+  $('#triage-count').textContent =
+    `${n.keep} keep · ${n.blog} blog · ${n.discard} discard · ${n.unset} undecided`
+}
+
+function sync_cursor() {
+  const cells = [...$('#grid').children]
+  cells.forEach((c, i) => c.classList.toggle('cursor', i === cursor))
+  cells[cursor]?.scrollIntoView({ block: 'nearest' })
+  draw_time_bar()
+}
+
+
+/** The cursor frame's time, editable -- the only way to place a file with no EXIF. */
+function draw_time_bar() {
+  const p = D.photos[cursor]
+  if (!p) return
+  const hand = p.hand_placed ? ' (hand-set)' : ''
+  const when = p.placed === null
+    ? 'no timestamp — this frame needs one'
+    : `${clock(p.placed)}${hand}`
+  $('#time-who').innerHTML = `<b>${p.file}</b> · ${when} &nbsp;`
+  $('#time-who').classList.toggle('warn', p.placed === null)
+  $('#frame-time-clear').disabled = !p.hand_placed
+}
+
+function show(p) {
+  const lb = $('#lightbox')
+  lb.style.display = 'flex'
+  lb.querySelector('img').src = `/orig/${p.id}`
+  lb.querySelector('.cap').textContent =
+    `${p.id} · ${D.cameras[p.dir].who} · ${clock(p.placed)} · ${p.width}x${p.height}`
+}
+$('#lightbox').addEventListener('click', () => { $('#lightbox').style.display = 'none' })
+
+$('#frame-time-set').addEventListener('click', async () => {
+  const p = D.photos[cursor]
+  const ref_any = D.photos.find((x) => x.dir === D.reference_dir && x.exif_time)
+  const year = new Date((ref_any?.exif_time ?? Date.now() / 1000) * 1000).getUTCFullYear()
+  const t = parse_typed($('#frame-time').value, year)
+  if (t === null) {
+    $('#time-who').innerHTML = '<span class="warn">couldn\u2019t read that — try 08-08 9:19pm</span>'
+    return
+  }
+  D.state.times = { ...(D.state.times ?? {}), [p.id]: t }
+  await push({ times: D.state.times })
+  $('#frame-time').value = ''
+  const keep_cursor = cursor
+  await load()
+  cursor = Math.min(keep_cursor, D.photos.length - 1)
+  sync_cursor()
+})
+
+$('#frame-time-clear').addEventListener('click', async () => {
+  const p = D.photos[cursor]
+  const times = { ...(D.state.times ?? {}) }
+  delete times[p.id]
+  D.state.times = times
+  await push({ times })
+  const keep_cursor = cursor
+  await load()
+  cursor = Math.min(keep_cursor, D.photos.length - 1)
+  sync_cursor()
+})
+
+$('#only-unplaced').addEventListener('change', (e) => {
+  $('#grid').classList.toggle('only-unplaced', e.target.checked)
+})
+
+for (const b of document.querySelectorAll('[data-size]')) {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('[data-size]').forEach((x) => x.classList.remove('on'))
+    b.classList.add('on')
+    size = b.dataset.size
+    // rebuilt rather than restyled: the cells have to swap image tier too
+    draw_grid()
+    sync_cursor()
+  })
+}
+
+document.addEventListener('keydown', async (ev) => {
+  if (!$('#pane-triage').classList.contains('on')) return
+  if (ev.target.tagName === 'INPUT' || ev.target.tagName === 'SELECT') return
+
+  if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
+    ev.preventDefault()
+    cursor = Math.max(0, Math.min(D.photos.length - 1, cursor + (ev.key === 'ArrowRight' ? 1 : -1)))
+    return sync_cursor()
+  }
+  if (ev.key === 'Escape') return void ($('#lightbox').style.display = 'none')
+  if (ev.key === 'Enter') {
+    ev.preventDefault()
+    return show(D.photos[cursor])
+  }
+  if (!(ev.key in MARK_KEY)) return
+
+  ev.preventDefault()
+  const p = D.photos[cursor]
+  const mark = MARK_KEY[ev.key]
+  p.mark = mark
+  if (mark) D.state.marks[p.id] = mark
+  else delete D.state.marks[p.id]
+
+  const cell = $('#grid').children[cursor]
+  cell.className = `cell${p.placed !== null ? ' placed' : ''}${mark ? ` m-${mark}` : ''}`
+  cell.querySelector('.badge')?.remove()
+  if (mark) cell.append(el('div', 'badge', mark[0].toUpperCase()))
+  cell.style.borderColor = color(p.dir)
+
+  // advance, so a run of keeps is just k k k
+  cursor = Math.min(D.photos.length - 1, cursor + 1)
+  sync_cursor()
+  tally()
+  status(`${marked_count()} marked · last: ${p.file} → ${mark ?? 'unset'}`)
+  await push({ marks: D.state.marks })
+  draw_blog()
+})
+
+// ------------------------------------------------------------------- blog
+
+function blog_rows() {
+  const marked = D.photos.filter((p) => p.mark === 'blog')
+  const by_id = new Map(marked.map((p) => [p.id, p]))
+  const out = []
+  for (const id of D.state.blog_order) {
+    if (by_id.has(id)) { out.push(by_id.get(id)); by_id.delete(id) }
+  }
+  return [...out, ...by_id.values()]
+}
+
+let drag = null
+
+function draw_blog() {
+  const list = $('#blog-list')
+  list.innerHTML = ''
+  const rows = blog_rows()
+  rows.forEach((p, i) => {
+    const r = el('div', 'row')
+    r.draggable = true
+    r.dataset.id = p.id
+    r.style.borderColor = color(p.dir)
+    r.append(el('div', 'idx', String(i).padStart(2, '0')))
+    const im = el('img')
+    im.loading = 'lazy'
+    im.src = `/thumbs/${p.thumb.replace('thumbs/', '')}`
+    r.append(im)
+    const box = el('div')
+    box.append(el('div', 'nm', p.file))
+    box.append(el('div', 'sub', `${D.cameras[p.dir].who} · ${clock(p.placed)}`))
+    r.append(box)
+
+    r.addEventListener('dragstart', () => {
+      drag = r
+      setTimeout(() => r.classList.add('dragging'), 0)
+    })
+    r.addEventListener('dragend', async () => {
+      r.classList.remove('dragging')
+      list.querySelectorAll('.over').forEach((x) => x.classList.remove('over'))
+      D.state.blog_order = [...list.children].map((c) => c.dataset.id)
+      await push({ blog_order: D.state.blog_order })
+      draw_blog()
+    })
+    r.addEventListener('dragover', (e) => { e.preventDefault(); if (drag !== r) r.classList.add('over') })
+    r.addEventListener('dragleave', () => r.classList.remove('over'))
+    r.addEventListener('drop', (e) => {
+      e.preventDefault()
+      r.classList.remove('over')
+      if (drag && drag !== r) list.insertBefore(drag, r)
+    })
+    list.append(r)
+  })
+  if (!rows.length)
+    list.append(el('p', 'hint', 'Nothing marked for the blog yet — press b on frames in triage.'))
+}
+
+$('#btn-apply').addEventListener('click', async () => {
+  const out = $('#apply-out')
+  out.style.display = 'block'
+  out.textContent = 'working…'
+  const r = await (await fetch('/apply', { method: 'POST' })).json()
+  if (r.error) { out.textContent = `failed: ${r.error}`; return }
+  out.textContent = [
+    `${r.keep} keepers  ->  ${r.keep_path}`,
+    `${r.blog} blog picks  ->  ${r.blog_path}`,
+    `${r.discarded} moved to img/.trash/`,
+    '',
+    r.commands,
+  ].join('\n')
+  await load()
+})
+
+// -------------------------------------------------------------------- tabs
+
+for (const b of document.querySelectorAll('#tabs button')) {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('#tabs button').forEach((x) => x.classList.remove('on'))
+    document.querySelectorAll('.pane').forEach((x) => x.classList.remove('on'))
+    b.classList.add('on')
+    $(`#pane-${b.dataset.pane}`).classList.add('on')
+  })
+}
+
+await load()
+</script></body></html>
