@@ -11,6 +11,16 @@ You can also add first args like
   -featured FILE  convert FILE to .webp instead of .avif (for og:image / iOS sharing)
   -v              verbose show the CLI magick command for each
 
+  -mirror DIR     mirror each input's own path under DIR instead of numbering.
+                  No <basename> argument is used in this mode.
+                    (cd img && $1 -mirror thumbs wed/DSC_0018.JPG)
+                      => thumbs/wed/DSC_0018.avif
+                  Keeps the original filename, so a derivative can always be traced
+                  back to the photographer who shot it.
+  -width N        resize to exactly N pixels wide.  Without this, inputs are halved
+                  repeatedly until under ${MAX_WIDTH}px, which is kinder to quality but
+                  overshoots small targets (an 8256px frame lands on 516px, not 1000).
+
 
 Script will print the invocation for this at the end:
   bin/post-from-imagery
@@ -31,6 +41,8 @@ OLDEST=0
 KEEPGPS=0
 FEATURED=
 VERBOSE=
+MIRROR=
+EXACT_WIDTH=
 
 [[ -n $1 ]] || set -- '-usage' "$@"
 set -u
@@ -40,13 +52,20 @@ while [[ $1 == -* ]]; do
     -keepgps)  KEEPGPS=1 ;;
     -v)        VERBOSE=1 ;;
     -featured) FEATURED=$2; shift ;;
+    -mirror)   MIRROR=${2%/}; shift ;;
+    -width)    EXACT_WIDTH=$2; shift ;;
     *) usage $0; exit 1 ;;
   esac
   shift
 done
 
-BASE=$1
-shift
+# -mirror names outputs after their inputs, so there is no basename to consume
+if [[ -z $MIRROR ]]; then
+  BASE=$1
+  shift
+else
+  BASE=
+fi
 
 if (( OLDEST )); then
   local -a time_tagged
@@ -62,7 +81,7 @@ if (( OLDEST )); then
   set -- "${time_tagged[@]#* }"
 fi
 
-if [ -e "$BASE" ]; then
+if [[ -n $BASE && -e "$BASE" ]]; then
   echo "flipped args?"
   return
 fi
@@ -75,21 +94,38 @@ while (( $# )); do
   local EXT=avif
   [[ -n $FEATURED && $IMG == $FEATURED ]] && EXT=webp
 
-  for n in $(seq -w 0 99); do
-    OUT=${BASE}-$n.$EXT
-    if [ ! -e $OUT ]; then break; fi
-  done
-
-  # resize/shrink input by multiples of 2, until the output width is <= $MAX_WIDTH
-  WIDTH=$(identify -format "%w" "$IMG")
-  DIVISOR=1
-  while true; do
-    local RESIZED_WIDTH=$(( WIDTH * 2 / (2**DIVISOR) ))
-    if [ $RESIZED_WIDTH -le $MAX_WIDTH ]; then
-      break
+  if [[ -n $MIRROR ]]; then
+    # keep the input's own name and path -- provenance survives the conversion
+    local SUBDIR=${IMG:h}
+    [[ $SUBDIR == '.' ]] && SUBDIR=
+    OUT=${MIRROR}${SUBDIR:+/$SUBDIR}/${IMG:t:r}.$EXT
+    mkdir -p ${OUT:h}
+    # batches here run to the hundreds, so make re-runs resumable
+    if [[ -e $OUT ]]; then
+      echo "$OUT\tskipped (exists)"
+      continue
     fi
-    let "DIVISOR=$DIVISOR+1"
-  done
+  else
+    for n in $(seq -w 0 99); do
+      OUT=${BASE}-$n.$EXT
+      if [ ! -e $OUT ]; then break; fi
+    done
+  fi
+
+  WIDTH=$(identify -format "%w" "$IMG")
+  if [[ -n $EXACT_WIDTH ]]; then
+    local RESIZED_WIDTH=$EXACT_WIDTH
+  else
+    # resize/shrink input by multiples of 2, until the output width is <= $MAX_WIDTH
+    DIVISOR=1
+    while true; do
+      local RESIZED_WIDTH=$(( WIDTH * 2 / (2**DIVISOR) ))
+      if [ $RESIZED_WIDTH -le $MAX_WIDTH ]; then
+        break
+      fi
+      let "DIVISOR=$DIVISOR+1"
+    done
+  fi
   # Make sure it's even
   RESIZED_WIDTH=$(( RESIZED_WIDTH - RESIZED_WIDTH % 2 ))
   echo "$OUT\t${WIDTH}w => $RESIZED_WIDTH"
@@ -111,4 +147,8 @@ while (( $# )); do
   exiftool $exif_args "$OUT"
 done
 
-echo "\n/../bin/post-from-imagery ${BASE}-"
+if [[ -n $MIRROR ]]; then
+  echo "\nmirrored into ${MIRROR}/ -- filenames match their originals"
+else
+  echo "\n/../bin/post-from-imagery ${BASE}-"
+fi
