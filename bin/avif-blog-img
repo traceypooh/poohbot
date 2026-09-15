@@ -43,6 +43,8 @@ FEATURED=
 VERBOSE=
 MIRROR=
 EXACT_WIDTH=
+LONG_EDGE=
+MIN_WIDE=
 
 [[ -n $1 ]] || set -- '-usage' "$@"
 set -u
@@ -54,6 +56,8 @@ while [[ $1 == -* ]]; do
     -featured) FEATURED=$2; shift ;;
     -mirror)   MIRROR=${2%/}; shift ;;
     -width)    EXACT_WIDTH=$2; shift ;;
+    -long)     LONG_EDGE=$2; shift ;;
+    -minwide)  MIN_WIDE=$2; shift ;;
     *) usage $0; exit 1 ;;
   esac
   shift
@@ -112,23 +116,49 @@ while (( $# )); do
     done
   fi
 
-  WIDTH=$(identify -format "%w" "$IMG")
-  if [[ -n $EXACT_WIDTH ]]; then
-    local RESIZED_WIDTH=$EXACT_WIDTH
+  # Read the ORIENTED size: a camera may store a portrait frame rotated with an EXIF
+  # Orientation flag, and -auto-orient (applied below) swaps the axes.  Measuring the
+  # stored size would then scale the wrong axis.
+  local DIMS=$(magick "$IMG" -auto-orient -format "%w %h" info:)
+  WIDTH=${DIMS% *}
+  local HEIGHT=${DIMS#* }
+  local RESIZED_WIDTH=$WIDTH
+  local RESIZED_HEIGHT=$HEIGHT
+
+  if [[ -n $LONG_EDGE ]]; then
+    local LONG=$WIDTH
+    [[ $HEIGHT -gt $LONG ]] && LONG=$HEIGHT
+    # only ever shrink; upscaling adds bytes and invents no detail
+    if [[ $LONG -gt $LONG_EDGE ]]; then
+      RESIZED_WIDTH=$(( WIDTH * LONG_EDGE / LONG ))
+      RESIZED_HEIGHT=$(( HEIGHT * LONG_EDGE / LONG ))
+    fi
+    # a very tall portrait can satisfy the long edge and still be too narrow to read
+    if [[ -n $MIN_WIDE && $RESIZED_WIDTH -lt $MIN_WIDE && $WIDTH -ge $MIN_WIDE ]]; then
+      RESIZED_WIDTH=$MIN_WIDE
+      RESIZED_HEIGHT=$(( HEIGHT * MIN_WIDE / WIDTH ))
+    fi
+  elif [[ -n $EXACT_WIDTH ]]; then
+    if [[ $WIDTH -gt $EXACT_WIDTH ]]; then
+      RESIZED_WIDTH=$EXACT_WIDTH
+      RESIZED_HEIGHT=$(( HEIGHT * EXACT_WIDTH / WIDTH ))
+    fi
   else
     # resize/shrink input by multiples of 2, until the output width is <= $MAX_WIDTH
     DIVISOR=1
     while true; do
-      local RESIZED_WIDTH=$(( WIDTH * 2 / (2**DIVISOR) ))
+      RESIZED_WIDTH=$(( WIDTH * 2 / (2**DIVISOR) ))
       if [ $RESIZED_WIDTH -le $MAX_WIDTH ]; then
         break
       fi
       let "DIVISOR=$DIVISOR+1"
     done
+    RESIZED_HEIGHT=$(( HEIGHT * RESIZED_WIDTH / WIDTH ))
   fi
-  # Make sure it's even
+  # Both axes even -- see the -long note in usage()
   RESIZED_WIDTH=$(( RESIZED_WIDTH - RESIZED_WIDTH % 2 ))
-  echo "$OUT\t${WIDTH}w => $RESIZED_WIDTH"
+  RESIZED_HEIGHT=$(( RESIZED_HEIGHT - RESIZED_HEIGHT % 2 ))
+  echo "$OUT\t${WIDTH}x${HEIGHT} => ${RESIZED_WIDTH}x${RESIZED_HEIGHT}"
 
   ARGS2=()
   if [[ $EXT == avif ]]; then
@@ -138,7 +168,7 @@ while (( $# )); do
 
   (
     [ $VERBOSE ] && set -x
-    magick "$IMG" $ARGS -resize $RESIZED_WIDTH $ARGS2 -quality 90 $OUT
+    magick "$IMG" $ARGS -resize ${RESIZED_WIDTH}x${RESIZED_HEIGHT}! $ARGS2 -quality 90 $OUT
   )
 
   # always drop Orientation (baked in by -auto-orient); strip GPS unless -keepgps

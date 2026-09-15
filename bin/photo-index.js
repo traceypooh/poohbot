@@ -21,11 +21,20 @@
   Writes .photo-cache/manifest.json.  Re-running is cheap: thumbnails already built
   are left alone, so it's safe to interrupt.
 
-  Usage:  bin/photo-index [--force-thumbs] [--quiet]
+  Usage:  bin/photo-index [--src DIR] [--force-thumbs] [--quiet]
+
+    --src DIR   where the wed* folders live (default: <repo>/img).  Point this at a
+                NAS mirror after clearing the originals out of the repo.
 */
 
 const REPO = new URL('..', import.meta.url).pathname.replace(/\/$/, '')
-const IMG = `${REPO}/img`
+// Originals normally live in the repo, but they are bulky and get cleared out once
+// they're safely on archive.org + a NAS.  --src re-points the scan at wherever they
+// ended up, without moving the manifest, thumb cache or your picks.
+const src_arg = Deno.args.indexOf('--src')
+const IMG = src_arg === -1
+  ? `${REPO}/img`
+  : (Deno.args[src_arg + 1] ?? '').replace(/\/$/, '')
 const CACHE = `${REPO}/.photo-cache`
 const THUMBS = `${CACHE}/thumbs`
 const LARGE = `${CACHE}/large`
@@ -300,7 +309,8 @@ Deno.mkdirSync(THUMBS, { recursive: true })
 say('scanning img/wed* ...')
 const originals = find_originals()
 if (!originals.length) {
-  console.error('no originals found under img/wed*')
+  console.error(`no originals found under ${IMG}/wed*`)
+  console.error('  (if you have cleared them from the repo, pass --src /path/to/mirror)')
   Deno.exit(1)
 }
 say(`  ${originals.length} originals`)
@@ -437,6 +447,7 @@ await pool(
 Deno.writeTextFileSync(MANIFEST, `${JSON.stringify({
   generated: new Date().toISOString(),
   repo: REPO,
+  src: IMG,
   reference_dir: ref_dir,
   thumb_px: THUMB_PX,
   large_px: LARGE_PX,
