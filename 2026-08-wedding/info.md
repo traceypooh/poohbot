@@ -3,10 +3,24 @@ title: info
 ---
 
 ## run with:
--long 2064 -minwide 1000
+```sh
+cd /Volumes/*/pelican-wedding
+
+# 1. the 52 -> avif
+xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000 \
+  < ~/poohbot/misc/blog-convert.txt
+
+# 2. featured also needs .webp
+~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000 \
+  -featured wed/DSC_9849.jpg  wed/DSC_9849.jpg
+
+# 3. the 3 selfies verbatim
+mkdir -p ~/poohbot/img/wed-misc
+xargs -I{} cp {} ~/poohbot/img/{} < ~/poohbot/misc/blog-selfies.txt
+```
+
 
 - make alt repo have index.html + zotf JS + avif previews too -- same link to HQ originals for d/l
-- 3 reenie images cropped to 20% size, restore, better HQ crop??
 - kim AI de-mask & uprez
 
 
@@ -44,9 +58,6 @@ keep 445 · blog 48 · discard 8 · **undecided 5** (all of `wed-misc`).
 
 - [ ] post opens with 2 `wed-canon` frames — those are the **720×480 previews** and
       will look soft against 8256px neighbours. Move, drop, or wait for the originals.
-- [ ] 3 Reenie frames were cropped in Preview and lost ~84% of their bytes
-      (`DSC_9670` 25MB→4MB, also `DSC_9701`, `DSC_9721`). Consider uploading the
-      *uncropped* originals to archive.org and keeping the crops as blog-only.
 
 ## next steps, in order
 
@@ -60,12 +71,6 @@ keep 445 · blog 48 · discard 8 · **undecided 5** (all of `wed-misc`).
 2. **resolve the two state/post FIXMEs above**, then Apply → writes
    `misc/wedding-keep.txt` + `misc/wedding-blog.txt`, moves 8 discards to
    `img/.trash/`, prints the conversion commands.
-3. **convert blog images**: `cd img && ../bin/avif-blog-img 2026-08-wedding $(...)`
-   — deliberately *without* `-oldest`, or it re-sorts and undoes your ordering.
-5. **new previews repo**: 2048px avifs via `-mirror`, measured at **535KB avg → 258MB
-   for 493** (25% of the 1GB Pages cap, so one repo is fine). Needs `loading="lazy"`
-   on every `<img>` — 258MB eager would be unusable — plus width/height attributes to
-   stop layout shift.
 6. **`photo` shortcode** in `layouts/shortcodes/` taking `src` + `full` + `credit`, so
    the blog renders `<figure><a href=archive.org/...><img></a><figcaption>`. The theme
    already styles `figure`/`figcaption`, and that `<a href>` is exactly what ZOTF's
