@@ -165,6 +165,29 @@ function cookie_write(picked, total) {
  * @param {HTMLImageElement} el
  * @returns {string|null}
  */
+/**
+ * The URL to *fetch*, which is not always the URL to *link*.
+ *
+ * archive.org/serve/ is the right thing to put in an href: it is the durable form and
+ * it serves recognised image types inline with `access-control-allow-origin: *`.  But
+ * for a type it doesn't recognise -- .heic, say -- it 302s to the storage node, and
+ * that response carries no CORS header at all, so fetch() fails.  And it fails as an
+ * opaque CORS error rather than a status, which is a miserable thing to debug.
+ *
+ * cors.archive.org/cors/ answers every type with a CORS header, at the cost of
+ * `application/octet-stream` (which is exactly why it's wrong for the href -- the
+ * browser downloads instead of displaying).  So: link one, fetch the other.
+ * @param {string} url
+ * @returns {string}
+ */
+function fetchable(url) {
+  return url.replace(
+    /^https?:\/\/(?:www\.)?archive\.org\/(?:serve|download)\//,
+    'https://cors.archive.org/cors/',
+  )
+}
+
+
 function linked_url(el) {
   const href = el.closest('a')?.href
   return href && MEDIA_RE.test(href) ? href : null
@@ -650,12 +673,19 @@ class ZipOnTheFly extends LitElement {
   }
 
   async #zip() {
-    const items = [...this.#picked]
+    const picked = [...this.#picked]
       .sort((a, b) => a - b)
       .map((idx) => ({
         name: entry_name(this.#els[idx]),
-        url: linked_url(this.#els[idx]) ?? this.#els[idx].currentSrc ?? this.#els[idx].src,
+        url: fetchable(linked_url(this.#els[idx])
+          ?? this.#els[idx].currentSrc ?? this.#els[idx].src),
       }))
+
+    // the same photo can legitimately appear twice on a page -- a "best of" block at
+    // the top repeating shots that also appear in sequence.  Two identical names in
+    // one zip is untidy at best, so keep the first of each.
+    const seen = new Set()
+    const items = picked.filter((i) => !seen.has(i.url) && seen.add(i.url))
 
     const streaming = 'showSaveFilePicker' in globalThis
     if (!streaming) {
