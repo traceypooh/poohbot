@@ -24,13 +24,9 @@ xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000
 # 3. copied the 3 low-res selfies verbatim into img/wed-misc
 ```
 
-
+## to do
 - make alt repo have index.html + zotf JS + avif previews too -- same link to HQ originals for d/l
 - kim AI de-mask & uprez
-
-
-- send to dad https://www.proprofs.com/quiz-school/story.php?title=mteynjc2mgk5sl
-- Meshell Ndegeocello & Cat Power - Don’t You Want Me
 
 
 keep        445
