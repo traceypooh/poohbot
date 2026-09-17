@@ -25,9 +25,18 @@ xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000
 ```
 
 ## to do
-- make alt repo have index.html + zotf JS + avif previews too -- same link to HQ originals for d/l
+- [ ] post needs ZOTF info/howto
+- [ ] `photo` shortcode in `layouts/shortcodes/` (src + full + credit) for the
+      "credit: Reenie Raschke" captions. Theme already styles figure/figcaption, and
+      the `<a href>` it emits is what ZOTF's `linked_url()` already detects
+- [ ] post opens with the 2 `wed-canon` frames -- now real resolution, but twin says
+      they are not colour corrected
+- [ ] make previews repo have index.html + zotf JS + avif previews too -- same link to HQ originals for d/l
+- [ ] previews repo: 2048px avifs via `-mirror`, measured 535KB avg -> ~258MB for 493
+      (25% of the 1GB Pages cap, so one repo is fine). Wants the same lazy + sized
+      `<img>` treatment; that repo is not Hugo, so port the logic, don't reuse the hook
 
-
+## info
 keep        445
 blog         48   (also counts as keep)
 discard       8
@@ -72,8 +81,7 @@ the picker though they *are* in the post.
       (tested); lossy webp is mandatorily 4:2:0 8-bit so it cannot carry 4:4:4 anyway,
       and is no more compatible than JPEG. `featured: wed/DSC_9849.jpg#top30`
 - [x] **theme og:image fixed to absURL** (was relURL -> relative URL, which the OG
-      spec disallows; Apple's scraper tolerated it, Facebook's would not). Committed
-      in the theme fork, so it needs a poohbot push to take effect
+      spec disallows; Apple's scraper tolerated it, Facebook's would not).
 - [x] **Enforce HTTPS on** -- Pages now 301s http->https (note: no HSTS header; GH
       Pages does not send one, on custom domains or `*.github.io`)
 - [x] **two `wed-canon` frames replaced** with real originals (`.heic.jpg`, 2.4MB) --
@@ -83,11 +91,6 @@ the picker though they *are* in the post.
       (worst: 89) so nothing reached black. Per-frame lift 2.0%-34.5% with a gamma
       that holds each median, so contrast returns without changing brightness.
       Pristine copies kept as `wed-bokeh-orig/` on NAS + item.
-- [x] **`wed-bokeh-fixed/` -> upload as `wed-bokeh/`** (NAS + item, clobbering flat
-      versions), then `rm -rf img/wed-bokeh-fixed` incl. its 112MB `.src/` cache
-- [x] **regenerate the 2 bokeh derivatives** afterwards or the post still shows the
-      washed-out ones -- `-mirror` skips existing, so delete them first:
-      `rm img/wed-bokeh/IMG_2168.avif img/wed-bokeh/IMG_2262.avif`
 - [x] ZOTF dedupes by URL now, so the 2 repeated bangers only zip once
 - [x] **lazy loading, via a markdown render hook in the theme** at
       `layouts/_default/_markup/render-image.html`. All 57 refs get
@@ -96,22 +99,7 @@ the picker though they *are* in the post.
       collapse to zero height and the page jumps as each one lands.
       - `.Width` is a hard build error on a non-image resource, not an empty value, so
         the hook checks `eq $res.ResourceType "image"` first
-      - **hugo 0.166 reads AVIF dimensions**
-
-## FIXME
-
-- [ ] state/post divergence: `state.json` has 48 blog marks in a stale 36-entry
-      `blog_order`, doesn't know the 3 `-crop` or 2 `.heic` files, and has 2 of the
-      post's images marked `keep`. The post is the source of truth now, so either
-      sync state from it or just drive the post directly and skip Apply's blog list
-- [ ] post opens with the 2 `wed-canon` frames -- now real resolution, but twin says
-      they are not colour corrected
-- [ ] `photo` shortcode in `layouts/shortcodes/` (src + full + credit) for the
-      "credit: Reenie Raschke" captions. Theme already styles figure/figcaption, and
-      the `<a href>` it emits is what ZOTF's `linked_url()` already detects
-- [ ] previews repo: 2048px avifs via `-mirror`, measured 535KB avg -> ~258MB for 493
-      (25% of the 1GB Pages cap, so one repo is fine). Wants the same lazy + sized
-      `<img>` treatment; that repo is not Hugo, so port the logic, don't reuse the hook
+      - **hugo 0.166 reads AVIF dimensions** (many prior versions dont)
 
 ## URL forms that matter
 
@@ -136,7 +124,7 @@ bin/photo-pick.js           # http://localhost:8777/  (restart after re-indexing
                             #  the manifest is read once at startup)
 ```
 
-Picks live in `.photo-cache/state.json`, keyed by original filename and **separate
+Picks live in `misc/state.json`, keyed by original filename and **separate
 from the manifest** — so re-indexing (new files, the real 70D originals replacing
 previews) never costs you the triage.
 
