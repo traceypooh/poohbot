@@ -26,7 +26,6 @@ xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000
 
 ## to do
 - make alt repo have index.html + zotf JS + avif previews too -- same link to HQ originals for d/l
-- kim AI de-mask & uprez
 
 
 keep        445
