@@ -8,7 +8,12 @@ Usage: $1 <basename eg: '2025-europe'>  <image input file1> <image input file2> 
 You can also add first args like
   -oldest         sort input files by capture time (DateTimeOriginal; else FS birth time) oldest first
   -keepgps        preserve GPS data (default: stripped for privacy)
-  -featured FILE  convert FILE to .webp instead of .avif (for og:image / iOS sharing)
+  -featured FILE  convert FILE to high-quality 4:4:4 .jpg instead of .avif, for
+                  og:image.  Social scrapers (Facebook, LinkedIn, iMessage, Slack)
+                  are patchy on AVIF, and JPEG is the one format none of them fail
+                  at.  Not webp: lossy webp is *mandatorily* 4:2:0 8-bit, so it
+                  cannot carry the chroma our 4:4:4 camera sources actually have --
+                  and it's no more compatible than JPEG anyway.
   -v              verbose show the CLI magick command for each
 
   -mirror DIR     mirror each input's own path under DIR instead of numbering.
@@ -20,6 +25,36 @@ You can also add first args like
   -width N        resize to exactly N pixels wide.  Without this, inputs are halved
                   repeatedly until under ${MAX_WIDTH}px, which is kinder to quality but
                   overshoots small targets (an 8256px frame lands on 516px, not 1000).
+  -long N         cap the LONG edge at N, portrait or landscape, and never upscale.
+                  Usually what you want: the default halving caps *width* only, so a
+                  4000x6000 portrait comes out 2000x3000.
+  -minwide N      floor the width at N, for very tall portraits that would otherwise
+                  end up narrower than the page displays.  Never upscales past the
+                  source, so a genuinely small original stays small.
+
+                  BOTH axes are always forced even.  That is the one dimensional rule
+                  that still matters: 4:2:0 chroma halves each axis, so an odd
+                  dimension makes the encoder pad and can smear that edge.  Multiples
+                  of 8 are a JPEG concern (8x8 DCT blocks); AV1 uses 64x64/128x128
+                  superblocks and pads internally, so it buys nothing and costs more
+                  aspect distortion.  Exact 2x/4x ratios likewise don't matter with a
+                  modern resampler.
+
+  -avifenc        encode with avifenc instead of ImageMagick's AVIF writer, which
+                  cannot set chroma or depth at all on this build (-sampling-factor
+                  and avif:effort are both silently ignored).  magick still does the
+                  decode + resize, so every format it reads still works -- JPG, HEIC,
+                  PNG, TIFF -- and the intermediate is lossless PNG, so nothing gets
+                  double-compressed.  Measured on an 8256x5504 source at 2064px:
+                  601KB / 44.7dB versus magick's 620KB / 41.8dB -- better AND smaller.
+                  Implied by -yuv, -depth or -q.
+  -yuv FORMAT     444 (default), 422, 420.  Camera sources here are YCbCr 4:4:4, so
+                  the usual 4:2:0 discards chroma the originals actually have.
+  -depth N        8 (default) or 10.  10-bit is NOT HDR -- an 8-bit sRGB source has no
+                  HDR data to recover.  It only stops the encoder's own quantisation
+                  from banding smooth gradients: +1.9dB for +17% size.
+  -q N            avifenc quality 0..100 (default 88).  Not the same scale as
+                  magick's -quality.
 
 
 Script will print the invocation for this at the end:
@@ -45,6 +80,10 @@ MIRROR=
 EXACT_WIDTH=
 LONG_EDGE=
 MIN_WIDE=
+AVIFENC=0
+YUV=444
+DEPTH=8
+AVIFQ=88
 
 [[ -n $1 ]] || set -- '-usage' "$@"
 set -u
@@ -58,6 +97,10 @@ while [[ $1 == -* ]]; do
     -width)    EXACT_WIDTH=$2; shift ;;
     -long)     LONG_EDGE=$2; shift ;;
     -minwide)  MIN_WIDE=$2; shift ;;
+    -avifenc)  AVIFENC=1 ;;
+    -yuv)      YUV=$2; AVIFENC=1; shift ;;
+    -depth)    DEPTH=$2; AVIFENC=1; shift ;;
+    -q)        AVIFQ=$2; AVIFENC=1; shift ;;
     *) usage $0; exit 1 ;;
   esac
   shift
@@ -96,14 +139,27 @@ while (( $# )); do
   if [ ! -e "$IMG" ]; then break; fi
 
   local EXT=avif
-  [[ -n $FEATURED && $IMG == $FEATURED ]] && EXT=webp
+  [[ -n $FEATURED && $IMG == $FEATURED ]] && EXT=jpg
 
   if [[ -n $MIRROR ]]; then
     # keep the input's own name and path -- provenance survives the conversion
     local SUBDIR=${IMG:h}
     [[ $SUBDIR == '.' ]] && SUBDIR=
-    OUT=${MIRROR}${SUBDIR:+/$SUBDIR}/${IMG:t:r}.$EXT
+    # Strip *every* trailing image extension, not just one.  A re-exported original
+    # can arrive as IMG_6836.heic.jpg, and :r alone leaves "IMG_6836.heic" -- giving
+    # IMG_6836.heic.avif, which no longer matches what the post references.
+    local STEM=${IMG:t}
+    # (L) lowercases for the compare; (#i) would need extended_glob, which this
+    # script does not set -- and without it (#i) silently matches nothing.
+    while [[ ${(L)STEM} == *.(jpg|jpeg|heic|heif|png|tif|tiff|avif|webp) ]]; do
+      STEM=${STEM:r}
+    done
+    OUT=${MIRROR}${SUBDIR:+/$SUBDIR}/${STEM}.$EXT
     mkdir -p ${OUT:h}
+    if [[ ${OUT:A} == ${IMG:A} ]]; then
+      echo "$OUT\trefusing to overwrite its own source"
+      continue
+    fi
     # batches here run to the hundreds, so make re-runs resumable
     if [[ -e $OUT ]]; then
       echo "$OUT\tskipped (exists)"
@@ -162,14 +218,42 @@ while (( $# )); do
 
   ARGS2=()
   if [[ $EXT == avif ]]; then
-    # avif:effort => higher === slower & higher quality
-    ARGS2+=(-define avif:effort=6)
+    # NB: `-define avif:effort=N` is silently ignored by ImageMagick 7.1.2 -- effort 1
+    # and 9 produce byte-identical files.  heic:speed is the knob libheif actually
+    # reads (0 = slowest/best, ~2% smaller at the same quality).
+    ARGS2+=(-define heic:speed=0)
+  else
+    # keep full chroma on the og:image; 4:2:0 here is worse than the webp it replaced
+    ARGS2+=(-sampling-factor 4:4:4)
   fi
 
-  (
-    [ $VERBOSE ] && set -x
-    magick "$IMG" $ARGS -resize ${RESIZED_WIDTH}x${RESIZED_HEIGHT}! $ARGS2 -quality 90 $OUT
-  )
+  if (( AVIFENC )) && [[ $EXT == avif ]]; then
+    # magick decodes + resizes (so HEIC/TIFF/PNG inputs all still work) and hands off
+    # a lossless PNG; avifenc does the only part magick can't.  PNG carries the ICC
+    # profile across, which matters -- a dropped profile shifts colour.
+    local TMP=$(mktemp -t avifblog).png
+    local TMPICC=$(mktemp -t avificc).icc
+    # magick's PNG writer drops the ICC profile (verified: zero iCCP chunks out of an
+    # sRGB JPEG), so extract it from the source and hand it to avifenc directly.
+    # Not cosmetic: iPhone HEICs are Display P3, and an untagged P3 image gets
+    # rendered as sRGB, which visibly shifts saturated colour.
+    magick "$IMG" icc:"$TMPICC" 2>/dev/null || rm -f "$TMPICC"
+    local -a ICCARG=()
+    [[ -s $TMPICC ]] && ICCARG=(--icc "$TMPICC")
+    (
+      [ $VERBOSE ] && set -x
+      magick "$IMG" $ARGS -resize ${RESIZED_WIDTH}x${RESIZED_HEIGHT}! "$TMP"
+      # --ignore-xmp: ~4KB/file of pure bloat.  Exif is kept so exiftool below can
+      # strip GPS from it exactly as in the magick path.
+      avifenc -y $YUV -d $DEPTH -q $AVIFQ -s 4 -j all --ignore-xmp $ICCARG "$TMP" $OUT >/dev/null
+    )
+    rm -f "$TMP" "$TMPICC"
+  else
+    (
+      [ $VERBOSE ] && set -x
+      magick "$IMG" $ARGS -resize ${RESIZED_WIDTH}x${RESIZED_HEIGHT}! $ARGS2 -quality 90 $OUT
+    )
+  fi
 
   # always drop Orientation (baked in by -auto-orient); strip GPS unless -keepgps
   local exif_args=(-Orientation= -overwrite_original -quiet)

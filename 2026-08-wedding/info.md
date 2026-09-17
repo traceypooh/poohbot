@@ -2,21 +2,26 @@
 title: info
 ---
 
-## run with:
+# summary
+```
+52 avif   all YUV 4:4:4, all long edge 2064, all even dimensions
+ 3 jpg    the selfies, 1600x1200 untouched as intended
+ 1 jpg    wed/DSC_9849.jpg — the banger, 4:4:4 JPEG
+```
+
+## ran with:
 ```sh
 cd /Volumes/*/pelican-wedding
-
-# 1. the 52 -> avif
-xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000 \
+# 1. the 52 -> avif (avifenc to ensure 4:4:4 color -- imagemagick can only do 4:2:0 avif)
+# this also ensures chroma depth ICC profiles carry over
+xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000 -avifenc \
   < ~/poohbot/misc/blog-convert.txt
 
-# 2. featured also needs .webp
+# 2. featured also needs a 4:4:4 color JPEG
 ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000 \
   -featured wed/DSC_9849.jpg  wed/DSC_9849.jpg
 
-# 3. the 3 selfies verbatim
-mkdir -p ~/poohbot/img/wed-misc
-xargs -I{} cp {} ~/poohbot/img/{} < ~/poohbot/misc/blog-selfies.txt
+# 3. copied the 3 low-res selfies verbatim into img/wed-misc
 ```
 
 
@@ -49,33 +54,75 @@ Blog picks also count as keepers, so the archive item gets 493 originals.
 
 ---
 
-# where things stand  (2026-09-14)
+# where things stand  (2026-09-16)
 
-Numbers above were taken before `img/wed-misc/` existed. Current: **506 photos**,
-keep 445 · blog 48 · discard 8 · **undecided 5** (all of `wed-misc`).
+Post is **55 images** (57 refs -- 2 "best shots" bangers repeat later in time order),
+all wired to their originals on the `pelican-wedding` archive.org item. 506 photos
+triaged: keep 445 / blog 48 / discard 8 (moved out) / wed-misc 5 still `undecided` in
+the picker though they *are* in the post.
 
-## FIXME — content
+## done
 
-- [ ] post opens with 2 `wed-canon` frames — those are the **720×480 previews** and
-      will look soft against 8256px neighbours. Move, drop, or wait for the originals.
+- [x] **all 501 originals on archive.org + NAS**, md5-verified three ways, subdirs
+      kept so `<dir>/<basename>` is one key across item / NAS / blog / previews repo
+- [x] repo `img/wed*` originals cleared (3.8GB); `bin/photo-index.js --src` re-points
+      the picker at the NAS mirror
+- [x] **derivatives regenerated via avifenc** (`-avifenc -long 2064 -minwide 1000`):
+      30.8MB vs 32.2MB before, and better PSNR on every file measured. 4:4:4 chroma
+      (sources are 4:4:4, so the old 4:2:0 was discarding real chroma), both axes even
+- [x] **10-bit tried and rejected** -- 36.1MB for a difference invisible even on the
+      bokeh frames where it should have shown. Sources are 8-bit; there is no hidden
+      gradation to recover, only encoder quantisation, already below threshold
+- [x] **og:image is JPEG 4:4:4, not webp, not avif.** Slack renders no AVIF preview
+      (tested); lossy webp is mandatorily 4:2:0 8-bit so it cannot carry 4:4:4 anyway,
+      and is no more compatible than JPEG. `featured: wed/DSC_9849.jpg#top30`
+- [x] **theme og:image fixed to absURL** (was relURL -> relative URL, which the OG
+      spec disallows; Apple's scraper tolerated it, Facebook's would not). Committed
+      in the theme fork, so it needs a poohbot push to take effect
+- [x] **Enforce HTTPS on** -- Pages now 301s http->https (note: no HSTS header; GH
+      Pages does not send one, on custom domains or `*.github.io`)
+- [x] **two `wed-canon` frames replaced** with real originals (`.heic.jpg`, 2.4MB) --
+      were 720x480 previews
+- [x] **all 39 `wed-bokeh` frames black-point corrected** (`bin/lift-blacks.js`).
+      Uncoated Soviet lens -> veiling flare lifted every shadow; p1 averaged 28.5
+      (worst: 89) so nothing reached black. Per-frame lift 2.0%-34.5% with a gamma
+      that holds each median, so contrast returns without changing brightness.
+      Pristine copies kept as `wed-bokeh-orig/` on NAS + item.
+- [x] **`wed-bokeh-fixed/` -> upload as `wed-bokeh/`** (NAS + item, clobbering flat
+      versions), then `rm -rf img/wed-bokeh-fixed` incl. its 112MB `.src/` cache
+- [x] **regenerate the 2 bokeh derivatives** afterwards or the post still shows the
+      washed-out ones -- `-mirror` skips existing, so delete them first:
+      `rm img/wed-bokeh/IMG_2168.avif img/wed-bokeh/IMG_2262.avif`
+- [x] ZOTF dedupes by URL now, so the 2 repeated bangers only zip once
 
-## next steps, in order
+## FIXME
 
-   NOTE: subdirs are kept, so every URL includes the photographer dir:
-       https://cors.archive.org/cors/pelican-wedding/wed/DSC_5522.JPG
-   ...not `/pelican-wedding/DSC_5522.JPG`. That path is what the blog `full=` and
-   ZOTF links must use. Verify on a few files, because each breaks a different link:
-   - `access-control-allow-origin: *` — without it ZOTF's fetch fails *silently*
-   - filenames survive verbatim (`DSC_9603long.jpg` keeps its lowercase `.jpg`)
-   - `content-type: image/jpeg` so click-through displays rather than downloads
-2. **resolve the two state/post FIXMEs above**, then Apply → writes
-   `misc/wedding-keep.txt` + `misc/wedding-blog.txt`, moves 8 discards to
-   `img/.trash/`, prints the conversion commands.
-6. **`photo` shortcode** in `layouts/shortcodes/` taking `src` + `full` + `credit`, so
-   the blog renders `<figure><a href=archive.org/...><img></a><figcaption>`. The theme
-   already styles `figure`/`figcaption`, and that `<a href>` is exactly what ZOTF's
-   `linked_url()` detects. No theme fork needed.
+- [ ] state/post divergence: `state.json` has 48 blog marks in a stale 36-entry
+      `blog_order`, doesn't know the 3 `-crop` or 2 `.heic` files, and has 2 of the
+      post's images marked `keep`. The post is the source of truth now, so either
+      sync state from it or just drive the post directly and skip Apply's blog list
+- [ ] post opens with the 2 `wed-canon` frames -- now real resolution, but twin says
+      they are not colour corrected
+- [ ] `photo` shortcode in `layouts/shortcodes/` (src + full + credit) for the
+      "credit: Reenie Raschke" captions. Theme already styles figure/figcaption, and
+      the `<a href>` it emits is what ZOTF's `linked_url()` already detects
+- [ ] previews repo: 2048px avifs via `-mirror`, measured 535KB avg -> ~258MB for 493
+      (25% of the 1GB Pages cap, so one repo is fine). Needs `loading="lazy"` on every
+      `<img>` plus width/height attrs to stop layout shift
 
+## URL forms that matter
+
+Link `archive.org/serve/...`, fetch `cors.archive.org/cors/...`:
+
+- `/serve/` gives `image/jpeg` + `access-control-allow-origin: *` for recognised image
+  types, so click-through displays inline. It is also the durable form.
+- but for a type it does *not* recognise (`.heic`) it 302s to the storage node, and
+  that response has **no CORS header** -- so `fetch()` fails, opaquely.
+- `cors.archive.org/cors/` sends CORS for every type, but `application/octet-stream`,
+  which makes a browser download rather than display.
+
+`zip-on-the-fly.js` handles this in `fetchable()`: hrefs stay `/serve/`, fetches get
+rewritten to the cors host.
 
 ## running the tools again
 
