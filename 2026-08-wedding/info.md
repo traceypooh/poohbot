@@ -94,6 +94,14 @@ the picker though they *are* in the post.
       washed-out ones -- `-mirror` skips existing, so delete them first:
       `rm img/wed-bokeh/IMG_2168.avif img/wed-bokeh/IMG_2262.avif`
 - [x] ZOTF dedupes by URL now, so the 2 repeated bangers only zip once
+- [x] **lazy loading, via a markdown render hook in the theme** at
+      `layouts/_default/_markup/render-image.html`. All 57 refs get
+      `loading="lazy" decoding="async"` **plus real `width`/`height`** read from the
+      file. Without the dimensions lazy loading is worse than none -- unsized images
+      collapse to zero height and the page jumps as each one lands.
+      - `.Width` is a hard build error on a non-image resource, not an empty value, so
+        the hook checks `eq $res.ResourceType "image"` first
+      - **hugo 0.166 reads AVIF dimensions**
 
 ## FIXME
 
@@ -107,8 +115,8 @@ the picker though they *are* in the post.
       "credit: Reenie Raschke" captions. Theme already styles figure/figcaption, and
       the `<a href>` it emits is what ZOTF's `linked_url()` already detects
 - [ ] previews repo: 2048px avifs via `-mirror`, measured 535KB avg -> ~258MB for 493
-      (25% of the 1GB Pages cap, so one repo is fine). Needs `loading="lazy"` on every
-      `<img>` plus width/height attrs to stop layout shift
+      (25% of the 1GB Pages cap, so one repo is fine). Wants the same lazy + sized
+      `<img>` treatment; that repo is not Hugo, so port the logic, don't reuse the hook
 
 ## URL forms that matter
 

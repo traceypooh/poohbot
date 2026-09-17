@@ -31,7 +31,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.128.0
+      # >= 0.166 required: `[security] allowContent` in config.toml is a 0.166 key, and
+      # only 0.166+ can read AVIF dimensions -- which the render-image hook needs to
+      # emit width/height, without which loading="lazy" causes layout shift instead of
+      # preventing it.
+      HUGO_VERSION: 0.166.0
     steps:
       - name: Install Hugo CLI
         run: |
