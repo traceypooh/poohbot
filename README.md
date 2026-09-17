@@ -5,6 +5,27 @@ tracey pooh's site & blog, static site generated
 - https://poohbot.com
 
 
+## top tip: `<figcaption>` needs a blank line after it
+
+A `<figcaption>` line opens a markdown HTML block that runs **until a blank line**.
+Forget the blank line and everything after it gets swallowed into that block and
+printed as literal text -- no error, no warning, just a broken-looking page.
+
+```md
+![skull rock](../img/50-skull-rock.jpg)
+<figcaption>
+And the super popular (giant) Skull Rock
+</figcaption>
+
+![jumbo rocks](../img/50-jumbo-rocks.jpg)
+```
+
+Drop that blank line and the page shows the literal text
+`![jumbo rocks](../img/50-jumbo-rocks.jpg)` where the picture should be.
+
+Captions belong **below** their image; the theme snugs them up against it.
+
+
 # todo
 ```sh
 cd ~/poohbot/comments; gg qtfast;

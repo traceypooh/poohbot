@@ -26,9 +26,6 @@ xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000
 
 ## to do
 - [ ] post needs ZOTF info/howto
-- [ ] `photo` shortcode in `layouts/shortcodes/` (src + full + credit) for the
-      "credit: Reenie Raschke" captions. Theme already styles figure/figcaption, and
-      the `<a href>` it emits is what ZOTF's `linked_url()` already detects
 - [ ] post opens with the 2 `wed-canon` frames -- now real resolution, but twin says
       they are not colour corrected
 - [ ] make previews repo have index.html + zotf JS + avif previews too -- same link to HQ originals for d/l
