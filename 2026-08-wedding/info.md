@@ -34,6 +34,7 @@ xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000
       `<img>` treatment; that repo is not Hugo, so port the logic, don't reuse the hook
 
 ## info
+```
 keep        445
 blog         48   (also counts as keep)
 discard       8
@@ -41,6 +42,7 @@ undecided     0
 ----------------------
 decided     501 / 501  (100%)
 -> archive item gets 493 originals
+```
 
 | Directory | Photographer | Camera | Keep | Blog | Discard | Total |
 |---|---|---|---|---|---|---|
