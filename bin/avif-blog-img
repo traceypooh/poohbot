@@ -106,6 +106,15 @@ while [[ $1 == -* ]]; do
   shift
 done
 
+# A batch of 500 runs for hours, so dying partway is a normal event, not an
+# exceptional one -- and re-runs resume by skipping any output that already exists.
+# Those two facts combine badly: a file encoded but not yet EXIF-stripped would be
+# treated as done by every future run, keeping its GPS forever.  So a half-made
+# output never survives the exit that interrupted it.
+OUT=
+INCOMPLETE=
+trap '[[ -n $INCOMPLETE && -n $OUT && -e $OUT ]] && rm -f -- "$OUT"' EXIT INT TERM
+
 # -mirror names outputs after their inputs, so there is no basename to consume
 if [[ -z $MIRROR ]]; then
   BASE=$1
@@ -216,6 +225,9 @@ while (( $# )); do
   RESIZED_HEIGHT=$(( RESIZED_HEIGHT - RESIZED_HEIGHT % 2 ))
   echo "$OUT\t${WIDTH}x${HEIGHT} => ${RESIZED_WIDTH}x${RESIZED_HEIGHT}"
 
+  # from here until the exiftool strip below, $OUT is half-made -- see the trap above
+  INCOMPLETE=1
+
   ARGS2=()
   if [[ $EXT == avif ]]; then
     # NB: `-define avif:effort=N` is silently ignored by ImageMagick 7.1.2 -- effort 1
@@ -256,9 +268,20 @@ while (( $# )); do
   fi
 
   # always drop Orientation (baked in by -auto-orient); strip GPS unless -keepgps
-  local exif_args=(-Orientation= -overwrite_original -quiet)
+  #
+  # -m: treat exiftool's "minor" errors as warnings.  Without it a single frame with
+  # a damaged embedded thumbnail -- "[minor] Error reading PreviewImage data in
+  # PreviewIFD", which a re-saved or composited file can easily carry -- exits 1 and
+  # takes the whole batch down with `set -e`, 283 files into 501.  The minor error
+  # concerns a tag we are not reading; the Orientation and GPS strip itself succeeds
+  # either way (verified), so failing the run over it loses work for nothing.
+  local exif_args=(-m -Orientation= -overwrite_original -quiet)
   (( KEEPGPS )) || exif_args+=(-gps:all=)
   exiftool $exif_args "$OUT"
+  # The output is only complete once the strip has run.  Until this point a die would
+  # leave a fully-encoded but still-GPS-bearing file on disk -- which the skip above
+  # would then honour forever, silently, on every future re-run.
+  INCOMPLETE=
 done
 
 if [[ -n $MIRROR ]]; then
