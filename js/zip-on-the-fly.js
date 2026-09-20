@@ -454,7 +454,8 @@ class ZipOnTheFly extends LitElement {
     this.#picked = cookie_read(els.length)
 
     this.#install_nav()
-    this.addEventListener('zotf-toggle', (ev) => this.#toggle(ev.detail.idx))
+    // on `document`, not on `this`: the <zotf-pick> wrappers live out in the post
+    // content, so their events never pass through this element
     document.addEventListener('zotf-toggle', (ev) => this.#toggle(ev.detail.idx))
 
     // an undecided preview becomes eligible once it decodes and we can read its width
@@ -686,6 +687,23 @@ class ZipOnTheFly extends LitElement {
     // one zip is untidy at best, so keep the first of each.
     const seen = new Set()
     const items = picked.filter((i) => !seen.has(i.url) && seen.add(i.url))
+
+    // Distinct files can still collide on name, because entry_name() keeps only the
+    // basename: two cameras both numbering DSC_0145.JPG land on one zip entry, and
+    // most unzippers silently overwrite rather than complain -- you get 494 files
+    // out of a 501-file pick and nothing says so.  Qualify only the ones that
+    // actually clash, so an ordinary pick still unzips flat.
+    const by_name = new Map()
+    for (const i of items)
+      by_name.set(i.name, (by_name.get(i.name) ?? 0) + 1)
+    for (const i of items) {
+      if (by_name.get(i.name) < 2)
+        continue
+      const parts = new URL(i.url, location.href).pathname.split('/').filter(Boolean)
+      const parent = parts.length > 1 ? decodeURIComponent(parts[parts.length - 2]) : ''
+      if (parent)
+        i.name = `${parent}/${i.name}`
+    }
 
     const streaming = 'showSaveFilePicker' in globalThis
     if (!streaming) {
