@@ -329,6 +329,22 @@ body.album .post {
   display: block;
 }
 
+/* Display widths for the `#half` suffix the image render hook understands, eg.
+   ![polaroid camera](../img/wed-misc/poloroid-cam.avif#half)
+
+   Width only: height stays auto so the ratio the hook reserved via width/height
+   still holds, and the page does not jump when the image lands. */
+.post.single .content img.size-two-thirds { max-width: 66%; height: auto; }
+.post.single .content img.size-half       { max-width: 50%; height: auto; }
+.post.single .content img.size-third      { max-width: 33%; height: auto; }
+.post.single .content img.size-quarter    { max-width: 25%; height: auto; }
+
+/* Half of a 390px phone is not a photograph, it is a stamp.  Below tablet width
+   these all go back to full bleed. */
+@media (max-width: 640px) {
+  .post.single .content img[class*="size-"] { max-width: 100%; }
+}
+
 /* https://codepen.io/burtclan/pen/mLqxC */
 a.image.featured {
   box-shadow: inset 0 0 10px 5px;

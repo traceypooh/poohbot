@@ -25,13 +25,9 @@ xargs ~/poohbot/bin/avif-blog-img -mirror ~/poohbot/img -long 2064 -minwide 1000
 ```
 
 ## to do
-- [ ] post needs ZOTF info/howto
+- [ ] xxx the `wed-canon` are placeholder ~720x480px now -- replace them & rebuild preview avifs
 - [ ] post opens with the 2 `wed-canon` frames -- now real resolution, but twin says
       they are not colour corrected
-- [ ] make previews repo have index.html + zotf JS + avif previews too -- same link to HQ originals for d/l
-- [ ] previews repo: 2048px avifs via `-mirror`, measured 535KB avg -> ~258MB for 493
-      (25% of the 1GB Pages cap, so one repo is fine). Wants the same lazy + sized
-      `<img>` treatment; that repo is not Hugo, so port the logic, don't reuse the hook
 
 ## info
 ```
@@ -99,6 +95,21 @@ the picker though they *are* in the post.
       - `.Width` is a hard build error on a non-image resource, not an empty value, so
         the hook checks `eq $res.ResourceType "image"` first
       - **hugo 0.166 reads AVIF dimensions** (many prior versions dont)
+- [x] **previews repo shipped** -- `traceypooh/pelican-wedding` on GH Pages, all 501
+      at 1200px (107MB). Not Hugo, so the lazy + sized `<img>` logic is ported rather
+      than reusing the hook. One merged timeline across all six cameras; estimated
+      times are marked `~`. Tooling lives there: `make-thumbs`, `build-index.js`,
+      `make-originals.js`, and `make-align.js` (the clock alignment tool).
+      - the item holds **503** originals but only **501** previews: `IMG_6836` and
+        `IMG_6844` each exist twice, as a stale 720x480 `.JPG` and the real
+        `.heic.jpg`. Both reduce to one `.avif` name, and `avif-blog-img` skips an
+        existing output -- so left alone, the stale pair wins on sort order
+      - `zip-on-the-fly.js` flattened zip entries to basename, and 7 filenames exist
+        in both `wed/` and `wed-mom/`; a 501-file pick unzipped to 494 silently.
+        Fixed in both copies -- only clashing names get directory-qualified
+      - `bin/avif-blog-img` now passes `-m` to exiftool (one damaged embedded
+        thumbnail exited 1 and killed a 501-file batch at 283) and removes a
+        half-made output on exit, since re-runs skip anything already present
 
 ## URL forms that matter
 
@@ -132,15 +143,34 @@ previews) never costs you the triage.
 Only Reenie's clock was trustworthy — corroborated twice: cake cut ~9:19pm ==
 `DSC_0053` @ 21:19:33, and the ~5:10pm ceremony vs. her event frames starting 17:23.
 
+Settled properly in the previews repo (`~/d/pelican-wedding`, `align.html`), by
+looking at what two cameras shot at the same moment. Live values are in that repo's
+`clocks.json`; this is the record.
+
 | camera | fix |
 |---|---|
-| `wed` | reference |
-| `wed-bokeh`, `wed-mom` | already correct (100% / 99% inside the event window) |
-| `wed-misc` | iPhones, network-synced — correct |
-| `wed-nikon` | **−3.816h**, from one matched pair |
-| `wed-canon` | dead coin cell (resets ~every 3 frames, 31 times across 162). No usable absolute *or* relative time — placed by 8 hand anchors interpolated across the frame counter |
+| `wed` | reference — the one clock that was right |
+| `wed-bokeh` | **−2.047h** (−7369s) |
+| `wed-mom` | **−3h exactly** — she flew in and the camera was still on Eastern time |
+| `wed-nikon` | **−3.799h** (−13677s) |
+| `wed-misc` | iPhones network-synced; the 3 selfies have no EXIF and are placed by hand |
+| `wed-canon` | dead coin cell, 43 resets across 161 frames. 27 hand anchors; each burst keeps the duration it recorded and all the slack goes into the gaps between power-ons |
+
+**The window check was not enough.** `wed-bokeh` and `wed-mom` both scored ~100%
+"inside the event window" and both were hours wrong — a wedding runs long enough that
+a 2-3h shift still lands inside it. Only content told the truth: `wed-mom/DSC_0187`
+sat at 8:17pm showing guests seated on the lawn for the ceremony, and `DSC_0138` was
+stamped Friday 9:23pm in bright daylight, an hour after sunset.
 
 Automatic offset detection was tried and removed. At a wedding every camera shoots
 continuously through the same hours, so each shot-density curve is one broad plateau;
 shifting it 2h still lands on the plateau and scores as well. It confidently proposed
-−2h for two cameras that were already correct. See the note in `bin/photo-index.js`.
+−2h for two cameras — which, ironically, turned out to be roughly right for one of
+them, but for no reason the search could justify. See the note in `bin/photo-index.js`.
+
+**`wed-canon` needed a different model entirely.** Interpolating across the frame
+counter between anchors — the obvious approach, and what was used first — spreads
+every burst evenly over the anchors bracketing it: a 15-frame burst genuinely shot in
+619 seconds came out smeared across 4154. The coin cell only killed the *absolute*
+clock; within one power-on it ran normally, so burst-internal timing was exact all
+along. See `clock.js` in the previews repo.
