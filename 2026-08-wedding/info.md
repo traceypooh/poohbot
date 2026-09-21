@@ -174,3 +174,17 @@ every burst evenly over the anchors bracketing it: a 15-frame burst genuinely sh
 619 seconds came out smeared across 4154. The coin cell only killed the *absolute*
 clock; within one power-on it ran normally, so burst-internal timing was exact all
 along. See `clock.js` in the previews repo.
+
+
+## Dance Music
+- Muppet Show Theme
+- At Last - Etta James (~9:26pm)
+- Summer Girl - Haim
+- Steal My Sunshine - Len (~9:35pm)
+- Groove is in the Heart - Deee-Lite (~9:38pm)
+- Wonderwall - Oasis (~9:41pm - 9:44pm)
+- It Takes Two - Rob Base and DJ EZ Rock (~9:45pm - 9:48pm)
+- Dancing Queen - ABBA (~9:50pm)
+- Pink Pony Club - Chappell Roan (~9:56pm)
+- Slow Burn - Kacey Musgraves (~10:00pm)
+- [cowbells] (~10:01pm)
