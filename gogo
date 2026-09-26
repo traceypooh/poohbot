@@ -40,10 +40,25 @@ mv comments data
 
 NPAGES=0
 NPOSTS=0
-for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -Ev ^public/); do
+
+# Every .html content source that Hugo should build from.
+function content-sources() {
+  find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -Ev ^public/
+}
+
+# Turn ONE .html source into the .md Hugo actually builds from.
+#
+# Shared by the startup pass and by watch mode deliberately: if the two ever handled
+# aliases or `type:` differently, the page you previewed would not be the page that
+# ships, which is the worst kind of dev-server bug.
+# Returns non-zero if the source is unusable; the caller decides whether that is
+# fatal (startup: yes) or just worth reporting (watch: no).
+function make-md() {
+  local HTM=$1
   if ( ! grep -qE '^---' $HTM ); then
-    # echo "skipping $HTM w/o frontmatter"
-    continue
+    # No front matter, so not Hugo content.  These are the real passthrough HTML
+    # pages (lacer, resume, amy, gears, alc/*) -- leave them exactly where they are.
+    return 0
   fi
 
   # Hugo will not parse a .html content file as markdown -- there is no config for
@@ -60,20 +75,30 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
   # Hugo renders into the theme layout, and they must stay exactly where they are.
   # That is also why this cannot be an `ignoreFiles` rule -- the distinction is front
   # matter, not path.
-  MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
+  local MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
   cp $HTM $MD
 
-  ALIASED=
+  local ALIASED=
+  local DATE YYYY MM DD TTL ALIAS1 ALIAS2 ALIASES MISSING
 
+  # NB: the counters below return the value BEFORE incrementing, so `((NPAGES++))`
+  # exits 1 the first time.  That is why `set +e` has to come first.
   set +e
   if ( grep -qE '^type: page$' $MD ); then
     ((NPAGES++))
   else
     ((NPOSTS++))
+
+    # add aliases to every post like this
+    # (or ensure a page w/ additional aliases have them)
+    #   /YYYY/MM/DD/<slug>/
+    #   /YYYY/MM/<slug>/
+    # those will then redirect back to /YYYY-MM-<slug> (or rare /YYYY-MM-DD-<slug>)
     DATE=$(grep -Eo '^date: [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' $MD |cut -f2 -d ' ')
     if [ "$DATE" = "" ]; then
       echo "$HTM has no 'date:'"
-      exit 1
+      set -e   # restore before bailing, or the caller inherits `set +e`
+      return 1
     fi
 
     if ( grep -qE '^aliases:' $MD ); then
@@ -95,8 +120,8 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
         if [ $ALIASED ]; then
           # check the front matter for the 2 standard aliases we always want present
           MISSING=
-          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS1 || MISSING=1
-          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q $ALIAS2 || MISSING=1
+          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q "$ALIAS1" || MISSING=1
+          tail +2 $MD |fgrep -B100 -m1 -- --- | grep -q "$ALIAS2" || MISSING=1
           if [ $MISSING ]; then
             echo "ERROR: $HTM has manual aliases but is missing standard date-path aliases."
             echo "  When adding a manual alias, also keep the standard ones:"
@@ -115,6 +140,10 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
     fi
   fi
   set -e
+}
+
+for HTM in $(content-sources); do
+  make-md $HTM || exit 1
 done
 
 echo Number Posts: $NPOSTS
