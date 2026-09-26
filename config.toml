@@ -20,7 +20,7 @@ disableLanguages        = [""]
 
 # we like everything in top dir
 contentDir = "."
-assetDir = "."
+assetDir = "img"
 themesDir = "."
 
 # dont process or copy these into dest 'public/' dir:

@@ -6,15 +6,23 @@ mydir=${0:a:h}
 
 cd $mydir
 
+# -w / --watch : run Hugo's own dev server with live reload instead of building once
+# and handing the result to caddy.  Hugo only ever sees the generated .md, so the
+# watcher below keeps that in step with the .html you are actually editing.
+WATCH=
+if [[ ${1:-} == (-w|--watch) ]]; then
+  WATCH=1
+  shift
+fi
+POLL=3  # seconds between checks; a stat of ~165 files is cheap but not free
+
 # Delete only the index.md files this script generated.  Nothing else is touched --
 # the .html sources were copied, never moved, so an interrupted run cannot leave the
 # repo half-renamed.  (`find -name index.md` is safe: no *tracked* index.md exists,
 # and every real .md here is named otherwise -- info.md, README.md, _index.md.)
 function restore-source-files() {
   ( set +e; mv data/comments . && rmdir data )
-  for MD in $(find . -mindepth 2 -type f -name 'index.md' |cut -f2- -d/ |grep -Ev ^public/); do
-    rm $MD
-  done
+  find . -mindepth 2 -type f -name index.md -delete
 }
 
 UNAMEY=$(uname)
@@ -43,7 +51,7 @@ NPOSTS=0
 
 # Every .html content source that Hugo should build from.
 function content-sources() {
-  find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -Ev ^public/
+  find . -name public -prune -o -name .git -prune -o -name index.html -print |cut -b3-
 }
 
 # Turn ONE .html source into the .md Hugo actually builds from.
@@ -75,7 +83,11 @@ function make-md() {
   # Hugo renders into the theme layout, and they must stay exactly where they are.
   # That is also why this cannot be an `ignoreFiles` rule -- the distinction is front
   # matter, not path.
-  local MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
+  # zsh suffix replacement, not `echo | perl`: this runs once per post, and in watch
+  # mode once per post per poll.  Spawning perl 188 times costs 0.8s against 0.04s
+  # for the shell doing it in-process -- per poll, that was 27% of a core burnt on
+  # renaming strings.
+  local MD=${HTM%.html}.md
   cp $HTM $MD
 
   local ALIASED=
@@ -153,18 +165,80 @@ ARGS=()
 if [ "$UNAMEY" = Darwin ]; then
   ARGS+=(--buildDrafts)
 fi
-( set -eux; hugo $ARGS )
 
-# Hugo skips .htm files (no frontmatter); copy them manually
-find alc -type f -name '*.htm' -o -name '*.html' | while IFS= read -r f; do
-  mkdir -p "public/${f%/*}"
-  if [ -e "public/$f" ]; then continue; fi
-  cp "$f" "public/$f"
-done
+# Hugo skips .htm files (no front matter); copy them manually.
+#
+# Scoped to alc/ ON PURPOSE.  ciclo/, old/ and test/ publish fine as directories --
+# their index.html pages are live -- but the 15 loose .htm files sitting beside them
+# are not copied, 404 today, and nothing links to them.  Widening this would silently
+# put those back online.  If any should go live, add that directory here rather than
+# dropping the scope.
+#
+# The parenthesis matters: without it, `-type f -name '*.htm' -o -name '*.html'`
+# parses as (type f AND *.htm) OR (*.html), so the second branch loses the file test.
+function copy-skipped-htm() {
+  find alc -type f \( -name '*.htm' -o -name '*.html' \) | while IFS= read -r f; do
+    mkdir -p "public/${f%/*}"
+    if [ -e "public/$f" ]; then continue; fi
+    cp "$f" "public/$f"
+  done
+}
 
-# cheap check if GitHub Actions or dev mode on mac
-if [ "$UNAMEY" = Darwin ]; then
-  restore-source-files
+if [ $WATCH ]; then
+  # Hugo builds from the copied .md, so editing a .html shows nothing until its
+  # .md twin is refreshed.  A hard link looks like the obvious fix and is not: the write
+  # lands on the .html path, so Hugo's watcher never gets an event for the .md, and
+  # an editor that saves atomically silently severs the link and freezes the page.
+  # Polling and re-running make-md works whatever the editor does.
+  #
+  ( while sleep $POLL; do
+      for HTM in $(content-sources); do
+        # Regenerate when the twin is missing (a post you just started) or stale (one
+        # you just edited).  No `-e` guard needed: zsh's -nt is simply false when
+        # either side is absent, which would silently skip a brand new post forever.
+        [[ ! -e ${HTM%.html}.md || $HTM -nt ${HTM%.html}.md ]] && { make-md $HTM || true }
+      done
 
-  ( set -eux; caddy file-server -r public --listen :1313 )
+      # CSS is the one thing Hugo's server detects but never re-copies: add-on.css is a
+      # plain <link href=...>, not an asset-pipeline resource, so it is published once and
+      # then left alone.  (.md, js/ and img/ all refresh correctly -- css is the outlier.)
+      # So copy it ourselves.  Hugo has already rebuilt and reloaded the browser by the
+      # time our poll notices, which would leave the page showing the OLD css until some
+      # later edit -- hence the touch, which makes Hugo rebuild once more and reload with
+      # the new file in place.
+      for CSS in css/*.css(N); do
+        if [[ ! -e public/$CSS || $CSS -nt public/$CSS ]]; then
+          # `|| continue` is not decoration: this loop starts before hugo server has
+          # finished its first build, so public/css/ may not exist yet.  A bare failing
+          # cp under `set -e` kills this whole subshell -- silently, leaving you with a
+          # watcher that simply never fires again.
+          cp $CSS public/$CSS 2>/dev/null || continue
+          # Re-touch the SOURCE so Hugo rebuilds once more and the browser reloads
+          # against the copy we just made.  Then re-touch the PUBLISHED file so it
+          # stays newer than the source -- otherwise this same test fires on every
+          # poll and we copy/touch/rebuild forever.
+          touch $CSS
+          touch public/$CSS
+        fi
+      done
+    done ) &
+  WATCH_PID=$!
+  # kill the watcher BEFORE the .md files are removed, or it recreates them
+  trap "kill $WATCH_PID 2>/dev/null; restore-source-files" EXIT
+
+  # hugo server writes to disk by default (memory is opt-in via --renderToMemory),
+  # and it never cleans public/, so these survive its rebuilds -- they live at paths
+  # Hugo does not write.
+  copy-skipped-htm
+  ( set -eux; hugo server $ARGS --disableFastRender )
+else
+  ( set -eux; hugo $ARGS )
+  copy-skipped-htm
+
+  # cheap check if GitHub Actions or dev mode on mac
+  if [ "$UNAMEY" = Darwin ]; then
+    restore-source-files
+
+    ( set -eux; caddy file-server -r public --listen :1313 )
+  fi
 fi
