@@ -6,11 +6,13 @@ mydir=${0:a:h}
 
 cd $mydir
 
+# Delete only the index.md files this script generated.  Nothing else is touched --
+# the .html sources were copied, never moved, so an interrupted run cannot leave the
+# repo half-renamed.  (`find -name index.md` is safe: no *tracked* index.md exists,
+# and every real .md here is named otherwise -- info.md, README.md, _index.md.)
 function restore-source-files() {
   ( set +e; mv data/comments . && rmdir data )
   for MD in $(find . -mindepth 2 -type f -name 'index.md' |cut -f2- -d/ |grep -Ev ^public/); do
-    HTM=$(echo $MD |perl -pe 's/\.md$/.html/')
-    mv $HTM.tmp $HTM
     rm $MD
   done
 }
@@ -44,9 +46,22 @@ for HTM in $(find . -mindepth 2 -type f -name 'index.html' |cut -f2- -d/ |grep -
     continue
   fi
 
+  # Hugo will not parse a .html content file as markdown -- there is no config for
+  # it (tried: remapping the `html` suffix onto text/markdown, and taking it off
+  # text/html entirely; both still pass through).  So hand it a .md copy instead.
+  #
+  # The .html does NOT need moving out of the way: with both present in one bundle
+  # directory, Hugo picks index.md as the page and treats index.html as a plain
+  # bundle resource, which never reaches public/.  Verified by diffing a full build
+  # both ways -- every post and page came out byte-identical.
+  #
+  # Copying rather than moving matters: the 24 index.html files that carry NO front
+  # matter (lacer, resume, amy, gears, alc/*) are real passthrough HTML that
+  # Hugo renders into the theme layout, and they must stay exactly where they are.
+  # That is also why this cannot be an `ignoreFiles` rule -- the distinction is front
+  # matter, not path.
   MD=$(echo $HTM |perl -pe 's/\.html$/.md/')
   cp $HTM $MD
-  mv $HTM $HTM.tmp
 
   ALIASED=
 
