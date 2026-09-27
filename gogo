@@ -161,6 +161,18 @@ if [ "$UNAMEY" = Darwin ]; then
   ARGS+=(--buildDrafts)
 fi
 
+# img/ is in ignoreFiles so Hugo never copies those 300MB+ into public/.  Symlink it
+# instead: caddy and hugo server both serve straight through it, and the GitHub Pages
+# upload tars with --dereference, so production gets the real bytes.  One code path
+# for dev and prod -- no divergence to keep straight.
+function link-img() {
+  mkdir -p public
+  # an older build may have left a REAL public/img directory; ln -sfn would then
+  # helpfully create public/img/img inside it
+  [[ -L public/img ]] || rm -rf public/img
+  ln -sfn ../img public/img
+}
+
 # Hugo skips .htm files (no front matter); copy them manually.
 #
 # Scoped to alc/ ON PURPOSE.  ciclo/, old/ and test/ publish fine as directories --
@@ -225,10 +237,12 @@ if [ $WATCH ]; then
   # and it never cleans public/, so these survive its rebuilds -- they live at paths
   # Hugo does not write.
   copy-skipped-htm
+  link-img
   ( set -eux; hugo server $ARGS --disableFastRender )
 else
   ( set -eux; hugo $ARGS )
   copy-skipped-htm
+  link-img
 
   # cheap check if GitHub Actions or dev mode on mac
   if [ "$UNAMEY" = Darwin ]; then
