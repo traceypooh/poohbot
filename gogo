@@ -21,7 +21,6 @@ POLL=3  # seconds between checks; a stat of ~165 files is cheap but not free
 # repo half-renamed.  (`find -name index.md` is safe: no *tracked* index.md exists,
 # and every real .md here is named otherwise -- info.md, README.md, _index.md.)
 function restore-source-files() {
-  ( set +e; mv data/comments . && rmdir data )
   find . -mindepth 2 -type f -name index.md -delete
 }
 
@@ -41,10 +40,6 @@ else
   set +x
 fi
 
-
-# sigh :p
-mkdir -p data
-mv comments data
 
 NPAGES=0
 NPOSTS=0

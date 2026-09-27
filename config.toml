@@ -270,3 +270,17 @@ ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,
 mastodon                = "mastodon.social/@traceypooh"
   # Email
 # email                 = "example"
+
+# Hugo only exposes `data/` as .Site.Data, but staticman writes to `comments/`
+# (see staticman.yml: path = "comments/{options.entryId}") and the theme reads
+# .Site.Data.comments.  Mounting removes the need for gogo to shuffle the directory
+# in and out of data/ around every build.
+# NB: declaring ANY mount for a component replaces that component's default mount,
+# so `data -> data` has to be restated alongside the new one.
+[[module.mounts]]
+  source = "data"
+  target = "data"
+
+[[module.mounts]]
+  source = "comments"
+  target = "data/comments"
