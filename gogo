@@ -161,16 +161,25 @@ if [ "$UNAMEY" = Darwin ]; then
   ARGS+=(--buildDrafts)
 fi
 
-# img/ is in ignoreFiles so Hugo never copies those 300MB+ into public/.  Symlink it
-# instead: caddy and hugo server both serve straight through it, and the GitHub Pages
-# upload tars with --dereference, so production gets the real bytes.  One code path
-# for dev and prod -- no divergence to keep straight.
-function link-img() {
+# Directories of pure static assets -- no front matter, nothing Hugo has to render.
+# They are listed in ignoreFiles so Hugo never copies them into public/, and are
+# symlinked instead: caddy and hugo server serve straight through, and the GitHub
+# Pages upload tars with --dereference, so production gets the real bytes.  One code
+# path for dev and prod -- no divergence to keep straight.
+#
+# Before adding a directory here, check it holds NO files with front matter (those
+# are content Hugo must build) and NO dangling symlinks -- GNU tar fails the whole
+# artifact on an unreadable target, and macOS bsdtar will not reproduce it locally.
+STATIC_LINKS=(img albums)
+
+function link-static() {
   mkdir -p public
-  # an older build may have left a REAL public/img directory; ln -sfn would then
-  # helpfully create public/img/img inside it
-  [[ -L public/img ]] || rm -rf public/img
-  ln -sfn ../img public/img
+  for D in $STATIC_LINKS; do
+    # an older build may have left a REAL public/$D directory; ln -sfn would then
+    # helpfully create public/$D/$D inside it
+    [[ -L public/$D ]] || rm -rf public/$D
+    ln -sfn ../$D public/$D
+  done
 }
 
 # Hugo skips .htm files (no front matter); copy them manually.
@@ -237,12 +246,12 @@ if [ $WATCH ]; then
   # and it never cleans public/, so these survive its rebuilds -- they live at paths
   # Hugo does not write.
   copy-skipped-htm
-  link-img
+  link-static
   ( set -eux; hugo server $ARGS --disableFastRender )
 else
   ( set -eux; hugo $ARGS )
   copy-skipped-htm
-  link-img
+  link-static
 
   # cheap check if GitHub Actions or dev mode on mac
   if [ "$UNAMEY" = Darwin ]; then
