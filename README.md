@@ -28,7 +28,7 @@ Captions belong **below** their image; the theme snugs them up against it.
 
 # todo
 ```sh
-cd ~/poohbot/comments; gg qtfast;
+grep qtfast ~/poohbot/comments.json
 # user email may not be showing up same/right, compared to:
 cd ~/bup/WP; cat comments-wp.json|jq .|fgrep -C10 qtfast
 ```
@@ -44,8 +44,7 @@ and you can, too!
 
 - See [staticman.yml](staticman.yml) for the setup.
 - Submitted comments go into approval (by you) mode, where your GitHub repo hosting your blog/site gets a "Pull Request" and new branch for each comment.
-- Current setup puts comments in [comments/](comments/) top-level subdir, as JSON files.
-- Each post or page gets the comment added to a `comments/` subdir, based on the corresponding post/page's path name [example](comments/about)
+- Setup puts comments in [comments.json](comments.json).
 
 
 ### 404s fixme xxx

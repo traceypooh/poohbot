@@ -170,11 +170,13 @@ fi
 # Before adding a directory here, check it holds NO files with front matter (those
 # are content Hugo must build) and NO dangling symlinks -- GNU tar fails the whole
 # artifact on an unreadable target, and macOS bsdtar will not reproduce it locally.
-STATIC_LINKS=(img albums)
+STATIC_LINKS=(img albums avatars)
 
 function link-static() {
   mkdir -p public
   for D in $STATIC_LINKS; do
+    # (avatars/ only exists once staticmin saves a commenter's Gravatar -- and no dangling symlinks)
+    [[ -d $D ]] || continue
     # an older build may have left a REAL public/$D directory; ln -sfn would then
     # helpfully create public/$D/$D inside it
     [[ -L public/$D ]] || rm -rf public/$D

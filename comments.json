@@ -1,0 +1,1997 @@
+#0
+#1
+#2
+#3
+#4
+#5
+{
+  "path": "2023-11-first-big-break",
+  "body": "We're all good - we're living in Toronto now (moved back in 2021; bought a house sight unseen; had a quarantine period after entering Canada so we spent two weeks camping out in the house with no furniture or anything; about as stressful as it sounds like). I still work for Google, processing satellite imagery with ML these days.",
+  "date": "2023-12-03T14:05:24.923Z",
+  "id": "010de450-91e5-11ee-8b5f-838117aaaf61",
+  "replyID": "af125e70-914d-11ee-8b5f-838117aaaf61",
+  "name": "William Rucklidge",
+  "identity": "166549f1f6e5858665dae253c3fed591"
+},
+#6
+#7
+#8
+#9
+#a
+#b
+#c
+#d
+#e
+#f
+#g
+#h
+#i
+#j
+#k
+#l
+#m
+#n
+#o
+{
+  "path": "2012-01-natively-compiling-ffmpeg-mplayer-mencoder-on-macos-lion-with-x264",
+  "body": "<p>I am getting an error when I run your scripts. First error is in patching for the thumbnail, but when i commented out the patch for thumbnail, it went further ahead but broke in building mencoder. Following is the error message :<br />\nclang -o mencoder mencoder.o parser-mecmd.o xvid_vbr.o libmpcodecs/ae.o libmpcodecs/ae_pcm.o libmpcodecs/ve.o libmpcodecs/ve_raw.o libmpdemux/muxer.o libmpdemux/muxer_avi.o libmpdemux/muxer_mpeg.o libmpdemux/muxer_rawaudio.o libmpdemux/muxer_rawvideo.o libmpcodecs/ae_faac.o libmpcodecs/ae_lavc.o libmpcodecs/ve_lavc.o libmpdemux/muxer_lavf.o libmpcodecs/ae_lame.o libmpcodecs/ve_x264.o libmpcodecs/ve_xvid4.o asxparser.o bstr.o codec-cfg.o cpudetect.o edl.o fmt-conversion.o m_config.o m_option.o m_struct.o mp_msg.o mp_strings.o mpcommon.o parser-cfg.o path.o playtree.o playtreeparser.o subopt-helper.o libaf/af.o libaf/af_center.o libaf/af_channels.o libaf/af_comp.o libaf/af_delay.o libaf/af_dummy.o libaf/af_equalizer.o libaf/af_extrastereo.o libaf/af_format.o libaf/af_gate.o libaf/af_hrtf.o libaf/af_karaoke.o libaf/af_pan.o libaf/af_resample.o libaf/af_scaletempo.o libaf/af_sinesuppress.o libaf/af_stats.o libaf/af_sub.o libaf/af_surround.o libaf/af_sweep.o libaf/af_tools.o libaf/af_volnorm.o libaf/af_volume.o libaf/filter.o libaf/format.o libaf/reorder_ch.o libaf/window.o libmpcodecs/ad.o libmpcodecs/ad_alaw.o libmpcodecs/ad_dk3adpcm.o libmpcodecs/ad_dvdpcm.o libmpcodecs/ad_hwac3.o libmpcodecs/ad_hwmpa.o libmpcodecs/ad_imaadpcm.o libmpcodecs/ad_msadpcm.o libmpcodecs/ad_pcm.o libmpcodecs/dec_audio.o libmpcodecs/dec_teletext.o libmpcodecs/dec_video.o libmpcodecs/img_format.o libmpcodecs/mp_image.o libmpcodecs/pullup.o libmpcodecs/vd.o libmpcodecs/vd_hmblck.o libmpcodecs/vd_lzo.o libmpcodecs/vd_mpegpes.o libmpcodecs/vd_mtga.o libmpcodecs/vd_null.o libmpcodecs/vd_raw.o libmpcodecs/vd_sgi.o libmpcodecs/vf.o libmpcodecs/vf_1bpp.o libmpcodecs/vf_2xsai.o libmpcodecs/vf_blackframe.o libmpcodecs/vf_boxblur.o libmpcodecs/vf_crop.o libmpcodecs/vf_cropdetect.o libmpcodecs/vf_decimate.o libmpcodecs/vf_delogo.o libmpcodecs/vf_denoise3d.o libmpcodecs/vf_detc.o libmpcodecs/vf_dint.o libmpcodecs/vf_divtc.o libmpcodecs/vf_down3dright.o libmpcodecs/vf_dsize.o libmpcodecs/vf_dvbscale.o libmpcodecs/vf_eq.o libmpcodecs/vf_eq2.o libmpcodecs/vf_expand.o libmpcodecs/vf_field.o libmpcodecs/vf_fil.o libmpcodecs/vf_filmdint.o libmpcodecs/vf_fixpts.o libmpcodecs/vf_flip.o libmpcodecs/vf_format.o libmpcodecs/vf_framestep.o libmpcodecs/vf_gradfun.o libmpcodecs/vf_halfpack.o libmpcodecs/vf_harddup.o libmpcodecs/vf_hqdn3d.o libmpcodecs/vf_hue.o libmpcodecs/vf_il.o libmpcodecs/vf_ilpack.o libmpcodecs/vf_ivtc.o libmpcodecs/vf_kerndeint.o libmpcodecs/vf_mirror.o libmpcodecs/vf_noformat.o libmpcodecs/vf_noise.o libmpcodecs/vf_ow.o libmpcodecs/vf_palette.o libmpcodecs/vf_perspective.o libmpcodecs/vf_phase.o libmpcodecs/vf_pp7.o libmpcodecs/vf_pullup.o libmpcodecs/vf_rectangle.o libmpcodecs/vf_remove_logo.o libmpcodecs/vf_rgbtest.o libmpcodecs/vf_rotate.o libmpcodecs/vf_sab.o libmpcodecs/vf_scale.o libmpcodecs/vf_smartblur.o libmpcodecs/vf_softpulldown.o libmpcodecs/vf_stereo3d.o libmpcodecs/vf_softskip.o libmpcodecs/vf_swapuv.o libmpcodecs/vf_telecine.o libmpcodecs/vf_test.o libmpcodecs/vf_tfields.o libmpcodecs/vf_tile.o libmpcodecs/vf_tinterlace.o libmpcodecs/vf_unsharp.o libmpcodecs/vf_vo.o libmpcodecs/vf_yadif.o libmpcodecs/vf_yuvcsp.o libmpcodecs/vf_yvu9.o libmpdemux/aac_hdr.o libmpdemux/asfheader.o libmpdemux/aviheader.o libmpdemux/aviprint.o libmpdemux/demuxer.o libmpdemux/demux_aac.o libmpdemux/demux_asf.o libmpdemux/demux_audio.o libmpdemux/demux_avi.o libmpdemux/demux_demuxers.o libmpdemux/demux_film.o libmpdemux/demux_fli.o libmpdemux/demux_lmlm4.o libmpdemux/demux_mf.o libmpdemux/demux_mkv.o libmpdemux/demux_mov.o libmpdemux/demux_mpg.o libmpdemux/demux_nsv.o libmpdemux/demux_pva.o libmpdemux/demux_rawaudio.o libmpdemux/demux_rawvideo.o libmpdemux/demux_realaud.o libmpdemux/demux_real.o libmpdemux/demux_roq.o libmpdemux/demux_smjpeg.o libmpdemux/demux_ts.o libmpdemux/demux_ty.o libmpdemux/demux_ty_osd.o libmpdemux/demux_viv.o libmpdemux/demux_vqf.o libmpdemux/demux_y4m.o libmpdemux/ebml.o libmpdemux/extension.o libmpdemux/mf.o libmpdemux/mp3_hdr.o libmpdemux/mp_taglists.o libmpdemux/mpeg_hdr.o libmpdemux/mpeg_packetizer.o libmpdemux/parse_es.o libmpdemux/parse_mp4.o libmpdemux/video.o libmpdemux/yuv4mpeg.o libmpdemux/yuv4mpeg_ratio.o osdep/getch2.o osdep/timer-darwin.o stream/open.o stream/stream.o stream/stream_bd.o stream/stream_cue.o stream/stream_file.o stream/stream_mf.o stream/stream_null.o stream/url.o sub/eosd.o sub/find_sub.o sub/osd.o sub/spudec.o sub/sub.o sub/sub_cc.o sub/subreader.o sub/vobsub.o sub/font_load.o stream/stream_dvdnav.o libdvdnav/dvdnav.o libdvdnav/highlight.o libdvdnav/navigation.o libdvdnav/read_cache.o libdvdnav/remap.o libdvdnav/searching.o libdvdnav/settings.o libdvdnav/vm/decoder.o libdvdnav/vm/vm.o libdvdnav/vm/vmcmd.o stream/stream_dvd.o stream/stream_dvd_common.o libdvdread4/bitreader.o libdvdread4/dvd_input.o libdvdread4/dvd_reader.o libdvdread4/dvd_udf.o libdvdread4/ifo_print.o libdvdread4/ifo_read.o libdvdread4/md5.o libdvdread4/nav_print.o libdvdread4/nav_read.o libvo/aclib.o av_helpers.o av_opts.o libaf/af_lavcac3enc.o libaf/af_lavcresample.o libmpcodecs/ad_ffmpeg.o libmpcodecs/ad_spdif.o libmpcodecs/vd_ffmpeg.o libmpcodecs/vf_geq.o libmpcodecs/vf_lavc.o libmpcodecs/vf_lavcdeint.o libmpcodecs/vf_screenshot.o libmpdemux/demux_lavf.o stream/stream_ffmpeg.o sub/av_sub.o libmpcodecs/vf_fspp.o libmpcodecs/vf_mcdeint.o libmpcodecs/vf_qp.o libmpcodecs/vf_spp.o libmpcodecs/vf_uspp.o stream/stream_ftp.o libmpcodecs/vf_bmovl.o libaf/af_export.o osdep/mmap_anon.o libdvdcss/css.o libdvdcss/device.o libdvdcss/error.o libdvdcss/ioctl.o libdvdcss/libdvdcss.o libmpcodecs/vd_libmpeg2.o libmpeg2/alloc.o libmpeg2/cpu_accel.o libmpeg2/cpu_state.o libmpeg2/decode.o libmpeg2/header.o libmpeg2/idct.o libmpeg2/motion_comp.o libmpeg2/slice.o libmpeg2/idct_mmx.o libmpeg2/motion_comp_mmx.o libmpcodecs/vd_theora.o libmpcodecs/ad_mp3lib.o mp3lib/sr1.o mp3lib/decode_mmx.o mp3lib/dct64_sse.o stream/stream_rtsp.o stream/freesdp/common.o stream/freesdp/errorlist.o stream/freesdp/parser.o stream/librtsp/rtsp.o stream/librtsp/rtsp_rtp.o stream/librtsp/rtsp_session.o stream/stream_netstream.o stream/asf_mmst_streaming.o stream/asf_streaming.o stream/cookies.o stream/http.o stream/network.o stream/pnm.o stream/rtp.o stream/udp.o stream/tcp.o stream/stream_rtp.o stream/stream_udp.o stream/realrtsp/asmrp.o stream/realrtsp/real.o stream/realrtsp/rmff.o stream/realrtsp/sdpplin.o stream/realrtsp/xbuffer.o libmpcodecs/vd_mpng.o libmpcodecs/vf_pp.o libmpcodecs/ad_realaud.o libmpcodecs/vd_realvid.o stream/cache2.o stream/stream_tv.o stream/tv.o stream/frequencies.o stream/tvi_dummy.o sub/unrar_exec.o stream/stream_vcd.o libmpcodecs/ad_libvorbis.o libmpdemux/demux_ogg.o libmpcodecs/vd_xanim.o libmpcodecs/vd_xvid4.o osdep/shmem.o ffmpeg/libpostproc/libpostproc.a ffmpeg/libavfilter/libavfilter.a ffmpeg/libavformat/libavformat.a ffmpeg/libavcodec/libavcodec.a ffmpeg/libswscale/libswscale.a ffmpeg/libswresample/libswresample.a ffmpeg/libavutil/libavutil.a /opt/local/x/usr/local/lib/libx264.a  -lncurses -lpng -lz -framework IOKit -framework Carbon -lz -lbz2 -lvorbis -lvorbisenc -logg -ltheoradec -logg -lopencore-amrnb -lopencore-amrwb -lxvidcore -lvpx    -L/usr/X11R6/lib -L/opt/local/lib -lm   -lfaac -lmp3lame<br />\nUndefined symbols for architecture x86_64:<br />\n  &#8220;_cio_tell&#8221;, referenced from:<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\nUndefined symbols for architecture x86_64:<br />\n  &#8220;_cio_tell&#8221;, referenced from:<br />\n  &#8220;_opj_cio_close&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_cio_open&#8221;, referenced from:<br />\n  &#8220;_opj_cio_close&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_create_compress&#8221;, referenced from:<br />\n  &#8220;_opj_cio_open&#8221;, referenced from:<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_create_decompress&#8221;, referenced from:<br />\n  &#8220;_opj_create_compress&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_decode_with_info&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n  &#8220;_opj_create_decompress&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n  &#8220;_opj_destroy_compress&#8221;, referenced from:<br />\n      _libopenjpeg_encode_close in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_decode_with_info&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n  &#8220;_opj_destroy_decompress&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n  &#8220;_opj_destroy_compress&#8221;, referenced from:<br />\n      _libopenjpeg_encode_close in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_encode&#8221;, referenced from:<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_destroy_decompress&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n  &#8220;_opj_image_create&#8221;, referenced from:<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_encode&#8221;, referenced from:<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_image_destroy&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_close in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_image_create&#8221;, referenced from:<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_set_default_decoder_parameters&#8221;, referenced from:<br />\n      _libopenjpeg_decode_init in libavcodec.a(libopenjpegdec.o)<br />\n  &#8220;_opj_image_destroy&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_close in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_set_default_encoder_parameters&#8221;, referenced from:<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_set_default_decoder_parameters&#8221;, referenced from:<br />\n  &#8220;_opj_set_event_mgr&#8221;, referenced from:<br />\n      _libopenjpeg_decode_init in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_setup_decoder&#8221;, referenced from:<br />\n  &#8220;_opj_set_default_encoder_parameters&#8221;, referenced from:<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_opj_setup_encoder&#8221;, referenced from:<br />\n  &#8220;_opj_set_event_mgr&#8221;, referenced from:<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n      _libopenjpeg_encode_init in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_th_encode_alloc&#8221;, referenced from:<br />\n  &#8220;_opj_setup_decoder&#8221;, referenced from:<br />\n      _encode_init in libavcodec.a(libtheoraenc.o)<br />\n      _libopenjpeg_decode_frame in libavcodec.a(libopenjpegdec.o)<br />\n  &#8220;_th_encode_ctl&#8221;, referenced from:<br />\n  &#8220;_opj_setup_encoder&#8221;, referenced from:<br />\n      _encode_init in libavcodec.a(libtheoraenc.o)<br />\n      _get_stats in libavcodec.a(libtheoraenc.o)<br />\n      _submit_stats in libavcodec.a(libtheoraenc.o)<br />\n      _libopenjpeg_encode_frame in libavcodec.a(libopenjpegenc.o)<br />\n  &#8220;_th_encode_flushheader&#8221;, referenced from:<br />\n  &#8220;_th_encode_alloc&#8221;, referenced from:<br />\n      _encode_init in libavcodec.a(libtheoraenc.o)<br />\n      _encode_init in libavcodec.a(libtheoraenc.o)<br />\n  &#8220;_th_encode_free&#8221;, referenced from:<br />\n  &#8220;_th_encode_ctl&#8221;, referenced from:<br />\n      _encode_close in libavcodec.a(libtheoraenc.o)<br />\n      _encode_init in libavcodec.a(libtheoraenc.o)<br />\n      _get_stats in libavcodec.a(libtheoraenc.o)<br />\n      _submit_stats in libavcodec.a(libtheoraenc.o)<br />\n  &#8220;_th_encode_packetout&#8221;, referenced from:<br />\n  &#8220;_th_encode_flushheader&#8221;, referenced from:<br />\n      _encode_frame in libavcodec.a(libtheoraenc.o)<br />\n      _encode_init in libavcodec.a(libtheoraenc.o)<br />\n  &#8220;_th_encode_ycbcr_in&#8221;, referenced from:<br />\n      _encode_frame in libavcodec.a(libtheoraenc.o)<br />\n  &#8220;_th_encode_free&#8221;, referenced from:<br />\n      _encode_close in libavcodec.a(libtheoraenc.o)<br />\n  &#8220;_th_encode_packetout&#8221;, referenced from:<br />\n      _encode_frame in libavcodec.a(libtheoraenc.o)<br />\nld: symbol(s) not found for architecture x86_64<br />\n  &#8220;_th_encode_ycbcr_in&#8221;, referenced from:<br />\n      _encode_frame in libavcodec.a(libtheoraenc.o)<br />\nclang: error: linker command failed with exit code 1 (use -v to see invocation)<br />\nmake: *** [mencoder] Error 1<br />\nmake: *** Waiting for unfinished jobs&#8230;.<br />\nld: symbol(s) not found for architecture x86_64<br />\nclang: error: linker command failed with exit code 1 (use -v to see invocation)<br />\nmake: *** [mplayer] Error 1</p>\n<p>How do i turn off building mencoder ?</p>\n",
+  "date": "2012-08-09T18:47:01Z",
+  "id": "wp10510",
+  "name": "matt",
+  "identity": "3603da95a1325140fbcc2b2bf2a4de2e"
+},
+#p
+#q
+{
+  "path": "2023-05-grinduro-mt-shasta-61-haaard-miles",
+  "body": "Great write up and what a small world that you used to work with my sister Jennifer! What a fun day/ride that was. Hope to meet you some time.",
+  "date": "2023-05-26T21:47:51.164Z",
+  "id": "f61311e0-fc0e-11ed-8e0d-29fc7105af42",
+  "name": "Melissa Leebove",
+  "identity": "63186354d2f3bc43ffe4164fd1ef4e94"
+},
+#r
+#s
+#t
+#u
+#v
+#w
+#x
+#y
+#z
+#a0
+#a1
+#a2
+{
+  "path": "2023-02-gravel-race-rock-cobbler-in-bakersfield-ca",
+  "body": "My studdly neighbors- who woulda known this was going on while we were having fondue?",
+  "date": "2023-02-14T16:18:58.179Z",
+  "id": "48644ee0-ac83-11ed-961e-c39e254f40fe",
+  "name": "Reenie Raschke",
+  "website": "https://www.reenieimages.com/",
+  "identity": "8051751afb27674e8f340ee86c110b8d"
+},
+#a3
+{
+  "path": "2010-10-sony-p-series-running-10-10-meerkat-ubuntu",
+  "body": "<p>hi matt,<br />\nah, thanks for that.  i think sometimes my older wordpress base would mangle/shorten links in some baffling ways &#8212; i&#8217;ve corrected it, thanks for that!</p>\n<p>glad you found this useful.  ironically, now, i got an iPad2 for my birthday and have &#8220;kitted&#8221; it out with iSSH app and a bluetooth keyboard so it&#8217;s now becoming my mini travel machine (so I&#8217;m actually going to sell my VAIO P-Series! 8-p)<br />\nbut I was still delighted to get a non-windoze OS on the little great Sony *and* to get video acceleration to work &#8212; seeing 720p HD h.264 video play on it is pretty mindblowing!</p>\n",
+  "date": "2012-01-10T06:49:39Z",
+  "id": "wp5176",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#a4
+#a5
+#a6
+#a7
+#a8
+#a9
+#aa
+#ab
+#ac
+#ad
+#ae
+{
+  "path": "2019-09-techo-tuesday-make-a-free-website-static-site-generators-and-hugo",
+  "body": "You deserve a Huggo!  (see what a did there?)",
+  "date": "2019-09-19T17:21:03.580Z",
+  "id": "db2ab450-db01-11e9-8686-b974bf178444",
+  "name": "Huntie",
+  "website": "https://hunterleebrown.com",
+  "identity": "788e875ee9b18f4017e40034b8600f23",
+  "type": "jpg"
+},
+#af
+#ag
+#ah
+#ai
+#aj
+#ak
+#al
+#am
+#an
+#ao
+#ap
+#aq
+#ar
+#as
+#at
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>hi Kelly and Keeper,</p>\n<p>I&#8217;m very sorry to say that I think, after looking around web and checking with Green Magic Man, that the forum is sadly just plain gone.  That is pretty horrific/terrible, I&#8217;m a little stunned.   As an Archivist (major programmer at archive.org) this saddens me greatly.  You can still find some of our crawled versions of some of the pages here:</p>\n<p><a href=\"https://web.archive.org/web/*/http://zx6e.net\" rel=\"nofollow\">https://web.archive.org/web/*/http://zx6e.net</a></p>\n<p>It&#8217;s really a shame &#8212; if they gave members some notice, we would have happily crawled it to the bottom and made sure it got saved in our archives fully&#8230;</p>\n",
+  "date": "2014-11-10T07:49:31Z",
+  "id": "wp56964",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#au
+{
+  "path": "2023-11-first-big-break",
+  "body": "Way to go pookie! Great post.  So sorry this happened, and it's painful that it happens to someone I love. I'd rather it would have happened to me.  Your strong spirit, as ever, has guided you through amazing and diligent recovery!  Give Tracey a project, and she usually nails it!  - love you lots!",
+  "date": "2023-12-02T21:14:36.005Z",
+  "id": "cb7f1670-9157-11ee-8b5f-838117aaaf61",
+  "name": "Hunter",
+  "website": "www.hunterleebrown.com",
+  "identity": "788e875ee9b18f4017e40034b8600f23",
+  "type": "jpg"
+},
+#av
+#aw
+#ax
+#ay
+#az
+#b0
+#b1
+#b2
+#b3
+#b4
+#b5
+#b6
+#b7
+#b8
+{
+  "path": "2010-10-sony-p-series-running-10-10-meerkat-ubuntu",
+  "body": "<p>I recently acquired one of these and was very thankful to find your recap on how to get video and suspend going! Thanks! Any luck with the extra &#8220;nub&#8221; function like click with the nub or scroll with the third button?</p>\n",
+  "date": "2010-11-13T18:06:26Z",
+  "id": "wp2884",
+  "name": "paige",
+  "identity": "4f861c69982179047eaef103abfec41b",
+  "type": "jpg"
+},
+#b9
+#ba
+#bb
+#bc
+#bd
+#be
+#bf
+{
+  "path": "2011-11-bitchn-camaro",
+  "body": "<p>Hi Tracey,<br />\nI am Peter and I just found the post of you and my wife.<br />\nYeah, it´s hard to wait and we couldn´t get warm with Mercedes and BMW.<br />\nDue to Birgit´s very serious problems wíth her discs we searched long time for a new car.<br />\nRefering to the fact that our boys will soon leave our house we thought of a ponycar, but Merceds and BMW brought some ugly pains to Birgit after sitting for less than 15 minutes.<br />\nBy the way all these cars are very, very narrow&#8230;and expensive<br />\nBeing very, very sceptical Birgit tried the Camaro ..and&#8230;.. nothing, no pain, only smooth sitting and  a lot of space&#8230;. okay, gaz and tax on the Camaro will be an horror here in Germany, but it´s worth.<br />\nI´ll go to post some pics after our Bumblebee is in.<br />\nHave a great X-Mas and a happy new year<br />\nPeter and Birgit<br />\n tried several cars.<br />\nNo comfort even the new OPEL seats.<br />\nShe recently drove with the Merceds SLK of my mother and Birgit<br />\nWe never drove a 430 horsepower car, especially not backwards, but it´s so easy.<br />\nI myself didn´t realized the backward camara. Birgit told me to look at the mirror &#8230;. hm&#8230;perhaps I should use the mirrors  🙂</p>\n<p>I should use mirror I<br />\nAt all II really don´t know what people think</p>\n",
+  "date": "2011-12-16T16:14:30Z",
+  "id": "wp4946",
+  "name": "birgit heblich",
+  "identity": "bc80d806b517e08a61121c150eafe613"
+},
+#bg
+#bh
+#bi
+#bj
+#bk
+#bl
+#bm
+#bn
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>So did they just pull the plug on the server?? I would be willing to host it if needed as it was a great site</p>\n",
+  "date": "2014-11-30T22:16:46Z",
+  "id": "wp61850",
+  "name": "Brad",
+  "identity": "a9f091f1209e2db51ed6207aa96c11b9"
+},
+{
+  "path": "2011-11-bitchn-camaro",
+  "body": "<p>Hi Peter,<br />\nNice to &#8220;e-meet&#8221; you, too.<br />\nSorry to hear about Birgit&#8217;s pain &#8212; but glad that you found something that seemed to be pretty good given the situation.  That rear cam is great &#8212; I still have a hard time not wanting to swing around and look and put my right arm across the seatback when in reverse.  😎</p>\n<p>I know what you mean about the Mercs and Beemers &#8212; Hunter (boyfriend) has a Beemer 3-series wagon.  I like it a lot and it has the sport package so it *is* very very quick feeling and &#8220;twitchy&#8221; &#8212; but BM/Merc/Audi (to me) just have gotten to be a bit &#8220;expected&#8221; in looks compared to years past and just dont quite have close to that raw oozing interest and looks of the camaro!  And cheaper, too!</p>\n<p>The waiting will be difficult but I think it will be worth it.  What colors did you settle on?  I think you are getting the V-8 version, right?</p>\n<p>Best regards from across the pond,<br />\n-tracey</p>\n<p>I can imagine the wait is going to be</p>\n",
+  "date": "2012-01-10T06:42:51Z",
+  "id": "wp5175",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#bo
+#bp
+#bq
+#br
+#bs
+#bt
+#bu
+#bv
+#bw
+#bx
+#by
+#bz
+#c0
+#c1
+#c2
+#c3
+#c4
+#c5
+#c6
+#c7
+#c8
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>Hey there, </p>\n<p>Has there been any forward movement on a &#8220;resurrection&#8221; of zx6e.net? I&#8217;m looking at starting up a new website to pick up where zx6e.net left off&#8230;I have a lot of the stickies and valuable information that I had saved over the years. I wanted to avoid a duplication of effort&#8230;hence why I&#8217;m asking whether this project ever got off the ground. </p>\n<p>Thanks!</p>\n<p>Justin</p>\n",
+  "date": "2015-04-13T15:19:03Z",
+  "id": "wp104258",
+  "name": "808_guy",
+  "identity": "bbd7f136d15c7957ad02984c8e3d7e82"
+},
+#c9
+#ca
+{
+  "path": "2022-07-biking-rocks-and-being-silly",
+  "body": "making this video was a real hoot in the small town where I grew up",
+  "date": "2025-02-20T08:00:14.443Z",
+  "id": "b7478030-ef60-11ef-b1d3-af9a79d670b0",
+  "name": "tracey pooh",
+  "website": "traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#cb
+#cc
+#cd
+#ce
+#cf
+#cg
+#ch
+#ci
+#cj
+#ck
+#cl
+#cm
+#cn
+#co
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>Owner of a &#8217;95 ZX6E and would also like to know what happened to ZX6e.net?  It&#8217;s a great source of information and would be saddened if it was all lost.  Thanks.</p>\n",
+  "date": "2014-11-07T15:12:49Z",
+  "id": "wp56260",
+  "name": "6E Keeper",
+  "identity": "bf959b6617f4ffebfe759a7acf0c82c0"
+},
+#cp
+#cq
+#cr
+#cs
+{
+  "path": "2023-12-bought-a-jeep",
+  "body": "This is my favorite car ever!\nI've owned:  late 80s Plymouth Horizon;  Honda Civic Del Sol (targa convertible!);  Geo Storm;  Lexus RX-300   SUV;  Chevrolet Camaro Transformers Edition;  JEEP Wrangler!",
+  "date": "2025-02-20T06:43:43.297Z",
+  "id": "06b5d320-ef56-11ef-bf09-e38597741d63",
+  "name": "tracey pooh",
+  "website": "traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#ct
+#cu
+#cv
+#cw
+#cx
+#cy
+{
+  "path": "oil-sugar-beef",
+  "body": "<p>Yay!  We had 7 riders join us for a perfect sized storming of these 45 miles.  2 of the riders (one was another Training Ride Leader incognito) *whipped* though the course and finished a stunning 90 minutes before the rest of us.</p>\n<p>Hunter and I each got a flat, at separate times, so we both wound up by the end being the sweeps.  That was just fine since everyone made it though the entire route and everyone kept safe, phew!</p>\n<p>Yay surreal climbing routes.  I was really happy that a bunch of you commented to me how you enjoyed the strange sites and choice of the course!</p>\n<p>Roll on!</p>\n",
+  "date": "2009-04-05T19:06:18Z",
+  "id": "wp4",
+  "name": "tracey pooh",
+  "identity": "2b56b133e7dc8bcd02331aaad95ccc76"
+},
+#cz
+#d0
+{
+  "path": "mt-diablo-halfway",
+  "body": "<p>Ride Stats:<br />\n3 riders (2 were leaders)<br />\nFinish times: ~5 hours, 45 minutes</p>\n<p>(multiple stops for lunch and coffee)</p>\n",
+  "date": "2009-04-13T06:00:14Z",
+  "id": "wp8",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#d1
+#d2
+#d3
+#d4
+{
+  "path": "morgan-territory",
+  "body": "<p>Ride Stats:<br />\n12 riders (3 were leaders &#8212; thanks Chuck!!)<br />\nFinish times range:  ~6 hours, 10 minutes   to  ~8 hours, 30 minutes</p>\n<p>We had 1 flat near the end (once again to Hunter).</p>\n<p>We had 2 riders get severe &#8220;jump-off-the-bike-in-pain&#8221; cramps in the calves and hamstrings.  It was a longer and tougher ride than they were used to and it&#8217;s possible food and electrolytes may have added to that.  They rallied after large late lunches (with bananas and electrolyte drinks!) in Danville and were able to avoid bailing out early.  A+ for persistence and effort!</p>\n",
+  "date": "2009-04-13T06:11:13Z",
+  "id": "wp11",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#d5
+#d6
+#d7
+#d8
+#d9
+#da
+#db
+#dc
+#dd
+#de
+#df
+{
+  "path": "palomares-canyon",
+  "body": "<p>Another successful ride!  We had five riders total and mostly kept in a relatively close together group for most of the ride.  It was sunny and warm, and the pace was fast (thanks to the 3 non-leader riders being *very* strong and fast).  So Hunter and I mostly tried to hold on as best we could and make our legs get in some really good training.  No flats!</p>\n",
+  "date": "2009-05-12T19:23:40Z",
+  "id": "wp311",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#dg
+#dh
+#di
+#dj
+{
+  "path": "2023-11-first-big-break",
+  "body": "Wow! That's some hardware! Glad your experience wasn't as painful as it looks, and keep going on the recovery. Oh, and say Hi to Kim for me.",
+  "date": "2023-12-02T14:59:09.380Z",
+  "id": "583cb340-9123-11ee-8b5f-838117aaaf61",
+  "name": "William Rucklidge",
+  "identity": "166549f1f6e5858665dae253c3fed591"
+},
+#dk
+#dl
+#dm
+#dn
+#do
+#dp
+#dq
+#dr
+#ds
+#dt
+#du
+#dv
+#dw
+#dx
+#dy
+#dz
+#e0
+#e1
+#e2
+#e3
+{
+  "path": "2023-11-first-big-break",
+  "body": "William!! So good to see your name pop up! How are you? How is your family?!?!",
+  "date": "2023-12-02T20:02:13.529Z",
+  "id": "af125e70-914d-11ee-8b5f-838117aaaf61",
+  "replyID": "583cb340-9123-11ee-8b5f-838117aaaf61",
+  "name": "kim mondelli"
+},
+#e4
+#e5
+{
+  "path": "three-bears-and-mt-diablo",
+  "body": "<p>We *did* it!<br />\nAfter Tracey&#8217;s bike-on-bike collision last week, I was amazed to be able to complete the entire ride, leading it with Hunter.</p>\n<p>We rode with 21 riders total &#8212; our biggest group ride yet!  It started cold, foggy, *very* windy, and 49 degrees!  At the top of Diablo it was 85 degrees and blazing sun.  What a day!</p>\n<p>A small number of riders only went up to the halfway point.  The rest made it up and down safely, phew!   Everyone was able to keep a decent pace and everyone had good experience climbing hills on bikes!</p>\n",
+  "date": "2009-05-25T04:20:46Z",
+  "id": "wp639",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#e6
+#e7
+#e8
+#e9
+#ea
+#eb
+#ec
+#ed
+#ee
+#ef
+#eg
+#eh
+#ei
+#ej
+#ek
+#el
+#em
+#en
+#eo
+#ep
+#eq
+#er
+#es
+#et
+#eu
+#ev
+#ew
+#ex
+#ey
+{
+  "path": "2023-02-gravel-race-rock-cobbler-in-bakersfield-ca",
+  "body": "This was super cool - thanks for sharing you and your groups adventure !",
+  "date": "2023-02-19T00:39:19.263Z",
+  "id": "d830f330-afed-11ed-961e-c39e254f40fe",
+  "name": "Larry Narachi",
+  "identity": "f1bad050bb9930f93acaba8e3140fd9b"
+},
+#ez
+#f0
+#f1
+#f2
+#f3
+#f4
+#f5
+#f6
+#f7
+#f8
+#f9
+#fa
+#fb
+{
+  "path": "2012-06-convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canonnikon-video",
+  "body": "<p>ah, cool, thanks for mentioning some workarounds and for finding my post helpful, too!</p>\n<p>regarding ffmpeg and aac encoding, as well as qt-faststart (that tool is included in the ffmpeg build), in the future you might find this little recipe to make ffmpeg, that I use at home and work helpful:</p>\n<p><a href=\"https://github.com/traceypooh/deriver-archive/blob/master/ffmpeg-README.sh\" rel=\"nofollow\">https://github.com/traceypooh/deriver-archive/blob/master/ffmpeg-README.sh</a></p>\n",
+  "date": "2013-01-05T20:39:19Z",
+  "id": "wp12580",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#fc
+#fd
+#fe
+#ff
+#fg
+#fh
+#fi
+#fj
+#fk
+#fl
+#fm
+#fn
+#fo
+{
+  "path": "2022-01-traceys-tamalpais-thirty-3t",
+  "body": "Most amazing!",
+  "date": "2022-01-23T04:44:06.937Z",
+  "id": "18f49460-7c07-11ec-a81b-6ba5ae372395",
+  "name": "Hunter",
+  "identity": "788e875ee9b18f4017e40034b8600f23",
+  "type": "jpg"
+},
+#fp
+#fq
+#fr
+#fs
+#ft
+#fu
+#fv
+#fw
+#fx
+#fy
+#fz
+#g0
+#g1
+#g2
+#g3
+#g4
+#g5
+#g6
+#g7
+#g8
+#g9
+{
+  "path": "2011-05-awesome-artwork",
+  "body": "<p>i will need to check that out!  😎</p>\n",
+  "date": "2011-10-27T19:17:06Z",
+  "id": "wp4213",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#ga
+#gb
+#gc
+#gd
+#ge
+#gf
+#gg
+#gh
+#gi
+#gj
+#gk
+#gl
+#gm
+#gn
+#go
+#gp
+{
+  "path": "2015-05-slide-responsively-minimal-standalone-htmcssjs-inspired-by-sliding-door-from-wayne-connor",
+  "body": "<p>This is awesome &#8211; good work!</p>\n",
+  "date": "2015-07-13T21:56:55Z",
+  "id": "wp109087",
+  "name": "Wayne",
+  "website": "http://dubbo.org",
+  "identity": "f1b165e79b3e0e83af0495c790f2f66e",
+  "type": "jpg"
+},
+#gq
+#gr
+#gs
+#gt
+#gu
+{
+  "path": "2015-09-save-the-decaf-rebuilding-and-renewing-the-engine-of-1978-cb400a-honda-motorcycle-named-decaf",
+  "body": "<p>hi there!<br />\npersonally, I loved it.  If you get a decent candidate one (look for oil leaks or signs of it especially and check all electrical would be my advice) they are pretty rock-solid and _very_ simple &#8212; both great things.</p>\n<p>So when we blew one of the three main gaskets (due to oil too full, age, and running hard on highway on a blistering hot day &#8212; bad recipe!) and took the engine apart, we found that the insides literally looked close to new (jaws hit floor).  We had some carbon buildup on the piston heads (expected) and cleaned them and replace the piston rings (pretty standard practice) but the transmission below and all the rest seemed super solid.  Look for rust too &#8212; just in terms of indicators of how it was cared for and body/parts integrity.</p>\n<p>I  _did_ find every once in awhile, esp. taking off from a stop sign on hard left/right, gunning reasonably hard, the footshift gear up could slip (which was jarring) but that might have just been my bike.  I dont think &#8220;automatic transmissions&#8221; (this is basically a two gear version of it) are expected to last 40+ years so maybe that&#8217;s something to just be aware of.</p>\n<p>Bikes this old will have little problems here and there.  In the case of old carbureted single or dual cylinder bikes, though, they are so simple that most issues can be traced back and sorted.  They dont have high tech computers in them regulating, and electrical issues can be sorted out.  </p>\n<p>Hope that&#8217;s helpful &#8212; sorry for the delay!</p>\n<p>Keep on riding and most importantly stay &#8220;up&#8221; and safe out there!</p>\n",
+  "date": "2017-12-11T03:20:41Z",
+  "id": "wp118725",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#gv
+#gw
+#gx
+#gy
+#gz
+#h0
+#h1
+#h2
+#h3
+#h4
+#h5
+#h6
+#h7
+#h8
+#h9
+#ha
+#hb
+#hc
+#hd
+#he
+#hf
+#hg
+#hh
+#hi
+#hj
+#hk
+#hl
+#hm
+#hn
+#ho
+#hp
+{
+  "path": "2011-03-its-fun-to-drink-and-drive",
+  "body": "<p>very impressive graphics! save some leffe for me!</p>\n",
+  "date": "2011-03-19T21:39:34Z",
+  "id": "wp3182",
+  "name": "conejita mona",
+  "identity": "f1b7b60c638b6ebb5ff2ce7274c87895"
+},
+#hq
+#hr
+#hs
+#ht
+#hu
+#hv
+{
+  "path": "2012-06-convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canonnikon-video",
+  "body": "<p>This is the second article,  of your blog I personally went through.<br />\nHowever , I personally enjoy this particular 1, “convert yuvj420p to yuv420p (chrome playable!<br />\n) mp4 video (eg: canon/nikon video) | PoohBot Pictures and more” the most.</p>\n<p>All the best ,Micki</p>\n",
+  "date": "2013-10-29T03:56:56Z",
+  "id": "wp14514",
+  "name": "Heather",
+  "website": "http://yahoo.com",
+  "identity": "a4e5169d999aced5cbc59d89cb669d88"
+},
+#hw
+{
+  "path": "2020-02-hunter-birthday-50",
+  "body": "You’re the best Pookie!   Was such a great time.  And total huge surprise.  - Hunter.",
+  "date": "2020-02-07T01:17:56.904Z",
+  "id": "abe46880-4947-11ea-ad91-9d69ef6644e2",
+  "name": "Tracey Lover",
+  "identity": "788e875ee9b18f4017e40034b8600f23",
+  "type": "jpg"
+},
+#hx
+#hy
+#hz
+#i0
+#i1
+{
+  "path": "2023-05-grinduro-mt-shasta-61-haaard-miles",
+  "body": "Hi Melissa!  First off -- HUGE CONGRATS FOR PODIUM #1!!\n\nWow, so glad Jennifer mentioned you!   I had remembered from our days working together that she had a sister who was a \"bike nut\" and racing :)     After being a weekly rider for most of my life, we finally found gravel biking about 18 months ago and have been hooked ever since, biking almost every day now, averaging ~2hrs/daily (!)\n\nWhat a fun and challenging 60+ miles.   Hope to meet up with you sometime in the future and who knows, maybe a podium!  :D",
+  "date": "2023-05-27T00:37:39.373Z",
+  "id": "ae5d72b0-fc26-11ed-8e0d-29fc7105af42",
+  "replyID": "f61311e0-fc0e-11ed-8e0d-29fc7105af42",
+  "name": "Tracey Pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#i2
+#i3
+#i4
+#i5
+#i6
+#i7
+#i8
+#i9
+#ia
+#ib
+{
+  "path": "about",
+  "body": "<p>Tracey is hawt&#8230; and so is her new, amazing functionally redesigned website!</p>\n",
+  "date": "2010-06-04T22:33:42Z",
+  "id": "wp2696",
+  "name": "Bunny Leader",
+  "website": "https://hunterleebrown.com",
+  "identity": "fbaa5b7d2dde67b31fe0ed06663a8940"
+},
+#ic
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>yah, they pulled the plug.<br />\nGreen Magic Man is looking in to trying to see if he can bring it back from the dead on another server, possibly another forum posting technology&#8230;<br />\nbut that&#8217;s going to take some time&#8230;</p>\n",
+  "date": "2014-12-25T23:34:03Z",
+  "id": "wp69374",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#id
+#ie
+{
+  "path": "2015-09-save-the-decaf-rebuilding-and-renewing-the-engine-of-1978-cb400a-honda-motorcycle-named-decaf",
+  "body": "<p>hello,<br />\ndon&#8217;t know if the blog still running anyway. 🙂<br />\ni&#8217;m about de buy a CB400A. and i wonder what do you think about this bike.<br />\nis it reliable bike? any big problem (except the one you explain on this page. how many miles ? )</p>\n<p>thanks a lot  and keep on riding 🙂</p>\n",
+  "date": "2017-10-18T08:49:41Z",
+  "id": "wp118646",
+  "name": "jay",
+  "identity": "e2ea6005d724bc33a255764dcd9cc716"
+},
+#if
+#ig
+#ih
+#ii
+#ij
+#ik
+#il
+#im
+#in
+#io
+#ip
+#iq
+#ir
+#is
+#it
+#iu
+#iv
+#iw
+#ix
+#iy
+#iz
+{
+  "path": "2026-08-wedding",
+  "body": "Perfect",
+  "date": "2026-09-22T04:13:38.276Z",
+  "id": "fc8275d0-b63b-11f1-b73d-7d720665d584",
+  "name": "Reenie Raschke",
+  "website": "Www.reenieimages.com",
+  "identity": "8051751afb27674e8f340ee86c110b8d"
+},
+#j0
+#j1
+#j2
+#j3
+#j4
+#j5
+#j6
+#j7
+#j8
+#j9
+#ja
+#jb
+#jc
+#jd
+#je
+#jf
+#jg
+#jh
+#ji
+#jj
+#jk
+#jl
+#jm
+#jn
+#jo
+#jp
+#jq
+#jr
+#js
+#jt
+#ju
+#jv
+#jw
+#jx
+{
+  "path": "2013-02-how-to-turn-time-machine-from-disk-with-many-partitions-to-single-partition-logically-extending-time-machine-partition",
+  "body": "<p>[2015 update]</p>\n<p>With Yosemite OSX I had problems making the .dmg with Disk Utility.</p>\n<p>So even easier (but requires a new *blank* disk!) success path:<br />\n* open &#8220;Disk Utility&#8221; app<br />\n* *carefully* figure out which your source and dest disks are<br />\n* click on the dest/blank disk<br />\n* click &#8220;Restore&#8221; tab to the right<br />\n* drag source disk (from left) to the &#8220;Source&#8221; type-in.<br />\n* drag dest/blank disk (from left) to the &#8220;Destination&#8221; type-in.<br />\n* click &#8220;Restore&#8221; in lower right<br />\n* go watch a movie!</p>\n",
+  "date": "2015-05-24T03:18:53Z",
+  "id": "wp106731",
+  "name": "pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#jy
+#jz
+#k0
+#k1
+#k2
+{
+  "path": "2015-09-save-the-decaf-rebuilding-and-renewing-the-engine-of-1978-cb400a-honda-motorcycle-named-decaf",
+  "body": "<p>Hi (again) Will!  🙂<br />\nI liked the black background one, but:<br />\n<a href=\"https://www.dimecitycycles.com/2-5-inch-chrome-mini-speedometer-with-white-face-and-led-indicator-lights.html\" rel=\"nofollow\">https://www.dimecitycycles.com/2-5-inch-chrome-mini-speedometer-with-white-face-and-led-indicator-lights.html</a></p>\n",
+  "date": "2018-09-07T03:18:20Z",
+  "id": "wp119057",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+{
+  "path": "2012-01-natively-compiling-ffmpeg-mplayer-mencoder-on-macos-lion-with-x264",
+  "body": "<p>hey there!</p>\n<p>I&#8217;ve updated my script since then &#8212; the patches should work now (they sometimes don&#8217;t work for a short period until I adjust them and update them, etc.)</p>\n<p>to disable mplayer/mencoder building (which is admittedly on macs the thing most likely to have issues at any given time) with the new script, simply change this line</p>\n<p>if [ &#8220;$SHORTNAME&#8221; == &#8220;mac&#8221; ]; then</p>\n<p>to something like</p>\n<p>if [ &#8220;$SHORTNAME&#8221; == &#8220;macSOMETHING&#8221; ]; then</p>\n<p>if you ever have issues with the patches, you can disable all of them entirely by changing these 2 lines:</p>\n<p>function ffmpeg_patch()<br />\n{</p>\n<p>to</p>\n<p>function ffmpeg_patch()<br />\n{ return;</p>\n<p>(and you can also move any .patch file to the &#8220;right&#8221; of the &#8220;#&#8221; char in the &#8220;for p in &#8230;.&#8221; line there if you want to try some but not all of them, alternatively)</p>\n<p>hope that all helps!!</p>\n",
+  "date": "2013-01-06T21:12:34Z",
+  "id": "wp12584",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#k3
+#k4
+#k5
+#k6
+#k7
+#k8
+#k9
+#ka
+#kb
+#kc
+#kd
+#ke
+#kf
+#kg
+{
+  "path": "2012-01-iphone-and-external-mic-sennheiser-mke-400-can-rule-the-galaxy",
+  "body": "<p>I didnt know that before, thanks!</p>\n",
+  "date": "2012-11-18T07:14:31Z",
+  "id": "wp12097",
+  "name": "this amazing site",
+  "website": "http://bradcook.snappages.com/",
+  "identity": "a297a10b6dc2d0169ef50f4889c3dbf6"
+},
+#kh
+#ki
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>GMM,</p>\n<p>This Kelly with the 98 ZX6e from NJ.  Can you send me an email and let me know what happen to ZX6e.net?</p>\n<p>Thank you Kelly<br />\n<a href=\"mailto:Kmp444@hotmail.com\">Kmp444@hotmail.com</a></p>\n",
+  "date": "2014-10-27T17:26:11Z",
+  "id": "wp52959",
+  "name": "Kmp444",
+  "website": "http://zx6e.net",
+  "identity": "922cdc27ac9dc099ca6c5b7f1791639c"
+},
+#kj
+#kk
+#kl
+#km
+#kn
+#ko
+#kp
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>Hi all:<br />\nThis is Green Magic Man.<br />\nI just emailed directly Kelly above, he knows my direct email now. I am still trying to get a complete copy of the site from Pengaru and waiting for him to get back to me. I want that site back too!!!</p>\n",
+  "date": "2015-05-06T18:07:00Z",
+  "id": "wp105954",
+  "name": "Green Magic Man",
+  "identity": "97f3db61f3261fea1d8dff5f1f640883"
+},
+#kq
+#kr
+#ks
+#kt
+#ku
+{
+  "path": "2011-05-natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding",
+  "body": "<p>Check out the improved python version of qtfaststart on github too.  </p>\n<p><a href=\"https://github.com/danielgtaylor/qtfaststart\" rel=\"nofollow\">https://github.com/danielgtaylor/qtfaststart</a></p>\n",
+  "date": "2011-06-22T21:44:56Z",
+  "id": "wp3548",
+  "name": "x",
+  "website": "https://github.com/danielgtaylor/qtfaststart",
+  "identity": "615fa48861589e3f6dc72fdb34f37e9a"
+},
+#kv
+#kw
+#kx
+#ky
+#kz
+#l0
+#l1
+#l2
+#l3
+#l4
+#l5
+#l6
+#l7
+#l8
+#l9
+#la
+{
+  "path": "2015-09-save-the-decaf-rebuilding-and-renewing-the-engine-of-1978-cb400a-honda-motorcycle-named-decaf",
+  "body": "<p>Hey great bike! I saw your video and really like what you did with your Honda. I have one that I have been working on and haven&#8217;t been able to find a good cluster replacement. What kind did you use and where can I get one? Thanks!</p>\n",
+  "date": "2018-08-12T21:04:14Z",
+  "id": "wp119005",
+  "name": "Will",
+  "identity": "ea90d9f51a68c1b664fd020a13b29d43"
+},
+#lb
+#lc
+#ld
+#le
+#lf
+#lg
+#lh
+#li
+#lj
+#lk
+#ll
+#lm
+{
+  "path": "about",
+  "body": "<p>I met you two (Hunter / Tracey) online this evening through your many films.  I must say that I am touched by these colorful, beautiful presentations of two very interesting lives.  </p>\n<p>Regards,<br />\nJaime</p>\n",
+  "date": "2013-09-15T04:17:15Z",
+  "id": "wp14303",
+  "name": "Jaime Ray",
+  "website": "http://www.youtube.com/user/jaimenote",
+  "identity": "fc07f14f9f253275603bbf39e7d3b51f",
+  "type": "jpg"
+},
+#ln
+#lo
+{
+  "path": "2014-09-hyper-green-magic-green-magic-man-kawasaki-zx-6-motorcycle-hyperlapse-route-1-ca",
+  "body": "<p>Joerocket693 here from zx6e.net. i miss the site too. Sold my zx6e  a few YEARS back but was trying to keep in touch with the group.  Site was such a great resource.</p>\n",
+  "date": "2016-03-16T12:34:39Z",
+  "id": "wp117051",
+  "name": "joerocket693",
+  "identity": "668eb04a4479377f9d7b1078b5a70659"
+},
+#lp
+#lq
+#lr
+#ls
+#lt
+#lu
+#lv
+#lw
+#lx
+#ly
+#lz
+#m0
+#m1
+#m2
+#m3
+#m4
+#m5
+#m6
+{
+  "path": "2020-07-like-kubernetes-k3s-is-dead-on-floor-fast",
+  "body": "NOTE: after talking with some of the `traefik` folks, over the weekend I updated the installer from v1.7 to v2.2+ (which is more flexible, but adds a bit more complexity to the setup for https)",
+  "date": "2020-08-03T17:41:14.407Z",
+  "id": "865c7cb0-d5b0-11ea-a20d-673a311150ef",
+  "name": "tracey pooh",
+  "website": "traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#m7
+{
+  "path": "2013-02-today-i-did-my-first-oil-and-oil-filter-change-ever-honda-cb400a-decaf",
+  "body": "<p>That you took pics of your first oil change is hilarious!  But I&#8217;m really posting this comment to get in touch, because I think I knew you at CU, where I worked for Bruce and Dan.  I had a different name then, and looked different, though!  We took a motorcycle ride together once, but that was before you had a license, I think.  I had a CBR600.  Drop me an email sometime!</p>\n",
+  "date": "2014-05-02T18:59:31Z",
+  "id": "wp14990",
+  "name": "Jamie Jennings",
+  "identity": "6ac4131e116e0c16d555e3c7b68cfba4"
+},
+#m8
+#m9
+#ma
+#mb
+#mc
+#md
+#me
+#mf
+#mg
+#mh
+#mi
+#mj
+#mk
+#ml
+#mm
+#mn
+#mo
+#mp
+#mq
+#mr
+#ms
+#mt
+#mu
+#mv
+#mw
+#mx
+#my
+#mz
+#n0
+#n1
+#n2
+#n3
+#n4
+#n5
+#n6
+{
+  "path": "2011-10-double-awesome-art-in-financial-district",
+  "body": "<p>Haha gotta love witty graffiti</p>\n",
+  "date": "2012-04-20T08:44:41Z",
+  "id": "wp7357",
+  "name": "wholesale art",
+  "website": "http://www.stareditions.com",
+  "identity": "385be86d56d9b6ab2db594370e81f877"
+},
+#n7
+#n8
+#n9
+#na
+#nb
+#nc
+#nd
+#ne
+#nf
+#ng
+{
+  "path": "2012-11-honda-cb400a-fixing-turn-signal-and-neutral-leds-to-new-speedometer",
+  "body": "<p>Whoevers idea this was is a fucken loser genius and i hate you lol. Love you at the same time tho lol but fuck off</p>\n",
+  "date": "2012-12-19T15:27:40Z",
+  "id": "wp12465",
+  "name": "Tracey pooh",
+  "website": "http://Facebook",
+  "identity": "67732aec4666a8ced8737f68af7881b5"
+},
+#nh
+#ni
+#nj
+#nk
+#nl
+#nm
+{
+  "path": "2009-04-breakfast-with-amy-goodman-of-democracy-now",
+  "body": "<p>wow! that&#8217;s such an amazing experience.  can&#8217;t wait to hear more &#8230;</p>\n",
+  "date": "2009-04-21T17:58:33Z",
+  "id": "wp12",
+  "name": "kim",
+  "identity": "f1b7b60c638b6ebb5ff2ce7274c87895"
+},
+#nn
+#no
+#np
+#nq
+#nr
+#ns
+#nt
+#nu
+#nv
+#nw
+#nx
+#ny
+#nz
+#o0
+#o1
+#o2
+#o3
+#o4
+#o5
+#o6
+{
+  "path": "2023-02-gravel-race-rock-cobbler-in-bakersfield-ca",
+  "body": "You rocked the cobbler!",
+  "date": "2023-02-26T18:00:56.046Z",
+  "id": "83e1ba90-b5ff-11ed-961e-c39e254f40fe",
+  "name": "You go girl!",
+  "identity": "788e875ee9b18f4017e40034b8600f23",
+  "type": "jpg"
+},
+#o7
+#o8
+#o9
+#oa
+#ob
+#oc
+{
+  "path": "2010-10-sony-p-series-running-10-10-meerkat-ubuntu",
+  "body": "<p>Yay, glad you found it helpful!</p>\n<p>In truth, I haven&#8217;t done tons of playing with my ubuntu VAIO &#8212; been busy w/ other stuff recently and it&#8217;s mostly a travel computer for me.  So no, I hadn&#8217;t gotten anywhere towards some of the nice/special things like scroll w/ the third button.<br />\nBut *yah* that&#8217;d be nice to have work!</p>\n<p>Oh, btw, I realize that I didn&#8217;t link in where I had been actively finding information/help and sharing results &#8212; which was in a very active thread here</p>\n<p><a href=\"http://ubuntuforums.org/showthread.php?t=1229345&#038;page=237\" rel=\"nofollow\">http://ubuntuforums.org/showthread.php?t=1229345&#038;page=237</a></p>\n<p>in case that helps!</p>\n",
+  "date": "2010-11-14T06:43:03Z",
+  "id": "wp2886",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#od
+#oe
+#of
+#og
+#oh
+{
+  "path": "2019-09-techo-tuesday-make-a-free-website-static-site-generators-and-hugo",
+  "body": "thank you for this tutorial! as you may have noticed, my current HTML authoring toolchain strategy is unsustainable.",
+  "date": "2019-09-12T17:53:16.629Z",
+  "id": "32812850-d586-11e9-b2f2-a1047fbebda6",
+  "name": "dvd",
+  "website": "http://tilde.club/~dvd/",
+  "identity": "246daab829e559f7e9de6d0f2115c1c9",
+  "type": "jpg"
+},
+#oi
+#oj
+#ok
+#ol
+{
+  "path": "2009-06-halfway-through-aids-lifecycle",
+  "body": "<p>chica, chica! so glad you are enjoying yourself so, and still feeling energetic. please kiss everyone for me.  yes, *everyone*. xoxo</p>\n",
+  "date": "2009-06-03T05:05:27Z",
+  "id": "wp929",
+  "name": "sister mildred, S.P.",
+  "identity": "f1b7b60c638b6ebb5ff2ce7274c87895"
+},
+#om
+#on
+#oo
+#op
+#oq
+#or
+#os
+#ot
+#ou
+#ov
+#ow
+#ox
+#oy
+#oz
+#p0
+{
+  "path": "2012-10-replacing-cb400a-instruments-to-smaller-cafe-racer-style",
+  "body": "<p>Thanks, Therod!</p>\n<p>heh, I was putting the bolts in groups on a piece of paper and writing up where came from.  After many piles, I looked around garage for old buttercups or something and found these silly ice cube trays we couldn&#8217;t *give away* and thought Perfect!  😎</p>\n<p>glad you liked the idea/progress.</p>\n<p>I&#8217;ll make sure to post more pics/progress as I go.  I just ordered the speedo and took apart the front light to find the wiring harness connector for the ignition (turns out it&#8217;s a 6-wire rectangular plastic connector for the closest OEM part (which Dime City unfortunately didn&#8217;t carry).</p>\n<p>I&#8217;ll tag everything related where it can be found here&#8230;</p>\n<p><a href=\"https://traceypooh.com/tags/decaf/\" rel=\"nofollow\">https://traceypooh.com/tags/decaf/</a></p>\n",
+  "date": "2012-10-30T21:16:41Z",
+  "id": "wp11926",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#p1
+#p2
+#p3
+#p4
+#p5
+#p6
+{
+  "path": "2011-05-natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding",
+  "body": "<p>Thanks for sharing your encoding params.</p>\n",
+  "date": "2011-06-22T21:36:25Z",
+  "id": "wp3546",
+  "name": "x",
+  "identity": "615fa48861589e3f6dc72fdb34f37e9a"
+},
+#p7
+#p8
+#p9
+#pa
+#pb
+#pc
+#pd
+#pe
+#pf
+#pg
+#ph
+#pi
+#pj
+#pk
+#pl
+#pm
+#pn
+#po
+#pp
+#pq
+#pr
+#ps
+#pt
+#pu
+#pv
+#pw
+#px
+#py
+#pz
+#q0
+#q1
+{
+  "path": "2013-11-play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js",
+  "body": "<p>This absolutely helped me. I ported it with standard ArrayBuffer object and it works on IE11. Thank you!</p>\n",
+  "date": "2014-02-10T20:39:23Z",
+  "id": "wp14763",
+  "name": "SaschaNaz",
+  "website": "http://github.com/saschanaz",
+  "identity": "cf3457c90e8e96caee2e925af1b6aa66",
+  "type": "png"
+},
+#q2
+{
+  "path": "2011-09-drifting-lotus-elise-on-playstation",
+  "body": "<p>oh yah, forgot to mention the tricky part &#8212; you have to drift the wheels, but you CANT go off the course, crash, or go more than 90 degrees sideways! (immediately disqualified 😉</p>\n",
+  "date": "2011-09-29T19:02:00Z",
+  "id": "wp4007",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#q3
+#q4
+#q5
+{
+  "path": "about",
+  "body": "<p>Hi Tracey,</p>\n<p>How are you?  We met at Demuxed last year.</p>\n<p>I wanted to invite you to join me for an event I&#8217;m organizing the day after Demuxed, focused on the future decentralized video technology. The event is for video engineers building or interested in decentralized video infrastructure and applications. We&#8217;re curating the guest list and limiting it to 30 engineers in the space, and I think your perspective and experience would be hugely valuable. Through a series of informal break-outs and lightning talks, you&#8217;ll walk away with clear examples of how decentralization is shifting the paradigm of video tech, along with an understanding of challenges ahead. </p>\n<p> Please save the date and RSVP (<a href=\"https://videoandblockchainunconference.splashthat.com/\" rel=\"nofollow\">https://videoandblockchainunconference.splashthat.com/</a>)<br />\nFriday, October 19th<br />\n10 am &#8211; 5 pm<br />\nSoma, San Francisco </p>\n<p>I&#8217;d love to see you there.</p>\n<p>Best,<br />\nEric Tang<br />\nCTO @ Livepeer</p>\n",
+  "date": "2018-08-16T20:23:29Z",
+  "id": "wp119014",
+  "name": "Eric Tang",
+  "identity": "5063fd2373503a63744854760b763e51",
+  "type": "png"
+},
+#q6
+#q7
+#q8
+#q9
+{
+  "path": "2012-06-convert-yuvj420p-to-yuv420p-chrome-playable-mp4-video-eg-canonnikon-video",
+  "body": "<p>thanks for this, a neat solution. for any fellow mac users like me, it works great on a macbook too with a minor modification &#8211; commenting out the &#8220;make a static binary&#8221; and &#8220;qt-faststart&#8221; lines. I also ran into a problem in that my ffmpeg doesn&#8217;t do aac encoding. However there is a command line utility &#8220;afconvert&#8221; on the mac for qt encoding which does the job. So I added an extra line after the MP4Box line:<br />\n<code>afconvert -f mp4f -b 256000 audio.wav audio.aac</code><br />\nand then modified the ffmpeg line to use the file generated above rather than convert on the fly<br />\n<code>ffmpeg -y -i tmp.mp4 -i audio.aac -acodec copy -vcodec copy \"$OUT\"</code></p>\n",
+  "date": "2012-12-26T16:27:15Z",
+  "id": "wp12510",
+  "name": "mckenz",
+  "identity": "45d2bb207e475a5e8c0592b822347d83"
+},
+#qa
+#qb
+#qc
+{
+  "path": "2011-09-return-to-alma-mater",
+  "body": "<p>yay!  yah, I did get to see the new architecture bldng and it is *fantastic*/amazing, love it!!  it was at the very top of my list to hit on foot (after car tour of the new) but I got slightly lost after hitting CIT to restore my netID and thought I remembered it near the Johnson (ironically I wandered thru the older Sibley/Rand and saw the impressive 9/11 related exhibit (including kind of jaw-dropping &#8220;Nuke York&#8221; &#8212; did you see that?!) but managed to miss it as I ran out of time.  Next visit, for sure!</p>\n<p>What an amazing place.  Really took me back (and to be honest made me wish I had mentally entertained Architecture as a major at least to explore it (Psychology became my &#8220;backup plan&#8221; when I wasn&#8217;t sure I&#8217;d be able to &#8220;make it&#8221; in Engineering&#8217;s rigorous and highly theoretical Comp Sci.!  8-))</p>\n<p>How cool would it be if you, me, and Kolin Ohi all made it back at the same time, huh?</p>\n<p>hugs!<br />\n-trace</p>\n",
+  "date": "2011-10-15T22:10:28Z",
+  "id": "wp4106",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#qd
+#qe
+{
+  "path": "2011-11-cute-scion-iq-coming-to-states",
+  "body": "<p>I bought one yesterday. I love it!</p>\n",
+  "date": "2011-11-27T22:27:40Z",
+  "id": "wp4728",
+  "name": "CL",
+  "identity": "d0557afd9708782b9161cda6d06016e9"
+},
+#qf
+#qg
+#qh
+#qi
+#qj
+#qk
+#ql
+#qm
+#qn
+#qo
+#qp
+{
+  "path": "2011-05-star-wars-1977-reedit-night",
+  "body": "<p>well, i don&#8217;t believe i have any rights to lend it out.  the techniques are all there so that w/ a purchase of the 2-disc set (i link to amazon; other sellers will have it) it can be constructed by a similar avid fan and disc owner.  i wish i could show it &#8212; it&#8217;s really a much nicer way to experience the film 😎</p>\n",
+  "date": "2011-06-18T07:49:45Z",
+  "id": "wp3530",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#qq
+#qr
+#qs
+#qt
+#qu
+{
+  "path": "2026-05-all-the-bikes",
+  "body": "Loved reading your bike story. You’ve had an amazing cycling life so far and that’s just the start. Keep on pedaling and jazzling your bikes 😊😊",
+  "date": "2026-05-13T13:40:00.126Z",
+  "id": "3cb62f20-4ed1-11f1-b137-ab69858b511e",
+  "name": "Carlos Gomes"
+},
+#qv
+#qw
+#qx
+#qy
+#qz
+#r0
+#r1
+#r2
+#r3
+#r4
+#r5
+#r6
+#r7
+#r8
+#r9
+#ra
+{
+  "path": "2023-12-photos-of-the-year",
+  "body": "in spite of the arm break, I had a great year!",
+  "date": "2024-02-17T23:27:21.925Z",
+  "id": "1946f280-cdec-11ee-ac17-b7211e6f8875",
+  "name": "tracey",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#rb
+#rc
+#rd
+#re
+#rf
+#rg
+#rh
+#ri
+#rj
+#rk
+#rl
+#rm
+#rn
+#ro
+#rp
+#rq
+#rr
+#rs
+#rt
+#ru
+#rv
+{
+  "path": "2015-06-hacking-apple-watch-to-a-cuff-bracelet-custom-watch",
+  "body": "<p>worth mentioning that indeed, the skin contact w/ the hole in the band was just fine in Day 1 test &#8212; watch never locked (ie: never thought I took it off after initial fastening to wrist and unlock).</p>\n<p>in fact, the only eventful part was crossing the few hundred feet through our work semi-concrete bunker to the bathroom, leaving phone at desk, and losing bluetooth signal to iphone.  once closer again, everything reconnected and the magic continued 😎</p>\n",
+  "date": "2015-06-21T02:31:09Z",
+  "id": "wp108058",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#rw
+#rx
+{
+  "path": "2012-11-honda-cb400a-fixing-turn-signal-and-neutral-leds-to-new-speedometer",
+  "body": "<p>heh, well I appreciate that 😎</p>\n",
+  "date": "2012-12-20T08:03:57Z",
+  "id": "wp12469",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#ry
+#rz
+{
+  "path": "2012-01-iphone-and-external-mic-sennheiser-mke-400-can-rule-the-galaxy",
+  "body": "<p>hi there!  sorry somehow missed this until now&#8230;<br />\nit was just a direct connection w/ the normal headphones/mic cable, very simple!<br />\nhope that helps!  🙂</p>\n",
+  "date": "2016-04-02T22:23:48Z",
+  "id": "wp117108",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+{
+  "path": "2011-11-bitchn-camaro",
+  "body": "<p>Hi Tracey,<br />\nwow, long time, but now it became real:<br />\nOur Bumblebee is in and its V8 sounds great  🙂 .<br />\nUnfortunately I am not able to mail you some pics, but feel free to have a look to the German Camaro-Fan-Forum:<br />\n<a href=\"http://www.camaro2010.de/g236-Bumblebee-von-IDEFIX.html\" rel=\"nofollow\">http://www.camaro2010.de/g236-Bumblebee-von-IDEFIX.html</a><br />\nThere are some pics at the gallery and our user name is IDEFIX (the small person behind Bumblebee is me 🙂  )<br />\nHave a special look to the trunk :):<br />\nA US dealer did a special job for me &#8230; a great job&#8230; 🙂<br />\nI hope it works and you can have a look to the gallery !!!!!!<br />\nHave a great weekend<br />\nBirgit Heblich</p>\n",
+  "date": "2012-05-19T10:59:44Z",
+  "id": "wp7974",
+  "name": "Heblich, Birgit",
+  "identity": "bc80d806b517e08a61121c150eafe613"
+},
+#s0
+#s1
+#s2
+#s3
+{
+  "path": "2012-04-google-maps-upgrades-to-8-bit-hi-res-today-8",
+  "body": "<p>How did I miss this!! I love it! All we need know is some good old retro 80s video game music and it will be back to our childhoods</p>\n",
+  "date": "2012-06-18T07:40:19Z",
+  "id": "wp8825",
+  "name": "Pilates Gal",
+  "website": "http://www.winstonpilatesla.com",
+  "identity": "ab369de692b7e662cd4cbae80508a619",
+  "type": "jpg"
+},
+#s4
+#s5
+#s6
+#s7
+#s8
+#s9
+#sa
+#sb
+#sc
+#sd
+#se
+{
+  "path": "2011-05-star-wars-1977-reedit-night",
+  "body": "<p>Is it possible to see your version of the DVD transfer?  Have you considered lending it if someone leaves collateral?</p>\n",
+  "date": "2011-06-16T05:54:01Z",
+  "id": "wp3520",
+  "name": "John",
+  "identity": "6406b049e718ad6bf59cc7c78eefe792"
+},
+#sf
+#sg
+{
+  "path": "2023-06-lost-found-race-won-womens-100-mile-50-years-and-up",
+  "body": "Obviously, we are super impressed!!! Way to go Tracey!!",
+  "date": "2023-06-08T12:16:09.851Z",
+  "id": "3ff88790-05f6-11ee-980c-0fae06f027a3",
+  "name": "Nancy & Sonia",
+  "website": "Kneissdesign.com",
+  "identity": "1969bf69fdaa1e947ec99c5a392e79ab"
+},
+#sh
+#si
+#sj
+#sk
+{
+  "path": "2011-11-bitchn-camaro",
+  "body": "<p>Hi Tracey,<br />\ncongrates to your Bumblebee !!!<br />\nRecently my husband and I bought one too, but it will last until 02/ or 03/2012.<br />\nSeeing your pics waiting will be pretty hard.<br />\nGreetings from Heidelberg/Germany</p>\n",
+  "date": "2011-12-15T14:59:01Z",
+  "id": "wp4926",
+  "name": "birgit heblich",
+  "identity": "bc80d806b517e08a61121c150eafe613"
+},
+#sl
+#sm
+#sn
+{
+  "path": "2009-06-halfway-through-aids-lifecycle",
+  "body": "<p>keep smiling, chica.  closer with every peddle.  soon u will be eating mole, and enjoying C.H.E.S.T. big hugs to u and hunter.</p>\n",
+  "date": "2009-06-04T19:27:58Z",
+  "id": "wp944",
+  "name": "sister mildred, S.P.",
+  "identity": "f1b7b60c638b6ebb5ff2ce7274c87895"
+},
+#so
+{
+  "path": "palomares-canyon",
+  "body": "<p>Ride Stats:<br />\n5 riders (2 were leaders)<br />\nFinish times range:  6hr 25min to 6hr 45min</p>\n",
+  "date": "2009-05-12T19:24:30Z",
+  "id": "wp312",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#sp
+#sq
+#sr
+#ss
+#st
+#su
+#sv
+{
+  "path": "2011-09-return-to-alma-mater",
+  "body": "<p>Great pic and so nice to read the notes on your visit. I was there for a memorial service for Engineering prof. and Ombudsman Walter Lynn a few weeks ago. Spent most of the time on campus in WSH Memorial Room and terrace. I totally know what you mean about your brain just snapping right back into Cornell mode. </p>\n<p>Don&#8217;t know if you got a chance to see, but the new Architecture building where Rand Hall and SIbley used to be&#8211;which might now be re-named&#8211;is gorgeous. Ditto a small box outside the Johnson Museum that reportedly goes down nine floors or something. Cool to see the new stuff, comforting to recognize the old stuff. </p>\n<p>Thanks for sharing, Tracey.</p>\n",
+  "date": "2011-10-15T21:53:41Z",
+  "id": "wp4105",
+  "name": "kelly",
+  "identity": "4d69f23dd5995f7d8eb4b7ae20f45697"
+},
+#sw
+#sx
+#sy
+#sz
+#t0
+#t1
+#t2
+#t3
+#t4
+#t5
+#t6
+#t7
+#t8
+#t9
+#ta
+#tb
+{
+  "path": "2022-01-traceys-tamalpais-thirty-3t",
+  "body": "I updated the maps from nonideal google maps to alltrails.com (basically, it's very hard to plot an *exact* course w/ google maps especially once you want more than 10 specific points to ensure the exact path is displayed).\r\n\r\nalltrails lets me easily create an *exact* path of the route we did, and the one i *really* want to do next!",
+  "date": "2022-01-23T03:20:22.111Z",
+  "id": "65e7f1b0-7bfb-11ec-a81b-6ba5ae372395",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#tc
+#td
+#te
+#tf
+#tg
+#th
+#ti
+#tj
+#tk
+#tl
+#tm
+#tn
+#to
+#tp
+#tq
+#tr
+#ts
+#tt
+#tu
+#tv
+#tw
+#tx
+{
+  "path": "2015-05-slide-responsively-minimal-standalone-htmcssjs-inspired-by-sliding-door-from-wayne-connor",
+  "body": "<p>yay!!  thanks so much, Wayne!   glad we&#8217;ve connected and I&#8217;ve loved your signature &#8220;sliding-door&#8221; theme for years!  😎</p>\n",
+  "date": "2015-07-13T22:10:36Z",
+  "id": "wp109088",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+{
+  "path": "2011-05-awesome-artwork",
+  "body": "<p>Hey&#8211; Have you seen Wishful Drinking? Will totally change your view on Carrie Fisher. Hilarious.</p>\n",
+  "date": "2011-10-26T05:43:41Z",
+  "id": "wp4187",
+  "name": "Nancita",
+  "identity": "fbd8dbec01da7fd383e8c3ed0eea4630"
+},
+#ty
+{
+  "path": "oil-sugar-beef",
+  "body": "<p>Ride Stats:</p>\n<p>9 riders (2 were leaders)<br />\nFinish times range: 3 hours, 10 minutes  to  4 hours, 30 minutes</p>\n<p>2 flats (one to each ride leader 😎</p>\n",
+  "date": "2009-04-13T06:03:11Z",
+  "id": "wp9",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#tz
+#u0
+#u1
+#u2
+{
+  "path": "mt-diablo-halfway",
+  "body": "<p>yay, we did it!  thanks Harry Stark for TRL-ing with me.  We lost Hunter&#8217;s participation today due to a sudden illness but we only had one rider show up to join us so it was OK.</p>\n<p>we 3 made it to, up and down Mt. Diablo (halfway point) and managed to avoid any rain luckily.  hooray!</p>\n<p>i&#8217;m updating the route sheet now with the *real* mileage numbers now&#8230;. 😎</p>\n",
+  "date": "2009-03-22T01:52:53Z",
+  "id": "wp3",
+  "name": "tracey pooh",
+  "identity": "2b56b133e7dc8bcd02331aaad95ccc76"
+},
+#u3
+#u4
+#u5
+{
+  "path": "2012-10-replacing-cb400a-instruments-to-smaller-cafe-racer-style",
+  "body": "<p>OK, speedo/instruments replaced!</p>\n<p>Posted some videos here:<br />\n<a href=\"https://traceypooh.com/tags/decaf/\" rel=\"nofollow\">https://traceypooh.com/tags/decaf/</a></p>\n",
+  "date": "2012-11-18T08:01:46Z",
+  "id": "wp12098",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#u6
+{
+  "path": "about",
+  "body": "Hey Tracey! My friend and I were browsing the internet archives and stumbled upon your page. We ended up watching some of your bike touring videos and commend you guys for the awesome progress and charity events you've done. We love your editing style and the positivity from your videos. We check in a couple of times a year just to see the cool adventures you share. Wishing you the best!\n\nYour fans from Canada! <3",
+  "date": "2026-02-22T08:40:59.940Z",
+  "id": "3686a440-0fca-11f1-aa3b-77c7d1ca2d72",
+  "name": "Marina + Shafer",
+  "website": "NA",
+  "identity": "ab2c9554bb859bf669f7be929a2102c2"
+},
+#u7
+{
+  "path": "2026-08-wedding",
+  "body": "I didn't cry (much).",
+  "date": "2026-09-20T01:48:06.690Z",
+  "id": "533f7330-b495-11f1-97d9-090a1256a45d",
+  "name": "Mr. Pooh",
+  "website": "www.hunterleebrown.com"
+},
+#u8
+{
+  "path": "2012-10-replacing-cb400a-instruments-to-smaller-cafe-racer-style",
+  "body": "<p>I love the ice cube tray idea! I&#8217;m currently restoring a 78 cb400a myself so I will keep checking back here to see your progress! Keep it up!</p>\n",
+  "date": "2012-10-29T22:26:47Z",
+  "id": "wp11915",
+  "name": "Therod",
+  "identity": "c91d240aaf21fadd3385d900449c9044"
+},
+#u9
+#ua
+#ub
+#uc
+#ud
+#ue
+#uf
+#ug
+#uh
+#ui
+{
+  "path": "2011-11-bitchn-camaro",
+  "body": "<p>wow, that&#8217;s a long time to wait, but I think you&#8217;ll find it worth the wait!<br />\nthe backup camera (+ four sonar sensors in bumper) in the rearview mirror is *especially* brilliant<br />\nbecause it *is* a bit hard to see out the back.</p>\n<p>it normally feels pretty &#8220;refined&#8221; but when pushed, gets its growl on 😎<br />\n<a href=\"/2011-12-camaro-0-to-60-test/\" rel=\"nofollow\">/2011-12-camaro-0-to-60-test/</a></p>\n<p>congrats on your excellent taste in cars  😎</p>\n<p>best regards, tracey</p>\n",
+  "date": "2011-12-15T18:59:31Z",
+  "id": "wp4935",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#uj
+#uk
+{
+  "path": "2012-04-fun-bootie-mashup-dance-mix",
+  "body": "<p>Hey, I have noticed that sometimes this webpage displays an 500 error. I figured you would like to know. Thanks</p>\n",
+  "date": "2014-01-20T00:43:42Z",
+  "id": "wp14708",
+  "name": "Jason Berkley",
+  "website": "http://sakdjhksh",
+  "identity": "0e3e729dc6d10795e11de16023db85f0"
+},
+#ul
+#um
+#un
+#uo
+#up
+#uq
+#ur
+#us
+#ut
+#uu
+#uv
+#uw
+#ux
+#uy
+#uz
+{
+  "path": "about",
+  "body": "<p>First, woo hoo!!  Tracey rox!</p>\n",
+  "date": "2009-03-17T08:48:17Z",
+  "id": "wp2",
+  "name": "Hunter",
+  "website": "https://hunterleebrown.com",
+  "identity": "fbaa5b7d2dde67b31fe0ed06663a8940"
+},
+{
+  "path": "2012-11-decaf-1978-honda-cb400a-speedometer-and-instruments-replaced",
+  "body": "<p>Yay!  speedometer and odometer functions worked!   I just logged my &#8220;first 12 miles&#8221; with a 30-minute neighborhood course at dusk.  Very relieved and pleased!</p>\n<p>NOTE: still need to do some minor work to get the blinker LED light to work when left-hand turning (right-hand turn works) and the &#8220;neutral light&#8221; wasn&#8217;t working (poop!) so will try to solve both next time I crack into the headlight birdnest of cables and post here how I fixed it (have some good leads over at hondatwins.net for the blinker minor issue&#8230;)</p>\n",
+  "date": "2012-11-19T04:26:39Z",
+  "id": "wp12105",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#v0
+#v1
+{
+  "path": "about",
+  "body": "major theme update -- a bunch of improvements and cleanup, new strava link and more.",
+  "date": "2022-06-27T20:43:17.682Z",
+  "id": "c5ab41a0-f659-11ec-a1da-c55202e85827",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#v2
+#v3
+#v4
+#v5
+#v6
+#v7
+#v8
+#v9
+#va
+#vb
+#vc
+#vd
+{
+  "path": "2012-01-iphone-and-external-mic-sennheiser-mke-400-can-rule-the-galaxy",
+  "body": "<p>Hi,<br />\nam wondering how you managed to connect the sennheiser mke 400 to your iPhone. Do you need a special adaptor cable? Hope to hear from you and thanks in advance.</p>\n<p>Rgds<br />\nSindhu</p>\n",
+  "date": "2016-01-22T02:33:07Z",
+  "id": "wp116695",
+  "name": "Sindhu Lim",
+  "identity": "480afe602935bb51c04aee6a22c17171"
+},
+#ve
+#vf
+#vg
+#vh
+#vi
+#vj
+#vk
+#vl
+#vm
+#vn
+#vo
+#vp
+#vq
+#vr
+{
+  "path": "2013-02-today-i-did-my-first-oil-and-oil-filter-change-ever-honda-cb400a-decaf",
+  "body": "<p>Hi June,<br />\nhehe, awesome to hear!  I grew up in NH, so it&#8217;s a trip to think of you potentially riding down the same roads and scenes as I would have &#8212; but with our shared bike 😎<br />\nGlad you like the mods &#8212; all were done by the prior owner, except the total consolidation, cleanup, and replacement of all the instruments and area (speedo, neutral and directional indicators and other lights, etc.)  (which is quite easy to do if you ever get the inkling 😉<br />\nMy boyfriend&#8217;s Harley got waaaay less attention too, and he had really styled it and nearly &#8220;murdered&#8221; it, too.  It&#8217;s nice to get the kudos from people who see the bike and it takes them back to their Honda CB from 30+ years ago, isn&#8217;t it?<br />\n(And it&#8217;s very nice to feel like we are stewards of some true Antiques that have quite the heritage and history, too).</p>\n<p>And yes, I&#8217;m sure you can get as much attention as you&#8217;d care for, with the fans that attract to your bike.</p>\n<p>Thanks a lot for the comment and thoughts &#8212; always appreciated to connect with another kindred rider &#8212; and another kindred sister!</p>\n",
+  "date": "2014-05-21T03:02:16Z",
+  "id": "wp15247",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#vs
+#vt
+{
+  "path": "2010-06-kitty-shot",
+  "body": "<p>I love her so much!</p>\n",
+  "date": "2010-06-08T19:15:55Z",
+  "id": "wp2701",
+  "name": "Bunny Leader",
+  "website": "https://hunterleebrown.com",
+  "identity": "fbaa5b7d2dde67b31fe0ed06663a8940"
+},
+#vu
+#vv
+#vw
+{
+  "path": "2011-05-natively-compiling-ffmpeg-x264-mplayer-on-mac-with-builtin-x264-and-webm-encoding",
+  "body": "<p>thanks for the tip.<br />\ni did check w/ the original author and his site at<br />\n<a href=\"http://multimedia.cx/eggs/improving-qt-faststart/\" rel=\"nofollow\">http://multimedia.cx/eggs/improving-qt-faststart/</a> where he seems to suggest/prefer the bundled source w/ ffmpeg.</p>\n<p>it seems most of the issues people have had with the C aspect of qt-faststart relate to 32bit vs 64bit compiling &#8212; which we don&#8217;t really have to worry about in our setup when compiling from ffmpeg as instructed.   (and having been &#8220;raised on C&#8221;, i don&#8217;t have any major issues w/ C vs. python.</p>\n<p>was there something compelling otherwise about the python variant you liked?</p>\n",
+  "date": "2011-06-23T09:06:30Z",
+  "id": "wp3549",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#vx
+#vy
+#vz
+#w0
+#w1
+#w2
+#w3
+#w4
+{
+  "path": "2025-03-ebgb-adventure-north-bay-bolinas-rambler",
+  "body": "My Strava post:  https://www.strava.com/activities/13829884594",
+  "date": "2025-04-01T19:47:50.951Z",
+  "id": "31d290b0-0f32-11f0-b187-25e2c6d46ca5",
+  "name": "tracey pooh",
+  "website": "traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+{
+  "path": "2023-06-lost-found-race-won-womens-100-mile-50-years-and-up",
+  "body": "thanks!  It was a winning week for the family!  \n\n🏅 ⛸️ ❤️",
+  "date": "2023-06-08T18:44:22.556Z",
+  "id": "7bdd1c40-062c-11ee-980c-0fae06f027a3",
+  "replyID": "3ff88790-05f6-11ee-980c-0fae06f027a3",
+  "name": "tracey",
+  "website": "traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#w5
+#w6
+#w7
+#w8
+#w9
+#wa
+#wb
+#wc
+#wd
+#we
+{
+  "path": "2019-10-techo-tuesday-dark-mode",
+  "body": "Hello nice to find your site. :)",
+  "date": "2019-12-01T11:27:14.248Z",
+  "id": "85b86700-142d-11ea-8122-ebb0a3156c47",
+  "name": "Jamie",
+  "identity": "c7653c223068c7057a9abc670c34e362"
+},
+#wf
+#wg
+#wh
+#wi
+#wj
+#wk
+#wl
+#wm
+#wn
+#wo
+{
+  "path": "2011-11-bitchn-camaro",
+  "body": "<p>oops..sorry Tracey forgot to delete the old sentences.<br />\nNo wonder, thinking of Camaro makes me crazy.<br />\nit´s something fascinating on this car.<br />\nTake care<br />\nPeter</p>\n",
+  "date": "2011-12-16T16:16:59Z",
+  "id": "wp4947",
+  "name": "birgit heblich",
+  "identity": "bc80d806b517e08a61121c150eafe613"
+},
+#wp
+#wq
+#wr
+#ws
+#wt
+#wu
+#wv
+#ww
+#wx
+#wy
+#wz
+#x0
+#x1
+#x2
+#x3
+{
+  "path": "2010-10-sony-p-series-running-10-10-meerkat-ubuntu",
+  "body": "<p>You have a mangled link in the text that should have been : <a href=\"http://www.webupd8.org/2010/05/fix-intel-gma500-poulsbo-graphics-in.html\" rel=\"nofollow\">http://www.webupd8.org/2010/05/fix-intel-gma500-poulsbo-graphics-in.html</a></p>\n<p>thanks for the post btw 😉</p>\n",
+  "date": "2011-12-18T19:39:32Z",
+  "id": "wp4974",
+  "name": "matt burns",
+  "website": "http://www.stolencamerafinder.com",
+  "identity": "6d3b81deddce43a4d7f0c6e8c38fd8e1",
+  "type": "png"
+},
+#x4
+#x5
+#x6
+#x7
+#x8
+#x9
+#xa
+#xb
+#xc
+#xd
+#xe
+#xf
+#xg
+#xh
+#xi
+#xj
+{
+  "path": "2026-08-wedding",
+  "body": "what a beautiful, authentic, full of Love and Joy and Community gorgeous night.  the photos did a masterful job capturing the evening.  i love you Pooh and Mr Pooh.  May the love live on.",
+  "date": "2026-09-21T20:00:31.570Z",
+  "id": "1972a790-b5f7-11f1-9517-2953f0aa2256",
+  "name": "Kim"
+},
+#xk
+#xl
+#xm
+#xn
+#xo
+{
+  "path": "2011-05-star-wars-1977-reedit-night",
+  "body": "<p>geeks</p>\n",
+  "date": "2011-05-07T08:09:43Z",
+  "id": "wp3380",
+  "name": "Lando",
+  "website": "http://www.cityintheclouds.com",
+  "identity": "4a3c7508478028a9a78270af4888be02"
+},
+#xp
+#xq
+{
+  "path": "three-bears-and-mt-diablo",
+  "body": "<p>Ride Stats:<br />\n21 riders (including 2 TRLs)<br />\nFinish times: 6-1/2 hours   to   10 hours 15 min<br />\n1 flat<br />\n1 broken spoke</p>\n",
+  "date": "2009-05-25T04:21:24Z",
+  "id": "wp640",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#xr
+#xs
+#xt
+#xu
+#xv
+#xw
+#xx
+#xy
+#xz
+#y0
+#y1
+#y2
+#y3
+#y4
+#y5
+{
+  "path": "2011-04-fun-with-ford-gt-in-gt5",
+  "body": "<p>Do you have any video of that? I&#8217;d want to find out<br />\nmore details.</p>\n",
+  "date": "2014-01-18T14:44:50Z",
+  "id": "wp14706",
+  "name": "facebook ford mustang",
+  "website": "https://www.facebook.com/V8.FordMustang",
+  "identity": "641167b5e2e9ea411153d3faeb85b810"
+},
+#y6
+#y7
+#y8
+#y9
+#ya
+#yb
+#yc
+#yd
+{
+  "path": "2013-11-play-motion-jpeg-video-using-javascript-in-browser-no-plugins-minimal-js",
+  "body": "<p>wow, super cool!   i&#8217;m super impressed you were able to use and hack it to make an IE version work.</p>\n<p>nicely done!<br />\n(and thanks for the ping 😎</p>\n",
+  "date": "2014-02-12T01:57:59Z",
+  "id": "wp14766",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#ye
+#yf
+#yg
+#yh
+#yi
+#yj
+#yk
+#yl
+#ym
+#yn
+#yo
+#yp
+{
+  "path": "morgan-territory",
+  "body": "<p>We had 12 riders start and finish this challenging and beautiful course!   Thank you all for coming and for RSVP-ing!  It started out a bit cool (but not tooo bad).   The bulk of the riders wound up missing the turn off the bike path towards Clayton but thankfully managed to reloop back (after unfortunately adding on 6 miles to their day!)  The group came back together in Clayton so we could start the climb together.  After the long climb and descent we hit an average amount of headwind and crosswind returning to Danville (it can be *really* bad sometimes).  Once in Danville, we all ate a lot, soaked up the sun and heat, and then finished the final 15 miles.   Yay for everyone making it through it!  I&#8217;m so happy we all got to share this little secret gem together!</p>\n",
+  "date": "2009-04-13T06:07:42Z",
+  "id": "wp10",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#yq
+#yr
+#ys
+{
+  "path": "2009-06-thank-you-donors",
+  "body": "<p>WOW  this photo looks great with the black back ground!</p>\n",
+  "date": "2009-06-30T16:59:41Z",
+  "id": "wp1539",
+  "name": "Bunny Leader",
+  "website": "https://hunterleebrown.com",
+  "identity": "fbaa5b7d2dde67b31fe0ed06663a8940"
+},
+#yt
+#yu
+#yv
+{
+  "path": "2019-09-techo-tuesday-make-a-free-website-static-site-generators-and-hugo",
+  "body": "wow, i really wish i was someone like tracey.  so funny and smert.",
+  "date": "2019-09-12T09:10:25.987Z",
+  "id": "28297e00-d53d-11e9-b2f2-a1047fbebda6",
+  "name": "da pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#yw
+#yx
+#yy
+#yz
+#z0
+#z1
+#z2
+#z3
+#z4
+{
+  "path": "2013-02-today-i-did-my-first-oil-and-oil-filter-change-ever-honda-cb400a-decaf",
+  "body": "<p>Hi Tracy,   I have the same motorcycle here in NH!   1978 CB400A.   I love the cafe racer style of your bike.   Very nice work.   Mine sat in my friends shop for many years, then he decided to get it going for me.   It has the original seat and mostly original parts.   I love that bike and soooo many people want to talk to me about it.   My husband&#8217;s boring Harley gets no attention, but there is always a fan club around my bike.   I joke with my husband that if I want to meet men, I just need to travel around on that bike!  I hope you are still riding her and that she lasts for many more years.</p>\n",
+  "date": "2014-05-19T12:44:59Z",
+  "id": "wp15047",
+  "name": "June",
+  "identity": "0eef60f3df35689955a9fe7cdfb8a648"
+},
+#z5
+#z6
+#z7
+#z8
+#z9
+#za
+#zb
+#zc
+#zd
+{
+  "path": "2009-09-ffmpeg-for-time-lapse-sets-of-images-and-even-archiving",
+  "body": "<p>to tweak/force framerate:</p>\n<p> ffmpeg -framerate 30 -i &#8220;cape%04d.jpg&#8221; -an -vcodec copy output.avi</p>\n",
+  "date": "2012-08-10T04:18:05Z",
+  "id": "wp10516",
+  "name": "tracey pooh",
+  "website": "https://traceypooh.com",
+  "identity": "dfdb9bf148a1af5f797e62e77db5ce0a",
+  "type": "png"
+},
+#ze
+#zf
+#zg
+#zh
+#zi
+#zj
+#zk
+#zl
+#zm
+#zn
+#zo
+#zp
+{
+  "path": "2012-12-decaf-cb400a-reassembled-and-on-the-cruise",
+  "body": "<p>Nice ride! A little wet out, but you worked it with your jacket and retro effect white helmet.</p>\n",
+  "date": "2012-12-10T06:50:58Z",
+  "id": "wp12360",
+  "name": "Hunter",
+  "website": "https://hunterleebrown.com",
+  "identity": "788e875ee9b18f4017e40034b8600f23",
+  "type": "jpg"
+},
+#zq
+#zr
+#zs
+#zt
+#zu
+#zv
+#zw
+#zx
+#zy
+#zz

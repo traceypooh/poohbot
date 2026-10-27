@@ -28,7 +28,9 @@ themesDir = "."
 # 500MB -> 198MB without it).  gogo symlinks public/img -> ../img instead, which
 # serves locally AND survives deploy: actions/upload-pages-artifact tars with
 # --dereference, so the real bytes land in the artifact.
-ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,'bin/', 'theme', 'public', '.git', '\.tmp$', 'img/', 'albums/']
+# 'avatars/': commenters' Gravatars (saved by staticmin) -- symlinked by gogo the same way.
+# 'comments.json': read by the theme (not content).
+ignoreFiles = ['archetypes/default.md', 'config.toml', 'staticman.yml', 'gogo' ,'bin/', 'theme', 'public', '.git', '\.tmp$', 'img/', 'albums/', 'avatars/', 'comments.json']
 
 
 # Hugo 0.166 stopped whitelisting `text/html` as a *content* format, defaulting to
@@ -275,16 +277,5 @@ mastodon                = "mastodon.social/@traceypooh"
   # Email
 # email                 = "example"
 
-# Hugo only exposes `data/` as .Site.Data, but staticman writes to `comments/`
-# (see staticman.yml: path = "comments/{options.entryId}") and the theme reads
-# .Site.Data.comments.  Mounting removes the need for gogo to shuffle the directory
-# in and out of data/ around every build.
-# NB: declaring ANY mount for a component replaces that component's default mount,
-# so `data -> data` has to be restated alongside the new one.
-[[module.mounts]]
-  source = "data"
-  target = "data"
-
-[[module.mounts]]
-  source = "comments"
-  target = "data/comments"
+# Comments: staticmin keeps them all in `comments.json` (top of the repo), which the theme reads directly
+# (see its layouts/_default/comments.html) -- so no `comments/` -> `data/comments` mount anymore.
