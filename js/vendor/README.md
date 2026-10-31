@@ -10,8 +10,8 @@ no internet (a plane, a hotel, a dead CDN).
 
 ```sh
 ~/d/esbuild_es5/esbuild.js -f esm -t es2020 \
-  'https://esm.ext.archive.org/lit?target=es2022' \
-  'https://esm.ext.archive.org/client-zip@2/index.js?target=es2022'
+  'https://esm.archive.org/lit?target=es2022' \
+  'https://esm.archive.org/client-zip@2/index.js?target=es2022'
 
 mv build/lit_target=es2022.min.js  js/vendor/lit.min.js
 mv build/index.min.js              js/vendor/client-zip.min.js

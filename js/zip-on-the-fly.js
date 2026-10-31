@@ -21,8 +21,8 @@
 // and uncomment the one below it.  See js/vendor/README.md to refresh the copies.
 // /*
 import { LitElement, html,
-  css, unsafeCSS } from 'https://esm.ext.archive.org/lit'
-import { downloadZip } from 'https://esm.ext.archive.org/client-zip@2/index.js'
+  css, unsafeCSS } from 'https://esm.archive.org/lit'
+import { downloadZip } from 'https://esm.archive.org/client-zip@2/index.js'
 import { log, warn } from 'https://av.archive.org/js/util/log.js'
 // */
 

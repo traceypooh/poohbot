@@ -41,8 +41,8 @@ You can load logical `npm` modules directly from the web (!) 😍
 Omitting (just) the pie chart setup clutter (it's a lot of JSON config for the data -- you can [see the full source here](https://av.archive.org/demo/deno.js)):
 
 ```js
-import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
-import * as d3v7 from 'https://esm.ext.archive.org/d3@7.9.0'
+import dayjs from 'https://esm.archive.org/dayjs@1.11.13'
+import * as d3v7 from 'https://esm.archive.org/d3@7.9.0'
 
 import { log } from 'https://av.archive.org/js/util/log.js'
 
@@ -71,9 +71,9 @@ document.body.innerHTML += `
     self-hosted
     <a href="https://esm.sh">esm.sh</a>
     -- at
-    <a href="https://esm.ext.archive.org">esm.ext.archive.org</a>
+    <a href="https://esm.archive.org">esm.archive.org</a>
     <pre>
-import dayjs from 'https://esm.ext.archive.org/dayjs@1.11.13'
+import dayjs from 'https://esm.archive.org/dayjs@1.11.13'
     </pre>
   </div>
 
@@ -83,7 +83,7 @@ const el = document.querySelector('#x h1')
 el.style.opacity = '0'
 el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, fill: 'forwards' })
 
-const d3pie = (await import('https://esm.ext.archive.org/d3pie@0.2.1')).default
+const d3pie = (await import('https://esm.archive.org/d3pie@0.2.1')).default
 const pie = new d3pie('pieChart', {
   ...
 })
